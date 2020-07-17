@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * Repräsentiert die Hauptaktivität der Applikation.
+ * Represents the main activity of the app, that is active when the user is in the logged in state.
+ * It thus holds all the fragments except {@link meet_eat.app.fragment.login.RegisterFragment
+ * RegisterFragment} and {@link meet_eat.app.fragment.login.LoginFragment LoginFragment}.
  */
 public class MainActivity extends AppCompatActivity {
 

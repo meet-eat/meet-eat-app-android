@@ -13,7 +13,9 @@ import androidx.navigation.Navigation;
 import meet_eat.app.R;
 
 /**
- * Repräsentiert die Registrierungsansicht der Applikation.
+ * This is the registration page. The user can create an account by entering registration data.
+ *
+ * @see RegisterViewModel
  */
 public class RegisterFragment extends Fragment {
 

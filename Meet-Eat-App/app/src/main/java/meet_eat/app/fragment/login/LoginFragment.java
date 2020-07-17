@@ -13,7 +13,11 @@ import androidx.navigation.Navigation;
 import meet_eat.app.R;
 
 /**
- * Repräsentiert die Anmeldeansicht der Applikation.
+ * This is the login page. It is the first page the user sees when opening the app. The user can
+ * log in by providing his email and password or request to reset his password by providing only
+ * his email address.
+ *
+ * @see LoginViewModel
  */
 public class LoginFragment extends Fragment {
 
