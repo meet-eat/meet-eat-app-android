@@ -17,7 +17,7 @@ import meet_eat.app.R;
  */
 public class LoginFragment extends Fragment {
 
-    View view;
+    private View view;
 
     @Nullable
     @Override

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import meet_eat.app.R;
 
@@ -16,9 +17,27 @@ import meet_eat.app.R;
  */
 public class RegisterFragment extends Fragment {
 
+    private View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        view = inflater.inflate(R.layout.fragment_register, container, false);
+
+        setButtonOnClickListener();
+
+        return view;
+    }
+
+    private void setButtonOnClickListener() {
+        view.findViewById(R.id.ibtBack).setOnClickListener(event ->
+                Navigation.findNavController(view).popBackStack()
+        );
+        view.findViewById(R.id.btRegister).setOnClickListener(this::doRegister);
+    }
+
+
+    private void doRegister(View view) {
+        // TODO: call ViewModel
     }
 }
