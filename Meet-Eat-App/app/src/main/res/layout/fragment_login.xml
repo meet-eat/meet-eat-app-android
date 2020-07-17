@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgFragment">
-
     <ImageView
         android:id="@+id/ivBackground"
 
@@ -33,10 +32,9 @@
         android:elevation="5dp"
         android:maxLines="1"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"
+        android:hint="E-Mail"
 
-        app:layout_constraintBottom_toTopOf="@+id/etPassword"
-        tools:layout_editor_absoluteX="5dp" />
+        app:layout_constraintBottom_toTopOf="@+id/etPassword" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -53,10 +51,9 @@
         android:elevation="5dp"
         android:maxLines="1"
         android:inputType="textPassword"
-        android:hint="@string/password"
+        android:hint="Passwort"
 
-        app:layout_constraintBottom_toTopOf="@+id/tvReset"
-        tools:layout_editor_absoluteX="5dp" />
+        app:layout_constraintBottom_toTopOf="@+id/tvReset" />
 
     <TextView
         android:id="@+id/tvReset"
@@ -71,7 +68,6 @@
 
         android:focusable="true"
         android:clickable="true"
-        android:onClick="resetPassword"
 
         app:layout_constraintBottom_toTopOf="@+id/btRegister"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -87,8 +83,6 @@
         android:textColor="@android:color/black"
         android:elevation="5dp"
         android:text="Anmelden"
-
-        android:onClick="login"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btRegister"
@@ -106,8 +100,6 @@
         android:textColor="@android:color/black"
         android:elevation="5dp"
         android:text="Registrieren"
-
-        android:onClick="register"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
