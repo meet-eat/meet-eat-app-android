@@ -1,2 +1,3 @@
 include ':app'
+include ':app:libs:meet-eat-data'
 rootProject.name = "meet-eat-app-android"

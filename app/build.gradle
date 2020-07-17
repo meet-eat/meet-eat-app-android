@@ -48,4 +48,6 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     apply plugin: "androidx.navigation.safeargs"
+
+    implementation project('libs:meet-eat-data')
 }

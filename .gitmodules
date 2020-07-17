@@ -1,0 +1,3 @@
+[submodule "app/libs/meet-eat-data"]
+	path = app/libs/meet-eat-data
+	url = https://github.com/meet-eat/meet-eat-data.git
