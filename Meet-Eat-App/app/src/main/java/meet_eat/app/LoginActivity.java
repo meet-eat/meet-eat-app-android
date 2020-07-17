@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+/**
+ * Hält die Fragmente RegisterFragment und LoginFragment und dient als initiale Aktivität
+ * beim Start der Applikation.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     @Override
