@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgFragment">
 
     <ImageView
         android:id="@+id/ivBackground"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/bgmain"
-
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/ibtBack"
-
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
-
+        android:adjustViewBounds="true"
         android:background="@null"
         android:elevation="5dp"
-        android:tint="@color/bgButton"
-
-        android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/arrow_back"
-
+        android:tint="@color/bgButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,178 +40,152 @@
 
         <ImageView
             android:id="@+id/ivProfile"
-
             android:layout_width="120dp"
             android:layout_height="120dp"
-
-            android:elevation="5dp"
-
             android:adjustViewBounds="true"
+            android:elevation="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/profilestd" />
 
         <ImageButton
             android:id="@+id/ibtAddAvatar"
-
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="bottom|right"
-
+            android:adjustViewBounds="true"
             android:background="@drawable/bg_button"
             android:elevation="5dp"
-            android:tint="@android:color/black"
-
-            android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/add" />
+            android:src="@drawable/add"
+            android:tint="@android:color/black" />
     </FrameLayout>
 
     <EditText
         android:id="@+id/etEmail"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="16dp"
-
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-        android:hint="E-Mail"
+        android:hint="@string/e_mail"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etPassword" />
 
     <EditText
         android:id="@+id/etPassword"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
-        android:hint="Passwort"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etName" />
 
     <EditText
         android:id="@+id/etName"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
-        android:hint="Benutzername"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etPhone" />
 
     <EditText
         android:id="@+id/etPhone"
-
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
-        android:hint="Telefonnummer"
+        android:hint="@string/phonenumber"
         android:inputType="phone"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etBirth" />
 
     <EditText
         android:id="@+id/etBirth"
-
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
-        android:hint="TT.MM.JJJJ"
+        android:hint="@string/dateformat"
         android:inputType="date"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etDescription"
+        app:layout_constraintEnd_toStartOf="@+id/etHome"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etHome"
-
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
-        android:hint="Heimatort"
+        android:hint="@string/home"
         android:maxLines="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/etDescription"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/etBirth" />
 
     <EditText
         android:id="@+id/etDescription"
-
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:elevation="5dp"
-
         android:gravity="top|start"
-        android:hint="Profilbeschreibung"
+        android:hint="@string/profile_description"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:textColor="@android:color/white"
         android:textColorHint="@color/textHint"
-
         app:layout_constraintBottom_toTopOf="@+id/btRegister" />
 
     <Button
         android:id="@+id/btRegister"
-
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-
         android:background="@drawable/bg_button"
         android:elevation="5dp"
-        android:text="Registrieren"
-
+        android:text="@string/register"
         android:textColor="@android:color/black"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Meet &amp; Eat</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="password">Passwort</string>
+    <string name="reset_password">Passwort vergessen?</string>
+    <string name="login">Anmelden</string>
+    <string name="register">Registrieren</string>
+    <string name="username">Benutzername</string>
+    <string name="phonenumber">Telefonnummer</string>
+    <string name="dateformat">TT.MM.JJJJ</string>
+    <string name="home">Heimatort</string>
+    <string name="profile_description">Profilbeschreibung</string>
 </resources>

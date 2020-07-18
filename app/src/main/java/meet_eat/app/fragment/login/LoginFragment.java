@@ -41,8 +41,5 @@ public class LoginFragment extends Fragment {
                         LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
                 )
         );
-
     }
-
-
 }

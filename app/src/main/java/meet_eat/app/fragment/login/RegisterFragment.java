@@ -36,7 +36,6 @@ public class RegisterFragment extends Fragment {
         view.findViewById(R.id.btRegister).setOnClickListener(this::doRegister);
     }
 
-
     private void doRegister(View view) {
         // TODO: call ViewModel
     }

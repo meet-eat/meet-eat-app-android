@@ -121,7 +121,6 @@ public class OfferViewModel {
     }
 
     /**
-     * TODO
      * Sends a "{@link ContactRequest ContactRequest}" request to the
      * {@link meet_eat.app.repository.UserRepository UserRepository}.
      *
