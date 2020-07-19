@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="@+id/tvNotification" />
 
     <TextView
-        android:id="@+id/tvApperence"
+        android:id="@+id/tvAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
