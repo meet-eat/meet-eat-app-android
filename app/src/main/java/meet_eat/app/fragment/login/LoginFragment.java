@@ -28,7 +28,7 @@ import meet_eat.app.viewmodel.login.LoginViewModel;
 public class LoginFragment extends Fragment {
 
     private View view;
-    private final LoginViewModel loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
+    private LoginViewModel loginVM;
 
     @Nullable
     @Override
@@ -36,18 +36,18 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
+        loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
         setButtonOnClickListener();
         return view;
     }
 
     private void setButtonOnClickListener() {
-        view.findViewById(R.id.btRegister).setOnClickListener(event -> register());
+        view.findViewById(R.id.btRegister).setOnClickListener(event -> navigateToRegister());
         view.findViewById(R.id.btLogin).setOnClickListener(event -> login());
         view.findViewById(R.id.tvReset).setOnClickListener(event -> reset());
     }
 
-    //only navigates to register view
-    private void register() {
+    private void navigateToRegister() {
         Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
     }
 
@@ -57,10 +57,13 @@ public class LoginFragment extends Fragment {
 
         try {
             loginVM.login(email, password);
-            startActivity(new Intent(getActivity(), MainActivity.class));
         } catch (IllegalArgumentException e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        //Switch to main app with logged in state
+        startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
     private void reset() {

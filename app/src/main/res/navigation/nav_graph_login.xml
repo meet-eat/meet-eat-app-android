@@ -15,5 +15,9 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="meet_eat.app.fragment.login.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>
