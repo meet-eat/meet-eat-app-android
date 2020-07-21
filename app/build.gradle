@@ -49,5 +49,5 @@ dependencies {
 
     apply plugin: "androidx.navigation.safeargs"
 
-    implementation project('libs:meet-eat-data')
+    implementation project(':meet-eat-data')
 }
