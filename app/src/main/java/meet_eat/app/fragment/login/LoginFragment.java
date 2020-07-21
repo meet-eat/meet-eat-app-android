@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
@@ -29,6 +28,7 @@ import meet_eat.app.viewmodel.login.LoginViewModel;
 public class LoginFragment extends Fragment {
 
     private View view;
+    private final LoginViewModel loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
 
     @Nullable
     @Override
@@ -36,40 +36,39 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
-
         setButtonOnClickListener();
         return view;
     }
 
     private void setButtonOnClickListener() {
-        view.findViewById(R.id.btRegister)
-                .setOnClickListener(event ->
-                        Navigation.findNavController(view).navigate(
-                                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-                        )
-                );
-        view.findViewById(R.id.btLogin).setOnClickListener(this::login);
-        view.findViewById(R.id.tvReset).setOnClickListener(this::reset);
+        view.findViewById(R.id.btRegister).setOnClickListener(event -> register());
+        view.findViewById(R.id.btLogin).setOnClickListener(event -> login());
+        view.findViewById(R.id.tvReset).setOnClickListener(event -> reset());
     }
 
-    private void login(View v) {
-        // TODO
-
-        startActivity(new Intent(getActivity(), MainActivity.class));
+    //only navigates to register view
+    private void register() {
+        Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
     }
 
-    private void reset(View v) {
-        // TODO
+    private void login() {
+        String email = ((EditText) view.findViewById(R.id.etEmail)).getText().toString();
+        String password = ((EditText) view.findViewById(R.id.etPassword)).getText().toString();
+
+        try {
+            loginVM.login(email, password);
+            startActivity(new Intent(getActivity(), MainActivity.class));
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
-    /*
-     * method is used for checking valid email id format.
-     */
-    private boolean isEmailValid(String email) {
-
-        String expression = ""; // TODO include regex
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    private void reset() {
+        String email = ((EditText) view.findViewById(R.id.etEmail)).getText().toString();
+        try {
+            loginVM.resetPassword(email);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
