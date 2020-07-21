@@ -17,4 +17,21 @@
     <string name="about">Über</string>
     <string name="delete_profile">Profil löschen</string>
     <string name="logout">Abmelden</string>
+    <string name="old_password">Altes Passwort</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="change_password">Ändern</string>
+    <string name="save">Speichern</string>
+    <string name="picture">BILD</string>
+    <string name="title">Angebotstitel</string>
+    <string name="date_time">Datum und Uhrzeit</string>
+    <string name="price">Preis</string>
+    <string name="distance">Entfernung</string>
+    <string name="city">Stadt</string>
+    <string name="participants">Teilnehmer</string>
+    <string name="offer_description">Angebotsbeschreibung</string>
+    <string name="tag">Tag</string>
+    <string name="participate">Teilnehmen</string>
+    <string name="contact">Kontaktieren</string>
+    <string name="cancel">Absagen</string>
+    <string name="participating">Du nimmst bereits teil.</string>
 </resources>

@@ -78,7 +78,7 @@
         android:elevation="5dp"
         android:text="@string/username"
         android:textColor="@android:color/white"
-        android:textSize="36dp"
+        android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
 
@@ -90,7 +90,7 @@
         android:elevation="5dp"
         android:text="0"
         android:textColor="@android:color/white"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
@@ -102,7 +102,7 @@
         android:elevation="5dp"
         android:text="@string/profile_description"
         android:textColor="@android:color/white"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
@@ -114,25 +114,20 @@
         android:elevation="5dp"
         android:text="0"
         android:textColor="@android:color/white"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/ivRating"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ivBackground"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
     <ImageView
         android:id="@+id/ivRating"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="16dp"
         android:adjustViewBounds="true"
         android:elevation="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/star"
         android:tint="@color/rating"
         app:layout_constraintBottom_toBottomOf="@+id/tvRating"
-        app:layout_constraintEnd_toStartOf="@+id/ivBackground"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvRating"
         app:layout_constraintTop_toTopOf="@+id/tvRating" />
 
