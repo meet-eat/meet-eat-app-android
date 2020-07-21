@@ -1,4 +1,2 @@
 include ':app'
-include 'meet-eat-data'
-project(':meet-eat-data').setProjectDir(new File('/app/libs/meet-eat-data'))
 rootProject.name = "meet-eat-app-android"
