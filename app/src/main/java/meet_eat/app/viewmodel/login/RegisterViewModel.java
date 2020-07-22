@@ -17,8 +17,6 @@ public class RegisterViewModel extends ViewModel {
      * @param user The user that is to be registered
      */
     public void register(User user) {
-        /* TODO UserRepository register
-        UserRepository.addEntity(user);
-         */
+        /* TODO UserRepository register: UserRepository.addEntity(user); */
     }
 }

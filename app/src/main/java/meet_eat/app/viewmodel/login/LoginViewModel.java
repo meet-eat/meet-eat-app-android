@@ -11,9 +11,7 @@ import meet_eat.data.entity.user.Password;
  * Manages login-related information.
  */
 public class LoginViewModel extends ViewModel {
-    /* TODO
-    Session session = Session.getInstance();
-     */
+    /* TODO Session init: Session session = Session.getInstance(); */
 
     /**
      * Check the parameters for semantic correctness
@@ -27,9 +25,7 @@ public class LoginViewModel extends ViewModel {
         Email email = new Email(emailString);
         Password password = new Password(passwordString);
         LoginCredential credential = new LoginCredential(email, password);
-        /*TODO Session login
-        session.login(credential);
-         */
+        /* TODO Session login: session.login(credential); */
     }
 
     /**
@@ -41,8 +37,6 @@ public class LoginViewModel extends ViewModel {
      */
     public void resetPassword(String emailString) throws IllegalArgumentException {
         Email email = new Email(emailString);
-        /*TODO UserRepository resetPassword
-        UserRepository.resetPassword(email);
-         */
+        /* TODO UserRepository resetPassword: UserRepository.resetPassword(email); */
     }
 }

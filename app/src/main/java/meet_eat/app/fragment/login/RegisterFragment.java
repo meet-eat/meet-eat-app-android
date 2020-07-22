@@ -26,7 +26,6 @@ import meet_eat.data.entity.user.User;
  * Manages registration-related information.
  */
 public class RegisterFragment extends Fragment {
-
     private View view;
     private RegisterViewModel registerVM;
 
@@ -71,7 +70,7 @@ public class RegisterFragment extends Fragment {
         try {
             Email email = new Email(emailString);
             Password password = new Password(passwordString);
-            User user = new User(birthDay, Role.USER, email, password,name, description,
+            User user = new User(birthDay, Role.USER, email, password, name, description,
                     phoneNumber, false);
             /* TODO user.addPredicate(home); */
             registerVM.register(user);
