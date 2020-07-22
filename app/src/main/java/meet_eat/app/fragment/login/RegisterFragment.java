@@ -70,8 +70,7 @@ public class RegisterFragment extends Fragment {
         try {
             Email email = new Email(emailString);
             Password password = new Password(passwordString);
-            User user = new User(birthDay, Role.USER, email, password, name, description,
-                    phoneNumber, false);
+            User user = new User(email, password, birthDay, name, phoneNumber, description, false);
             /* TODO user.addPredicate(home); */
             registerVM.register(user);
             navigateToLogin();
