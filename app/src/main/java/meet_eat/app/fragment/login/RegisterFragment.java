@@ -33,7 +33,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_register, container, false);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         setButtonOnClickListener();

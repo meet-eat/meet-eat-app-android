@@ -34,7 +34,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
         setButtonOnClickListener();
