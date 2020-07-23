@@ -55,7 +55,7 @@ public class RegisterFragment extends Fragment {
         Calendar cal = new GregorianCalendar();
         new DatePickerDialog(getActivity(), (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month, dayOfMonth);
-            birthDay.format(DateTimeFormatter.ofPattern("dd.mm.yyyy"));
+            birthDay.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             binding.tvBirth.setText(birthDay.toString());
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
