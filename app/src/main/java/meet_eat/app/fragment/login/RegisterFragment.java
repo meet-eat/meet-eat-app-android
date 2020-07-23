@@ -1,10 +1,10 @@
 package meet_eat.app.fragment.login;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,67 +14,115 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import meet_eat.app.R;
+import meet_eat.app.databinding.FragmentRegisterBinding;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
-import meet_eat.data.entity.user.Role;
 import meet_eat.data.entity.user.User;
 
 /**
  * Manages registration-related information.
  */
 public class RegisterFragment extends Fragment {
-    private View view;
+    private FragmentRegisterBinding binding;
     private RegisterViewModel registerVM;
+    private String email, password, username, phoneNumber, profileDescription;
+    private LocalDate birthDay;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         setButtonOnClickListener();
-        return view;
+        return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
-        view.findViewById(R.id.ibtBack).setOnClickListener(event -> Navigation.findNavController(view).popBackStack());
-        view.findViewById(R.id.btRegister).setOnClickListener(event -> register());
+        binding.ibtBack.setOnClickListener(event -> Navigation.findNavController(binding.getRoot()).popBackStack());
+        binding.tvBirth.setOnClickListener(event -> showDatePicker());
+        binding.btRegister.setOnClickListener(event -> register());
     }
 
-    private void navigateToLogin() {
-        Navigation.findNavController(view).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
+    private void showDatePicker() {
+        Calendar cal = new GregorianCalendar();
+        new DatePickerDialog(getActivity(), (datePicker, year, month, dayOfMonth) -> {
+            birthDay = LocalDate.of(year, month, dayOfMonth);
+            birthDay.format(DateTimeFormatter.ofPattern("dd.mm.yyyy"));
+            binding.tvBirth.setText(birthDay.toString());
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void register() {
-        /* TODO DatePicker */
-        int year = 1;
-        int month = 1;
-        int dayOfMonth = 1;
-        LocalDate birthDay = LocalDate.of(year, month, dayOfMonth);
-
-        String emailString = ((EditText) view.findViewById(R.id.etEmail)).getText().toString();
-        String passwordString =
-                ((EditText) view.findViewById(R.id.etPassword)).getText().toString();
-        String name = ((EditText) view.findViewById(R.id.etName)).getText().toString();
-        String description =
-                ((EditText) view.findViewById(R.id.etDescription)).getText().toString();
-        String phoneNumber = ((EditText) view.findViewById(R.id.etPhone)).getText().toString();
-
-        /* TODO Home with Google MapView */
-        String home = ((EditText) view.findViewById(R.id.etHome)).getText().toString();
-
-        try {
-            Email email = new Email(emailString);
-            Password password = new Password(passwordString);
-            User user = new User(email, password, birthDay, name, phoneNumber, description, false);
-            /* TODO user.addPredicate(home); */
-            registerVM.register(user);
-            navigateToLogin();
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (!Email.isLegalEmailAddress(email)) {
+            Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!Password.isLegalPassword(password)) {
+            Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
+            return;
         }
+        /* TODO Tests for other register information */
+        /* TODO Home with Google MapView */
+        String home = binding.etHome.getText().toString();
+
+        Email email = new Email(this.email);
+        Password password = new Password(this.password);
+        User user = new User(email, password, birthDay, username, phoneNumber, profileDescription
+                , false);
+        /* TODO user.addPredicate(home); */
+        registerVM.register(user);
+        navigateToLogin();
+        Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+    }
+
+    private void navigateToLogin() {
+        Navigation.findNavController(binding.getRoot()).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getProfileDescription() {
+        return profileDescription;
+    }
+
+    public void setProfileDescription(String profileDescription) {
+        this.profileDescription = profileDescription;
     }
 }

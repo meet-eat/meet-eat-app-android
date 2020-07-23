@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,10 @@ import androidx.navigation.Navigation;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
+import meet_eat.app.databinding.FragmentLoginBinding;
 import meet_eat.app.viewmodel.login.LoginViewModel;
+import meet_eat.data.entity.user.Email;
+import meet_eat.data.entity.user.Password;
 
 /**
  * This is the login page. It is the first page the user sees when opening the app. The user can
@@ -26,51 +28,69 @@ import meet_eat.app.viewmodel.login.LoginViewModel;
  * @see LoginViewModel
  */
 public class LoginFragment extends Fragment {
-
-    private View view;
+    private FragmentLoginBinding binding;
     private LoginViewModel loginVM;
+    private String email, password;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_login, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
         setButtonOnClickListener();
-        return view;
+        return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
-        view.findViewById(R.id.btRegister).setOnClickListener(event -> navigateToRegister());
-        view.findViewById(R.id.btLogin).setOnClickListener(event -> login());
-        view.findViewById(R.id.tvReset).setOnClickListener(event -> reset());
+        binding.btRegister.setOnClickListener(event -> navigateToRegister());
+        binding.btLogin.setOnClickListener(event -> login());
+        binding.tvReset.setOnClickListener(event -> reset());
     }
 
     private void navigateToRegister() {
-        Navigation.findNavController(view).navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
+        Navigation.findNavController(binding.getRoot()).navigate(LoginFragmentDirections
+                .actionLoginFragmentToRegisterFragment());
     }
 
     private void login() {
-        String email = ((EditText) view.findViewById(R.id.etEmail)).getText().toString();
-        String password = ((EditText) view.findViewById(R.id.etPassword)).getText().toString();
-
-        try {
-            loginVM.login(email, password);
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
+            Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        //Switch to main app with logged in state
+        /* TODO Exception handling for non-runtime exceptions */
+        loginVM.login(email, password);
+
+        /* Switch to main app with logged in state */
         startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
     private void reset() {
-        String email = ((EditText) view.findViewById(R.id.etEmail)).getText().toString();
-        try {
-            loginVM.resetPassword(email);
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        if (!Email.isLegalEmailAddress(email)) {
+            Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        /* TODO Exception handling for non-runtime exceptions */
+        loginVM.resetPassword(email);
+        Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

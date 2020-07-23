@@ -21,7 +21,8 @@ public class LoginViewModel extends ViewModel {
      * @param emailString    The email address of the user.
      * @param passwordString The password of the user.
      */
-    public void login(String emailString, String passwordString) throws IllegalArgumentException {
+    public void login(String emailString, String passwordString) {
+        /* TODO Exception handling for non-runtime exceptions */
         Email email = new Email(emailString);
         Password password = new Password(passwordString);
         LoginCredential credential = new LoginCredential(email, password);
@@ -36,6 +37,7 @@ public class LoginViewModel extends ViewModel {
      * @param emailString The email address of the user.
      */
     public void resetPassword(String emailString) throws IllegalArgumentException {
+        /* TODO Exception handling for non-runtime exceptions */
         Email email = new Email(emailString);
         /* TODO UserRepository resetPassword: UserRepository.resetPassword(email); */
     }
