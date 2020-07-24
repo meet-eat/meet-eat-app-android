@@ -29,6 +29,9 @@ import meet_eat.data.entity.user.User;
  * Manages registration-related information.
  */
 public class RegisterFragment extends Fragment {
+    private static final int MONTH_CORRECTION = 1;
+    private static final String EUROPEAN_DATE_FORMAT = "dd.MM.uuuu";
+
     private FragmentRegisterBinding binding;
     private RegisterViewModel registerVM;
     private String email, password, username, phoneNumber, profileDescription;
@@ -54,9 +57,8 @@ public class RegisterFragment extends Fragment {
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
         new DatePickerDialog(getActivity(), (datePicker, year, month, dayOfMonth) -> {
-            birthDay = LocalDate.of(year, month, dayOfMonth);
-            birthDay.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            binding.tvBirth.setText(birthDay.toString());
+            birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
+            binding.tvBirth.setText(birthDay.format(DateTimeFormatter.ofPattern(EUROPEAN_DATE_FORMAT)));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
@@ -70,7 +72,7 @@ public class RegisterFragment extends Fragment {
         }
         /* TODO Tests for other register information */
         /* TODO Home with Google MapView */
-        String home = binding.etHome.getText().toString();
+        String home = binding.tvHome.getText().toString();
 
         Email email = new Email(this.email);
         Password password = new Password(this.password);

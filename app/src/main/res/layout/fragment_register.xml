@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="fragment"
             type="meet_eat.app.fragment.login.RegisterFragment" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -73,12 +76,12 @@
             android:layout_margin="16dp"
             android:background="@drawable/bg_edittext"
             android:elevation="5dp"
-            android:text="@={fragment.email}"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.email}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/etPassword" />
@@ -91,11 +94,11 @@
             android:background="@drawable/bg_edittext"
             android:elevation="5dp"
             android:hint="@string/password"
-            android:text="@={fragment.password}"
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.password}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/etName" />
@@ -108,11 +111,11 @@
             android:background="@drawable/bg_edittext"
             android:elevation="5dp"
             android:hint="@string/username"
-            android:text="@={fragment.username}"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.username}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/etPhone" />
@@ -125,11 +128,11 @@
             android:background="@drawable/bg_edittext"
             android:elevation="5dp"
             android:hint="@string/phone_number"
-            android:text="@={fragment.phoneNumber}"
             android:inputType="phone"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.phoneNumber}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/tvBirth" />
@@ -143,7 +146,6 @@
             android:clickable="true"
             android:elevation="5dp"
             android:hint="@string/dateformat"
-            android:inputType="date"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -152,23 +154,26 @@
             android:textColorHint="@color/textHint"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/etDescription"
-            app:layout_constraintEnd_toStartOf="@+id/etHome"
+            app:layout_constraintEnd_toStartOf="@+id/tvHome"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/etHome"
+        <TextView
+            android:id="@+id/tvHome"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_margin="16dp"
             android:background="@drawable/bg_edittext"
+            android:clickable="true"
             android:elevation="5dp"
             android:hint="@string/home"
             android:maxLines="1"
             android:paddingLeft="20dp"
+            android:paddingTop="10dp"
             android:paddingRight="20dp"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/etDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -183,10 +188,10 @@
             android:elevation="5dp"
             android:gravity="top|start"
             android:hint="@string/profile_description"
-            android:text="@={fragment.profileDescription}"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.profileDescription}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/btRegister" />
