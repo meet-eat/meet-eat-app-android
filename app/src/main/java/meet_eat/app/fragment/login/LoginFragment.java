@@ -60,10 +60,10 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        /* TODO Exception handling for non-runtime exceptions */
+        // TODO Exception handling for non-runtime exceptions
         loginVM.login(email, password);
 
-        /* Switch to main app with logged in state */
+        // Switch to main app with logged in state
         startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        /* TODO Exception handling for non-runtime exceptions */
+        // TODO Exception handling for non-runtime exceptions
         loginVM.resetPassword(email);
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }
