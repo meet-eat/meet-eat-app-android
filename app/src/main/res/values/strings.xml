@@ -38,4 +38,5 @@
     <string name="bad_email">Ungültige E-Mail.</string>
     <string name="bad_password">Ungültiges Passwort.</string>
     <string name="bad_login">Ungültige Anmeldedaten.</string>
+    <string name="map_api_key">api</string>
 </resources>
