@@ -1,12 +1,12 @@
 package meet_eat.app.fragment.login;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,18 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
@@ -44,7 +39,11 @@ public class RegisterFragment extends Fragment {
 
     private FragmentRegisterBinding binding;
     private RegisterViewModel registerVM;
-    private String email, password, username, phoneNumber, profileDescription;
+    private String email;
+    private String password;
+    private String username;
+    private String phoneNumber;
+    private String profileDescription;
     private LocalDate birthDay;
 
     @Nullable
@@ -59,9 +58,9 @@ public class RegisterFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event -> Navigation.findNavController(binding.getRoot()).popBackStack());
+        binding.ibtBack.setOnClickListener(event ->
+                Navigation.findNavController(binding.getRoot()).popBackStack());
         binding.tvBirth.setOnClickListener(event -> showDatePicker());
-        binding.tvHome.setOnClickListener(event -> showMap());
         binding.btRegister.setOnClickListener(event -> register());
     }
 
@@ -69,28 +68,9 @@ public class RegisterFragment extends Fragment {
         Calendar cal = new GregorianCalendar();
         new DatePickerDialog(getActivity(), (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            binding.tvBirth.setText(birthDay.format(DateTimeFormatter.ofPattern(EUROPEAN_DATE_FORMAT)));
+            binding.tvBirth.setText(birthDay.format(DateTimeFormatter
+                    .ofPattern(EUROPEAN_DATE_FORMAT)));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    private void showMap() {
-        Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_map);
-        dialog.show();
-        MapView map = dialog.findViewById(R.id.mapView);
-        MapsInitializer.initialize(getActivity());
-        map.onCreate(dialog.onSaveInstanceState());
-        map.onResume();
-        map.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                LatLng karlsruhe = new LatLng(49.013282, 8.404402);
-                googleMap.addMarker(new MarkerOptions().position(karlsruhe).title("Karlsruhe"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(karlsruhe));
-                googleMap.getUiSettings().setZoomControlsEnabled(true);
-            }
-        });
     }
 
     private void register() {
@@ -101,22 +81,34 @@ public class RegisterFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
             return;
         }
-        /* TODO Tests for other register information */
-        /* TODO Home with Google MapView */
-        String home = binding.tvHome.getText().toString();
+        // TODO Tests for other register information
+        // TODO Address/Location
+        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), Locale.GERMANY);
+        try {
+            List<Address> f = geocoder
+                    .getFromLocationName(binding.etHome.getText().toString(), 4);
+            if (f.size() > 0) {
+                binding.etHome.setText(f.get(0).getPostalCode());
+                Toast.makeText(getActivity(), f.get(0).getFeatureName() +
+                        f.get(0).getPostalCode(), Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Email email = new Email(this.email);
         Password password = new Password(this.password);
         User user = new User(email, password, birthDay, username, phoneNumber, profileDescription
                 , false);
-        /* TODO user.addPredicate(home); */
+        // TODO user.addPredicate(home);
         registerVM.register(user);
         navigateToLogin();
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToLogin() {
-        Navigation.findNavController(binding.getRoot()).navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
+        Navigation.findNavController(binding.getRoot()).navigate(RegisterFragmentDirections
+                .actionRegisterFragmentToLoginFragment());
     }
 
     public String getEmail() {
