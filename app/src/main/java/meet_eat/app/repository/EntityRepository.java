@@ -57,7 +57,8 @@ public abstract class EntityRepository<T extends Entity> {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
         LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add(RequestHeaderField.TOKEN, toJSON(token));
+        //TODO
+        //headers.add(RequestHeaderField.TOKEN, toJSON(token));
         return headers;
     }
 
