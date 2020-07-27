@@ -23,17 +23,15 @@ public class OfferRepository extends EntityRepository<Offer> {
         super(BASE_URL);
     }
 
-    //TODO
-    /*public Iterable<Offer> getOffers(Page page, Iterable<Predicate<Offer>> predicates,
+    public Iterable<Offer> getOffers(Page page, Iterable<Predicate<Offer>> predicates,
                                      Iterable<Comparator<Offer>> comparators) throws RequestHandlerException {
-        LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add(RequestHeaderField.TOKEN, toJSON(Session.getInstance().getToken()));
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         headers.add(RequestHeaderField.PREDICATES, toJSON(predicates));
         headers.add(RequestHeaderField.COMPARATORS, toJSON(comparators));
         headers.add(RequestHeaderField.PAGE, toJSON(page));
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET, URI.create(BASE_URL));
         return new RequestHandler<Void, Iterable<Offer>>().handle(requestEntity, HttpStatus.OK);
-    }*/
+    }
 
     public Iterable<Offer> getOffersByCreatorId(String identifier) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
