@@ -27,6 +27,13 @@ android {
     dataBinding {
         enabled = true
     }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+    }
 }
 
 dependencies {
@@ -50,6 +57,13 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // Spring Framework
+    implementation 'org.springframework:spring-core:5.2.8.RELEASE'
+    implementation 'org.springframework:spring-web:5.2.8.RELEASE'
+
+    // Fasterxml jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
 
     apply plugin: "androidx.navigation.safeargs"
 }
