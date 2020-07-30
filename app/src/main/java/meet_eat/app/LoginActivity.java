@@ -1,8 +1,8 @@
 package meet_eat.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Holds the fragments {@link meet_eat.app.fragment.login.RegisterFragment RegisterFragment} and

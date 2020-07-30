@@ -1,8 +1,6 @@
 package meet_eat.app.viewmodel.login;
 
 
-import android.widget.Toast;
-
 import androidx.lifecycle.ViewModel;
 
 import meet_eat.app.repository.RequestHandlerException;
@@ -33,7 +31,6 @@ public class LoginViewModel extends ViewModel {
         final Email email = new Email(emailString);
         final Password password = Password.createHashedPassword(passwordString);
         final LoginCredential credential = new LoginCredential(email, password);
-
         session.login(credential);
     }
 
@@ -48,6 +45,7 @@ public class LoginViewModel extends ViewModel {
         if (!Email.isLegalEmailAddress(emailString)) {
             return;
         }
+
         // TODO email as string?
         userRepository.resetPassword(emailString);
     }

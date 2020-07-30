@@ -1,8 +1,8 @@
 package meet_eat.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Represents the main activity of the app, that is active when the user is in the logged in state.

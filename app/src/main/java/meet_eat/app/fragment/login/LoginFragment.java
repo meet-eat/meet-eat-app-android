@@ -29,6 +29,7 @@ import meet_eat.data.entity.user.Password;
  * @see LoginViewModel
  */
 public class LoginFragment extends Fragment {
+
     private FragmentLoginBinding binding;
     private LoginViewModel loginVM;
     private String email, password;
@@ -84,6 +85,7 @@ public class LoginFragment extends Fragment {
             // TODO catch error on reset request
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }
 

@@ -1,9 +1,6 @@
 package meet_eat.app.fragment.login;
 
 import android.app.DatePickerDialog;
-import android.content.res.Resources;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +9,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
@@ -37,8 +30,10 @@ import meet_eat.data.entity.user.User;
  * Manages registration-related information.
  */
 public class RegisterFragment extends Fragment {
-    private static final int MONTH_CORRECTION = 1;
+
+    // TODO Extract EUROPEAN_DATE_FORMAT to strings.xml
     private static final String EUROPEAN_DATE_FORMAT = "dd.MM.uuuu";
+    private static final int MONTH_CORRECTION = 1;
 
     private FragmentRegisterBinding binding;
     private RegisterViewModel registerVM;
@@ -61,15 +56,16 @@ public class RegisterFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event ->
-                Navigation.findNavController(binding.getRoot()).popBackStack());
+        binding.ibtBack.setOnClickListener(event -> Navigation.findNavController(binding.getRoot())
+                .popBackStack());
         binding.tvBirth.setOnClickListener(event -> showDatePicker());
         binding.btRegister.setOnClickListener(event -> register());
     }
 
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth) -> {
+        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth)
+                -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
             binding.tvBirth.setText(birthDay.format(DateTimeFormatter
                     .ofPattern(EUROPEAN_DATE_FORMAT)));
@@ -90,11 +86,12 @@ public class RegisterFragment extends Fragment {
 
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
-        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription
-                , false);
+        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
+                profileDescription, false);
 
         /* TODO Address/Location
-        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration())
+        .get(0);
         Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), locale);
         List<Address> addresses = null;
         try {
@@ -116,6 +113,7 @@ public class RegisterFragment extends Fragment {
             // TODO catch error on user create
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
         navigateToLogin();
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }

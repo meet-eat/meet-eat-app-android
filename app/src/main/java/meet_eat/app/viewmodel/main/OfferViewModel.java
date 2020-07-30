@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import meet_eat.app.fragment.main.offer.OfferListFragment;
 import meet_eat.app.repository.OfferRepository;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
@@ -32,7 +31,6 @@ public class OfferViewModel extends ViewModel {
     private final UserRepository userRepository = new UserRepository();
     private final TagRepository tagRepository = new TagRepository();
     private final Session session = Session.getInstance();
-
     private final Page page = new Page(PAGE_INDEX, PAGE_SIZE);
 
     /**
@@ -64,8 +62,7 @@ public class OfferViewModel extends ViewModel {
      */
     public void updatePredicates(List<Predicate<Offer>> predicateList) throws RequestHandlerException {
         User currentUser = session.getUser();
-        for (Predicate<Offer> predicate : predicateList)
-            currentUser.addPredicate(predicate);
+        for (Predicate<Offer> predicate : predicateList) currentUser.addPredicate(predicate);
         userRepository.updateEntity(currentUser);
     }
 

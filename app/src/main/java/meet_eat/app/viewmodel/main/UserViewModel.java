@@ -39,7 +39,7 @@ public class UserViewModel extends ViewModel {
     /**
      * Sends a report request to the {@link meet_eat.app.repository.UserRepository UserRepository}.
      *
-     * @param user The user that is to be reported.
+     * @param user   The user that is to be reported.
      * @param report The report.
      */
     public void report(User user, Report report) throws RequestHandlerException {
@@ -57,8 +57,8 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
-     *  Sends an update request to the {@link meet_eat.app.repository.UserRepository UserRepository},
-     *  containing the modified user object.
+     * Sends an update request to the {@link meet_eat.app.repository.UserRepository UserRepository},
+     * containing the modified user object.
      *
      * @param user The user object with an updated subscriber list.
      */

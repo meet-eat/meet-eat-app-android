@@ -65,5 +65,7 @@ dependencies {
     // Fasterxml jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
 
+    compile 'com.google.guava:guava:29.0-jre'
+
     apply plugin: "androidx.navigation.safeargs"
 }
