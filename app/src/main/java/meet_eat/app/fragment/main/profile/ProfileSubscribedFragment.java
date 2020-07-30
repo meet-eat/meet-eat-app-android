@@ -29,7 +29,6 @@ public class ProfileSubscribedFragment extends Fragment {
     private UserViewModel userVM;
     private ProfileSubscribedAdapter profileSubscribedAdapter;
     private NavController navController;
-    private UserViewModel userVM;
     private User currentUser;
 
     @Nullable
@@ -55,10 +54,7 @@ public class ProfileSubscribedFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtRemove.setOnClickListener(this::removeSubscribedUser);
         binding.ibtBack.setOnClickListener(event -> navController.popBackStack());
-        binding.clLinearLayoutItem.setClickable(true);
-        binding.clLinearLayoutItem.setOnClickListener(this::navigateToProfileFragment);
     }
 
     private void navigateToProfileFragment(View view) {

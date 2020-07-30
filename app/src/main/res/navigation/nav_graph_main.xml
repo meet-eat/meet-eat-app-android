@@ -33,13 +33,21 @@
             app:destination="@id/offerParticipantsFragment" />
         <action
             android:id="@+id/action_offerDetailedFragment_to_offerContactFragment"
-            app:destination="@id/offerContactFragment" />
+            app:destination="@id/offerContactFragment">
+            <argument
+                android:name="user"
+                app:argType="meet_eat.data.entity.user.User" />
+        </action>
         <action
             android:id="@+id/action_offerDetailedFragment_to_offerEditFragment"
             app:destination="@id/offerEditFragment" />
         <action
             android:id="@+id/action_offerDetailedFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment">
+            <argument
+                android:name="user"
+                app:argType="meet_eat.data.entity.user.User" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/offerContactFragment"
@@ -101,7 +109,11 @@
             app:destination="@id/profileEditFragment" />
         <action
             android:id="@+id/action_profileFragment_to_profileReportFragment"
-            app:destination="@id/profileReportFragment" />
+            app:destination="@id/profileReportFragment">
+            <argument
+                android:name="user"
+                app:argType="meet_eat.data.entity.user.User" />
+        </action>
         <action
             android:id="@+id/action_profileFragment_to_profileSubscribedFragment"
             app:destination="@id/profileSubscribedFragment" />

@@ -5,7 +5,7 @@
 
         <variable
             name="fragment"
-            type="meet_eat.app.fragment.main.profile.ProfileFragment" />
+            type="meet_eat.app.fragment.main.offer.OfferDetailedFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

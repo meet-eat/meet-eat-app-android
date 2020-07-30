@@ -23,6 +23,7 @@ import meet_eat.data.entity.Offer;
 public class OfferListFragment extends Fragment {
 
     private FragmentOfferListBinding binding;
+    private NavController navController;
     private OfferViewModel offerVM;
     private OfferListAdapter offerListAdapter;
 
@@ -33,6 +34,7 @@ public class OfferListFragment extends Fragment {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        navController = Navigation.findNavController(binding.getRoot());
         binding.rvOfferList.setAdapter(offerListAdapter);
         binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
@@ -47,12 +49,12 @@ public class OfferListFragment extends Fragment {
     }
 
     private void navigateToProfileSubscribed() {
-        Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
+        navController.navigate(OfferListFragmentDirections
                 .actionOfferListFragmentToProfileSubscribedFragment());
     }
 
     private void navigateToOfferEdit() {
-        Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
+        navController.navigate(OfferListFragmentDirections
                 .actionOfferListFragmentToOfferEditFragment());
     }
 
