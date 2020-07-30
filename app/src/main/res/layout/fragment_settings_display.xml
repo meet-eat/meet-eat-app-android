@@ -1,82 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgFragment">
+<layout>
 
-    <ImageButton
-        android:id="@+id/ibtBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/arrow_back"
-        android:tint="@color/bgButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/apperence"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
-        app:layout_constraintStart_toEndOf="@+id/ibtBack"
-        app:layout_constraintTop_toTopOf="@+id/ibtBack" />
+        <variable
+            name="fragment"
+            type="meet_eat.app.fragment.main.settings.SettingsDisplayFragment" />
+    </data>
 
-    <RadioGroup
-        android:id="@+id/rgRadioGroup"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibtBack">
+        android:layout_height="match_parent"
+        android:background="@color/bgFragment">
 
-        <RadioButton
-            android:id="@+id/rbStandard"
+        <ImageButton
+            android:id="@+id/ibtBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/arrow_back"
+            android:tint="@color/bgButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSettingsDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/apperence"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
+            app:layout_constraintStart_toEndOf="@+id/ibtBack"
+            app:layout_constraintTop_toTopOf="@+id/ibtBack" />
+
+        <RadioGroup
+            android:id="@+id/rgSettingsDisplayRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/symbol"
-            android:text="@string/standard"
-            android:textColor="@android:color/white" />
+            android:layout_margin="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
 
-        <RadioButton
-            android:id="@+id/rbBright"
-            android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/rbSettingsDisplayStandard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/symbol"
+                android:text="@string/standard"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/rbSettingsDisplayBright"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/symbol"
+                android:text="@string/bright"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/rbSettingsDisplayDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:text="@string/dark"
+                android:textColor="@android:color/white" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btSettingsDisplaySave"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/symbol"
-            android:text="@string/bright"
-            android:textColor="@android:color/white" />
-
-        <RadioButton
-            android:id="@+id/rbDark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:buttonTint="@color/colorPrimary"
-            android:text="@string/dark"
-            android:textColor="@android:color/white" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:text="@string/save"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:text="@string/save"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

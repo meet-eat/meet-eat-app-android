@@ -1,127 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgFragment">
+<layout>
 
-    <ImageButton
-        android:id="@+id/ibtBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/arrow_back"
-        android:tint="@color/bgButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/settings"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
-        app:layout_constraintStart_toEndOf="@+id/ibtBack"
-        app:layout_constraintTop_toTopOf="@+id/ibtBack" />
+        <variable
+            name="fragment"
+            type="meet_eat.app.fragment.main.settings.SettingsFragment" />
+    </data>
 
-    <TextView
-        android:id="@+id/tvNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:elevation="5dp"
-        android:focusable="true"
-        android:text="@string/notification"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSettings" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgFragment">
 
-    <Switch
-        android:id="@+id/swNotification"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:checked="true"
-        android:drawableTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNotification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvNotification" />
+        <ImageButton
+            android:id="@+id/ibtBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/arrow_back"
+            android:tint="@color/bgButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvAppearance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:elevation="5dp"
-        android:focusable="true"
-        android:text="@string/apperence"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNotification" />
+        <TextView
+            android:id="@+id/tvSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/settings"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
+            app:layout_constraintStart_toEndOf="@+id/ibtBack"
+            app:layout_constraintTop_toTopOf="@+id/ibtBack" />
 
-    <TextView
-        android:id="@+id/tvAbout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/about"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/ivInfo"
-        app:layout_constraintStart_toEndOf="@+id/ivInfo"
-        app:layout_constraintTop_toTopOf="@+id/ivInfo" />
+        <TextView
+            android:id="@+id/tvSettingsNotificationMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:focusable="true"
+            android:text="@string/notification"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSettings" />
 
-    <ImageView
-        android:id="@+id/ivInfo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/info"
-        android:tint="@color/symbol"
-        app:layout_constraintBottom_toTopOf="@+id/btDelete"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Switch
+            android:id="@+id/swSettingsNotification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:checked="true"
+            android:drawableTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSettingsNotificationMenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvSettingsNotificationMenu" />
 
-    <Button
-        android:id="@+id/btDelete"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:text="@string/delete_profile"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btLogout"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvSettingsAppearanceMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:focusable="true"
+            android:text="@string/apperence"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSettingsNotificationMenu" />
 
-    <Button
-        android:id="@+id/btLogout"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:text="@string/logout"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btDelete" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvSettingsAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/about"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/ivSettingsInfo"
+            app:layout_constraintStart_toEndOf="@+id/ivSettingsInfo"
+            app:layout_constraintTop_toTopOf="@+id/ivSettingsInfo" />
+
+        <ImageView
+            android:id="@+id/ivSettingsInfo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/info"
+            android:tint="@color/symbol"
+            app:layout_constraintBottom_toTopOf="@+id/btSettingsDelete"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btSettingsDelete"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:text="@string/delete_profile"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btSettingsLogout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btSettingsLogout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:text="@string/logout"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btSettingsDelete" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
