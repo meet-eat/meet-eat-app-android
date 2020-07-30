@@ -8,15 +8,26 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import meet_eat.app.R;
+import meet_eat.app.viewmodel.main.UserViewModel;
 
 public class ProfileReportFragment extends Fragment {
+
+    private FragmentProfileReportBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        binding = FragmentProfileReportBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
+        userVM = new ViewModelProvider(this).get(UserViewModel.class);
+        setButtonOnClickListener();
+        return binding.getRoot();
+    }
+
+    private void setButtonOnClickListener() {
     }
 }
