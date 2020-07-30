@@ -1,11 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/settingsFragment">
+    app:startDestination="@id/navigationDrawerFragment">
     <fragment
         android:id="@+id/settingsFragment"
         android:name="meet_eat.app.fragment.main.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsDeleteProfileFragment"
+            app:destination="@id/settingsDeleteProfileFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_displayFragment"
+            app:destination="@id/displayFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/offerEditFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferEditFragment"
+        android:label="OfferEditFragment" />
+    <fragment
+        android:id="@+id/offerDetailedFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferDetailedFragment"
+        android:label="OfferDetailedFragment" >
+        <action
+            android:id="@+id/action_offerDetailedFragment_to_offerReportFragment"
+            app:destination="@id/offerReportFragment" />
+        <action
+            android:id="@+id/action_offerDetailedFragment_to_offerParticipantsFragment"
+            app:destination="@id/offerParticipantsFragment" />
+        <action
+            android:id="@+id/action_offerDetailedFragment_to_offerContactFragment"
+            app:destination="@id/offerContactFragment" />
+        <action
+            android:id="@+id/action_offerDetailedFragment_to_offerEditFragment"
+            app:destination="@id/offerEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/offerContactFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferContactFragment"
+        android:label="OfferContactFragment" />
+    <fragment
+        android:id="@+id/offerFilterFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferFilterFragment"
+        android:label="OfferFilterFragment" />
+    <fragment
+        android:id="@+id/offerParticipantsFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferParticipantsFragment"
+        android:label="OfferParticipantsFragment" />
+    <fragment
+        android:id="@+id/offerReportFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferReportFragment"
+        android:label="OfferReportFragment" />
+    <fragment
+        android:id="@+id/navigationDrawerFragment"
+        android:name="meet_eat.app.fragment.main.NavigationDrawerFragment"
+        android:label="NavigationDrawerFragment" >
+        <action
+            android:id="@+id/action_navigationDrawerFragment_to_offerFilterFragment"
+            app:destination="@id/offerFilterFragment" />
+        <action
+            android:id="@+id/action_navigationDrawerFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_navigationDrawerFragment_to_offerListFragment"
+            app:destination="@id/offerListFragment" />
+        <action
+            android:id="@+id/action_navigationDrawerFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/offerListFragment"
+        android:name="meet_eat.app.fragment.main.offer.OfferListFragment"
+        android:label="OfferListFragment" >
+        <action
+            android:id="@+id/action_offerListFragment_to_offerDetailedFragment"
+            app:destination="@id/offerDetailedFragment" />
+        <action
+            android:id="@+id/action_offerListFragment_to_offerEditFragment"
+            app:destination="@id/offerEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="meet_eat.app.fragment.main.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_profileEditFragment"
+            app:destination="@id/profileEditFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileReportFragment"
+            app:destination="@id/profileReportFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileSubscribedFragment"
+            app:destination="@id/profileSubscribedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsDeleteProfileFragment"
+        android:name="meet_eat.app.fragment.main.settings.SettingsDeleteProfileFragment"
+        android:label="SettingsDeleteProfileFragment" />
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="meet_eat.app.fragment.main.profile.ProfileEditFragment"
+        android:label="ProfileEditFragment" />
+    <fragment
+        android:id="@+id/profileReportFragment"
+        android:name="meet_eat.app.fragment.main.profile.ProfileReportFragment"
+        android:label="ProfileReportFragment" />
+    <fragment
+        android:id="@+id/rateGuestsFragment"
+        android:name="meet_eat.app.fragment.main.rating.RateGuestsFragment"
+        android:label="RateGuestsFragment" >
+        <action
+            android:id="@+id/action_rateGuestsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateHostFragment"
+        android:name="meet_eat.app.fragment.main.rating.RateHostFragment"
+        android:label="RateHostFragment" >
+        <action
+            android:id="@+id/action_rateHostFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSubscribedFragment"
+        android:name="meet_eat.app.fragment.main.profile.ProfileSubscribedFragment"
+        android:label="ProfileSubscribedFragment" />
+    <fragment
+        android:id="@+id/displayFragment"
+        android:name="meet_eat.app.fragment.main.settings.DisplayFragment"
+        android:label="DisplayFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="meet_eat.app.fragment.main.settings.NotificationFragment"
+        android:label="NotificationFragment" />
 </navigation>
