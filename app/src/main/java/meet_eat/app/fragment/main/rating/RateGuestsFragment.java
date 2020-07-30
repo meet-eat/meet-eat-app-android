@@ -39,7 +39,7 @@ public class RateGuestsFragment extends Fragment {
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
         binding.rvRateGuests.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        rateGuestsAdapter = new rateGuestsAdapter(userVM, new ArrayList<User>());
+        rateGuestsAdapter = new RateGuestsAdapter(userVM, new ArrayList<User>());
         navController = Navigation.findNavController(binding.getRoot());
         setButtonOnClickListener();
         return binding.getRoot();
