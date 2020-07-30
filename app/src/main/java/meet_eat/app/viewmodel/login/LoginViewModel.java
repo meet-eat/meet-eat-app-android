@@ -18,6 +18,7 @@ import meet_eat.data.entity.user.Password;
 public class LoginViewModel extends ViewModel {
 
     private final UserRepository userRepository = new UserRepository();
+    private final Session session = Session.getInstance();
 
     /**
      * Check the parameters for semantic correctness
@@ -33,7 +34,7 @@ public class LoginViewModel extends ViewModel {
         final Password password = Password.createHashedPassword(passwordString);
         final LoginCredential credential = new LoginCredential(email, password);
 
-        Session.getInstance().login(credential);
+        session.login(credential);
     }
 
     /**
