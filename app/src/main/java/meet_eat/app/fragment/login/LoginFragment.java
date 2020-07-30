@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentLoginBinding;
+import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -60,8 +61,12 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        // TODO Exception handling for non-runtime exceptions
-        loginVM.login(email, password);
+        try {
+            loginVM.login(email, password);
+        } catch (RequestHandlerException e) {
+            // TODO catch error on login
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
         // Switch to main app with logged in state
         startActivity(new Intent(getActivity(), MainActivity.class));
@@ -73,8 +78,12 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        // TODO Exception handling for non-runtime exceptions
-        loginVM.resetPassword(email);
+        try {
+            loginVM.resetPassword(email);
+        } catch (RequestHandlerException e) {
+            // TODO catch error on reset request
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }
 

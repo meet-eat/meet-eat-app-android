@@ -1,6 +1,8 @@
 package meet_eat.app.viewmodel.login;
 
 
+import android.widget.Toast;
+
 import androidx.lifecycle.ViewModel;
 
 import meet_eat.app.repository.RequestHandlerException;
@@ -15,6 +17,8 @@ import meet_eat.data.entity.user.Password;
  */
 public class LoginViewModel extends ViewModel {
 
+    private final UserRepository userRepository = new UserRepository();
+
     /**
      * Check the parameters for semantic correctness
      * and sends a login request to the
@@ -23,17 +27,13 @@ public class LoginViewModel extends ViewModel {
      * @param emailString    The email address of the user.
      * @param passwordString The password of the user.
      */
-    public void login(String emailString, String passwordString) {
+    public void login(String emailString, String passwordString) throws RequestHandlerException {
         // TODO Exception handling for non-runtime exceptions
-        Email email = new Email(emailString);
-        Password password = Password.createHashedPassword(passwordString);
-        LoginCredential credential = new LoginCredential(email, password);
-        try {
-            Session.getInstance().login(credential);
-        } catch (RequestHandlerException e) {
-            //TODO
-        }
-        // TODO Session login: session.login(credential);
+        final Email email = new Email(emailString);
+        final Password password = Password.createHashedPassword(passwordString);
+        final LoginCredential credential = new LoginCredential(email, password);
+
+        Session.getInstance().login(credential);
     }
 
     /**
@@ -43,14 +43,11 @@ public class LoginViewModel extends ViewModel {
      *
      * @param emailString The email address of the user.
      */
-    public void resetPassword(String emailString) throws IllegalArgumentException {
-        // TODO Exception handling for non-runtime exceptions
-        Email email = new Email(emailString);
-        try {
-            new UserRepository().resetPassword(email.toString());
-        } catch (RequestHandlerException e) {
-            //TODO
+    public void resetPassword(String emailString) throws RequestHandlerException {
+        if (!Email.isLegalEmailAddress(emailString)) {
+            return;
         }
-        // TODO UserRepository resetPassword: UserRepository.resetPassword(email);
+        // TODO email as string?
+        userRepository.resetPassword(emailString);
     }
 }
