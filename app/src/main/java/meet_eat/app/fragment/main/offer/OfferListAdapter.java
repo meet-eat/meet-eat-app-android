@@ -2,20 +2,27 @@ package meet_eat.app.fragment.main.offer;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferCardBinding;
+import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
+    private OfferViewModel offerVM;
     private ArrayList<Offer> currentOffers;
 
-    public OfferListAdapter(ArrayList<Offer> offers) {
+    public OfferListAdapter(OfferViewModel offerVM, ArrayList<Offer> offers) {
+        this.offerVM = offerVM;
         currentOffers = offers;
     }
 
@@ -53,6 +60,35 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         public void setData(Offer offer) {
             binding.tvOfferTitle.setText(offer.getName());
+            binding.tvDescription.setText(offer.getDescription());
+            binding.tvOfferDate.setText(offer.getDateTime().toString());
+            binding.tvPrice.setText(String.valueOf(offer.getPrice()) + binding.getRoot()
+                    .getResources().getString(R.string.currency));
+            // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
+            binding.tvRating.setText(String.valueOf(offer.getCreator().getRatings()));
+            // TODO binding.ivOfferPicture.setImageResource(...);
+            binding.ivOfferPicture.setOnClickListener(event -> {
+                Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
+                        .actionOfferListFragmentToOfferDetailedFragment());
+            });
+
+            if (offerVM.isBookmarked(offer))
+                binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+
+            binding.ibtBookmark.setOnClickListener(event -> {
+                try {
+                    if (offerVM.isBookmarked(offer)) {
+                        offerVM.removeBookmark(offer);
+                        binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.symbol));
+                    } else {
+                        offerVM.addBookmark(offer);
+                        binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+                    }
+                } catch (RequestHandlerException e) {
+                    Toast.makeText(binding.getRoot().getContext(), e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }

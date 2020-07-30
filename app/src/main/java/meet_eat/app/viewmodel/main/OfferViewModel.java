@@ -178,10 +178,38 @@ public class OfferViewModel extends ViewModel {
      *
      * @param offer The offer to be added to the users /LIST/ of bookmarks.
      */
-    public void bookmark(Offer offer) throws RequestHandlerException {
+    public void addBookmark(Offer offer) throws RequestHandlerException {
         User currentUser = session.getUser();
-        currentUser.addBookmark(offer);
-        userRepository.updateEntity(currentUser);
+
+        if (!isBookmarked(offer)) {
+            currentUser.addBookmark(offer);
+            userRepository.updateEntity(currentUser);
+        }
+    }
+
+    /**
+     * Sends a user update request to the
+     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     *
+     * @param offer The offer to be added to the users /LIST/ of bookmarks.
+     */
+    public void removeBookmark(Offer offer) throws RequestHandlerException {
+        User currentUser = session.getUser();
+
+        if (isBookmarked(offer)) {
+            currentUser.removeBookmark(offer);
+            userRepository.updateEntity(currentUser);
+        }
+    }
+
+    /**
+     * Checks if offer is already bookmarked by user.
+     *
+     * @param offer The offer to be checked.
+     * @return true if the offer is already bookmarked, else false.
+     */
+    public boolean isBookmarked(Offer offer) {
+        return session.getUser().getBookmarks().contains(offer);
     }
 
     /**

@@ -15,7 +15,6 @@
         android:background="@color/bgFragment">
 
         <ImageView
-            android:id="@+id/ivBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -24,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/ibtCreate"
+            android:id="@+id/ibtOfferListCreate"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="16dp"
@@ -37,22 +36,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageButton
-            android:id="@+id/ibtEdit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <Button
+            android:id="@+id/ibtOfferListEdit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
+            android:background="@drawable/bg_button"
             android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/edit"
-            android:tint="@color/symbol"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="@string/edit_subscriptions"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/ibtOfferListCreate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ibtOfferListCreate" />
 
         <ScrollView
-            android:id="@+id/svScrollView"
             android:elevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -28,13 +28,13 @@ public class OfferListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        offerListAdapter = new OfferListAdapter(new ArrayList<Offer>());
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         binding.rvOfferList.setAdapter(offerListAdapter);
         binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
+        offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<Offer>());
         setButtonOnClickListener();
         return binding.getRoot();
     }
