@@ -10,4 +10,6 @@
     <color name="bgButton">#FFCF30</color>
     <color name="symbol">#80FFFFFF</color>
     <color name="rating">#FFFF00</color>
+
+    <color name="black">#000000</color>
 </resources>
