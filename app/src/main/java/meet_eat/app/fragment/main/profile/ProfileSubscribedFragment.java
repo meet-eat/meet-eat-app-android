@@ -13,6 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import java.util.Set;
+
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
@@ -22,6 +28,9 @@ public class ProfileSubscribedFragment extends Fragment {
     private FragmentProfileSubscribedBinding binding;
     private UserViewModel userVM;
     private ProfileSubscribedAdapter profileSubscribedAdapter;
+    private NavController navController;
+    private UserViewModel userVM;
+    private User currentUser;
 
     @Nullable
     @Override
@@ -34,10 +43,31 @@ public class ProfileSubscribedFragment extends Fragment {
         binding.rvProfileSubscriptions.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
+        navController = Navigation.findNavController(binding.getRoot());
+        displaySubscriberList();
         setButtonOnClickListener();
         return binding.getRoot();
     }
 
+    private void displaySubscriberList() {
+        Set<User> subscribers = currentUser.getSubscriptions();
+        // TODO: display sub list
+    }
+
     private void setButtonOnClickListener() {
+        binding.ibtRemove.setOnClickListener(this::removeSubscribedUser);
+        binding.ibtBack.setOnClickListener(event -> navController.popBackStack());
+        binding.clLinearLayoutItem.setClickable(true);
+        binding.clLinearLayoutItem.setOnClickListener(this::navigateToProfileFragment);
+    }
+
+    private void navigateToProfileFragment(View view) {
+        //TODO navController.navigate(ProfileSubscribedFragmentDirections
+        //        .actionProfileSubscribedFragmentToProfileFragment(view.getUser()));
+    }
+
+    private void removeSubscribedUser(View view) {
+        // TODO remove sub from list in view
+        // TODO currentUser.removeSubscriptions(view.getUser());
     }
 }

@@ -130,7 +130,15 @@
     <fragment
         android:id="@+id/profileSubscribedFragment"
         android:name="meet_eat.app.fragment.main.profile.ProfileSubscribedFragment"
-        android:label="ProfileSubscribedFragment"></fragment>
+        android:label="ProfileSubscribedFragment">
+        <action
+            android:id="@+id/action_profileSubscribedFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+            <argument
+                android:name="userDestination"
+                app:argType="meet_eat.data.entity.user.User" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/displayFragment"
         android:name="meet_eat.app.fragment.main.settings.DisplayFragment"
