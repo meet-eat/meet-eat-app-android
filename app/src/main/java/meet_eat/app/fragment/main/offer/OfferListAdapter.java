@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,16 +74,16 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             });
 
             if (offerVM.isBookmarked(offer))
-                binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
 
             binding.ibtOfferCardBookmark.setOnClickListener(event -> {
                 try {
                     if (offerVM.isBookmarked(offer)) {
                         offerVM.removeBookmark(offer);
-                        binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.symbol));
+                        binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol));
                     } else {
                         offerVM.addBookmark(offer);
-                        binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+                        binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
                     }
                 } catch (RequestHandlerException e) {
                     Toast.makeText(binding.getRoot().getContext(), e.getMessage(),

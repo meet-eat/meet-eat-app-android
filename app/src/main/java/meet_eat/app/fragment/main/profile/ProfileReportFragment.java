@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import meet_eat.app.R;
+import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.viewmodel.main.UserViewModel;
 
 public class ProfileReportFragment extends Fragment {
 
     private FragmentProfileReportBinding binding;
+    private UserViewModel userVM;
 
     @Nullable
     @Override
