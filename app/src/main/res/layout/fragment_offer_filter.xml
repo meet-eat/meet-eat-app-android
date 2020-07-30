@@ -1,6 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgFragment">
 
+    <ImageButton
+        android:id="@+id/ibtBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:elevation="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/arrow_back"
+        android:tint="@color/bgButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFilterAndSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/filter_and_sort"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
+        app:layout_constraintStart_toEndOf="@+id/ibtBack"
+        app:layout_constraintTop_toTopOf="@+id/ibtBack" />
+
+    <TextView
+        android:id="@+id/tvSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/sort"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtBack" />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvSort"
+        app:layout_constraintTop_toTopOf="@+id/tvSort" />
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/filter"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSort" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/date_time"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFilter" />
+
+    <TextView
+        android:id="@+id/tvDateMin"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/date_time_min"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+        app:layout_constraintEnd_toStartOf="@+id/tvDateMax"
+        app:layout_constraintTop_toTopOf="@+id/tvTime" />
+
+    <TextView
+        android:id="@+id/tvDateMax"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/date_time_max"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDateMin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvDateMin" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/price"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateMin" />
+
+    <EditText
+        android:id="@+id/etPriceMin"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/min"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPrice"
+        app:layout_constraintEnd_toStartOf="@+id/etPriceMax"
+        app:layout_constraintTop_toTopOf="@+id/tvPrice" />
+
+    <EditText
+        android:id="@+id/etPriceMax"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/max"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etPriceMin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etPriceMin" />
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/distance"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPriceMin" />
+
+    <EditText
+        android:id="@+id/etDistanceMin"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/min"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDistance"
+        app:layout_constraintEnd_toStartOf="@+id/etDistanceMax"
+        app:layout_constraintTop_toTopOf="@+id/tvDistance" />
+
+    <EditText
+        android:id="@+id/etDistanceMax"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/max"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etDistanceMin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etDistanceMin" />
+
+    <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/city"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDistanceMin" />
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="256dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/city"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvCity" />
+
+    <TextView
+        android:id="@+id/tvParticipants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/participants"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCity" />
+
+    <EditText
+        android:id="@+id/etParticipantsMin"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/min"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvParticipants"
+        app:layout_constraintEnd_toStartOf="@+id/etParticipantsMax"
+        app:layout_constraintTop_toTopOf="@+id/tvParticipants" />
+
+    <EditText
+        android:id="@+id/etParticipantsMax"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/max"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etParticipantsMin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etParticipantsMin" />
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="5dp"
+        android:text="@string/rating"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etParticipantsMin" />
+
+    <EditText
+        android:id="@+id/etRatingMin"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/min"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+        app:layout_constraintEnd_toStartOf="@+id/etRatingMax"
+        app:layout_constraintTop_toTopOf="@+id/tvRating" />
+
+    <EditText
+        android:id="@+id/etRatingMax"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/max"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etRatingMin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etRatingMin" />
+
+    <Button
+        android:id="@+id/btAddTag"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_tag"
+        android:elevation="5dp"
+        android:text="@string/add_tag"
+        android:textColor="@color/textHint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRatingMin" />
+
+    <TextView
+        android:id="@+id/tvTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_tag"
+        android:elevation="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/tag"
+        android:textColor="@color/textHint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btAddTag" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_button"
+        android:elevation="5dp"
+        android:text="@string/save"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

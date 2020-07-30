@@ -50,4 +50,21 @@
     <string name="standard">Standard</string>
     <string name="bright">Hell</string>
     <string name="dark">Dunkel</string>
+    <string name="report">Melden</string>
+    <string name="filter_and_sort">Filtern und Sortieren</string>
+    <string name="report_info">Benutzer oder Angebot</string>
+    <string name="report_message">Warum möchtest du den Benutzer oder das Angebot melden?</string>
+    <string name="sort">Sortieren nach</string>
+    <string name="filter">Filter</string>
+    <string name="rating">Bewertung</string>
+    <string name="date_time_min">frühestens</string>
+    <string name="date_time_max">spätestens</string>
+    <string name="min">min</string>
+    <string name="max">max</string>
+    <string name="contact_info">Benutzer</string>
+    <string name="contactRequest">Kontaktanfrage</string>
+    <string name="contact_text">Der Benutzer fragt deine Kontaktdaten an. Wähle aus, welche du ihm schicken möchtest.</string>
+    <string name="contact_accept">Senden</string>
+    <string name="contact_decline">Ablehnen</string>
+    <string name="delete_profile_info">Möchtest du dein Profil wirklich löschen? Alle Informationen werden gelöscht und können nicht wieder hergestellt werden. Bitte bestätige die Anfrage mit deinem Passwort.</string>
 </resources>
