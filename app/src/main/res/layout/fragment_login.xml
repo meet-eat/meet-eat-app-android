@@ -15,7 +15,6 @@
         android:background="@color/bgFragment">
 
         <ImageView
-            android:id="@+id/ivBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -24,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/etLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -38,10 +37,10 @@
             android:text="@={fragment.email}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword" />
+            app:layout_constraintBottom_toTopOf="@+id/etLoginPassword" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -55,10 +54,10 @@
             android:text="@={fragment.password}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/tvReset" />
+            app:layout_constraintBottom_toTopOf="@+id/tvLoginReset" />
 
         <TextView
-            android:id="@+id/tvReset"
+            android:id="@+id/tvLoginReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -67,7 +66,7 @@
             android:focusable="true"
             android:text="@string/reset_password"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/btRegister"
+            app:layout_constraintBottom_toTopOf="@+id/btLoginRegister"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
@@ -80,12 +79,12 @@
             android:text="@string/login"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btRegister"
+            app:layout_constraintEnd_toStartOf="@+id/btLoginRegister"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btRegister"
+            android:id="@+id/btLoginRegister"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

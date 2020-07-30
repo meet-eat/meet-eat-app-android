@@ -46,9 +46,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.btRegister.setOnClickListener(event -> navigateToRegister());
+        binding.btLoginRegister.setOnClickListener(event -> navigateToRegister());
         binding.btLogin.setOnClickListener(event -> login());
-        binding.tvReset.setOnClickListener(event -> reset());
+        binding.tvLoginReset.setOnClickListener(event -> reset());
     }
 
     private void navigateToRegister() {

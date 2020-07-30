@@ -15,7 +15,6 @@
         android:background="@color/bgFragment">
 
         <ImageView
-            android:id="@+id/ivBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -38,7 +37,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
-            android:id="@+id/frameLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -48,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ivProfile"
+                android:id="@+id/ivRegisterProfile"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:adjustViewBounds="true"
@@ -57,7 +55,7 @@
                 android:src="@drawable/profilestd" />
 
             <ImageButton
-                android:id="@+id/ibtAddAvatar"
+                android:id="@+id/ibtRegisterAddAvatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom|right"
@@ -70,7 +68,7 @@
         </FrameLayout>
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/etRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -84,10 +82,10 @@
             android:text="@={fragment.email}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword" />
+            app:layout_constraintBottom_toTopOf="@+id/etRegisterPassword" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -101,10 +99,10 @@
             android:text="@={fragment.password}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/etName" />
+            app:layout_constraintBottom_toTopOf="@+id/etRegisterUsername" />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/etRegisterUsername"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -118,10 +116,10 @@
             android:text="@={fragment.username}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/etPhone" />
+            app:layout_constraintBottom_toTopOf="@+id/etRegisterPhone" />
 
         <EditText
-            android:id="@+id/etPhone"
+            android:id="@+id/etRegisterPhone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -135,10 +133,10 @@
             android:text="@={fragment.phoneNumber}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintBottom_toTopOf="@+id/tvBirth" />
+            app:layout_constraintBottom_toTopOf="@+id/tvRegisterBirthdate" />
 
         <TextView
-            android:id="@+id/tvBirth"
+            android:id="@+id/tvRegisterBirthdate"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -153,13 +151,13 @@
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/etDescription"
+            app:layout_constraintBottom_toTopOf="@+id/etRegisterDescription"
             app:layout_constraintEnd_toStartOf="@+id/etHome"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/etHome"
+            android:id="@+id/etRegisterHome"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_margin="16dp"
@@ -173,13 +171,13 @@
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/etDescription"
+            app:layout_constraintBottom_toTopOf="@+id/etRegisterDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvBirth" />
+            app:layout_constraintStart_toEndOf="@+id/tvRegisterBirthdate" />
 
         <EditText
-            android:id="@+id/etDescription"
+            android:id="@+id/etRegisterDescription"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_margin="16dp"
