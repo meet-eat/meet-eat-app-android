@@ -18,6 +18,8 @@ import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.Offer;
 
+import static android.view.View.INVISIBLE;
+
 public class OfferDetailedFragment extends Fragment {
 
     private FragmentOfferDetailedBinding binding;
@@ -44,8 +46,30 @@ public class OfferDetailedFragment extends Fragment {
         return binding.getRoot();
     }
 
-
     private void updateUI() {
+        if (offer.getCreator().equals(userVM.getCurrentUser())) {
+            binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
+            binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
+            binding.btOfferDetailedParticipate.setClickable(false);
+            binding.btOfferDetailedCancel.setVisibility(INVISIBLE);
+            binding.btOfferDetailedCancel.setClickable(false);
+            binding.btOfferDetailedContact.setVisibility(INVISIBLE);
+            binding.btOfferDetailedContact.setClickable(false);
+        } else {
+            if (!offer.getParticipants().contains(userVM.getCurrentUser())
+                    && offer.getMaxParticipants() > offer.getParticipants().size()) {
+                binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
+                binding.btOfferDetailedParticipate.setClickable(false);
+            }
+            if (!offer.getParticipants().contains(userVM.getCurrentUser())) {
+                binding.btOfferDetailedCancel.setVisibility(INVISIBLE);
+                binding.btOfferDetailedCancel.setClickable(false);
+            }
+            binding.btOfferDetailedParticipants.setVisibility(INVISIBLE);
+            binding.btOfferDetailedParticipants.setClickable(false);
+            binding.ibtOfferDetailedEdit.setVisibility(INVISIBLE);
+            binding.ibtOfferDetailedEdit.setClickable(false);
+        }
     }
 
     private void setButtonOnClickListener() {
@@ -63,7 +87,7 @@ public class OfferDetailedFragment extends Fragment {
 
     private void navigateToOfferContact() {
         navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToOfferContactFragment());
+                .actionOfferDetailedFragmentToOfferContactFragment(offer.getCreator()));
     }
 
     private void cancelOffer() {
