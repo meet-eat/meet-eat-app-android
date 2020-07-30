@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="meet_eat.app.fragment.main.settings.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="SettingsFragment">
         <action
             android:id="@+id/action_settingsFragment_to_settingsDeleteProfileFragment"
             app:destination="@id/settingsDeleteProfileFragment" />
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/offerDetailedFragment"
         android:name="meet_eat.app.fragment.main.offer.OfferDetailedFragment"
-        android:label="OfferDetailedFragment" >
+        android:label="OfferDetailedFragment">
         <action
             android:id="@+id/action_offerDetailedFragment_to_offerReportFragment"
             app:destination="@id/offerReportFragment" />
@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/navigationDrawerFragment"
         android:name="meet_eat.app.fragment.main.NavigationDrawerFragment"
-        android:label="NavigationDrawerFragment" >
+        android:label="NavigationDrawerFragment">
         <action
             android:id="@+id/action_navigationDrawerFragment_to_offerFilterFragment"
             app:destination="@id/offerFilterFragment" />
@@ -74,18 +74,21 @@
     <fragment
         android:id="@+id/offerListFragment"
         android:name="meet_eat.app.fragment.main.offer.OfferListFragment"
-        android:label="OfferListFragment" >
+        android:label="OfferListFragment">
         <action
             android:id="@+id/action_offerListFragment_to_offerDetailedFragment"
             app:destination="@id/offerDetailedFragment" />
         <action
             android:id="@+id/action_offerListFragment_to_offerEditFragment"
             app:destination="@id/offerEditFragment" />
+        <action
+            android:id="@+id/action_offerListFragment_to_profileSubscribedFragment"
+            app:destination="@id/profileSubscribedFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="meet_eat.app.fragment.main.profile.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_profileEditFragment"
             app:destination="@id/profileEditFragment" />
@@ -111,7 +114,7 @@
     <fragment
         android:id="@+id/rateGuestsFragment"
         android:name="meet_eat.app.fragment.main.rating.RateGuestsFragment"
-        android:label="RateGuestsFragment" >
+        android:label="RateGuestsFragment">
         <action
             android:id="@+id/action_rateGuestsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -119,7 +122,7 @@
     <fragment
         android:id="@+id/rateHostFragment"
         android:name="meet_eat.app.fragment.main.rating.RateHostFragment"
-        android:label="RateHostFragment" >
+        android:label="RateHostFragment">
         <action
             android:id="@+id/action_rateHostFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -127,7 +130,7 @@
     <fragment
         android:id="@+id/profileSubscribedFragment"
         android:name="meet_eat.app.fragment.main.profile.ProfileSubscribedFragment"
-        android:label="ProfileSubscribedFragment" />
+        android:label="ProfileSubscribedFragment"></fragment>
     <fragment
         android:id="@+id/displayFragment"
         android:name="meet_eat.app.fragment.main.settings.DisplayFragment"
