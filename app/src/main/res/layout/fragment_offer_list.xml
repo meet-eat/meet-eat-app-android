@@ -1,158 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/ivBackground"
+    <data>
+
+        <variable
+            name="fragment"
+            type="meet_eat.app.fragment.main.offer.OfferListFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/bgmain"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/bgFragment">
 
-    <ImageButton
-        android:id="@+id/ibtCreate"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/add"
-        android:tint="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ScrollView
-        android:id="@+id/svScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/llLinearLayout"
+        <ImageView
+            android:id="@+id/ivBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bgmain"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clOfferList"
+        <ImageButton
+            android:id="@+id/ibtCreate"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/add"
+            android:tint="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibtEdit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit"
+            android:tint="@color/symbol"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ScrollView
+            android:id="@+id/svScrollView"
+            android:elevation="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llLinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_margin="16dp"
-                android:elevation="6dp">
-
-                <ImageView
-                    android:id="@+id/ivOfferPicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/bg_button"
-                    android:scaleType="fitCenter"
-                    android:src="@android:color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/ibtBookmark"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/bookmark"
-                    android:tint="@color/symbol"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvOfferTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/title"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferPicture"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferPicture" />
-
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/offer_description"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toTopOf="@+id/tvOfferDate"
-                    app:layout_constraintEnd_toStartOf="@+id/tvDistance"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferPicture"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferTitle" />
-
-                <TextView
-                    android:id="@+id/tvOfferDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/date_time"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferPicture" />
-
-                <TextView
-                    android:id="@+id/tvPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/price"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDistance"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvDistance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/distance"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toTopOf="@+id/tvRating"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="0"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivRating" />
-
-                <ImageView
-                    android:id="@+id/ivRating"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/star"
-                    android:tint="@color/rating"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvRating"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvRating" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

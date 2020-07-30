@@ -23,7 +23,7 @@
     <string name="save">Speichern</string>
     <string name="picture">BILD</string>
     <string name="title">Angebotstitel</string>
-    <string name="date_time">Datum und Uhrzeit</string>
+    <string name="date_time">Zeit</string>
     <string name="price">Preis</string>
     <string name="distance">Entfernung</string>
     <string name="city">Stadt</string>
@@ -39,4 +39,15 @@
     <string name="bad_password">Ungültiges Passwort.</string>
     <string name="bad_login">Ungültige Anmeldedaten.</string>
     <string name="map_api_key">api</string>
+    <string name="publish">Veröffentlichen</string>
+    <string name="delete_offer">Löschen</string>
+    <string name="add_tag">+ Tag</string>
+    <string name="rate">Bewerten</string>
+    <string name="subscribed">Abonnierte Benutzer</string>
+    <string name="minutes">Minuten</string>
+    <string name="notification_hint">Erhalte eine Benachrichtigung vor jeder Verabredung an
+    der du teilnimmst.</string>
+    <string name="standard">Standard</string>
+    <string name="bright">Hell</string>
+    <string name="dark">Dunkel</string>
 </resources>

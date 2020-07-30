@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/ibtReport"
+        android:id="@+id/ibtEdit"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/ibtEdit"
+        android:id="@+id/ibtReport"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="16dp"
@@ -55,7 +55,7 @@
         android:src="@drawable/report"
         android:tint="@color/symbol"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibtReport" />
+        app:layout_constraintTop_toBottomOf="@+id/ibtEdit" />
 
     <ImageView
         android:id="@+id/ivProfile"

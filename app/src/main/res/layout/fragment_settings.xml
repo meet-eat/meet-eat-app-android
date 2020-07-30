@@ -29,8 +29,9 @@
         android:text="@string/settings"
         android:textColor="@android:color/white"
         android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
         app:layout_constraintStart_toEndOf="@+id/ibtBack"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ibtBack" />
 
     <TextView
         android:id="@+id/tvNotification"

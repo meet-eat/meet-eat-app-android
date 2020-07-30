@@ -1,6 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgFragment">
 
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bgmain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibtBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:elevation="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/arrow_back"
+        android:tint="@color/bgButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivOfferPicture"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:src="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibtReport"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:elevation="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/edit"
+        android:tint="@color/symbol"
+        app:layout_constraintBottom_toBottomOf="@+id/ivOfferPicture"
+        app:layout_constraintEnd_toEndOf="@+id/ivOfferPicture"
+        app:layout_constraintStart_toStartOf="@+id/ivOfferPicture"
+        app:layout_constraintTop_toTopOf="@+id/ivBackground" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:elevation="5dp"
+        android:hint="@string/title"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        app:layout_constraintTop_toBottomOf="@+id/ivOfferPicture" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/date_time"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/etCity"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/city"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/price"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/etParticipants"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+    <EditText
+        android:id="@+id/etParticipants"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:hint="@string/participants"
+        android:inputType="number"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/etPrice"
+        app:layout_constraintTop_toBottomOf="@id/etCity" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:elevation="5dp"
+        android:gravity="top|start"
+        android:hint="@string/offer_description"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/textHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPrice" />
+
+    <Button
+        android:id="@+id/btAddTag"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_tag"
+        android:elevation="5dp"
+        android:text="@string/add_tag"
+        android:textColor="@color/textHint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+
+    <TextView
+        android:id="@+id/tvTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_tag"
+        android:elevation="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/tag"
+        android:textColor="@color/textHint"
+        app:layout_constraintBottom_toBottomOf="@+id/btAddTag"
+        app:layout_constraintStart_toEndOf="@+id/btAddTag"
+        app:layout_constraintTop_toTopOf="@+id/btAddTag" />
+
+    <Button
+        android:id="@+id/btPublish"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_button"
+        android:elevation="5dp"
+        android:text="@string/publish"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/btSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_button"
+        android:elevation="5dp"
+        android:text="@string/save"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btDelete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btDelete"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_button"
+        android:elevation="5dp"
+        android:text="@string/delete_offer"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btSave" />
 </androidx.constraintlayout.widget.ConstraintLayout>
