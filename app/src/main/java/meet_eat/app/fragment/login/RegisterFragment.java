@@ -97,8 +97,8 @@ public class RegisterFragment extends Fragment {
         }
 
         Email email = new Email(this.email);
-        Password password = new Password(this.password);
-        User user = new User(email, password, birthDay, username, phoneNumber, profileDescription
+        Password hashedPassword = Password.createHashedPassword(this.password);
+        User user = new User(email, hashedPassword, birthDay, username, phoneNumber, profileDescription
                 , false);
         // TODO user.addPredicate(home);
         registerVM.register(user);
