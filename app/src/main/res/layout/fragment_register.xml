@@ -55,7 +55,7 @@
                 android:src="@drawable/profilestd" />
 
             <ImageButton
-                android:id="@+id/ibtRegisterAddAvatar"
+                android:id="@+id/ibtRegisterAdd"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom|right"

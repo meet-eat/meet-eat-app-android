@@ -59,30 +59,30 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         }
 
         public void setData(Offer offer) {
-            binding.tvOfferTitle.setText(offer.getName());
-            binding.tvDescription.setText(offer.getDescription());
-            binding.tvOfferDate.setText(offer.getDateTime().toString());
+            binding.tvOfferCardTitle.setText(offer.getName());
+            binding.tvOfferCardDescription.setText(offer.getDescription());
+            binding.tvOfferCardDate.setText(offer.getDateTime().toString());
             binding.tvPrice.setText(String.valueOf(offer.getPrice()) + binding.getRoot()
                     .getResources().getString(R.string.currency));
             // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
-            binding.tvRating.setText(String.valueOf(offer.getCreator().getRatings()));
+            binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getRatings()));
             // TODO binding.ivOfferPicture.setImageResource(...);
-            binding.ivOfferPicture.setOnClickListener(event -> {
+            binding.ivOfferCardPicture.setOnClickListener(event -> {
                 Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
                         .actionOfferListFragmentToOfferDetailedFragment());
             });
 
             if (offerVM.isBookmarked(offer))
-                binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+                binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
 
-            binding.ibtBookmark.setOnClickListener(event -> {
+            binding.ibtOfferCardBookmark.setOnClickListener(event -> {
                 try {
                     if (offerVM.isBookmarked(offer)) {
                         offerVM.removeBookmark(offer);
-                        binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.symbol));
+                        binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.symbol));
                     } else {
                         offerVM.addBookmark(offer);
-                        binding.ibtBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
+                        binding.ibtOfferCardBookmark.setColorFilter(binding.getRoot().getResources().getColor(R.color.bookmarked));
                     }
                 } catch (RequestHandlerException e) {
                     Toast.makeText(binding.getRoot().getContext(), e.getMessage(),
