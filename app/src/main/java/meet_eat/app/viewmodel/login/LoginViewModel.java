@@ -3,6 +3,9 @@ package meet_eat.app.viewmodel.login;
 
 import androidx.lifecycle.ViewModel;
 
+import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.repository.Session;
+import meet_eat.app.repository.UserRepository;
 import meet_eat.data.LoginCredential;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -11,7 +14,6 @@ import meet_eat.data.entity.user.Password;
  * Manages login-related information.
  */
 public class LoginViewModel extends ViewModel {
-    /* TODO Session init: Session session = Session.getInstance(); */
 
     /**
      * Check the parameters for semantic correctness
@@ -26,6 +28,11 @@ public class LoginViewModel extends ViewModel {
         Email email = new Email(emailString);
         Password password = Password.createHashedPassword(passwordString);
         LoginCredential credential = new LoginCredential(email, password);
+        try {
+            Session.getInstance().login(credential);
+        } catch (RequestHandlerException e) {
+            //TODO
+        }
         // TODO Session login: session.login(credential);
     }
 
@@ -39,6 +46,11 @@ public class LoginViewModel extends ViewModel {
     public void resetPassword(String emailString) throws IllegalArgumentException {
         // TODO Exception handling for non-runtime exceptions
         Email email = new Email(emailString);
+        try {
+            new UserRepository().resetPassword(email.toString());
+        } catch (RequestHandlerException e) {
+            //TODO
+        }
         // TODO UserRepository resetPassword: UserRepository.resetPassword(email);
     }
 }
