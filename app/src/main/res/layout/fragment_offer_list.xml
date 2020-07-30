@@ -53,16 +53,14 @@
 
         <ScrollView
             android:id="@+id/svScrollView"
-            android:elevation="6dp"
+            android:elevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/llLinearLayout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOfferList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:layout_height="match_parent"/>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

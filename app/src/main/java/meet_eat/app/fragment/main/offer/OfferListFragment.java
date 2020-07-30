@@ -1,81 +1,54 @@
 package meet_eat.app.fragment.main.offer;
 
-import android.app.ActionBar;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import meet_eat.app.R;
+import java.util.ArrayList;
+
 import meet_eat.app.databinding.FragmentOfferListBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
+import meet_eat.data.entity.Offer;
 
 public class OfferListFragment extends Fragment {
+
     private FragmentOfferListBinding binding;
     private OfferViewModel offerVM;
+    private OfferListAdapter offerListAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        offerListAdapter = new OfferListAdapter(new ArrayList<Offer>());
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        binding.rvOfferList.setAdapter(offerListAdapter);
+        binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
         setButtonOnClickListener();
         return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtCreate.setOnClickListener(event -> addOffer());
+        binding.ibtCreate.setOnClickListener(event -> navigateToOfferEdit());
     }
 
-    private void addOffer() {
-        binding.llLinearLayout.addView(createNewOfferCard());
+    private void navigateToOfferEdit() {
+        Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
+                .actionOfferListFragmentToOfferEditFragment());
     }
 
-    private View createNewOfferCard() {
-        ConstraintLayout clOfferLayout = new ConstraintLayout(getActivity());
-        ViewGroup.MarginLayoutParams clOfferLayoutParams =
-                new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT,
-                (int) getResources().getDimension(R.dimen.offer_card_height));
-        clOfferLayoutParams.setMargins((int) getResources().getDimension(R.dimen.std_margin),
-                (int) getResources().getDimension(R.dimen.std_margin),
-                (int) getResources().getDimension(R.dimen.std_margin),
-                (int) getResources().getDimension(R.dimen.std_margin));
-        clOfferLayout.setLayoutParams(clOfferLayoutParams);
-        clOfferLayout.setElevation(10);
-
-        ImageView ivOfferPicture = new ImageView(getActivity());
-        ViewGroup.MarginLayoutParams ivOfferPictureParams =
-                new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT,
-                (int) getResources().getDimension(R.dimen.offer_card_height));
-        ivOfferPicture.setLayoutParams(ivOfferPictureParams);
-        ivOfferPicture.setAdjustViewBounds(true);
-        ivOfferPicture.setScaleType(ImageView.ScaleType.CENTER);
-        ivOfferPicture.setImageResource(R.drawable.bg_button);
-        ivOfferPicture.setColorFilter(getContext().getResources().getColor(R.color.black));
-        /*
-        <ImageView
-                        android:id="@+id/ivOfferPicture"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:src="@android:color/black"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-         */
-        clOfferLayout.addView(ivOfferPicture);
-        return clOfferLayout;
+    private void updateOffer() {
+        // TODO offerListAdapter.updateOffers(...)
     }
 }
