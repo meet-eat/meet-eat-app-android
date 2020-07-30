@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.login;
 
 import android.app.DatePickerDialog;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -25,6 +27,7 @@ import java.util.Locale;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
+import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -66,7 +69,7 @@ public class RegisterFragment extends Fragment {
 
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(getActivity(), (datePicker, year, month, dayOfMonth) -> {
+        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
             binding.tvBirth.setText(birthDay.format(DateTimeFormatter
                     .ofPattern(EUROPEAN_DATE_FORMAT)));
@@ -80,28 +83,39 @@ public class RegisterFragment extends Fragment {
         } else if (!Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
             return;
+        } else if ((username == null) || username.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.missing_username, Toast.LENGTH_SHORT).show();
+            return;
         }
-        // TODO Tests for other register information
-        // TODO Address/Location
-        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), Locale.GERMANY);
+
+        Email emailParam = new Email(this.email);
+        Password hashedPassword = Password.createHashedPassword(this.password);
+        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription
+                , false);
+
+        /* TODO Address/Location
+        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), locale);
+        List<Address> addresses = null;
         try {
-            List<Address> f = geocoder
-                    .getFromLocationName(binding.etHome.getText().toString(), 4);
-            if (f.size() > 0) {
-                binding.etHome.setText(f.get(0).getPostalCode());
-                Toast.makeText(getActivity(), f.get(0).getFeatureName() +
-                        f.get(0).getPostalCode(), Toast.LENGTH_SHORT).show();
-            }
+            addresses = geocoder.getFromLocationName(binding.etHome.getText().toString(), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (addresses != null && addresses.size() > 0) {
+            binding.etHome.setText(addresses.get(0).getSubAdminArea());
+            Toast.makeText(getActivity(), addresses.get(0).getFeatureName() +
+                    " " + addresses.get(0).getPostalCode(), Toast.LENGTH_SHORT).show();
+        }
+        user.addPredicate(home);
+        */
 
-        Email email = new Email(this.email);
-        Password hashedPassword = Password.createHashedPassword(this.password);
-        User user = new User(email, hashedPassword, birthDay, username, phoneNumber, profileDescription
-                , false);
-        // TODO user.addPredicate(home);
-        registerVM.register(user);
+        try {
+            registerVM.register(user);
+        } catch (RequestHandlerException e) {
+            // TODO catch error on user create
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         navigateToLogin();
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
     }
