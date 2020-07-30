@@ -1,8 +1,18 @@
 package meet_eat.app.viewmodel.main;
 
+import androidx.lifecycle.ViewModel;
+
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
+import meet_eat.app.fragment.main.offer.OfferListFragment;
+import meet_eat.app.repository.OfferRepository;
+import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.repository.Session;
+import meet_eat.app.repository.TagRepository;
+import meet_eat.app.repository.UserRepository;
+import meet_eat.data.Page;
 import meet_eat.data.Report;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
@@ -13,7 +23,17 @@ import meet_eat.data.entity.user.contact.ContactRequest;
 /**
  * Manages offer-related information.
  */
-public class OfferViewModel {
+public class OfferViewModel extends ViewModel {
+
+    public static final int PAGE_SIZE = 50;
+    public static final int PAGE_INDEX = 0;
+
+    private final OfferRepository offerRepository = new OfferRepository();
+    private final UserRepository userRepository = new UserRepository();
+    private final TagRepository tagRepository = new TagRepository();
+    private final Session session = Session.getInstance();
+
+    private final Page page = new Page(PAGE_INDEX, PAGE_SIZE);
 
     /**
      * Requests the object of the user currently logged in to the device from the
@@ -22,7 +42,7 @@ public class OfferViewModel {
      * @return The current user.
      */
     public User getCurrentUser() {
-        return null;
+        return session.getUser();
     }
 
     /**
@@ -31,8 +51,8 @@ public class OfferViewModel {
      *
      * @return A /LIST/ containing the updated offers.
      */
-    public Iterable<Offer> fetchOffers() {
-        return null;
+    public Iterable<Offer> fetchOffers() throws RequestHandlerException {
+        return offerRepository.getOffers(page, getPredicates(), null);
     }
 
     /**
@@ -40,10 +60,13 @@ public class OfferViewModel {
      * {@link meet_eat.app.repository.UserRepository UserRepository}.
      * Predicates are used to filter offers.
      *
-     * @param predicates The predicates that are to be updated.
+     * @param predicateList The predicates that are to be updated.
      */
-    public void updatePredicates(Predicate<Offer>... predicates) {
-
+    public void updatePredicates(List<Predicate<Offer>> predicateList) throws RequestHandlerException {
+        User currentUser = session.getUser();
+        for (Predicate<Offer> predicate : predicateList)
+            currentUser.addPredicate(predicate);
+        userRepository.updateEntity(currentUser);
     }
 
     /**
@@ -53,7 +76,7 @@ public class OfferViewModel {
      * @return A /LIST/ containing the predicates.
      */
     public Iterable<Predicate<Offer>> getPredicates() {
-        return null;
+        return session.getUser().getPredicates();
     }
 
     /**
@@ -64,7 +87,7 @@ public class OfferViewModel {
      * @param comparators The comparators that are to be updated.
      */
     public void updateComparators(Comparator<Offer>... comparators) {
-
+        // TODO
     }
 
     /**
@@ -73,8 +96,8 @@ public class OfferViewModel {
      *
      * @param offer The offer to be added.
      */
-    public void add(Offer offer) {
-
+    public void add(Offer offer) throws RequestHandlerException {
+        offerRepository.addEntity(offer);
     }
 
     /**
@@ -83,8 +106,8 @@ public class OfferViewModel {
      *
      * @param offer The offer to be deleted.
      */
-    public void delete(Offer offer) {
-
+    public void delete(Offer offer) throws RequestHandlerException {
+        offerRepository.deleteEntity(offer);
     }
 
     /**
@@ -93,31 +116,31 @@ public class OfferViewModel {
      *
      * @param offer The offer that was modified.
      */
-    public void edit(Offer offer) {
-
+    public void edit(Offer offer) throws RequestHandlerException {
+        offerRepository.updateEntity(offer);
     }
 
     /**
-     * TODO Is this not the same as edit(..)?
      * Adds the current user to an offer, then sends an offer update request to the
      * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
      *
      * @param offer The offer, wherein the current user is to be added.
      */
-    public void participate(Offer offer) {
-
+    public void participate(Offer offer) throws RequestHandlerException {
+        offer.addParticipant(session.getUser());
+        offerRepository.updateEntity(offer);
     }
 
     /**
-     * TODO Is this not the same as edit(..)?
      * Sends a request to the {@link meet_eat.app.repository.OfferRepository OfferRepository}
      * to update an offer after a {@param participant} was removed from it.
      *
      * @param participant The participant that is to be removed.
      * @param offer       The offer, whereof the participant is to be removed.
      */
-    public void cancelParticipation(User participant, Offer offer) {
-
+    public void cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
+        offer.removeParticipant(participant);
+        offerRepository.updateEntity(offer);
     }
 
     /**
@@ -127,17 +150,17 @@ public class OfferViewModel {
      * @param request The contact request.
      */
     public void requestContact(ContactRequest request) {
-
+        userRepository.requestContact(request);
     }
 
     /**
-     * Sends a request including consent and the contact data to be given the Requester
+     * Sends a request including consent and the contact data to be given to the requester
      * to the {@link meet_eat.app.repository.UserRepository UserRepository}.
      *
      * @param contact The contact data that is to be sent.
      */
     public void sendContact(ContactData contact) {
-
+        userRepository.sendContactData(contact);
     }
 
     /**
@@ -148,8 +171,8 @@ public class OfferViewModel {
      * @param report The report sent to the
      *               {@link meet_eat.app.repository.UserRepository UserRepository}.
      */
-    public void report(User user, Report report) {
-
+    public void report(User user, Report report) throws RequestHandlerException {
+        userRepository.report(user, report);
     }
 
     /**
@@ -158,8 +181,10 @@ public class OfferViewModel {
      *
      * @param offer The offer to be added to the users /LIST/ of bookmarks.
      */
-    public void bookmark(Offer offer) {
-
+    public void bookmark(Offer offer) throws RequestHandlerException {
+        User currentUser = session.getUser();
+        currentUser.addBookmark(offer);
+        userRepository.updateEntity(currentUser);
     }
 
     /**
@@ -168,7 +193,7 @@ public class OfferViewModel {
      *
      * @return A /LIST/ containing the tags.
      */
-    public Iterable<Tag> getAllTags() {
-        return null;
+    public Iterable<Tag> getAllTags() throws RequestHandlerException {
+        return tagRepository.getTags();
     }
 }
