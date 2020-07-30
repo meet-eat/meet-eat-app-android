@@ -8,15 +8,36 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import meet_eat.app.R;
+import java.util.ArrayList;
+
+import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
+import meet_eat.app.viewmodel.main.UserViewModel;
+import meet_eat.data.entity.user.User;
 
 public class ProfileSubscribedFragment extends Fragment {
+
+    private FragmentProfileSubscribedBinding binding;
+    private UserViewModel userVM;
+    private ProfileSubscribedAdapter profileSubscribedAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile_subscribed, container, false);
+        binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
+        userVM = new ViewModelProvider(this).get(UserViewModel.class);
+        binding.rvProfileSubscriptions.setAdapter(profileSubscribedAdapter);
+        binding.rvProfileSubscriptions.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
+        profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
+        setButtonOnClickListener();
+        return binding.getRoot();
+    }
+
+    private void setButtonOnClickListener() {
     }
 }

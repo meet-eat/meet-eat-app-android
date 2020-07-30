@@ -40,7 +40,7 @@ public class OfferListFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtCreate.setOnClickListener(event -> navigateToOfferEdit());
+        binding.ibtOfferListCreate.setOnClickListener(event -> navigateToOfferEdit());
     }
 
     private void navigateToOfferEdit() {

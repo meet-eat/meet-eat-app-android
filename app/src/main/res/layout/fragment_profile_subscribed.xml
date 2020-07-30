@@ -1,109 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgFragment">
+<layout>
 
-    <ImageView
-        android:id="@+id/ivBackground"
+    <data>
+
+        <variable
+            name="fragment"
+            type="meet_eat.app.fragment.main.profile.ProfileSubscribedFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/bgmain"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/bgFragment">
 
-    <ImageButton
-        android:id="@+id/ibtBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/arrow_back"
-        android:tint="@color/bgButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvSubscribed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/subscribed"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
-        app:layout_constraintStart_toEndOf="@+id/ibtBack"
-        app:layout_constraintTop_toTopOf="@+id/ibtBack" />
-
-    <ScrollView
-        android:id="@+id/svScrollView"
-        android:elevation="6dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibtBack">
-
-        <LinearLayout
-            android:id="@+id/llLinearLayout"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bgmain"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clLinearLayoutItem"
+        <ImageButton
+            android:id="@+id/ibtBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/arrow_back"
+            android:tint="@color/bgButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvProfileSubscribed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/subscribed"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ibtBack"
+            app:layout_constraintStart_toEndOf="@+id/ibtBack"
+            app:layout_constraintTop_toTopOf="@+id/ibtBack" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProfileSubscriptions"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/ivProfile"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="4dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/profilestd"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:text="@string/username"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
-                    app:layout_constraintStart_toEndOf="@+id/ivProfile"
-                    app:layout_constraintTop_toTopOf="@+id/ivProfile" />
-
-                <ImageButton
-                    android:id="@+id/ibtRemove"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/cross"
-                    android:tint="@color/symbol"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent" />
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

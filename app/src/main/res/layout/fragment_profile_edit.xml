@@ -1,214 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bgFragment">
+<layout>
 
-    <ImageView
-        android:id="@+id/ivBackground"
+    <data>
+
+        <variable
+            name="fragment"
+            type="meet_eat.app.fragment.main.profile.ProfileEditFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/bgmain"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/ibtBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:elevation="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/arrow_back"
-        android:tint="@color/bgButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@+id/ibtBack"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/bgFragment">
 
         <ImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:elevation="4dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/profilestd" />
+            android:src="@drawable/bgmain"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/ibtAddAvatar"
+            android:id="@+id/ibtBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/bg_button"
+            android:background="@null"
             android:elevation="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/add"
-            android:tint="@android:color/black" />
-    </FrameLayout>
+            android:src="@drawable/arrow_back"
+            android:tint="@color/bgButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/e_mail"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/ibtBack"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="@string/username"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+            <ImageView
+                android:id="@+id/ivProfileEditProfile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:adjustViewBounds="true"
+                android:elevation="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profilestd" />
 
-    <TextView
-        android:id="@+id/tvAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
-        android:text="0"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+            <ImageButton
+                android:id="@+id/ibtProfileEditAdd"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|right"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_button"
+                android:elevation="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add"
+                android:tint="@android:color/black" />
+        </FrameLayout>
 
-    <EditText
-        android:id="@+id/etOldPassword"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_edittext"
-        android:elevation="5dp"
-        android:hint="@string/old_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/textHint"
-        app:layout_constraintBottom_toTopOf="@+id/etNewPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvProfileEditEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/e_mail"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etNewPassword"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_edittext"
-        android:elevation="5dp"
-        android:hint="@string/new_password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/textHint"
-        app:layout_constraintBottom_toTopOf="@+id/btChangePassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvProfileEditUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/username"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail" />
 
-    <Button
-        android:id="@+id/btChangePassword"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="72dp"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:text="@string/change_password"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/etPhone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/tvProfileEditBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditUsername" />
 
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_edittext"
-        android:elevation="5dp"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
-        android:maxLines="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/textHint"
-        app:layout_constraintBottom_toTopOf="@+id/etHome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/etProfileEditOldPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edittext"
+            android:elevation="5dp"
+            android:hint="@string/old_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintBottom_toTopOf="@+id/etProfileEditNewPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/etHome"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_edittext"
-        android:elevation="5dp"
-        android:hint="@string/home"
-        android:maxLines="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/textHint"
-        app:layout_constraintBottom_toTopOf="@+id/etDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/etProfileEditNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edittext"
+            android:elevation="5dp"
+            android:hint="@string/new_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintBottom_toTopOf="@+id/btProfileEditChangePassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_edittext"
-        android:elevation="5dp"
-        android:gravity="top|start"
-        android:hint="@string/profile_description"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/textHint"
-        app:layout_constraintBottom_toTopOf="@+id/btSave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/btProfileEditChangePassword"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="72dp"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:text="@string/change_password"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toTopOf="@+id/etProfileEditPhone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:elevation="5dp"
-        android:text="@string/save"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/etProfileEditPhone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edittext"
+            android:elevation="5dp"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintBottom_toTopOf="@+id/etProfileEditHome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etProfileEditHome"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edittext"
+            android:elevation="5dp"
+            android:hint="@string/home"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintBottom_toTopOf="@+id/etProfileEditDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etProfileEditDescription"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edittext"
+            android:elevation="5dp"
+            android:gravity="top|start"
+            android:hint="@string/profile_description"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintBottom_toTopOf="@+id/btProfileEditSave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btProfileEditSave"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_button"
+            android:elevation="5dp"
+            android:text="@string/save"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
