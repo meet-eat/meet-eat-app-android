@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -56,6 +57,15 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
         }
 
         public void setData(User user) {
+            binding.tvOfferParticipantUsername.setText(user.getName());
+            // TODO image binding.ivOfferParticipantProfile.setImageResource();
+            binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile());
+            binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile());
+        }
+
+        private void navigateToProfile() {
+            offerVM.setUser(offerVM.getOffer().getCreator());
+            Navigation.findNavController(binding.getRoot()).navigate(OfferParticipantsFragmentDirections.actionOfferParticipantsFragmentToProfileFragment());
         }
     }
 }
