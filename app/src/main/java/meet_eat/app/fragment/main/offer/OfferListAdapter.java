@@ -70,7 +70,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // TODO binding.ivOfferPicture.setImageResource(...);
             binding.ivOfferCardPicture.setOnClickListener(event -> {
                 Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
-                        .actionOfferListFragmentToOfferDetailedFragment(offer));
+                        .actionOfferListFragmentToOfferDetailedFragment());
             });
 
             if (offerVM.isBookmarked(offer))

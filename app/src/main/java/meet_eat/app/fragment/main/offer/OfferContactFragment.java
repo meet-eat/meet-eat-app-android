@@ -23,7 +23,6 @@ public class OfferContactFragment extends Fragment {
 
     private FragmentOfferContactBinding binding;
     private OfferViewModel offerVM;
-    private User user;
 
     @Nullable
     @Override
@@ -31,11 +30,6 @@ public class OfferContactFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferContactBinding.inflate(inflater, container, false);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
-        if (getArguments() != null)
-            user = (User) getArguments().get("user");
-        else
-            goBack();
-
         updateUI();
         setButtonOnClickListener();
         return binding.getRoot();
@@ -47,12 +41,20 @@ public class OfferContactFragment extends Fragment {
     }
 
     private void contact() {
-        ContactRequest contactRequest = new ContactRequest(Session.getInstance().getUser(), user);
+        if (offerVM.getOffer() == null) {
+            return;
+        }
+
+        ContactRequest contactRequest = new ContactRequest(offerVM.getUser(),
+                offerVM.getOffer().getCreator());
         offerVM.requestContact(contactRequest);
     }
 
     private void updateUI() {
-        binding.tvOfferContactInfo.setText(user.getName());
+        if (offerVM.getOffer() == null) {
+            return;
+        }
+        binding.tvOfferContactInfo.setText(offerVM.getOffer().getCreator().getName());
     }
 
     private void goBack() {

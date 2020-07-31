@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.databinding.FragmentProfileBinding;
-import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
-import meet_eat.app.viewmodel.main.UserViewModel;
+import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.user.User;
 
 import static android.view.View.INVISIBLE;
@@ -24,7 +23,7 @@ public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private NavController navController;
-    private UserViewModel userVM;
+    private OfferViewModel offerVM;
     private User user;
 
     @Nullable
@@ -32,16 +31,23 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        userVM = new ViewModelProvider(this).get(UserViewModel.class);
-        navController = Navigation.findNavController(binding.getRoot());
-        if (getArguments() != null)
-            user = (User) getArguments().get("user");
-        else
-            goBack();
+        offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        navController = NavHostFragment.findNavController(this);
+
+        user = offerVM.getUser();
+        if (user == null)
+            navController.popBackStack();
 
         updateUI();
         setButtonOnClickListener();
         return binding.getRoot();
+    }
+
+    private void setButtonOnClickListener() {
+        binding.ibtBack.setOnClickListener(event -> goBack());
+        //binding.btProfileSubscribe.setOnClickListener(event -> subscribe());
+        binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
+        binding.ibtProfileEdit.setOnClickListener(event -> navigateToProfileEdit());
     }
 
     private void updateUI() {
@@ -50,7 +56,7 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileBirthday.setText(user.getBirthDay().toString());
         binding.tvProfileRating.setText(String.format("%s", user.getHostRating()));
         // add image
-        if (!user.equals(userVM.getCurrentUser())) {
+        if (!user.equals(offerVM.getCurrentUser())) {
             binding.ibtProfileEdit.setVisibility(INVISIBLE);
             binding.ibtProfileEdit.setClickable(false);
         } else {
@@ -59,13 +65,7 @@ public class ProfileFragment extends Fragment {
             binding.btProfileSubscribe.setVisibility(INVISIBLE);
             binding.btProfileSubscribe.setClickable(false);
         }
-    }
-
-    private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event -> goBack());
-        binding.btProfileSubscribe.setOnClickListener(event -> subscribe());
-        binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
-        binding.ibtProfileEdit.setOnClickListener(event -> navigateToProfileEdit());
+        // TODO if subscribed change text to "deabonnieren" oder so
     }
 
     private void navigateToProfileEdit() {
@@ -74,17 +74,17 @@ public class ProfileFragment extends Fragment {
 
     private void navigateToProfileReport() {
         navController.navigate(ProfileFragmentDirections
-                .actionProfileFragmentToProfileReportFragment(user));
+                .actionProfileFragmentToProfileReportFragment());
     }
 
-    private void subscribe() {
+    /*private void subscribe() {
         try {
-            userVM.subscribe(user);
+            offerVM.subscribe(user);
         } catch (RequestHandlerException e) {
             // TODO
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     private void goBack() {
