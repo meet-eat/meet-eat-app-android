@@ -18,6 +18,16 @@ public class SettingsViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
+     * Requests the object of the user currently logged in to the device from the
+     * {@link meet_eat.app.repository.Session Session}.
+     *
+     * @return The current user.
+     */
+    public User getCurrentUser() {
+        return session.getUser();
+    }
+
+    /**
      * Sends a user deletion request to the
      * {@link meet_eat.app.repository.UserRepository UserRepository}.
      *
@@ -43,6 +53,7 @@ public class SettingsViewModel extends ViewModel {
      */
     public void updateNotificationSettings(NotificationSetting notificationSetting) throws RequestHandlerException {
         User currentUser = session.getUser();
+        // TODO remove old notification setting?
         currentUser.addSetting(notificationSetting);
         userRepository.updateEntity(currentUser);
     }
@@ -55,6 +66,7 @@ public class SettingsViewModel extends ViewModel {
      */
     public void updateDisplaySettings(DisplaySetting displaySetting) throws RequestHandlerException {
         User currentUser = session.getUser();
+        // TODO remove old display setting?
         currentUser.addSetting(displaySetting);
         userRepository.updateEntity(currentUser);
     }
