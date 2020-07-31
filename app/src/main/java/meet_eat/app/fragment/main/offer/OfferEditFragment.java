@@ -8,15 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
+import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.R;
+import meet_eat.app.databinding.FragmentOfferEditBinding;
 
 public class OfferEditFragment extends Fragment {
+
+    private FragmentOfferEditBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_offer_edit, container, false);
+        binding = FragmentOfferEditBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }
