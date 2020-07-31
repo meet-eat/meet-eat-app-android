@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.Objects;
 
 import meet_eat.data.Report;
+import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
@@ -30,8 +31,8 @@ public class UserRepository extends EntityRepository<User> {
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
 
-    public Void resetPassword(String email) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + BASE_URL + String.format(URL_RESET_PASSWORD, email)));
+    public Void resetPassword(Email email) throws RequestHandlerException {
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + BASE_URL + String.format(URL_RESET_PASSWORD, email.toString())));
         return new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
     }
 
