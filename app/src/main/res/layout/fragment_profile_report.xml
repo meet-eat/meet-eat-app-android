@@ -66,6 +66,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.reportMessage"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintEnd_toEndOf="parent"
