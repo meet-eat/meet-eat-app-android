@@ -20,8 +20,8 @@ import meet_eat.data.entity.user.User;
 
 public class ProfileEditFragment extends Fragment {
 
-    FragmentProfileEditBinding binding;
-    UserViewModel userVM;
+    private FragmentProfileEditBinding binding;
+    private UserViewModel userVM;
     private String phone;
     private String oldPasswordString;
     private String newPasswordString;
