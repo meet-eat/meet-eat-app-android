@@ -42,7 +42,7 @@ public class LoginViewModel extends ViewModel {
      * @param emailString The email address of the user.
      */
     public void resetPassword(String emailString) throws RequestHandlerException {
-        // TODO email as string?
-        userRepository.resetPassword(emailString);
+        Email email = new Email(emailString);
+        //userRepository.resetPassword(email);
     }
 }
