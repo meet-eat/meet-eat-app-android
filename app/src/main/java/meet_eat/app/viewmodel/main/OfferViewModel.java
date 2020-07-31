@@ -51,9 +51,9 @@ public class OfferViewModel extends ViewModel {
      *
      * @return A /LIST/ containing the updated offers.
      */
-    public Iterable<Offer> fetchOffers() throws RequestHandlerException {
+    /*public Iterable<Offer> fetchOffers() throws RequestHandlerException {
         return offerRepository.getOffers(page, getPredicates(), null);
-    }
+    }*/
 
     /**
      * Sends a predicate update request to the
@@ -62,11 +62,11 @@ public class OfferViewModel extends ViewModel {
      *
      * @param predicateList The predicates that are to be updated.
      */
-    public void updatePredicates(List<Predicate<Offer>> predicateList) throws RequestHandlerException {
+    /*public void updatePredicates(List<Predicate<Offer>> predicateList) throws RequestHandlerException {
         User currentUser = session.getUser();
         for (Predicate<Offer> predicate : predicateList) currentUser.addPredicate(predicate);
         userRepository.updateEntity(currentUser);
-    }
+    }*/
 
     /**
      * Requests the predicates currently stored in the
@@ -74,9 +74,9 @@ public class OfferViewModel extends ViewModel {
      *
      * @return A /LIST/ containing the predicates.
      */
-    public Iterable<Predicate<Offer>> getPredicates() {
+    /*public Iterable<Predicate<Offer>> getPredicates() {
         return session.getUser().getPredicates();
-    }
+    }*/
 
     /**
      * Sends a comparator update request to the
