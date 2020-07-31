@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class RateGuestsFragment extends Fragment {
         binding.rvRateGuests.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         rateGuestsAdapter = new RateGuestsAdapter(userVM, new ArrayList<User>());
-        navController = Navigation.findNavController(binding.getRoot());
+        navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();
     }

@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavHost;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -32,9 +34,8 @@ public class OfferListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
-        binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
-        navController = Navigation.findNavController(binding.getRoot());
+        navController = NavHostFragment.findNavController(this);
         binding.rvOfferList.setAdapter(offerListAdapter);
         binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));

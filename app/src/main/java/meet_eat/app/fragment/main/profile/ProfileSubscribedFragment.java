@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ProfileSubscribedFragment extends Fragment {
         binding.rvProfileSubscriptions.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
-        navController = Navigation.findNavController(binding.getRoot());
+        navController = NavHostFragment.findNavController(this);
         displaySubscriberList();
         setButtonOnClickListener();
         return binding.getRoot();
