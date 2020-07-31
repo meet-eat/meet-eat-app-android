@@ -12,16 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Set;
 
 import meet_eat.app.LoginActivity;
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsBinding;
-import meet_eat.app.databinding.FragmentSettingsDeleteProfileBinding;
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
-import meet_eat.app.viewmodel.main.UserViewModel;
+import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.setting.NotificationSetting;
 import meet_eat.data.entity.user.setting.Setting;
 
@@ -29,7 +27,7 @@ public class SettingsFragment extends Fragment {
 
 
     private FragmentSettingsBinding binding;
-    private UserViewModel userVM;
+    private SettingsViewModel settingsVM;
     private NavController navController;
 
     @Nullable
@@ -37,11 +35,12 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
-        userVM = new ViewModelProvider(this).get(UserViewModel.class);
-        navController = Navigation.findNavController(binding.getRoot());
+        settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
+
+        navController = NavHostFragment.findNavController(this);
 
         setButtonOnClickListener();
-        setUI();
+        updateUI();
 
         return binding.getRoot();
     }
@@ -55,18 +54,22 @@ public class SettingsFragment extends Fragment {
         binding.ibtBack.setOnClickListener(event -> goBack());
     }
 
-    private void setUI() {
-        NotificationSetting currentNotificationSetting = getCurrentNotificationSetting();
-        if (currentNotificationSetting != null)
-            binding.swSettingsNotification.setChecked(currentNotificationSetting.isEnabled());
+    private void updateUI() {
+        Set<Setting> settings = settingsVM.getCurrentUser().getSettings();
+        for (Setting s : settings) {
+            if (s instanceof NotificationSetting) {
+                binding.swSettingsNotification.setChecked(((NotificationSetting) s).isEnabled());
+                break;
+            }
+        }
     }
 
     private void logout() {
         try {
-            Session.getInstance().logout();
+            settingsVM.logout();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } catch (RequestHandlerException e) {
-            // TODO was ist los
+            // TODO
         }
     }
 
@@ -88,22 +91,13 @@ public class SettingsFragment extends Fragment {
 
     private void toggleNotification() {
         NotificationSetting newNotificationSetting = new NotificationSetting();
-        NotificationSetting currentNotificationSetting = getCurrentNotificationSetting();
-        newNotificationSetting.setEnabled(binding.swSettingsNotification.isChecked());
-
-        if (currentNotificationSetting != null) {
-            userVM.getCurrentUser().getSettings().remove(currentNotificationSetting);
-            newNotificationSetting.setMinutesUntilOffer(currentNotificationSetting.getMinutesUntilOffer());
+        newNotificationSetting.setEnabled(binding.swSettingsNotification.isEnabled());
+        try {
+            settingsVM.updateNotificationSettings(newNotificationSetting);
+        } catch (RequestHandlerException e) {
+            // TODO
         }
-        userVM.getCurrentUser().getSettings().add(newNotificationSetting);
-
     }
 
-    private NotificationSetting getCurrentNotificationSetting() {
-        for (Setting s : userVM.getCurrentUser().getSettings())
-            if (s instanceof NotificationSetting)
-                return (NotificationSetting) s;
-        return null;
-    }
 }
 
