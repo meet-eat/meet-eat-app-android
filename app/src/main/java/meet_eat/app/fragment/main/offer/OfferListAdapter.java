@@ -66,7 +66,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.tvPrice.setText(String.valueOf(offer.getPrice()) + binding.getRoot()
                     .getResources().getString(R.string.currency));
             // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
-            binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getRatings()));
+            binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO binding.ivOfferPicture.setImageResource(...);
             binding.ivOfferCardPicture.setOnClickListener(event -> {
                 Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
