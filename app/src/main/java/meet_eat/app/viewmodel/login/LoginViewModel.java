@@ -43,6 +43,6 @@ public class LoginViewModel extends ViewModel {
      */
     public void resetPassword(String emailString) throws RequestHandlerException {
         Email email = new Email(emailString);
-        //userRepository.resetPassword(email);
+        userRepository.resetPassword(email);
     }
 }
