@@ -1,6 +1,8 @@
 package meet_eat.app.fragment.login;
 
 import android.app.DatePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
@@ -73,6 +78,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register() {
+
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
             return;
@@ -89,23 +95,12 @@ public class RegisterFragment extends Fragment {
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
                 profileDescription, false);
 
-        /* TODO Address/Location
-        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration())
-        .get(0);
-        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), locale);
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocationName(binding.etHome.getText().toString(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Address address = getLocationFromUI();
+        if (address == null) {
+            Toast.makeText(getActivity(), "Heimatort gibt es nicht (laut google)", Toast.LENGTH_SHORT).show();
+            return;
         }
-        if (addresses != null && addresses.size() > 0) {
-            binding.etHome.setText(addresses.get(0).getSubAdminArea());
-            Toast.makeText(getActivity(), addresses.get(0).getFeatureName() +
-                    " " + addresses.get(0).getPostalCode(), Toast.LENGTH_SHORT).show();
-        }
-        user.addPredicate(home);
-        */
+        // TODO add location to user object
 
         try {
             registerVM.register(user);
@@ -116,6 +111,33 @@ public class RegisterFragment extends Fragment {
 
         navigateToLogin();
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+    }
+
+    private Address getLocationFromUI() {
+        // TODO cleanup
+        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), Locale.GERMANY);
+        List<Address> addressList = null;
+        Address address = null;
+        try {
+
+            if (geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1) != null)
+                addressList = geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (addressList != null && addressList.size() > 0)
+            address = addressList.get(0);
+
+        if (address != null && address.getSubAdminArea() != null) {
+            if (address.getPostalCode() != null)
+                binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()).append(", ").append(address.getPostalCode()).toString());
+            else
+                binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName()).append(", ").append(address.getSubAdminArea()));
+        } else {
+            return null;
+        }
+        return address;
     }
 
     private void navigateToLogin() {
