@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,19 +39,18 @@ import meet_eat.data.entity.user.User;
  */
 public class RegisterFragment extends Fragment {
 
-    // TODO Extract EUROPEAN_DATE_FORMAT to strings.xml
-    private static final String EUROPEAN_DATE_FORMAT = "dd.MM.uuuu";
     private static final int MONTH_CORRECTION = 1;
 
     private FragmentRegisterBinding binding;
-    private NavController navController;
     private RegisterViewModel registerVM;
+    private NavController navController;
+    private LocalDate birthDay;
+    private String date_format;
     private String email;
     private String password;
     private String username;
     private String phoneNumber;
     private String profileDescription;
-    private LocalDate birthDay;
 
     @Nullable
     @Override
@@ -59,6 +60,7 @@ public class RegisterFragment extends Fragment {
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = NavHostFragment.findNavController(this);
+        date_format = getResources().getString(R.string.european_date_format);
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -74,11 +76,12 @@ public class RegisterFragment extends Fragment {
         new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month,
                                                               dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter.ofPattern(EUROPEAN_DATE_FORMAT)));
+            binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter.ofPattern(date_format)));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void register() {
+        // TODO profile image
 
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
@@ -102,13 +105,15 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        // TODO add location to user object
+        // TODO location of user
 
         try {
             registerVM.register(user);
         } catch (RequestHandlerException e) {
-            // TODO catch error on user create
-            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            // TODO resolve error code
+            Toast.makeText(getActivity(),
+                    "DEBUG RegisterFragment.java -> register(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
 
         navigateToLogin();
@@ -116,8 +121,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private Address getLocationFromUI() {
-        // TODO cleanup
-        Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), Locale.GERMANY);
+        Geocoder geocoder = new Geocoder(binding.getRoot().getContext());
         List<Address> addressList = null;
         Address address = null;
 
@@ -127,27 +131,28 @@ public class RegisterFragment extends Fragment {
                 addressList =
                         geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(),
                                 1);
+                address = addressList.get(0);
+
+                if (address.getSubAdminArea() == null) {
+                    return null;
+                }
+
+                if (address.getPostalCode() == null) {
+                    binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()));
+                } else {
+                    binding.etRegisterHome.setText(new StringBuilder().append(address.getPostalCode()).append(", ").append(address.getSubAdminArea()).toString());
+                }
             }
 
+            return address;
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (addressList != null && addressList.size() > 0) {
-            address = addressList.get(0);
-        }
-
-        if (address == null || address.getSubAdminArea() == null) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG RegisterFragment.java -> getLocationFromUI(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
             return null;
         }
 
-        if (address.getPostalCode() != null) {
-            binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()).append(", ").append(address.getPostalCode()).toString());
-        } else {
-            binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName()).append(", ").append(address.getSubAdminArea()));
-        }
-
-        return address;
     }
 
     private void navigateToLogin() {

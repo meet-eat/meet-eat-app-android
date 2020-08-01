@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferContactBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
@@ -20,9 +21,11 @@ import meet_eat.data.entity.user.contact.ContactRequest;
 
 public class OfferContactFragment extends Fragment {
 
+    private final static String KEY_OFFER = "offer";
+
     private FragmentOfferContactBinding binding;
-    private NavController navController;
     private OfferViewModel offerVM;
+    private NavController navController;
     private Offer offer;
 
     @Nullable
@@ -33,14 +36,16 @@ public class OfferContactFragment extends Fragment {
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable("offer") == null) {
-            Toast.makeText(getActivity(), "DEBUG: Offer not given", Toast.LENGTH_SHORT).show();
+        if (getArguments() == null || getArguments().getSerializable(KEY_OFFER) == null) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();
         } else {
-            offer = (Offer) getArguments().getSerializable("offer");
+            offer = (Offer) getArguments().getSerializable(KEY_OFFER);
         }
 
-        updateUI();
+        initUI();
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -54,10 +59,11 @@ public class OfferContactFragment extends Fragment {
         ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(),
                 offer.getCreator());
         offerVM.requestContact(contactRequest);
-        // TODO navigation and toast
+        Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+        navController.navigateUp();
     }
 
-    private void updateUI() {
+    private void initUI() {
         binding.tvOfferContactInfo.setText(offer.getCreator().getName());
     }
 }

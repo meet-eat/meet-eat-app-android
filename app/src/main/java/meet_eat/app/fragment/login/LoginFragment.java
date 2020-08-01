@@ -20,6 +20,7 @@ import meet_eat.app.databinding.FragmentLoginBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.data.entity.user.Email;
+import meet_eat.data.entity.user.Password;
 
 /**
  * This is the login page. It is the first page the user sees when opening the app. The user can
@@ -31,9 +32,10 @@ import meet_eat.data.entity.user.Email;
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
-    private NavController navController;
     private LoginViewModel loginVM;
-    private String email, password;
+    private NavController navController;
+    private String email;
+    private String password;
 
     @Nullable
     @Override
@@ -59,7 +61,7 @@ public class LoginFragment extends Fragment {
 
     private void login() {
 
-        /*if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
+        if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -67,9 +69,10 @@ public class LoginFragment extends Fragment {
         try {
             loginVM.login(email, password);
         } catch (RequestHandlerException e) {
-            // TODO catch error on login
-            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }*/
+            // TODO resolve error code
+            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
 
         startActivity(new Intent(getActivity(), MainActivity.class));
     }
@@ -84,8 +87,9 @@ public class LoginFragment extends Fragment {
         try {
             loginVM.resetPassword(email);
         } catch (RequestHandlerException e) {
-            // TODO catch error on reset request
-            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            // TODO resolve error code
+            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
 
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
