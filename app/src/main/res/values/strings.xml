@@ -45,8 +45,8 @@
     <string name="rate">Bewerten</string>
     <string name="subscribed">Abonnierte Benutzer</string>
     <string name="minutes">Minuten</string>
-    <string name="notification_hint">Erhalte eine Benachrichtigung vor jeder Verabredung an
-    der du teilnimmst.</string>
+    <string name="notification_hint">Erhalte eine Benachrichtigung vor jeder Verabredung an der
+        du teilnimmst.</string>
     <string name="standard">Standard</string>
     <string name="bright">Hell</string>
     <string name="dark">Dunkel</string>
@@ -70,4 +70,10 @@
     <string name="missing_username">Nutzername darf nicht leer sein</string>
     <string name="currency">€</string>
     <string name="edit_subscriptions">Abonnements</string>
+    <string name="unsubscribe">Deabonnieren</string>
+    <string name="invalid_location">Ort nicht gefunden.</string>
+    <string name="bad_passwords">Altes oder neues Passwort ungültig.</string>
+    <string name="password_changed">Passwort erfolgreich geändert.</string>
+    <string name="invalid_old_password">Altes Passwort falsch.</string>
+    <string name="invalid_password">Passwort falsch.</string>
 </resources>
