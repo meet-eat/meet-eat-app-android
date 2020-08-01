@@ -84,4 +84,6 @@
     <string name="drawer_menu_logout">Abmelden</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="european_date_format">dd.MM.uuuu</string>
+    <string name="drawer_menu_main_offers">Hauptansicht</string>
 </resources>
