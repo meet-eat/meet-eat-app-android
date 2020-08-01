@@ -8,6 +8,9 @@
             android:id="@+id/drawer_menu_profile"
             android:title="@string/drawer_menu_profile" />
         <item
+            android:id="@+id/drawer_menu_main_offers"
+            android:title="@string/drawer_menu_main_offers" />
+        <item
             android:id="@+id/drawer_menu_my_offers"
             android:title="@string/drawer_menu_my_offers" />
         <item
