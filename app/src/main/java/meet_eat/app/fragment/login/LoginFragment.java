@@ -31,6 +31,7 @@ import meet_eat.data.entity.user.Password;
  */
 public class LoginFragment extends Fragment {
 
+    private static final boolean DEBUG = true;
     private FragmentLoginBinding binding;
     private LoginViewModel loginVM;
     private NavController navController;
@@ -60,7 +61,10 @@ public class LoginFragment extends Fragment {
     }
 
     private void login() {
-
+        if(DEBUG){
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            return;
+        }
         if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;

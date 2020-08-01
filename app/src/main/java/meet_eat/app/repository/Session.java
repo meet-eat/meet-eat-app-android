@@ -2,7 +2,10 @@ package meet_eat.app.repository;
 
 import meet_eat.data.LoginCredential;
 import meet_eat.data.entity.Token;
+import meet_eat.data.entity.user.Email;
+import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Session {
@@ -32,7 +36,7 @@ public class Session {
     private Session() {
     }
 
-    public static Session getInstance () {
+    public static Session getInstance() {
         if (Objects.isNull(session)) {
             session = new Session();
         }
@@ -40,7 +44,10 @@ public class Session {
     }
 
     public User getUser() {
-        return token.getUser();
+        return new User(new Email("tester@testi.de"), Password
+                .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester Testi",
+                "+49160304050", "My description", true);
+        //return token.getUse();
     }
 
     public Token getToken() {

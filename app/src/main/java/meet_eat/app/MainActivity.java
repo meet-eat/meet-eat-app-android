@@ -14,6 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.navigation.NavigationView;
 
+import static meet_eat.app.fragment.main.offer.OfferListFragment.OFFER_LIST_TYPE_BOOKMARKED;
+import static meet_eat.app.fragment.main.offer.OfferListFragment.OFFER_LIST_TYPE_OWN;
+import static meet_eat.app.fragment.main.offer.OfferListFragment.OFFER_LIST_TYPE_STANDARD;
+import static meet_eat.app.fragment.main.offer.OfferListFragment.OFFER_LIST_TYPE_SUBSCRIBED;
+
 /**
  * Represents the main activity of the app, that is active when the user is in the logged in state.
  * It thus holds all the fragments except {@link meet_eat.app.fragment.login.RegisterFragment
@@ -21,6 +26,7 @@ import com.google.android.material.navigation.NavigationView;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String KEY_TYPE = "type";
     private DrawerLayout drawerLayout;
     private NavController navController;
 
@@ -42,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
     private boolean onItemClicked(MenuItem menuItem) {
+        Bundle bundle = new Bundle();
 
         switch (menuItem.getItemId()) {
             // TODO bundles
@@ -52,15 +60,19 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.profileFragment);
                 break;
             case R.id.drawer_menu_main_offers:
+                bundle.putInt(KEY_TYPE, OFFER_LIST_TYPE_STANDARD);
                 navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_my_offers:
+                bundle.putInt(KEY_TYPE, OFFER_LIST_TYPE_OWN);
                 navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_bookmarked:
+                bundle.putInt(KEY_TYPE, OFFER_LIST_TYPE_BOOKMARKED);
                 navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_subscriptions:
+                bundle.putInt(KEY_TYPE, OFFER_LIST_TYPE_SUBSCRIBED);
                 navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_settings:
