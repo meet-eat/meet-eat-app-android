@@ -40,7 +40,10 @@ public class RatingViewModel extends ViewModel {
      * @param ratings The new ratings.
      */
     public void send(Rating... ratings) {
-        for (Rating rating : ratings)
+
+        for (Rating rating : ratings) {
             send(rating);
+        }
+
     }
 }

@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.databinding.FragmentProfileBinding;
@@ -33,10 +32,11 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
-
         user = offerVM.getUser();
-        if (user == null)
+
+        if (user == null) {
             navController.popBackStack();
+        }
 
         updateUI();
         setButtonOnClickListener();
@@ -56,6 +56,7 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileBirthday.setText(user.getBirthDay().toString());
         binding.tvProfileRating.setText(String.format("%s", user.getHostRating()));
         // add image
+
         if (!user.equals(offerVM.getCurrentUser())) {
             binding.ibtProfileEdit.setVisibility(INVISIBLE);
             binding.ibtProfileEdit.setClickable(false);
@@ -65,11 +66,13 @@ public class ProfileFragment extends Fragment {
             binding.btProfileSubscribe.setVisibility(INVISIBLE);
             binding.btProfileSubscribe.setClickable(false);
         }
+
         // TODO if subscribed change text to "deabonnieren" oder so
     }
 
     private void navigateToProfileEdit() {
-        navController.navigate(ProfileFragmentDirections.actionProfileFragmentToProfileEditFragment());
+        navController.navigate(ProfileFragmentDirections
+                .actionProfileFragmentToProfileEditFragment());
     }
 
     private void navigateToProfileReport() {
@@ -78,12 +81,14 @@ public class ProfileFragment extends Fragment {
     }
 
     /*private void subscribe() {
+
         try {
             offerVM.subscribe(user);
         } catch (RequestHandlerException e) {
             // TODO
             e.printStackTrace();
         }
+
     }*/
 
 

@@ -3,8 +3,6 @@ package meet_eat.app.viewmodel.main;
 import androidx.lifecycle.ViewModel;
 
 import java.util.Comparator;
-import java.util.List;
-import java.util.function.Predicate;
 
 import meet_eat.app.repository.OfferRepository;
 import meet_eat.app.repository.RequestHandlerException;
@@ -32,6 +30,7 @@ public class OfferViewModel extends ViewModel {
     private final TagRepository tagRepository = new TagRepository();
     private final Session session = Session.getInstance();
     private final Page page = new Page(PAGE_INDEX, PAGE_SIZE);
+
     private Offer offer;
     private User user;
 
@@ -62,9 +61,14 @@ public class OfferViewModel extends ViewModel {
      *
      * @param predicateList The predicates that are to be updated.
      */
-    /*public void updatePredicates(List<Predicate<Offer>> predicateList) throws RequestHandlerException {
+    /*public void updatePredicates(List<Predicate<Offer>> predicateList) throws
+    RequestHandlerException {
         User currentUser = session.getUser();
-        for (Predicate<Offer> predicate : predicateList) currentUser.addPredicate(predicate);
+
+        for (Predicate<Offer> predicate : predicateList) {
+            currentUser.addPredicate(predicate);
+        }
+
         userRepository.updateEntity(currentUser);
     }*/
 

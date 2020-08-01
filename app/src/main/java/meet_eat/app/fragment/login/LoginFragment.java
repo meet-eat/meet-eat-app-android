@@ -57,6 +57,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void login() {
+
         if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
@@ -74,6 +75,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void reset() {
+
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
             return;

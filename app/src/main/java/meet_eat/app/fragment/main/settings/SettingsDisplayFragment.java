@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 

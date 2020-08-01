@@ -35,7 +35,6 @@ public class ProfileEditFragment extends Fragment {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
-
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -47,37 +46,47 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private void changePassword() {
-        if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
-            Toast.makeText(getActivity(), "Altes Passwort falsch oder neues ungültig", Toast.LENGTH_SHORT).show();
+
+        if (!Password.isLegalPassword(oldPasswordString) || !Password
+                .isLegalPassword(newPasswordString)) {
+            Toast.makeText(getActivity(), "Altes Passwort falsch oder neues ungültig",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
-        Password oldPassword = Password
-                .createHashedPassword(oldPasswordString);
-        Password newPassword = Password
-                .createHashedPassword(newPasswordString);
+
+        Password oldPassword = Password.createHashedPassword(oldPasswordString);
+        Password newPassword = Password.createHashedPassword(newPasswordString);
+
         if (oldPassword.equals(userVM.getCurrentUser().getPassword())) {
             userVM.getCurrentUser().setPassword(newPassword);
             Toast.makeText(getActivity(), "Passwort erfolgreich geändert", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Altes Passwort falsch", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void saveProfile() {
         User currentUser = userVM.getCurrentUser();
-        if (phone != null && !phone.isEmpty())
+
+        if (phone != null && !phone.isEmpty()) {
             currentUser.setPhoneNumber(phone);
+        }
+
         if (home != null && !home.isEmpty()) {
             // TODO
         }
-        if (description != null && !description.isEmpty())
+
+        if (description != null && !description.isEmpty()) {
             currentUser.setDescription(description);
+        }
 
         try {
             userVM.edit(currentUser);
         } catch (RequestHandlerException e) {
             // TODO timeout etc.
         }
+
     }
 
     private void goBack() {

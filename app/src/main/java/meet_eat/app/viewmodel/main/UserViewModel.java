@@ -15,6 +15,7 @@ public class UserViewModel extends ViewModel {
 
     private final UserRepository userRepository = new UserRepository();
     private final Session session = Session.getInstance();
+
     private User user;
 
     /**

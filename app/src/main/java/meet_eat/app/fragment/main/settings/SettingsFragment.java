@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Set;
@@ -36,19 +35,17 @@ public class SettingsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
-
         navController = NavHostFragment.findNavController(this);
-
         setButtonOnClickListener();
         updateUI();
-
         return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
         binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
         binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navigateToSettingsDisplay());
-        binding.tvSettingsNotificationMenu.setOnClickListener(event -> navigateToSettingsNotification());
+        binding.tvSettingsNotificationMenu.setOnClickListener(
+                event -> navigateToSettingsNotification());
         binding.btSettingsDelete.setOnClickListener(event -> navigateToSettingsDeleteProfile());
         binding.btSettingsLogout.setOnClickListener(event -> logout());
         binding.ibtBack.setOnClickListener(event -> goBack());
@@ -56,21 +53,27 @@ public class SettingsFragment extends Fragment {
 
     private void updateUI() {
         Set<Setting> settings = settingsVM.getCurrentUser().getSettings();
+
         for (Setting s : settings) {
+
             if (s instanceof NotificationSetting) {
                 binding.swSettingsNotification.setChecked(((NotificationSetting) s).isEnabled());
                 break;
             }
+
         }
+
     }
 
     private void logout() {
+
         try {
             settingsVM.logout();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } catch (RequestHandlerException e) {
             // TODO
         }
+
     }
 
     private void navigateToSettingsDeleteProfile() {
@@ -92,12 +95,12 @@ public class SettingsFragment extends Fragment {
     private void toggleNotification() {
         NotificationSetting newNotificationSetting = new NotificationSetting();
         newNotificationSetting.setEnabled(binding.swSettingsNotification.isEnabled());
+
         try {
             settingsVM.updateNotificationSettings(newNotificationSetting);
         } catch (RequestHandlerException e) {
             // TODO
         }
+
     }
-
 }
-

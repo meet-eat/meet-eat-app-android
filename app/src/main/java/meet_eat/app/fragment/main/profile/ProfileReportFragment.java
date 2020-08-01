@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
@@ -33,12 +32,12 @@ public class ProfileReportFragment extends Fragment {
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
 
-        if (getArguments() == null)
+        if (getArguments() == null) {
             Navigation.findNavController(binding.getRoot()).popBackStack();
+        }
+
         user = (User) getArguments().get("user");
-
         setButtonOnClickListener();
-
         return binding.getRoot();
     }
 
@@ -47,14 +46,15 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void reportUser() {
-
-        Report report = new Report(userVM.getCurrentUser(), reportMessage != null ? reportMessage : "");
+        Report report = new Report(userVM.getCurrentUser(), reportMessage != null ?
+                reportMessage : "");
 
         try {
             userVM.report(user, report);
         } catch (RequestHandlerException e) {
             // TODO timeout etc
         }
+
     }
 
     public String getReportMessage() {

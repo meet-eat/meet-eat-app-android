@@ -11,12 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferContactBinding;
-import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.main.OfferViewModel;
-import meet_eat.app.viewmodel.main.UserViewModel;
-import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactRequest;
 
 public class OfferContactFragment extends Fragment {
@@ -41,19 +37,22 @@ public class OfferContactFragment extends Fragment {
     }
 
     private void contact() {
+
         if (offerVM.getOffer() == null) {
             return;
         }
 
-        ContactRequest contactRequest = new ContactRequest(offerVM.getUser(),
-                offerVM.getOffer().getCreator());
+        ContactRequest contactRequest = new ContactRequest(offerVM.getUser(), offerVM.getOffer()
+                .getCreator());
         offerVM.requestContact(contactRequest);
     }
 
     private void updateUI() {
+
         if (offerVM.getOffer() == null) {
             return;
         }
+
         binding.tvOfferContactInfo.setText(offerVM.getOffer().getCreator().getName());
     }
 

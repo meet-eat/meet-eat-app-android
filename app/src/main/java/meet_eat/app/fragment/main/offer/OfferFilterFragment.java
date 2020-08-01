@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferFilterBinding;
 
 public class OfferFilterFragment extends Fragment {

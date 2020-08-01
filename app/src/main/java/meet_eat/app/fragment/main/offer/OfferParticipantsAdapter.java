@@ -65,7 +65,9 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
 
         private void navigateToProfile() {
             offerVM.setUser(offerVM.getOffer().getCreator());
-            Navigation.findNavController(binding.getRoot()).navigate(OfferParticipantsFragmentDirections.actionOfferParticipantsFragmentToProfileFragment());
+            Navigation.findNavController(binding.getRoot())
+                    .navigate(OfferParticipantsFragmentDirections
+                            .actionOfferParticipantsFragmentToProfileFragment());
         }
     }
 }

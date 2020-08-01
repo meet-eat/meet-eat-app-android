@@ -10,15 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
-import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.Offer;
-
-import static android.view.View.INVISIBLE;
 
 public class OfferDetailedFragment extends Fragment {
 
@@ -35,14 +31,14 @@ public class OfferDetailedFragment extends Fragment {
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
-
         offer = offerVM.getOffer();
-        if (offer == null)
+
+        if (offer == null) {
             navController.popBackStack();
+        }
 
         updateUI();
         setButtonOnClickListener();
-
         return binding.getRoot();
     }
 
@@ -57,15 +53,18 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedContact.setVisibility(INVISIBLE);
             binding.btOfferDetailedContact.setClickable(false);
         } else {
+
             if (!offer.getParticipants().contains(offerVM.getCurrentUser())
                     && offer.getMaxParticipants() > offer.getParticipants().size()) {
                 binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
                 binding.btOfferDetailedParticipate.setClickable(false);
             }
+
             if (!offer.getParticipants().contains(offerVM.getCurrentUser())) {
                 binding.btOfferDetailedCancel.setVisibility(INVISIBLE);
                 binding.btOfferDetailedCancel.setClickable(false);
             }
+
             binding.btOfferDetailedParticipants.setVisibility(INVISIBLE);
             binding.btOfferDetailedParticipants.setClickable(false);
             binding.ibtOfferDetailedEdit.setVisibility(INVISIBLE);
@@ -99,7 +98,7 @@ public class OfferDetailedFragment extends Fragment {
     private void navigateToProfile() {
         offerVM.setUser(offer.getCreator());
         navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToProfileFragment());
+                .actionOfferDetailedFragmentToProfileFragment(offer.getCreator()));
     }
 
     private void navigateToOfferParticipants() {
@@ -109,10 +108,13 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void bookmark(View view) {
-        if (offerVM.getCurrentUser().getBookmarks().contains(offer))
+
+        if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
             offerVM.getCurrentUser().removeBookmark(offer);
-        else
+        } else {
             offerVM.getCurrentUser().addBookmark(offer);
+        }
+
         updateUI();
     }
 

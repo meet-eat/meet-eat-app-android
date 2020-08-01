@@ -10,16 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
-import meet_eat.app.R;
-import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.databinding.FragmentRateGuestsBinding;
-import meet_eat.app.fragment.main.profile.ProfileSubscribedAdapter;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 

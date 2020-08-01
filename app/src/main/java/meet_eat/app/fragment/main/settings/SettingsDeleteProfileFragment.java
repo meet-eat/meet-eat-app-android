@@ -10,15 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsDeleteProfileBinding;
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
-import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.Password;
 
 public class SettingsDeleteProfileFragment extends Fragment {
@@ -35,7 +31,6 @@ public class SettingsDeleteProfileFragment extends Fragment {
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         setButtonOnClickListener();
-
         return binding.getRoot();
     }
 
@@ -45,16 +40,24 @@ public class SettingsDeleteProfileFragment extends Fragment {
     }
 
     private void deleteProfile() {
-        if (!Password.isLegalPassword(password))
+
+        if (!Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), "wrong pw", Toast.LENGTH_SHORT).show();
-        if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser().getPassword())) {
+        }
+
+        if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser()
+                .getPassword())) {
+
             try {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());
             } catch (RequestHandlerException e) {
                 // TODO
             }
-        } else
+
+        } else {
             Toast.makeText(getActivity(), "wrong pw bro", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void goBack() {

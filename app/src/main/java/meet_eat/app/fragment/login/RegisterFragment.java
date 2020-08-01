@@ -69,8 +69,8 @@ public class RegisterFragment extends Fragment {
 
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth)
-                -> {
+        new DatePickerDialog(binding.getRoot().getContext(),
+                (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
             binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter
                     .ofPattern(EUROPEAN_DATE_FORMAT)));
@@ -94,12 +94,14 @@ public class RegisterFragment extends Fragment {
         Password hashedPassword = Password.createHashedPassword(this.password);
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
                 profileDescription, false);
-
         Address address = getLocationFromUI();
+
         if (address == null) {
-            Toast.makeText(getActivity(), "Heimatort gibt es nicht (laut google)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Heimatort gibt es nicht (laut google)",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
+
         // TODO add location to user object
 
         try {
@@ -118,25 +120,36 @@ public class RegisterFragment extends Fragment {
         Geocoder geocoder = new Geocoder(binding.getRoot().getContext(), Locale.GERMANY);
         List<Address> addressList = null;
         Address address = null;
+
         try {
 
-            if (geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1) != null)
-                addressList = geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1);
+            if (geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1) != null) {
+                addressList = geocoder.getFromLocationName(binding.etRegisterHome.getText()
+                        .toString(), 1);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (addressList != null && addressList.size() > 0)
+        if (addressList != null && addressList.size() > 0) {
             address = addressList.get(0);
+        }
 
         if (address != null && address.getSubAdminArea() != null) {
-            if (address.getPostalCode() != null)
-                binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()).append(", ").append(address.getPostalCode()).toString());
-            else
-                binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName()).append(", ").append(address.getSubAdminArea()));
+
+            if (address.getPostalCode() != null) {
+                binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea())
+                        .append(", ").append(address.getPostalCode()).toString());
+            } else {
+                binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName())
+                        .append(", ").append(address.getSubAdminArea()));
+            }
+
         } else {
             return null;
         }
+
         return address;
     }
 

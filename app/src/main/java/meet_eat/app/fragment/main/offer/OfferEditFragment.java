@@ -8,11 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
-import androidx.navigation.fragment.NavHostFragment;
 
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferEditBinding;
 
 public class OfferEditFragment extends Fragment {

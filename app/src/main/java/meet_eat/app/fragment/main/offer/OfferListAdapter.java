@@ -68,16 +68,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO binding.ivOfferPicture.setImageResource(...);
-            binding.ivOfferCardPicture.setOnClickListener(event -> {
-                Navigation.findNavController(binding.getRoot()).navigate(OfferListFragmentDirections
-                        .actionOfferListFragmentToOfferDetailedFragment());
-            });
+            binding.ivOfferCardPicture.setOnClickListener(
+                    event -> {
+                        Navigation.findNavController(binding.getRoot())
+                                .navigate(OfferListFragmentDirections
+                                        .actionOfferListFragmentToOfferDetailedFragment());
+                    });
 
-            if (offerVM.isBookmarked(offer))
-                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+            if (offerVM.isBookmarked(offer)) {
+                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot()
+                        .getContext(), R.color.bookmarked));
+            }
 
             binding.ibtOfferCardBookmark.setOnClickListener(event -> {
+
                 try {
+
                     if (offerVM.isBookmarked(offer)) {
                         offerVM.removeBookmark(offer);
                         binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol));
@@ -85,10 +91,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         offerVM.addBookmark(offer);
                         binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
                     }
+
                 } catch (RequestHandlerException e) {
                     Toast.makeText(binding.getRoot().getContext(), e.getMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
+
             });
         }
     }
