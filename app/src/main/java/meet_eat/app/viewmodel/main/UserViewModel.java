@@ -16,8 +16,6 @@ public class UserViewModel extends ViewModel {
     private final UserRepository userRepository = new UserRepository();
     private final Session session = Session.getInstance();
 
-    private User user;
-
     /**
      * Requests the object of the user currently logged in to the device from the
      * {@link meet_eat.app.repository.Session Session}.
@@ -66,13 +64,5 @@ public class UserViewModel extends ViewModel {
      */
     public void unsubscribe(User user) throws RequestHandlerException {
         userRepository.updateEntity(user);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
