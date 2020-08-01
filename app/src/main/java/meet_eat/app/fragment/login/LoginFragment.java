@@ -11,7 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
@@ -19,7 +20,6 @@ import meet_eat.app.databinding.FragmentLoginBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.data.entity.user.Email;
-import meet_eat.data.entity.user.Password;
 
 /**
  * This is the login page. It is the first page the user sees when opening the app. The user can
@@ -31,6 +31,7 @@ import meet_eat.data.entity.user.Password;
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
+    private NavController navController;
     private LoginViewModel loginVM;
     private String email, password;
 
@@ -41,6 +42,7 @@ public class LoginFragment extends Fragment {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
+        navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -52,13 +54,12 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToRegister() {
-        Navigation.findNavController(binding.getRoot()).navigate(LoginFragmentDirections
-                .actionLoginFragmentToRegisterFragment());
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
     }
 
     private void login() {
 
-        if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
+        /*if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -67,10 +68,9 @@ public class LoginFragment extends Fragment {
             loginVM.login(email, password);
         } catch (RequestHandlerException e) {
             // TODO catch error on login
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }*/
 
-        // Switch to main app with logged in state
         startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
             loginVM.resetPassword(email);
         } catch (RequestHandlerException e) {
             // TODO catch error on reset request
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();

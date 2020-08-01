@@ -1,5 +1,6 @@
 package meet_eat.app.fragment.main.offer;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferParticipantBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.user.User;
@@ -59,15 +61,15 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
         public void setData(User user) {
             binding.tvOfferParticipantUsername.setText(user.getName());
             // TODO image binding.ivOfferParticipantProfile.setImageResource();
-            binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile());
-            binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile());
+            binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile(user));
+            binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile(user));
         }
 
-        private void navigateToProfile() {
-            offerVM.setUser(offerVM.getOffer().getCreator());
+        private void navigateToProfile(User user) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", user);
             Navigation.findNavController(binding.getRoot())
-                    .navigate(OfferParticipantsFragmentDirections
-                            .actionOfferParticipantsFragmentToProfileFragment());
+                    .navigate(R.id.profileFragment, bundle);
         }
     }
 }

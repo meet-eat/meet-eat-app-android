@@ -30,16 +30,10 @@ public class OfferFilterFragment extends Fragment {
 
     private void initializeSortSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("R.string.appearance");
-        arrayList.add("ANDROID");
-        arrayList.add("C Language");
-        arrayList.add("CPP Language");
-        arrayList.add("Go Language");
-        arrayList.add("AVN SYSTEMS");
+        // TODO arrayList.add(...);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(binding.getRoot().getContext(),
                 android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.sOfferFilterSort.setAdapter(arrayAdapter);
     }
-
 }

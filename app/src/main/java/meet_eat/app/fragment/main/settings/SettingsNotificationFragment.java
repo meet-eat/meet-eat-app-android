@@ -8,15 +8,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import meet_eat.app.R;
+import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
+import meet_eat.app.databinding.FragmentSettingsNotificationBinding;
+import meet_eat.app.viewmodel.main.SettingsViewModel;
 
 public class SettingsNotificationFragment extends Fragment {
+
+    private FragmentSettingsNotificationBinding binding;
+    private SettingsViewModel settingsVM;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings_notification, container, false);
+        binding = FragmentSettingsNotificationBinding.inflate(inflater, container, false);
+        settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
+        return binding.getRoot();
     }
 }

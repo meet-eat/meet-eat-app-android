@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
@@ -31,10 +33,12 @@ public class OfferDetailedFragment extends Fragment {
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
-        offer = offerVM.getOffer();
 
-        if (offer == null) {
-            navController.popBackStack();
+        if (getArguments() == null || getArguments().getSerializable("offer") == null) {
+            Toast.makeText(getActivity(), "DEBUG: Offer not given", Toast.LENGTH_SHORT).show();
+            navController.navigateUp();
+        } else {
+            offer = (Offer) getArguments().getSerializable("offer");
         }
 
         updateUI();
@@ -44,41 +48,14 @@ public class OfferDetailedFragment extends Fragment {
 
     private void updateUI() {
         // TODO
-        /*if (offer.getCreator().equals(offerVM.getCurrentUser())) {
-            binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
-            binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
-            binding.btOfferDetailedParticipate.setClickable(false);
-            binding.btOfferDetailedCancel.setVisibility(INVISIBLE);
-            binding.btOfferDetailedCancel.setClickable(false);
-            binding.btOfferDetailedContact.setVisibility(INVISIBLE);
-            binding.btOfferDetailedContact.setClickable(false);
-        } else {
-
-            if (!offer.getParticipants().contains(offerVM.getCurrentUser())
-                    && offer.getMaxParticipants() > offer.getParticipants().size()) {
-                binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
-                binding.btOfferDetailedParticipate.setClickable(false);
-            }
-
-            if (!offer.getParticipants().contains(offerVM.getCurrentUser())) {
-                binding.btOfferDetailedCancel.setVisibility(INVISIBLE);
-                binding.btOfferDetailedCancel.setClickable(false);
-            }
-
-            binding.btOfferDetailedParticipants.setVisibility(INVISIBLE);
-            binding.btOfferDetailedParticipants.setClickable(false);
-            binding.ibtOfferDetailedEdit.setVisibility(INVISIBLE);
-            binding.ibtOfferDetailedEdit.setClickable(false);
-        }*/
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event -> navController.popBackStack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.ibtOfferDetailedEdit.setOnClickListener(event -> navigateToOfferEdit());
         binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
         binding.ibtOfferDetailedBookmark.setOnClickListener(this::bookmark);
-        binding.btOfferDetailedParticipants
-                .setOnClickListener(event -> navigateToOfferParticipants());
+        binding.btOfferDetailedParticipants.setOnClickListener(event -> navigateToOfferParticipants());
         binding.ivOfferDetailedProfile.setOnClickListener(event -> navigateToProfile());
         binding.tvOfferDetailedUsername.setOnClickListener(event -> navigateToProfile());
         binding.btOfferDetailedCancel.setOnClickListener(event -> cancelOffer());
@@ -86,25 +63,27 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void navigateToOfferContact() {
-        navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToOfferContactFragment());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("offer", offer);
+        navController.navigate(R.id.offerContactFragment, bundle);
     }
 
     private void cancelOffer() {
         offer.removeParticipant(offerVM.getCurrentUser());
+        // TODO toast?
         updateUI();
     }
 
     private void navigateToProfile() {
-        offerVM.setUser(offer.getCreator());
-        navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToProfileFragment(offer.getCreator()));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", offer.getCreator());
+        navController.navigate(R.id.profileFragment, bundle);
     }
 
     private void navigateToOfferParticipants() {
-        offerVM.setOffer(offer);
-        navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToOfferParticipantsFragment());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("offer", offer);
+        navController.navigate(R.id.offerParticipantsFragment, bundle);
     }
 
     private void bookmark(View view) {
@@ -115,16 +94,19 @@ public class OfferDetailedFragment extends Fragment {
             offerVM.getCurrentUser().addBookmark(offer);
         }
 
+        // TODO toast?
         updateUI();
     }
 
     private void navigateToOfferReport() {
-        navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToOfferReportFragment());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("offer", offer);
+        navController.navigate(R.id.offerReportFragment, bundle);
     }
 
     private void navigateToOfferEdit() {
-        navController.navigate(OfferDetailedFragmentDirections
-                .actionOfferDetailedFragmentToOfferEditFragment());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("offer", offer);
+        navController.navigate(R.id.offerEditFragment, bundle);
     }
 }

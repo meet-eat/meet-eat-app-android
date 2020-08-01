@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.util.Set;
 
 import meet_eat.app.LoginActivity;
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
@@ -44,11 +45,10 @@ public class SettingsFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
         binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navigateToSettingsDisplay());
-        binding.tvSettingsNotificationMenu.setOnClickListener(
-                event -> navigateToSettingsNotification());
+        binding.tvSettingsNotificationMenu.setOnClickListener(event -> navigateToSettingsNotification());
         binding.btSettingsDelete.setOnClickListener(event -> navigateToSettingsDeleteProfile());
         binding.btSettingsLogout.setOnClickListener(event -> logout());
-        binding.ibtBack.setOnClickListener(event -> goBack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
     private void updateUI() {
@@ -69,6 +69,7 @@ public class SettingsFragment extends Fragment {
 
         try {
             settingsVM.logout();
+            // TODO toast?
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } catch (RequestHandlerException e) {
             // TODO
@@ -77,19 +78,15 @@ public class SettingsFragment extends Fragment {
     }
 
     private void navigateToSettingsDeleteProfile() {
-        navController.navigate(SettingsFragmentDirections.actionSettingsFragmentToSettingsDeleteProfileFragment());
+        navController.navigate(R.id.settingsDeleteProfileFragment);
     }
 
     private void navigateToSettingsNotification() {
-        navController.navigate(SettingsFragmentDirections.actionSettingsFragmentToNotificationFragment());
+        navController.navigate(R.id.settingsNotificationFragment);
     }
 
     private void navigateToSettingsDisplay() {
-        navController.navigate(SettingsFragmentDirections.actionSettingsFragmentToDisplayFragment());
-    }
-
-    private void goBack() {
-        navController.popBackStack();
+        navController.navigate(R.id.settingsDisplayFragment);
     }
 
     private void toggleNotification() {

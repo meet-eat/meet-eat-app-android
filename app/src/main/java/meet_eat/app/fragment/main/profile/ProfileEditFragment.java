@@ -10,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileEditBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
@@ -27,6 +29,7 @@ public class ProfileEditFragment extends Fragment {
     private String newPasswordString;
     private String home;
     private String description;
+    private NavController navController;
 
     @Nullable
     @Override
@@ -35,6 +38,7 @@ public class ProfileEditFragment extends Fragment {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
+        navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -42,14 +46,13 @@ public class ProfileEditFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.btProfileEditChangePassword.setOnClickListener(event -> changePassword());
         binding.btProfileEditSave.setOnClickListener(event -> saveProfile());
-        binding.ibtBack.setOnClickListener(event -> goBack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
     private void changePassword() {
 
-        if (!Password.isLegalPassword(oldPasswordString) || !Password
-                .isLegalPassword(newPasswordString)) {
-            Toast.makeText(getActivity(), "Altes Passwort falsch oder neues ungültig",
+        if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
+            Toast.makeText(getActivity(), R.string.bad_passwords,
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -59,9 +62,9 @@ public class ProfileEditFragment extends Fragment {
 
         if (oldPassword.equals(userVM.getCurrentUser().getPassword())) {
             userVM.getCurrentUser().setPassword(newPassword);
-            Toast.makeText(getActivity(), "Passwort erfolgreich geändert", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), "Altes Passwort falsch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -83,14 +86,11 @@ public class ProfileEditFragment extends Fragment {
 
         try {
             userVM.edit(currentUser);
+            // TODO toast?
         } catch (RequestHandlerException e) {
             // TODO timeout etc.
         }
 
-    }
-
-    private void goBack() {
-        Navigation.findNavController(binding.getRoot()).popBackStack();
     }
 
     public String getPhone() {

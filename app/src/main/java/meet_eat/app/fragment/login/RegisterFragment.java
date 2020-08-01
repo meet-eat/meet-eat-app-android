@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class RegisterFragment extends Fragment {
     private static final int MONTH_CORRECTION = 1;
 
     private FragmentRegisterBinding binding;
+    private NavController navController;
     private RegisterViewModel registerVM;
     private String email;
     private String password;
@@ -56,24 +58,23 @@ public class RegisterFragment extends Fragment {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
+        navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event -> Navigation.findNavController(binding.getRoot())
-                .popBackStack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.tvRegisterBirthdate.setOnClickListener(event -> showDatePicker());
         binding.btRegister.setOnClickListener(event -> register());
     }
 
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(),
-                (datePicker, year, month, dayOfMonth) -> {
+        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month,
+                                                              dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter
-                    .ofPattern(EUROPEAN_DATE_FORMAT)));
+            binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter.ofPattern(EUROPEAN_DATE_FORMAT)));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
@@ -97,8 +98,7 @@ public class RegisterFragment extends Fragment {
         Address address = getLocationFromUI();
 
         if (address == null) {
-            Toast.makeText(getActivity(), "Heimatort gibt es nicht (laut google)",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -108,7 +108,7 @@ public class RegisterFragment extends Fragment {
             registerVM.register(user);
         } catch (RequestHandlerException e) {
             // TODO catch error on user create
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         navigateToLogin();
@@ -124,8 +124,9 @@ public class RegisterFragment extends Fragment {
         try {
 
             if (geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1) != null) {
-                addressList = geocoder.getFromLocationName(binding.etRegisterHome.getText()
-                        .toString(), 1);
+                addressList =
+                        geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(),
+                                1);
             }
 
         } catch (IOException e) {
@@ -136,26 +137,21 @@ public class RegisterFragment extends Fragment {
             address = addressList.get(0);
         }
 
-        if (address != null && address.getSubAdminArea() != null) {
-
-            if (address.getPostalCode() != null) {
-                binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea())
-                        .append(", ").append(address.getPostalCode()).toString());
-            } else {
-                binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName())
-                        .append(", ").append(address.getSubAdminArea()));
-            }
-
-        } else {
+        if (address == null || address.getSubAdminArea() == null) {
             return null;
+        }
+
+        if (address.getPostalCode() != null) {
+            binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()).append(", ").append(address.getPostalCode()).toString());
+        } else {
+            binding.etRegisterHome.setText(new StringBuilder().append(address.getFeatureName()).append(", ").append(address.getSubAdminArea()));
         }
 
         return address;
     }
 
     private void navigateToLogin() {
-        Navigation.findNavController(binding.getRoot()).navigate(RegisterFragmentDirections
-                .actionRegisterFragmentToLoginFragment());
+        navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
     }
 
     public String getEmail() {

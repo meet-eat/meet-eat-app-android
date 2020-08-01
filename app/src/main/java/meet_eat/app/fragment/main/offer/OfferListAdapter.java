@@ -1,5 +1,6 @@
 package meet_eat.app.fragment.main.offer;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -68,36 +69,39 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO binding.ivOfferPicture.setImageResource(...);
-            binding.ivOfferCardPicture.setOnClickListener(
-                    event -> {
-                        Navigation.findNavController(binding.getRoot())
-                                .navigate(OfferListFragmentDirections
-                                        .actionOfferListFragmentToOfferDetailedFragment());
-                    });
+            binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
             if (offerVM.isBookmarked(offer)) {
-                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot()
-                        .getContext(), R.color.bookmarked));
+                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
             }
 
-            binding.ibtOfferCardBookmark.setOnClickListener(event -> {
+            binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
+        }
 
-                try {
+        private void changeBookmark(Offer offer) {
+            try {
 
-                    if (offerVM.isBookmarked(offer)) {
-                        offerVM.removeBookmark(offer);
-                        binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol));
-                    } else {
-                        offerVM.addBookmark(offer);
-                        binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
-                    }
-
-                } catch (RequestHandlerException e) {
-                    Toast.makeText(binding.getRoot().getContext(), e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
+                if (offerVM.isBookmarked(offer)) {
+                    offerVM.removeBookmark(offer);
+                    // TODO toast?
+                    binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol));
+                } else {
+                    offerVM.addBookmark(offer);
+                    // TODO toast?
+                    binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
                 }
 
-            });
+            } catch (RequestHandlerException e) {
+                Toast.makeText(binding.getRoot().getContext(), "Exception " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        private void navigateToOfferDetailed(Offer offer) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("offer", offer);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.offerDetailedFragment,
+                    bundle);
         }
     }
 }

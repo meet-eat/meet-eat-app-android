@@ -10,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsDeleteProfileBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
@@ -22,6 +24,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     private FragmentSettingsDeleteProfileBinding binding;
     private SettingsViewModel settingsVM;
     private String password;
+    private NavController navController;
 
 
     @Nullable
@@ -30,38 +33,35 @@ public class SettingsDeleteProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
+        navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
         binding.btSettingsDeleteProfile.setOnClickListener(event -> deleteProfile());
-        binding.ibtBack.setOnClickListener(event -> goBack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
     private void deleteProfile() {
 
         if (!Password.isLegalPassword(password)) {
-            Toast.makeText(getActivity(), "wrong pw", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
         }
 
-        if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser()
-                .getPassword())) {
+        if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser().getPassword())) {
 
             try {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());
+                // TODO toast?
             } catch (RequestHandlerException e) {
                 // TODO
             }
 
         } else {
-            Toast.makeText(getActivity(), "wrong pw bro", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.invalid_password, Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    private void goBack() {
-        Navigation.findNavController(binding.getRoot()).popBackStack();
     }
 
     public String getPassword() {

@@ -55,7 +55,7 @@ public class ProfileSubscribedFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.ibtBack.setOnClickListener(event -> navController.popBackStack());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
     private void navigateToProfileFragment(View view) {
