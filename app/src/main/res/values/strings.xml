@@ -76,4 +76,12 @@
     <string name="password_changed">Passwort erfolgreich geändert.</string>
     <string name="invalid_old_password">Altes Passwort falsch.</string>
     <string name="invalid_password">Passwort falsch.</string>
+    <string name="drawer_menu_profile">Profil</string>
+    <string name="drawer_menu_my_offers">Meine Angebote</string>
+    <string name="drawer_menu_bookmarked">Germerkt</string>
+    <string name="drawer_menu_subscriptions">Abonnements</string>
+    <string name="drawer_menu_settings">Einstellungen</string>
+    <string name="drawer_menu_logout">Abmelden</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

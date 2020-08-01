@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_menu_profile"
+            android:title="@string/drawer_menu_profile" />
+        <item
+            android:id="@+id/drawer_menu_my_offers"
+            android:title="@string/drawer_menu_my_offers" />
+        <item
+            android:id="@+id/drawer_menu_bookmarked"
+            android:title="@string/drawer_menu_bookmarked" />
+        <item
+            android:id="@+id/drawer_menu_subscriptions"
+            android:title="@string/drawer_menu_subscriptions" />
+        <item
+            android:id="@+id/drawer_menu_settings"
+            android:title="@string/drawer_menu_settings" />
+    </group>
+</menu>

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/offerDetailedFragment">
+    app:startDestination="@id/offerListFragment">
     <fragment
         android:id="@+id/settingsFragment"
         android:name="meet_eat.app.fragment.main.settings.SettingsFragment"
@@ -61,23 +61,7 @@
         android:id="@+id/offerReportFragment"
         android:name="meet_eat.app.fragment.main.offer.OfferReportFragment"
         android:label="OfferReportFragment" />
-    <fragment
-        android:id="@+id/navigationDrawerFragment"
-        android:name="meet_eat.app.fragment.main.NavigationDrawerFragment"
-        android:label="NavigationDrawerFragment">
-        <action
-            android:id="@+id/action_navigationDrawerFragment_to_offerFilterFragment"
-            app:destination="@id/offerFilterFragment" />
-        <action
-            android:id="@+id/action_navigationDrawerFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_navigationDrawerFragment_to_offerListFragment"
-            app:destination="@id/offerListFragment" />
-        <action
-            android:id="@+id/action_navigationDrawerFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/offerListFragment"
         android:name="meet_eat.app.fragment.main.offer.OfferListFragment"
