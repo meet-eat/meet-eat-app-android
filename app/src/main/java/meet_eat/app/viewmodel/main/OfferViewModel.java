@@ -31,9 +31,6 @@ public class OfferViewModel extends ViewModel {
     private final Session session = Session.getInstance();
     private final Page page = new Page(PAGE_INDEX, PAGE_SIZE);
 
-    private Offer offer;
-    private User user;
-
     /**
      * Requests the object of the user currently logged in to the device from the
      * {@link meet_eat.app.repository.Session Session}.
@@ -226,21 +223,5 @@ public class OfferViewModel extends ViewModel {
      */
     public Iterable<Tag> getAllTags() throws RequestHandlerException {
         return tagRepository.getTags();
-    }
-
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
