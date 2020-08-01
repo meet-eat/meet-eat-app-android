@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -21,11 +22,13 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        navController = NavHostFragment.findNavController(getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,42 +45,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean onItemClicked(MenuItem menuItem) {
+
         switch (menuItem.getItemId()) {
+            // TODO bundles
             case R.id.drawer_menu_profile:
-                NavHostFragment.findNavController(
-                        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main))
-                        .navigate(R.id.profileFragment);
+                navController.navigate(R.id.profileFragment);
+                break;
+            case R.id.drawer_menu_main_offers:
+                navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_my_offers:
-                NavHostFragment.findNavController(
-                        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main))
-                        .navigate(R.id.offerListFragment);
+                navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_bookmarked:
-                NavHostFragment.findNavController(
-                        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main))
-                        .navigate(R.id.offerListFragment);
+                navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_subscriptions:
-                NavHostFragment.findNavController(
-                        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main))
-                        .navigate(R.id.offerListFragment);
+                navController.navigate(R.id.offerListFragment);
                 break;
             case R.id.drawer_menu_settings:
-                NavHostFragment.findNavController(
-                        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_main))
-                        .navigate(R.id.settingsFragment);
+                navController.navigate(R.id.settingsFragment);
                 break;
         }
+
         return true;
     }
 
     @Override
     public void onBackPressed() {
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 }
