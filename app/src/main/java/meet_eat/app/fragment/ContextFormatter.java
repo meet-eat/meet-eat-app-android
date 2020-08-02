@@ -14,8 +14,6 @@ import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.data.location.Localizable;
-import meet_eat.data.location.SphericalLocation;
-import meet_eat.data.location.SphericalPosition;
 import meet_eat.data.location.UnlocalizableException;
 
 public class ContextFormatter {
@@ -42,7 +40,7 @@ public class ContextFormatter {
         return String.format(context.getResources().getString(R.string.price_format), price) + context.getResources().getString(R.string.currency);
     }
 
-    public Address getLocationFromString(String location) {
+    public Address getAddressFromString(String location) {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
@@ -56,14 +54,14 @@ public class ContextFormatter {
         } catch (IOException e) {
             // TODO remove debug toast
             Toast.makeText(context,
-                    "DEBUG ContextFormatter.java -> getLocationFromString(): " + e.getMessage(),
+                    "DEBUG ContextFormatter.java -> getAddressFromString(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
             return null;
         }
 
     }
 
-    public String getStringFromLocation(Address address) {
+    public String getStringFromAddress(Address address) {
 
         if (Objects.requireNonNull(address).getPostalCode() == null) {
             return address.getSubAdminArea();
@@ -72,16 +70,14 @@ public class ContextFormatter {
         return address.getPostalCode() + ", " + address.getSubAdminArea();
     }
 
-    public Address parseLocalizableToAddress(Localizable localizable) {
+    public String getStringFromLocalizeable(Localizable localizable) {
 
         try {
-            return new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(),
-                    localizable.getSphericalPosition().getLongitude(), 1).get(0);
+            return getStringFromAddress(new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(), localizable.getSphericalPosition().getLongitude(), 1).get(0));
         } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
-            Toast.makeText(context,
-                    "DEBUG ContextFormatter.java -> parseLocalizableToAddress(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "DEBUG ContextFormatter.java -> getStringFromLocalizeable(): "
+                    + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         return null;

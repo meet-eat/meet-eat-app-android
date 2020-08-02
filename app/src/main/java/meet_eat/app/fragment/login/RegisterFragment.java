@@ -78,7 +78,6 @@ public class RegisterFragment extends Fragment {
     private void register() {
         ContextFormatter contextFormatter =
                 new ContextFormatter(binding.getRoot().getContext());
-        // TODO profile image
 
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
@@ -91,19 +90,20 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        Email emailParam = new Email(this.email);
-        Password hashedPassword = Password.createHashedPassword(this.password);
-        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
-                profileDescription, false);
-        Address address = contextFormatter.getLocationFromString(home);
+        Address address = contextFormatter.getAddressFromString(home);
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        home = contextFormatter.getStringFromLocation(address);
+        home = contextFormatter.getStringFromAddress(address);
         // TODO location of user
+        // TODO profile image
+        Email emailParam = new Email(this.email);
+        Password hashedPassword = Password.createHashedPassword(this.password);
+        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
+                profileDescription, false);
 
         try {
             registerVM.register(user);

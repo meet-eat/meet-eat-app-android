@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
@@ -31,9 +30,6 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
-import meet_eat.data.entity.user.Email;
-import meet_eat.data.entity.user.Password;
-import meet_eat.data.entity.user.User;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalPosition;
 
@@ -122,7 +118,7 @@ public class OfferEditFragment extends Fragment {
 
     private void editOffer() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        Address address = contextFormatter.getLocationFromString(city);
+        Address address = contextFormatter.getAddressFromString(city);
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
@@ -166,7 +162,7 @@ public class OfferEditFragment extends Fragment {
 
     private void publishOffer() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        Address address = contextFormatter.getLocationFromString(city);
+        Address address = contextFormatter.getAddressFromString(city);
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
@@ -276,7 +272,7 @@ public class OfferEditFragment extends Fragment {
                     "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
-        
+
     }
 
     private void initUI() {
@@ -290,7 +286,7 @@ public class OfferEditFragment extends Fragment {
             ContextFormatter contextFormatter =
                     new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
-            city = contextFormatter.getStringFromLocation(contextFormatter.parseLocalizableToAddress(offer.getLocation()));
+            city = contextFormatter.getStringFromLocalizeable(offer.getLocation());
             price = String.valueOf(offer.getPrice());
             participants = String.valueOf(offer.getMaxParticipants());
             description = offer.getDescription();

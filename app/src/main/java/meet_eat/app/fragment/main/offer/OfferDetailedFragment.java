@@ -151,7 +151,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
         // TODO distance
-        binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocation(contextFormatter.parseLocalizableToAddress(location)));
+        binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizeable(location));
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
         // TODO profile image
