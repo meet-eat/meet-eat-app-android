@@ -13,6 +13,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import meet_eat.app.R;
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalLocation;
+import meet_eat.data.location.SphericalPosition;
+import meet_eat.data.location.UnlocalizableException;
 
 public class ContextFormatter {
 
@@ -52,7 +56,7 @@ public class ContextFormatter {
         } catch (IOException e) {
             // TODO remove debug toast
             Toast.makeText(context,
-                    "DEBUG RegisterFragment.java -> getLocationFromUI(): " + e.getMessage(),
+                    "DEBUG ContextFormatter.java -> getLocationFromString(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
             return null;
         }
@@ -66,5 +70,20 @@ public class ContextFormatter {
         }
 
         return address.getPostalCode() + ", " + address.getSubAdminArea();
+    }
+
+    public Address parseLocalizableToAddress(Localizable localizable) {
+
+        try {
+            return new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(),
+                    localizable.getSphericalPosition().getLongitude(), 1).get(0);
+        } catch (IOException | UnlocalizableException e) {
+            // TODO remove debug toast
+            Toast.makeText(context,
+                    "DEBUG ContextFormatter.java -> parseLocalizableToAddress(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        return null;
     }
 }
