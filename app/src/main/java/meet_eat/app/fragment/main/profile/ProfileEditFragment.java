@@ -40,12 +40,25 @@ public class ProfileEditFragment extends Fragment {
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
+        initUI();
         return binding.getRoot();
+    }
+
+    private void initUI() {
+        User currentUser = userVM.getCurrentUser();
+        binding.tvProfileEditEmail.setText(currentUser.getEmail().toString());
+        binding.tvProfileEditUsername.setText(currentUser.getName());
+        //ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+        //binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
+        binding.etProfileEditPhone.setText(currentUser.getPhoneNumber());
+        // TODO binding.etProfileEditHome.setText(currentUser.getHome());
+        binding.etProfileEditDescription.setText(currentUser.getDescription());
     }
 
     private void setButtonOnClickListener() {
         binding.btProfileEditChangePassword.setOnClickListener(event -> changePassword());
         binding.btProfileEditSave.setOnClickListener(event -> saveProfile());
+        binding.ibtProfileEditAdd.setOnClickListener(event -> addImage());
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
@@ -69,8 +82,14 @@ public class ProfileEditFragment extends Fragment {
 
     }
 
+    private void addImage() {
+        // TODO
+    }
+
     private void saveProfile() {
         User currentUser = userVM.getCurrentUser();
+
+        currentUser.setPhoneNumber(phone);
 
         if (phone != null && !phone.isEmpty()) {
             currentUser.setPhoneNumber(phone);
@@ -86,7 +105,7 @@ public class ProfileEditFragment extends Fragment {
 
         try {
             userVM.edit(currentUser);
-            // TODO toast?
+            Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             // TODO timeout etc.
         }
