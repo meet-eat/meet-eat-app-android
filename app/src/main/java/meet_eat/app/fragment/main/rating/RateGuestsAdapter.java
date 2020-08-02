@@ -7,24 +7,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
-import meet_eat.app.viewmodel.main.UserViewModel;
+import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.user.User;
 
 public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.ViewHolder> {
 
-    private UserViewModel userVM;
+    private RatingViewModel ratingVM;
     private ArrayList<User> currentGuests;
 
-    public RateGuestsAdapter(UserViewModel userVM, ArrayList<User> guests) {
-        this.userVM = userVM;
+    public RateGuestsAdapter(RatingViewModel ratingVM, ArrayList<User> guests) {
+        this.ratingVM = ratingVM;
         currentGuests = guests;
     }
 
-    public void updateGuests(ArrayList<User> guests) {
-        currentGuests = guests;
+    public void updateGuests(Collection<User> participants) {
+        currentGuests = new ArrayList<>(participants);
         notifyDataSetChanged();
+    }
+
+    public void sendRatings() {
+        // TODO create ratings, then: ratingVM.send(ratings);
     }
 
     @NonNull
