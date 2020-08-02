@@ -23,7 +23,7 @@ import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 
 import static android.view.View.GONE;
-import static meet_eat.app.fragment.Key.USER;
+import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
 public class ProfileFragment extends Fragment {
 

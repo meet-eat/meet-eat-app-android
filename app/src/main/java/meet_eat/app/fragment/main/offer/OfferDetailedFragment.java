@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
-import meet_eat.app.fragment.FormatFragment;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
@@ -29,9 +29,10 @@ import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static meet_eat.app.fragment.Key.*;
+import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
+import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
-public class OfferDetailedFragment extends FormatFragment {
+public class OfferDetailedFragment extends Fragment {
 
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
@@ -56,7 +57,6 @@ public class OfferDetailedFragment extends FormatFragment {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
-        super.setPatterns();
         initUI();
         setButtonOnClickListener();
         return binding.getRoot();
@@ -149,9 +149,10 @@ public class OfferDetailedFragment extends FormatFragment {
     }
 
     private void initUI() {
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         // TODO offer image
         binding.tvOfferDetailedTitle.setText(offer.getName());
-        binding.tvOfferDetailedDate.setText(formatDateTime(offer.getDateTime()));
+        binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
 
         try {
@@ -165,7 +166,7 @@ public class OfferDetailedFragment extends FormatFragment {
                     Toast.LENGTH_LONG).show();
         }
 
-        binding.tvOfferDetailedPrice.setText(formatPrice(offer.getPrice()));
+        binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
         // TODO profile image
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());

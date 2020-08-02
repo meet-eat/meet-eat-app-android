@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.offer;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -19,20 +21,21 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferEditBinding;
-import meet_eat.app.fragment.FormatFragment;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
-import static meet_eat.app.fragment.Key.*;
+import static meet_eat.app.fragment.NavigationArgumentKey.*;
 import static meet_eat.app.fragment.OfferListType.STANDARD;
 
-public class OfferEditFragment extends FormatFragment {
+public class OfferEditFragment extends Fragment {
 
     private static final int MONTH_CORRECTION = 1;
 
@@ -84,9 +87,10 @@ public class OfferEditFragment extends FormatFragment {
             new TimePickerDialog(binding.getRoot().getContext(),
                     (view, hourOfDay, minute) -> {
                         dateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth,
-                                hourOfDay
-                                , minute);
-                        binding.tvOfferEditDate.setText(formatDateTime(dateTime));
+                                hourOfDay, minute);
+                        ContextFormatter contextFormatter =
+                                new ContextFormatter(binding.getRoot().getContext());
+                        binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
                     }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
         }, cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
@@ -110,9 +114,36 @@ public class OfferEditFragment extends FormatFragment {
     }
 
     private void updateOffer() {
+        /* TODO Address address = getLocationFromUI();
+
+        if (address == null) {
+            Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        offer.setLocation();*/
+
+        try {
+            offer.setPrice(Double.parseDouble(price));
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), R.string.invalid_price, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            offer.setMaxParticipants(Integer.parseInt(participants));
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), R.string.invalid_max_participants, Toast.LENGTH_SHORT).show();
+        }
+
+        // TODO offer image
         offer.setName(title);
         offer.setDateTime(LocalDateTime.from(dateTime));
+        offer.setDescription(description);
+        // TODO tags
     }
+
+    // TODO extract geocoder to FormatFragment?
 
     private void publishOffer() {
     }
@@ -125,7 +156,9 @@ public class OfferEditFragment extends FormatFragment {
         } else {
             binding.btOfferEditPublish.setVisibility(GONE);
             title = offer.getName();
-            binding.tvOfferEditDate.setText(formatDateTime(dateTime));
+            ContextFormatter contextFormatter =
+                    new ContextFormatter(binding.getRoot().getContext());
+            binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
 
             try {
                 // TODO distance

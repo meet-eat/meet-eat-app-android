@@ -58,7 +58,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/ibtOfferListCreate" />
 
             <Button
-                android:id="@+id/ibtOfferListEdit"
+                android:id="@+id/ibtOfferListSubscribed"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"

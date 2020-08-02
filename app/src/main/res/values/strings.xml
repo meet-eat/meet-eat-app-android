@@ -88,5 +88,8 @@
     <string name="drawer_menu_main_offers">Hauptansicht</string>
     <string name="european_time_format">HH:mm</string>
     <string name="european_time_calling">Uhr</string>
-    <string name="price_format">%,2f</string>
+    <string name="price_format">%.2f</string>
+    <string name="profile_edit_success">Profil erfolgreich bearbeitet.</string>
+    <string name="invalid_price">Ungültige Preisangabe.</string>
+    <string name="invalid_max_participants">Ungültige Anzahl an Teilnehmern.</string>
 </resources>

@@ -15,7 +15,7 @@ import meet_eat.app.databinding.ItemOfferParticipantBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.user.User;
 
-import static meet_eat.app.fragment.Key.USER;
+import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
 public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticipantsAdapter.ViewHolder> {
 

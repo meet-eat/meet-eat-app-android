@@ -1,7 +1,10 @@
 package meet_eat.app.fragment;
 
-public enum Key {
+public enum NavigationArgumentKey {
+
     OFFER,
+
     USER,
+
     TYPE
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -23,7 +24,7 @@ import java.util.List;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
-import meet_eat.app.fragment.FormatFragment;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
@@ -33,7 +34,7 @@ import meet_eat.data.entity.user.User;
 /**
  * Manages registration-related information.
  */
-public class RegisterFragment extends FormatFragment {
+public class RegisterFragment extends Fragment {
 
     private static final int MONTH_CORRECTION = 1;
 
@@ -42,6 +43,7 @@ public class RegisterFragment extends FormatFragment {
     private NavController navController;
     private LocalDate birthDay;
     private String email;
+    private String home;
     private String password;
     private String username;
     private String phoneNumber;
@@ -56,7 +58,6 @@ public class RegisterFragment extends FormatFragment {
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
-        super.setPatterns();
         return binding.getRoot();
     }
 
@@ -71,11 +72,15 @@ public class RegisterFragment extends FormatFragment {
         new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month,
                                                               dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            binding.tvRegisterBirthdate.setText(formatDate(birthDay));
+            ContextFormatter contextFormatter =
+                    new ContextFormatter(binding.getRoot().getContext());
+            binding.tvRegisterBirthdate.setText(contextFormatter.formatDate(birthDay));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void register() {
+        ContextFormatter contextFormatter =
+                new ContextFormatter(binding.getRoot().getContext());
         // TODO profile image
 
         if (!Email.isLegalEmailAddress(email)) {
@@ -93,13 +98,14 @@ public class RegisterFragment extends FormatFragment {
         Password hashedPassword = Password.createHashedPassword(this.password);
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
                 profileDescription, false);
-        Address address = getLocationFromUI();
+        Address address = contextFormatter.getLocationFromString(home);
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
+        home = contextFormatter.getStringFromLocation(address);
         // TODO location of user
 
         try {
@@ -113,41 +119,6 @@ public class RegisterFragment extends FormatFragment {
 
         navigateToLogin();
         Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
-    }
-
-    private Address getLocationFromUI() {
-        Geocoder geocoder = new Geocoder(binding.getRoot().getContext());
-        List<Address> addressList = null;
-        Address address = null;
-
-        try {
-
-            if (geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(), 1) != null) {
-                addressList =
-                        geocoder.getFromLocationName(binding.etRegisterHome.getText().toString(),
-                                1);
-                address = addressList.get(0);
-
-                if (address.getSubAdminArea() == null) {
-                    return null;
-                }
-
-                if (address.getPostalCode() == null) {
-                    binding.etRegisterHome.setText(new StringBuilder().append(address.getSubAdminArea()));
-                } else {
-                    binding.etRegisterHome.setText(new StringBuilder().append(address.getPostalCode()).append(", ").append(address.getSubAdminArea()).toString());
-                }
-            }
-
-            return address;
-        } catch (IOException e) {
-            // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG RegisterFragment.java -> getLocationFromUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
-            return null;
-        }
-
     }
 
     private void navigateToLogin() {

@@ -21,7 +21,7 @@ import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
-import static meet_eat.app.fragment.Key.OFFER;
+import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 public class OfferParticipantsFragment extends Fragment {
 

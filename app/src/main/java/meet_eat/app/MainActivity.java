@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 
-import static meet_eat.app.fragment.Key.TYPE;
+import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
 import static meet_eat.app.fragment.OfferListType.BOOKMARKED;
 import static meet_eat.app.fragment.OfferListType.OWN;
 import static meet_eat.app.fragment.OfferListType.STANDARD;

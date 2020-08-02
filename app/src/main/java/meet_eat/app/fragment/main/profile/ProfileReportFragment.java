@@ -11,17 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.Report;
-import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
-import static meet_eat.app.fragment.Key.USER;
+import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
 public class ProfileReportFragment extends Fragment {
 

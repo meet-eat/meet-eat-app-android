@@ -22,7 +22,6 @@ import java.util.Set;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferListBinding;
-import meet_eat.app.fragment.Key;
 import meet_eat.app.fragment.OfferListType;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
@@ -32,8 +31,8 @@ import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalPosition;
 
-import static meet_eat.app.fragment.Key.TYPE;
-import static meet_eat.app.fragment.OfferListType.*;
+import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
+import static meet_eat.app.fragment.OfferListType.STANDARD;
 
 public class OfferListFragment extends Fragment {
 
@@ -52,9 +51,10 @@ public class OfferListFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());
         binding.rvOfferList.setAdapter(offerListAdapter);
-        binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
 
-        if (getArguments() == null ) {
+        if (getArguments() == null) {
             navController.navigateUp();
         } else {
             type = (OfferListType) getArguments().getSerializable(TYPE.name());
@@ -158,7 +158,8 @@ public class OfferListFragment extends Fragment {
 
         for (int i = 0; i < 100; i++) {
             offerList.add(new Offer(new User(new Email("tester@testi.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester 2 Testi 2",
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester 2 " +
+                    "Testi 2",
                     "+49160304050", "My description", true), new Set<Tag>() {
                 @Override
                 public int size() {

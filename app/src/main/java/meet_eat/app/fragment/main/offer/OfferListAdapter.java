@@ -11,19 +11,16 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferCardBinding;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 
-import static meet_eat.app.fragment.Key.OFFER;
+import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
@@ -69,20 +66,25 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         public ViewHolder(@NonNull ItemOfferCardBinding binding) {
             super(binding.getRoot());
-            dateFormatPattern = binding.getRoot().getResources().getString(R.string.european_date_format);
-            timeFormatPattern = binding.getRoot().getResources().getString(R.string.european_time_format);
-            timeCalling = binding.getRoot().getResources().getString(R.string.european_time_calling);
+            dateFormatPattern =
+                    binding.getRoot().getResources().getString(R.string.european_date_format);
+            timeFormatPattern =
+                    binding.getRoot().getResources().getString(R.string.european_time_format);
+            timeCalling =
+                    binding.getRoot().getResources().getString(R.string.european_time_calling);
             pricePattern = binding.getRoot().getResources().getString(R.string.price_format);
             currency = binding.getRoot().getResources().getString(R.string.currency);
             this.binding = binding;
         }
 
         public void setData(Offer offer) {
+            ContextFormatter contextFormatter =
+                    new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferCardTitle.setText(offer.getName());
             binding.tvOfferCardDescription.setText(offer.getDescription());
-            binding.tvOfferCardDate.setText(formatDateTime(offer.getDateTime()));
-            binding.tvPrice.setText(formatPrice(offer.getPrice()));
-            // TODO binding.tvDistance.setText(Haversine.applyHaversineFormula(...));
+            binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
+            binding.tvPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
+            // TODO distance
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
@@ -118,22 +120,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             bundle.putSerializable(OFFER.name(), offer);
             Navigation.findNavController(binding.getRoot()).navigate(R.id.offerDetailedFragment,
                     bundle);
-        }
-
-        public String formatDateTime(LocalDateTime dateTime) {
-            return formatDate(dateTime.toLocalDate()) + ", " + formatTime(dateTime.toLocalTime());
-        }
-
-        public String formatDate(LocalDate localDate) {
-            return localDate.format(DateTimeFormatter.ofPattern(dateFormatPattern));
-        }
-
-        public String formatTime(LocalTime localTime) {
-            return localTime.format(DateTimeFormatter.ofPattern(timeFormatPattern)) + " " + timeCalling;
-        }
-
-        public String formatPrice(Double price) {
-            return String.format(pricePattern, price) + currency;
         }
     }
 }
