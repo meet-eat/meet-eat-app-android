@@ -34,6 +34,11 @@ import meet_eat.data.location.SphericalPosition;
 import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
 import static meet_eat.app.fragment.OfferListType.STANDARD;
 
+import static android.view.View.GONE;
+import static meet_eat.app.fragment.Key.TYPE;
+import static meet_eat.app.fragment.OfferListType.STANDARD;
+import static meet_eat.app.fragment.OfferListType.SUBSCRIBED;
+
 public class OfferListFragment extends Fragment {
 
     private FragmentOfferListBinding binding;
@@ -67,12 +72,19 @@ public class OfferListFragment extends Fragment {
 
     private void updateUI() {
         updateOffers();
-        // TODO
+        if (!type.equals(SUBSCRIBED)) {
+            binding.ibtOfferListSubscribed.setVisibility(GONE);
+        }
     }
 
     private void setButtonOnClickListener() {
+        binding.ibtOfferListFilter.setOnClickListener(event -> navigateToOfferFilter());
         binding.ibtOfferListCreate.setOnClickListener(event -> navigateToOfferEdit());
-        binding.ibtOfferListEdit.setOnClickListener(event -> navigateToProfileSubscribed());
+        binding.ibtOfferListSubscribed.setOnClickListener(event -> navigateToProfileSubscribed());
+    }
+
+    private void navigateToOfferFilter() {
+        navController.navigate(R.id.offerFilterFragment);
     }
 
     private void navigateToProfileSubscribed() {
