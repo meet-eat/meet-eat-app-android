@@ -3,7 +3,6 @@ package meet_eat.app.fragment.main.offer;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferEditBinding;
@@ -29,10 +30,16 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.location.UnlocalizableException;
+import meet_eat.data.entity.Tag;
+import meet_eat.data.entity.user.Email;
+import meet_eat.data.entity.user.Password;
+import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalPosition;
 
 import static android.view.View.GONE;
-import static meet_eat.app.fragment.NavigationArgumentKey.*;
+import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
+import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
 import static meet_eat.app.fragment.OfferListType.STANDARD;
 
 public class OfferEditFragment extends Fragment {
@@ -75,7 +82,7 @@ public class OfferEditFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btOfferEditPublish.setOnClickListener(event -> publishOffer());
-        binding.btOfferEditSave.setOnClickListener(event -> updateOffer());
+        binding.btOfferEditSave.setOnClickListener(event -> editOffer());
         binding.btOfferEditDelete.setOnClickListener(event -> deleteOffer());
         binding.tvOfferEditDate.setOnClickListener(event -> showDateTimePicker());
     }
@@ -113,15 +120,17 @@ public class OfferEditFragment extends Fragment {
 
     }
 
-    private void updateOffer() {
-        /* TODO Address address = getLocationFromUI();
+    private void editOffer() {
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+        Address address = contextFormatter.getLocationFromString(city);
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        offer.setLocation();*/
+        offer.setLocation(() -> new SphericalPosition(address.getLatitude(),
+                address.getLongitude()));
 
         try {
             offer.setPrice(Double.parseDouble(price));
@@ -134,6 +143,7 @@ public class OfferEditFragment extends Fragment {
             offer.setMaxParticipants(Integer.parseInt(participants));
         } catch (NumberFormatException e) {
             Toast.makeText(getActivity(), R.string.invalid_max_participants, Toast.LENGTH_SHORT).show();
+            return;
         }
 
         // TODO offer image
@@ -141,11 +151,132 @@ public class OfferEditFragment extends Fragment {
         offer.setDateTime(LocalDateTime.from(dateTime));
         offer.setDescription(description);
         // TODO tags
+
+        try {
+            offerVM.edit(offer);
+            Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+            navController.navigateUp();
+        } catch (RequestHandlerException e) {
+            // TODO resolve error code
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
-    // TODO extract geocoder to FormatFragment?
-
     private void publishOffer() {
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+        Address address = contextFormatter.getLocationFromString(city);
+
+        if (address == null) {
+            Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Localizable location = () -> new SphericalPosition(address.getLatitude(),
+                address.getLongitude());
+        double price;
+
+        try {
+            price = Double.parseDouble(this.price);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), R.string.invalid_price, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int maxParticipants;
+
+        try {
+            maxParticipants = Integer.parseInt(participants);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), R.string.invalid_max_participants, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // TODO offer image
+        // TODO tags
+        offer = new Offer(offerVM.getCurrentUser(), new Set<Tag>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(@Nullable Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<Tag> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean add(Tag tag) {
+                return false;
+            }
+
+            @Override
+            public boolean remove(@Nullable Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends Tag> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+            }
+        }, title, description, price, maxParticipants, LocalDateTime.from(dateTime), location);
+
+        try {
+            offerVM.add(offer);
+            Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(OFFER.name(), offer);
+            navController.navigate(R.id.offerDetailedFragment, bundle);
+        } catch (RequestHandlerException e) {
+            // TODO resolve error code
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+        
     }
 
     private void initUI() {
@@ -159,19 +290,7 @@ public class OfferEditFragment extends Fragment {
             ContextFormatter contextFormatter =
                     new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
-
-            try {
-                // TODO distance
-                city =
-                        new Geocoder(binding.getRoot().getContext()).getFromLocation(offer.getLocation().getSphericalPosition().getLatitude(),
-                                offer.getLocation().getSphericalPosition().getLongitude(), 1).get(0).getSubAdminArea();
-            } catch (IOException | UnlocalizableException e) {
-                // TODO remove debug toast
-                Toast.makeText(getActivity(),
-                        "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-
+            city = contextFormatter.getStringFromLocation(contextFormatter.parseLocalizableToAddress(offer.getLocation()));
             price = String.valueOf(offer.getPrice());
             participants = String.valueOf(offer.getMaxParticipants());
             description = offer.getDescription();

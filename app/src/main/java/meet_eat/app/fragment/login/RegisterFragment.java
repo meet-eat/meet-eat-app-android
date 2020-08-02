@@ -2,7 +2,6 @@ package meet_eat.app.fragment.login;
 
 import android.app.DatePickerDialog;
 import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;

@@ -61,7 +61,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void login() {
-        if(DEBUG){
+        if (DEBUG) {
             startActivity(new Intent(getActivity(), MainActivity.class));
             return;
         }
