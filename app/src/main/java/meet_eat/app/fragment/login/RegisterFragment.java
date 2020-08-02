@@ -164,4 +164,12 @@ public class RegisterFragment extends Fragment {
     public void setProfileDescription(String profileDescription) {
         this.profileDescription = profileDescription;
     }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
 }
