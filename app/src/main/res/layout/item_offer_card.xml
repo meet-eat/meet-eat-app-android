@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="@+id/ivOfferCardPicture" />
 
         <TextView
-            android:id="@+id/tvPrice"
+            android:id="@+id/tvOfferCardPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

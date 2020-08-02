@@ -69,9 +69,11 @@ public class OfferListFragment extends Fragment {
 
     private void updateUI() {
         updateOffers();
+
         if (!type.equals(SUBSCRIBED)) {
             binding.ibtOfferListSubscribed.setVisibility(GONE);
         }
+
     }
 
     private void setButtonOnClickListener() {

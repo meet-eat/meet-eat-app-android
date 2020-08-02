@@ -58,22 +58,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemOfferCardBinding binding;
-        private String dateFormatPattern;
-        private String timeFormatPattern;
-        private String timeCalling;
-        private String pricePattern;
-        private String currency;
 
         public ViewHolder(@NonNull ItemOfferCardBinding binding) {
             super(binding.getRoot());
-            dateFormatPattern =
-                    binding.getRoot().getResources().getString(R.string.european_date_format);
-            timeFormatPattern =
-                    binding.getRoot().getResources().getString(R.string.european_time_format);
-            timeCalling =
-                    binding.getRoot().getResources().getString(R.string.european_time_calling);
-            pricePattern = binding.getRoot().getResources().getString(R.string.price_format);
-            currency = binding.getRoot().getResources().getString(R.string.currency);
             this.binding = binding;
         }
 
@@ -83,7 +70,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.tvOfferCardTitle.setText(offer.getName());
             binding.tvOfferCardDescription.setText(offer.getDescription());
             binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
-            binding.tvPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
+            binding.tvOfferCardPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
             // TODO distance
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO offer image
