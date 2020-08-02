@@ -86,4 +86,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="european_date_format">dd.MM.uuuu</string>
     <string name="drawer_menu_main_offers">Hauptansicht</string>
+    <string name="european_time_format">HH:mm</string>
+    <string name="european_time_calling">Uhr</string>
+    <string name="price_format">%,2f</string>
 </resources>
