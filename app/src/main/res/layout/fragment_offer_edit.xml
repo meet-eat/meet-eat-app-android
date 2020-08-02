@@ -88,7 +88,7 @@
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="@{fragment.title}"
+                    android:text="@={fragment.title}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     app:layout_constraintTop_toTopOf="parent"
@@ -110,8 +110,7 @@
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/etOfferEditCity"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toStartOf="@+id/etOfferEditPrice"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
 
@@ -127,18 +126,17 @@
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="@{fragment.city}"
+                    android:text="@={fragment.city}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvOfferEditDate"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
+                    app:layout_constraintEnd_toStartOf="@+id/etOfferEditParticipants"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOfferEditDate" />
 
                 <EditText
                     android:id="@+id/etOfferEditPrice"
-                    android:layout_width="0dp"
+                    android:layout_width="120dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/bg_edittext"
@@ -149,18 +147,16 @@
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="@{fragment.price}"
+                    android:text="@={fragment.price}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@id/etOfferEditParticipants"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvOfferEditDate" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
 
                 <EditText
                     android:id="@+id/etOfferEditParticipants"
-                    android:layout_width="0dp"
+                    android:layout_width="120dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/bg_edittext"
@@ -171,14 +167,12 @@
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="@{fragment.participants}"
+                    android:text="@={fragment.participants}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@id/etOfferEditPrice"
-                    app:layout_constraintTop_toBottomOf="@id/etOfferEditCity" />
+                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditPrice" />
 
                 <EditText
                     android:id="@+id/etOfferEditDescription"
@@ -197,7 +191,7 @@
                     android:textColorHint="@color/textHint"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditPrice" />
+                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditCity" />
 
                 <Button
                     android:id="@+id/btOfferEditAddTag"

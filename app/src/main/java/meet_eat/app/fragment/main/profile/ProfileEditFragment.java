@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileEditBinding;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.Password;
@@ -48,11 +49,11 @@ public class ProfileEditFragment extends Fragment {
         User currentUser = userVM.getCurrentUser();
         binding.tvProfileEditEmail.setText(currentUser.getEmail().toString());
         binding.tvProfileEditUsername.setText(currentUser.getName());
-        //ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        //binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
-        binding.etProfileEditPhone.setText(currentUser.getPhoneNumber());
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+        binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
+        phone = currentUser.getPhoneNumber();
         // TODO binding.etProfileEditHome.setText(currentUser.getHome());
-        binding.etProfileEditDescription.setText(currentUser.getDescription());
+        description = currentUser.getDescription();
     }
 
     private void setButtonOnClickListener() {
@@ -75,6 +76,16 @@ public class ProfileEditFragment extends Fragment {
 
         if (oldPassword.equals(userVM.getCurrentUser().getPassword())) {
             userVM.getCurrentUser().setPassword(newPassword);
+
+            try {
+                userVM.edit(userVM.getCurrentUser());
+            } catch (RequestHandlerException e) {
+                // TODO resolve error code
+                Toast.makeText(getActivity(),
+                        "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+
             Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
@@ -88,8 +99,6 @@ public class ProfileEditFragment extends Fragment {
 
     private void saveProfile() {
         User currentUser = userVM.getCurrentUser();
-
-        currentUser.setPhoneNumber(phone);
 
         if (phone != null && !phone.isEmpty()) {
             currentUser.setPhoneNumber(phone);
@@ -107,7 +116,10 @@ public class ProfileEditFragment extends Fragment {
             userVM.edit(currentUser);
             Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
-            // TODO timeout etc.
+            // TODO resolve error code
+            Toast.makeText(getActivity(),
+                    "DEBUG RegisterFragment.java -> saveProfile(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
 
     }

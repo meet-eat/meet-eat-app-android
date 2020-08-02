@@ -285,8 +285,9 @@ public class OfferEditFragment extends Fragment {
             title = offer.getName();
             ContextFormatter contextFormatter =
                     new ContextFormatter(binding.getRoot().getContext());
+            dateTime = offer.getDateTime();
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
-            city = contextFormatter.getStringFromLocalizeable(offer.getLocation());
+            city = contextFormatter.getStringFromLocalizable(offer.getLocation());
             price = String.valueOf(offer.getPrice());
             participants = String.valueOf(offer.getMaxParticipants());
             description = offer.getDescription();

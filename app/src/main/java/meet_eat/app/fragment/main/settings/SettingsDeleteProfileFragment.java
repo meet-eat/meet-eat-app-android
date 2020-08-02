@@ -32,6 +32,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
@@ -47,6 +48,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
 
         if (!Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser().getPassword())) {

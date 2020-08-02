@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import org.checkerframework.checker.units.qual.C;
-
 import meet_eat.app.R;
-import meet_eat.app.databinding.FragmentRateGuestsBinding;
 import meet_eat.app.databinding.FragmentRateHostBinding;
 import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.viewmodel.main.RatingViewModel;
@@ -24,9 +20,6 @@ import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.entity.user.rating.RatingBasis;
 import meet_eat.data.entity.user.rating.RatingValue;
-
-import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
-import static meet_eat.app.fragment.OfferListType.STANDARD;
 
 public class RateHostFragment extends Fragment {
 
@@ -59,7 +52,7 @@ public class RateHostFragment extends Fragment {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
         binding.tvRateHostOfferTitle.setText(offer.getName());
-        binding.tvRateHostOfferCity.setText(contextFormatter.getStringFromLocalizeable(offer.getLocation()));
+        binding.tvRateHostOfferCity.setText(contextFormatter.getStringFromLocalizable(offer.getLocation()));
         binding.tvRateHostOfferDate.setText(contextFormatter.formatTime(offer.getDateTime().toLocalTime()));
         binding.tvRateHostOfferDescription.setText(offer.getDescription());
         binding.tvRateHostOfferPrice.setText(String.valueOf(offer.getPrice()));

@@ -49,6 +49,7 @@ public class OfferListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
         offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());

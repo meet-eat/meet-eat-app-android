@@ -70,7 +70,7 @@ public class ContextFormatter {
         return address.getPostalCode() + ", " + address.getSubAdminArea();
     }
 
-    public String getStringFromLocalizeable(Localizable localizable) {
+    public String getStringFromLocalizable(Localizable localizable) {
 
         try {
             return getStringFromAddress(new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(), localizable.getSphericalPosition().getLongitude(), 1).get(0));

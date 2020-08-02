@@ -55,6 +55,7 @@ public class RegisterFragment extends Fragment {
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
+        home ="";
         return binding.getRoot();
     }
 

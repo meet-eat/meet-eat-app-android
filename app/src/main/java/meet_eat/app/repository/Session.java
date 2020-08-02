@@ -48,7 +48,8 @@ public class Session {
     public User getUser() {
         if (DEBUG) {
             User testUser1 = new User(new Email("tester@testi.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Gregor Snelting",
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Gregor " +
+                    "Snelting",
                     "+49160304050", "Ich liebe PSE", true);
             testUser1.addSubscription(new User(new Email("abcde@web.de"), Password
                     .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Stefan Kühnlein",

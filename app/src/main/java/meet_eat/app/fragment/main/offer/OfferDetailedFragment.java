@@ -62,7 +62,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.ibtOfferDetailedEdit.setOnClickListener(event -> navigateToOfferEdit());
         binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
-        binding.ibtOfferDetailedBookmark.setOnClickListener(this::bookmark);
+        binding.ibtOfferDetailedBookmark.setOnClickListener(event -> bookmark());
         binding.btOfferDetailedParticipants.setOnClickListener(event -> navigateToOfferParticipants());
         binding.ivOfferDetailedProfile.setOnClickListener(event -> navigateToProfile());
         binding.tvOfferDetailedUsername.setOnClickListener(event -> navigateToProfile());
@@ -110,7 +110,7 @@ public class OfferDetailedFragment extends Fragment {
         navController.navigate(R.id.offerParticipantsFragment, bundle);
     }
 
-    private void bookmark(View view) {
+    private void bookmark() {
 
         try {
 
@@ -151,7 +151,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
         // TODO distance
-        binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizeable(location));
+        binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
         // TODO profile image
