@@ -1,5 +1,6 @@
 package meet_eat.app.fragment.main.offer;
 
+import android.graphics.PorterDuff;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -18,20 +20,18 @@ import java.io.IOException;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
+import meet_eat.app.fragment.FormatFragment;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.user.User;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.UnlocalizableException;
 
-import static android.view.View.INVISIBLE;
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static meet_eat.app.fragment.Key.*;
 
-public class OfferDetailedFragment extends Fragment {
-
-    private final static String KEY_OFFER = "offer";
-    private final static String KEY_USER = "user";
+public class OfferDetailedFragment extends FormatFragment {
 
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
@@ -47,15 +47,16 @@ public class OfferDetailedFragment extends Fragment {
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(KEY_OFFER) == null) {
+        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
             // TODO remove debug toast
             Toast.makeText(getActivity(),
                     "DEBUG OfferDetailedFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();
         } else {
-            offer = (Offer) getArguments().getSerializable(KEY_OFFER);
+            offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
+        super.setPatterns();
         initUI();
         setButtonOnClickListener();
         return binding.getRoot();
@@ -75,7 +76,7 @@ public class OfferDetailedFragment extends Fragment {
 
     private void navigateToOfferContact() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_OFFER, offer);
+        bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerContactFragment, bundle);
     }
 
@@ -103,13 +104,13 @@ public class OfferDetailedFragment extends Fragment {
 
     private void navigateToProfile() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_USER, offer.getCreator());
+        bundle.putSerializable(USER.name(), offer.getCreator());
         navController.navigate(R.id.profileFragment, bundle);
     }
 
     private void navigateToOfferParticipants() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_OFFER, offer);
+        bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerParticipantsFragment, bundle);
     }
 
@@ -137,39 +138,34 @@ public class OfferDetailedFragment extends Fragment {
 
     private void navigateToOfferReport() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_OFFER, offer);
+        bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerReportFragment, bundle);
     }
 
     private void navigateToOfferEdit() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_OFFER, offer);
+        bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerEditFragment, bundle);
     }
 
     private void initUI() {
         // TODO offer image
         binding.tvOfferDetailedTitle.setText(offer.getName());
-        binding.tvOfferDetailedDate.setText(offer.getDateTime().toString());
+        binding.tvOfferDetailedDate.setText(formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
 
         try {
             // TODO distance
             binding.tvOfferDetailedCity.setText(new Geocoder(binding.getRoot().getContext()).getFromLocation(location.getSphericalPosition().getLatitude(),
                     location.getSphericalPosition().getLongitude(), 1).get(0).getSubAdminArea());
-        } catch (IOException e) {
+        } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
             Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> updateUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
-        } catch (UnlocalizableException e) {
-            // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> updateUI(): " + e.getMessage(),
+                    "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 
-        binding.tvOfferDetailedPrice.setText(String.valueOf(offer.getPrice()) + R.string.currency);
+        binding.tvOfferDetailedPrice.setText(formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
         // TODO profile image
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());
@@ -178,18 +174,13 @@ public class OfferDetailedFragment extends Fragment {
         // TODO tags
 
         if (offerVM.getCurrentUser().equals(offer.getCreator())) {
-            binding.ibtOfferDetailedReport.setVisibility(INVISIBLE);
-            binding.ibtOfferDetailedReport.setClickable(false);
-            binding.btOfferDetailedParticipate.setVisibility(INVISIBLE);
-            binding.btOfferDetailedParticipate.setClickable(false);
-            binding.btOfferDetailedContact.setVisibility(INVISIBLE);
-            binding.btOfferDetailedContact.setClickable(false);
-            binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
+            binding.ibtOfferDetailedReport.setVisibility(GONE);
+            binding.btOfferDetailedParticipate.setVisibility(GONE);
+            binding.btOfferDetailedContact.setVisibility(GONE);
+            binding.tvOfferDetailedParticipating.setVisibility(GONE);
         } else {
-            binding.ibtOfferDetailedEdit.setVisibility(INVISIBLE);
-            binding.ibtOfferDetailedEdit.setClickable(false);
-            binding.btOfferDetailedParticipants.setVisibility(INVISIBLE);
-            binding.btOfferDetailedParticipants.setClickable(false);
+            binding.ibtOfferDetailedEdit.setVisibility(GONE);
+            binding.btOfferDetailedParticipants.setVisibility(GONE);
         }
 
         updateUI();
@@ -198,9 +189,11 @@ public class OfferDetailedFragment extends Fragment {
     private void updateUI() {
 
         if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
-            binding.ibtOfferDetailedBookmark.setColorFilter(R.color.bookmarked);
+            binding.ibtOfferDetailedBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
+                    R.color.bookmarked), PorterDuff.Mode.SRC_IN);
         } else {
-            binding.ibtOfferDetailedBookmark.setColorFilter(R.color.symbol);
+            binding.ibtOfferDetailedBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
+                    R.color.symbol), PorterDuff.Mode.SRC_IN);
         }
 
         if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
@@ -208,7 +201,8 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
         } else {
             binding.btOfferDetailedParticipate.setText(R.string.participate);
-            binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
+            binding.tvOfferDetailedParticipating.setVisibility(GONE);
         }
+
     }
 }

@@ -19,9 +19,9 @@ import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.contact.ContactRequest;
 
-public class OfferContactFragment extends Fragment {
+import static meet_eat.app.fragment.Key.OFFER;
 
-    private final static String KEY_OFFER = "offer";
+public class OfferContactFragment extends Fragment {
 
     private FragmentOfferContactBinding binding;
     private OfferViewModel offerVM;
@@ -33,16 +33,17 @@ public class OfferContactFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferContactBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(KEY_OFFER) == null) {
+        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
             // TODO remove debug toast
             Toast.makeText(getActivity(),
                     "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();
         } else {
-            offer = (Offer) getArguments().getSerializable(KEY_OFFER);
+            offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
         initUI();

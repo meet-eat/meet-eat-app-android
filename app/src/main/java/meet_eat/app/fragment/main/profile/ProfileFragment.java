@@ -22,7 +22,8 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 
-import static android.view.View.INVISIBLE;
+import static android.view.View.GONE;
+import static meet_eat.app.fragment.Key.USER;
 
 public class ProfileFragment extends Fragment {
 
@@ -41,11 +42,11 @@ public class ProfileFragment extends Fragment {
 
         if (getArguments() == null) {
             user = userVM.getCurrentUser();
-        } else if (getArguments().getSerializable("user") == null) {
+        } else if (getArguments().getSerializable(USER.name()) == null) {
             Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {
-            user = (User) getArguments().getSerializable("user");
+            user = (User) getArguments().getSerializable(USER.name());
         }
 
         updateUI();
@@ -64,17 +65,14 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileUsername.setText(user.getName());
         binding.tvProfileDescription.setText(user.getDescription());
         binding.tvProfileBirthday.setText(getAge());
-        binding.tvProfileRating.setText(String.format("%s", user.getHostRating()));
+        binding.tvProfileRating.setText(String.valueOf(user.getHostRating()));
         // TODO profile image
 
         if (user.equals(userVM.getCurrentUser())) {
-            binding.ibtProfileReport.setVisibility(INVISIBLE);
-            binding.ibtProfileReport.setClickable(false);
-            binding.btProfileSubscribe.setVisibility(INVISIBLE);
-            binding.btProfileSubscribe.setClickable(false);
+            binding.ibtProfileReport.setVisibility(GONE);
+            binding.btProfileSubscribe.setVisibility(GONE);
         } else {
-            binding.ibtProfileEdit.setVisibility(INVISIBLE);
-            binding.ibtProfileEdit.setClickable(false);
+            binding.ibtProfileEdit.setVisibility(GONE);
 
             if (userVM.getCurrentUser().getSubscriptions().contains(user)) {
                 binding.btProfileSubscribe.setText(getResources().getString(R.string.unsubscribe));
@@ -86,8 +84,8 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private int getAge() {
-        return Period.between(user.getBirthDay(), LocalDate.now()).getYears();
+    private String getAge() {
+        return String.valueOf(Period.between(user.getBirthDay(), LocalDate.now()).getYears());
     }
 
     private void navigateToProfileEdit() {
@@ -96,7 +94,7 @@ public class ProfileFragment extends Fragment {
 
     private void navigateToProfileReport() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
+        bundle.putSerializable(USER.name(), user);
         navController.navigate(R.id.profileReportFragment, bundle);
     }
 

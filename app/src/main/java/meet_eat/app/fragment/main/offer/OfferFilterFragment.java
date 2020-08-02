@@ -23,10 +23,10 @@ public class OfferFilterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferFilterBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         initializeSortSpinner();
         return binding.getRoot();
     }
-
 
     private void initializeSortSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();

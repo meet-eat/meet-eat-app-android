@@ -21,6 +21,8 @@ import meet_eat.data.Report;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
+import static meet_eat.app.fragment.Key.USER;
+
 public class ProfileReportFragment extends Fragment {
 
     private FragmentProfileReportBinding binding;
@@ -38,11 +40,11 @@ public class ProfileReportFragment extends Fragment {
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable("user") == null) {
+        if (getArguments() == null || getArguments().getSerializable(USER.name()) == null) {
             Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {
-            user = (User) getArguments().getSerializable("user");
+            user = (User) getArguments().getSerializable(USER.name());
         }
 
         setButtonOnClickListener();

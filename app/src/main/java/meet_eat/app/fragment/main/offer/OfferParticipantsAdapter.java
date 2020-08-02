@@ -15,6 +15,8 @@ import meet_eat.app.databinding.ItemOfferParticipantBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.user.User;
 
+import static meet_eat.app.fragment.Key.USER;
+
 public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticipantsAdapter.ViewHolder> {
 
     private OfferViewModel offerVM;
@@ -60,16 +62,15 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
 
         public void setData(User user) {
             binding.tvOfferParticipantUsername.setText(user.getName());
-            // TODO image binding.ivOfferParticipantProfile.setImageResource();
+            // TODO profile image
             binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile(user));
             binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile(user));
         }
 
         private void navigateToProfile(User user) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("user", user);
-            Navigation.findNavController(binding.getRoot())
-                    .navigate(R.id.profileFragment, bundle);
+            bundle.putSerializable(USER.name(), user);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.profileFragment, bundle);
         }
     }
 }

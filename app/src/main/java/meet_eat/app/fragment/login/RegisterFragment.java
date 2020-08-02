@@ -11,23 +11,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
+import meet_eat.app.fragment.FormatFragment;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
@@ -37,7 +33,7 @@ import meet_eat.data.entity.user.User;
 /**
  * Manages registration-related information.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends FormatFragment {
 
     private static final int MONTH_CORRECTION = 1;
 
@@ -45,7 +41,6 @@ public class RegisterFragment extends Fragment {
     private RegisterViewModel registerVM;
     private NavController navController;
     private LocalDate birthDay;
-    private String date_format;
     private String email;
     private String password;
     private String username;
@@ -60,8 +55,8 @@ public class RegisterFragment extends Fragment {
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = NavHostFragment.findNavController(this);
-        date_format = getResources().getString(R.string.european_date_format);
         setButtonOnClickListener();
+        super.setPatterns();
         return binding.getRoot();
     }
 
@@ -76,7 +71,7 @@ public class RegisterFragment extends Fragment {
         new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month,
                                                               dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            binding.tvRegisterBirthdate.setText(birthDay.format(DateTimeFormatter.ofPattern(date_format)));
+            binding.tvRegisterBirthdate.setText(formatDate(birthDay));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 

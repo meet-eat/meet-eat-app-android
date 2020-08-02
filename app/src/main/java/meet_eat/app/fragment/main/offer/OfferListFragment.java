@@ -22,6 +22,8 @@ import java.util.Set;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferListBinding;
+import meet_eat.app.fragment.Key;
+import meet_eat.app.fragment.OfferListType;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
@@ -30,18 +32,16 @@ import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalPosition;
 
-public class OfferListFragment extends Fragment {
+import static meet_eat.app.fragment.Key.TYPE;
+import static meet_eat.app.fragment.OfferListType.*;
 
-    public final static int OFFER_LIST_TYPE_STANDARD = 0;
-    public final static int OFFER_LIST_TYPE_OWN = 1;
-    public final static int OFFER_LIST_TYPE_BOOKMARKED = 2;
-    public final static int OFFER_LIST_TYPE_SUBSCRIBED = 3;
+public class OfferListFragment extends Fragment {
 
     private FragmentOfferListBinding binding;
     private NavController navController;
     private OfferViewModel offerVM;
     private OfferListAdapter offerListAdapter;
-    private int type = OFFER_LIST_TYPE_STANDARD;
+    private OfferListType type = STANDARD;
 
     @Nullable
     @Override
@@ -50,17 +50,17 @@ public class OfferListFragment extends Fragment {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
+        offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());
         binding.rvOfferList.setAdapter(offerListAdapter);
         binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());
 
         if (getArguments() == null ) {
             navController.navigateUp();
         } else {
-            type = getArguments().getInt("type");
+            type = (OfferListType) getArguments().getSerializable(TYPE.name());
         }
-        updateUI();
 
+        updateUI();
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -85,6 +85,76 @@ public class OfferListFragment extends Fragment {
 
     private void updateOffers() {
         ArrayList<Offer> offerList = new ArrayList<>();
+
+        offerList.add(new Offer(offerVM.getCurrentUser(), new Set<Tag>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(@Nullable Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<Tag> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean add(Tag tag) {
+                return false;
+            }
+
+            @Override
+            public boolean remove(@Nullable Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends Tag> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+            }
+        }, "EIGENES ANGEBOT", "mmm leker", 2.50, 1, LocalDateTime.now(),
+                () -> new SphericalPosition(48.9305065, 8.4612313)));
 
         for (int i = 0; i < 100; i++) {
             offerList.add(new Offer(new User(new Email("tester@testi.de"), Password
@@ -161,19 +231,16 @@ public class OfferListFragment extends Fragment {
         }
 
         switch (type) {
-            case OFFER_LIST_TYPE_STANDARD:
+            case STANDARD:
                 offerListAdapter.updateOffers(offerList);
                 break;
-            case OFFER_LIST_TYPE_OWN:
+            case OWN:
                 offerListAdapter.updateOffers(offerList);
                 break;
-            case OFFER_LIST_TYPE_BOOKMARKED:
+            case BOOKMARKED:
                 offerListAdapter.updateOffers(offerList);
                 break;
-            case OFFER_LIST_TYPE_SUBSCRIBED:
-                offerListAdapter.updateOffers(offerList);
-                break;
-            default:
+            case SUBSCRIBED:
                 offerListAdapter.updateOffers(offerList);
                 break;
         }

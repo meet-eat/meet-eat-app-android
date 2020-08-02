@@ -39,10 +39,10 @@ public class ProfileSubscribedFragment extends Fragment {
         binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
+        profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
         binding.rvProfileSubscriptions.setAdapter(profileSubscribedAdapter);
         binding.rvProfileSubscriptions.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
         navController = NavHostFragment.findNavController(this);
         displaySubscriberList();
         setButtonOnClickListener();

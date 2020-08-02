@@ -33,10 +33,10 @@ public class RateGuestsFragment extends Fragment {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
+        rateGuestsAdapter = new RateGuestsAdapter(userVM, new ArrayList<User>());
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
         binding.rvRateGuests.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        rateGuestsAdapter = new RateGuestsAdapter(userVM, new ArrayList<User>());
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
         return binding.getRoot();

@@ -26,6 +26,7 @@ public class OfferContactRequestFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferContactRequestBinding.inflate(inflater, container, false);
+        binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
         return binding.getRoot();

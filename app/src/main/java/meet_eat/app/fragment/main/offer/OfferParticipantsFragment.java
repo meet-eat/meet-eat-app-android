@@ -21,6 +21,8 @@ import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
+import static meet_eat.app.fragment.Key.OFFER;
+
 public class OfferParticipantsFragment extends Fragment {
 
     private FragmentOfferParticipantsBinding binding;
@@ -36,17 +38,17 @@ public class OfferParticipantsFragment extends Fragment {
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        offerParticipantsAdapter = new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
         binding.rvOfferParticipants.setAdapter(offerParticipantsAdapter);
         binding.rvOfferParticipants.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        offerParticipantsAdapter = new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable("offer") == null) {
+        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
             Toast.makeText(getActivity(), "DEBUG: Offer not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {
-            offer = (Offer) getArguments().getSerializable("offer");
+            offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
         setButtonOnClickListener();
