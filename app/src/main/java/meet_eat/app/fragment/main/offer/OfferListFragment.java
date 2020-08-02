@@ -31,11 +31,8 @@ import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalPosition;
 
-import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
-import static meet_eat.app.fragment.OfferListType.STANDARD;
-
 import static android.view.View.GONE;
-import static meet_eat.app.fragment.Key.TYPE;
+import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
 import static meet_eat.app.fragment.OfferListType.STANDARD;
 import static meet_eat.app.fragment.OfferListType.SUBSCRIBED;
 
