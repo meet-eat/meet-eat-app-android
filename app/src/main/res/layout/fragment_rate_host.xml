@@ -47,185 +47,195 @@
             app:layout_constraintStart_toStartOf="@+id/ivRateHostOfferPicture"
             app:layout_constraintTop_toTopOf="@+id/ivRateHostOfferPicture" />
 
-        <TextView
-            android:id="@+id/tvRateHostOfferTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/title"
-            android:textColor="@android:color/white"
-            android:textSize="32sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivRateHostOfferPicture" />
-
-        <TextView
-            android:id="@+id/tvRateHostOfferDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/date_time"
-            android:textColor="@android:color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferTitle" />
-
-        <TextView
-            android:id="@+id/tvRateHostOfferPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/price"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferTitle" />
-
-        <TextView
-            android:id="@+id/tvRateHostOfferCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/city"
-            android:textColor="@android:color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferDate" />
-
-        <TextView
-            android:id="@+id/tvRateHostOfferParticipants"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/participants"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferPrice" />
-
-        <ImageView
-            android:id="@+id/ivRateHostProfile"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:elevation="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/profilestd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferCity" />
-
-        <TextView
-            android:id="@+id/tvRateHostUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            android:elevation="5dp"
-            android:text="@string/username"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivRateHostProfile"
-            app:layout_constraintStart_toEndOf="@+id/ivRateHostProfile"
-            app:layout_constraintTop_toTopOf="@+id/ivRateHostProfile" />
-
-        <LinearLayout
-            android:id="@+id/llRateHostLinearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateHostUsername">
-
-            <ImageButton
-                android:id="@+id/ibtRateHostRate1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/star"
-                android:tint="@color/rating" />
-
-            <ImageButton
-                android:id="@+id/ibtRateHostRate2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/star"
-                android:tint="@color/textHint" />
-
-            <ImageButton
-                android:id="@+id/ibtRateHostRate3"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/star"
-                android:tint="@color/textHint" />
-
-            <ImageButton
-                android:id="@+id/ibtRateHostRate4"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/star"
-                android:tint="@color/textHint" />
-
-            <ImageButton
-                android:id="@+id/ibtRateHostRate5"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/star"
-                android:tint="@color/textHint" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvRateHostOfferDescription"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/offer_description"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/tvRateHostTag"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llRateHostLinearLayout" />
-
-        <TextView
-            android:id="@+id/tvRateHostTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_tag"
-            android:elevation="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/tag"
-            android:textColor="@color/textHint"
             app:layout_constraintBottom_toTopOf="@+id/btRateHostRate"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/ivRateHostOfferPicture">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/title"
+                    android:textColor="@android:color/white"
+                    android:textSize="32sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/date_time"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferTitle" />
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/price"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferTitle" />
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/city"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferDate" />
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferParticipants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/participants"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferPrice" />
+
+                <ImageView
+                    android:id="@+id/ivRateHostProfile"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/profilestd"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferCity" />
+
+                <TextView
+                    android:id="@+id/tvRateHostUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:clickable="true"
+                    android:elevation="5dp"
+                    android:text="@string/username"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivRateHostProfile"
+                    app:layout_constraintStart_toEndOf="@+id/ivRateHostProfile"
+                    app:layout_constraintTop_toTopOf="@+id/ivRateHostProfile" />
+
+                <LinearLayout
+                    android:id="@+id/llRateHostLinearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostUsername">
+
+                    <ImageButton
+                        android:id="@+id/ibtRateHostRate1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        android:tint="@color/rating" />
+
+                    <ImageButton
+                        android:id="@+id/ibtRateHostRate2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        android:tint="@color/textHint" />
+
+                    <ImageButton
+                        android:id="@+id/ibtRateHostRate3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        android:tint="@color/textHint" />
+
+                    <ImageButton
+                        android:id="@+id/ibtRateHostRate4"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        android:tint="@color/textHint" />
+
+                    <ImageButton
+                        android:id="@+id/ibtRateHostRate5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        android:tint="@color/textHint" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvRateHostOfferDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/offer_description"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/llRateHostLinearLayout" />
+
+                <TextView
+                    android:id="@+id/tvRateHostTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_tag"
+                    android:elevation="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/tag"
+                    android:textColor="@color/textHint"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRateHostOfferDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btRateHostRate"

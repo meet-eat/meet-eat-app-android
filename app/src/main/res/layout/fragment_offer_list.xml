@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,8 +9,7 @@
             type="meet_eat.app.fragment.main.offer.OfferListFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
@@ -22,35 +22,59 @@
             android:src="@drawable/bgmain"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/ibtOfferListCreate"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/bg_button"
-            android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/add"
-            android:tint="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/ibtOfferListEdit"
-            android:layout_width="150dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_button"
-            android:elevation="5dp"
-            android:text="@string/edit_subscriptions"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/ibtOfferListCreate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ibtOfferListCreate" />
+            android:elevation="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollView2">
+
+            <ImageButton
+                android:id="@+id/ibtOfferListCreate"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_button"
+                android:elevation="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add"
+                android:tint="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ibtOfferListFilter"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_button"
+                android:elevation="5dp"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/filter"
+                android:tint="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ibtOfferListCreate" />
+
+            <Button
+                android:id="@+id/ibtOfferListEdit"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_button"
+                android:elevation="5dp"
+                android:text="@string/edit_subscriptions"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/ibtOfferListFilter"
+                app:layout_constraintEnd_toStartOf="@+id/ibtOfferListFilter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ibtOfferListFilter" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="3dp">
@@ -60,5 +84,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
