@@ -9,17 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import java.util.Set;
-
-import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
@@ -30,7 +25,6 @@ public class ProfileSubscribedFragment extends Fragment {
     private UserViewModel userVM;
     private ProfileSubscribedAdapter profileSubscribedAdapter;
     private NavController navController;
-    private User currentUser;
 
     @Nullable
     @Override
@@ -50,21 +44,12 @@ public class ProfileSubscribedFragment extends Fragment {
     }
 
     private void displaySubscriberList() {
-        Set<User> subscribers = currentUser.getSubscriptions();
-        // TODO: display sub list
+        profileSubscribedAdapter.updateSubscriptions(
+                new ArrayList<>(userVM.getCurrentUser().getSubscriptions()));
     }
 
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
-    private void navigateToProfileFragment(View view) {
-        //TODO navController.navigate(ProfileSubscribedFragmentDirections
-        //        .actionProfileSubscribedFragmentToProfileFragment(view.getUser()));
-    }
-
-    private void removeSubscribedUser(View view) {
-        // TODO remove sub from list in view
-        // TODO currentUser.removeSubscriptions(view.getUser());
-    }
 }
