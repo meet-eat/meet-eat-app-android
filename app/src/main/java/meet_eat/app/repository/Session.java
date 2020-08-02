@@ -19,6 +19,8 @@ import java.util.Objects;
 
 public class Session {
 
+    private static final boolean DEBUG = true;
+
     private static Session session;
     private static final String URL_LOGIN = "/login"; //TODO
     private static final String URL_LOGOUT = "/logout"; //TODO
@@ -44,10 +46,17 @@ public class Session {
     }
 
     public User getUser() {
-        return new User(new Email("tester@testi.de"), Password
-                .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester Testi",
-                "+49160304050", "My description", true);
-        //return token.getUse();
+        if (DEBUG) {
+            User testUser1 = new User(new Email("tester@testi.de"), Password
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Gregor Snelting",
+                    "+49160304050", "Ich liebe PSE", true);
+            testUser1.addSubscription(new User(new Email("abcde@web.de"), Password
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Stefan Kühnlein",
+                    "+49160323050", "Ich liebe Mathe", true));
+            return testUser1;
+        }
+
+        return token.getUser();
     }
 
     public Token getToken() {
