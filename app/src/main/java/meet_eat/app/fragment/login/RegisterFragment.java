@@ -106,6 +106,15 @@ public class RegisterFragment extends Fragment {
         }
 
         home = contextFormatter.getStringFromAddress(address);
+
+        if (phoneNumber == null) {
+            phoneNumber = "";
+        }
+
+        if (profileDescription == null) {
+            profileDescription = "";
+        }
+
         // TODO location of user
         // TODO profile image
         Email emailParam = new Email(this.email);

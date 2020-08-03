@@ -36,6 +36,7 @@ public class OfferDetailedFragment extends Fragment {
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
+    private Bundle bundle;
     private Offer offer;
 
     @Nullable
@@ -56,6 +57,7 @@ public class OfferDetailedFragment extends Fragment {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
+        bundle = new Bundle();
         initUI();
         setButtonOnClickListener();
         return binding.getRoot();
@@ -74,7 +76,6 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void navigateToOfferContact() {
-        Bundle bundle = new Bundle();
         bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerContactFragment, bundle);
     }
@@ -102,13 +103,11 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void navigateToProfile() {
-        Bundle bundle = new Bundle();
         bundle.putSerializable(USER.name(), offer.getCreator());
         navController.navigate(R.id.profileFragment, bundle);
     }
 
     private void navigateToOfferParticipants() {
-        Bundle bundle = new Bundle();
         bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerParticipantsFragment, bundle);
     }
@@ -136,13 +135,11 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void navigateToOfferReport() {
-        Bundle bundle = new Bundle();
         bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerReportFragment, bundle);
     }
 
     private void navigateToOfferEdit() {
-        Bundle bundle = new Bundle();
         bundle.putSerializable(OFFER.name(), offer);
         navController.navigate(R.id.offerEditFragment, bundle);
     }
@@ -157,13 +154,7 @@ public class OfferDetailedFragment extends Fragment {
 
         try {
             binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
-        } catch (IOException e) {
-            // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
-            return;
-        } catch (UnlocalizableException e) {
+        } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
             Toast.makeText(getActivity(),
                     "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),

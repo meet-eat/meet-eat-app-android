@@ -52,7 +52,8 @@ public class RateHostFragment extends Fragment {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
         binding.tvRateHostOfferTitle.setText(offer.getName());
-        binding.tvRateHostOfferCity.setText(contextFormatter.getStringFromLocalizable(offer.getLocation()));
+        //binding.tvRateHostOfferCity.setText(contextFormatter.getStringFromLocalizable(offer
+        // .getLocation()));
         binding.tvRateHostOfferDate.setText(contextFormatter.formatTime(offer.getDateTime().toLocalTime()));
         binding.tvRateHostOfferDescription.setText(offer.getDescription());
         binding.tvRateHostOfferPrice.setText(String.valueOf(offer.getPrice()));
