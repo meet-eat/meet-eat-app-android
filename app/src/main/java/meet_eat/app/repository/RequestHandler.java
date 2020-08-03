@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class RequestHandler<T, S> {
 
-    public static final String SERVER_PATH = ""; //TODO
+    public static final String SERVER_PATH = "https://karlsruhe.gstuer.com:8443";
     private static final String ERROR_MESSAGE_REQUEST = "Request failed. ";
     private static final String ERROR_MESSAGE_STATUS_CODE = "Error code: ";
     private final RestTemplate restTemplate;
