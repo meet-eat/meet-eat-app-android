@@ -53,6 +53,7 @@ public class ProfileEditFragment extends Fragment {
         binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
         phone = currentUser.getPhoneNumber();
         // TODO binding.etProfileEditHome.setText(currentUser.getHome());
+        // TODO image
         description = currentUser.getDescription();
     }
 

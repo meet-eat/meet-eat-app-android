@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,6 @@ public class RateHostFragment extends Fragment {
 
     private void initUI() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-
         binding.tvRateHostOfferTitle.setText(offer.getName());
         //binding.tvRateHostOfferCity.setText(contextFormatter.getStringFromLocalizable(offer
         // .getLocation()));
@@ -72,6 +72,7 @@ public class RateHostFragment extends Fragment {
     private void rateGuests() {
         int numStars = (int) binding.rbRateHost.getRating();
         Rating rating = null;
+
         switch (numStars) {
             case 1:
                 rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_1, ratingVM.getCurrentUser());
@@ -89,9 +90,12 @@ public class RateHostFragment extends Fragment {
                 rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_5, ratingVM.getCurrentUser());
                 break;
             default:
-                // TODO
+                // TODO remove debug toast
+                Toast.makeText(getActivity(), "DEBUG RateHostFragment -> rateGuests()", Toast.LENGTH_LONG).show();
+                return;
+
         }
+
         ratingVM.send(rating);
     }
-
 }
