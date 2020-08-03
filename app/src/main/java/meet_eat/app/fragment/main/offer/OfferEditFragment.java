@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
@@ -32,6 +33,7 @@ import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalPosition;
+import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
@@ -103,7 +105,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             offerVM.delete(offer);
-            Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
             Bundle bundle = new Bundle();
             bundle.putSerializable(TYPE.name(), STANDARD);
             navController.navigate(R.id.offerListFragment, bundle);
@@ -118,15 +120,26 @@ public class OfferEditFragment extends Fragment {
 
     private void editOffer() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        Address address = contextFormatter.getAddressFromString(city);
+        Address address;
+
+        try {
+            address = contextFormatter.getAddressFromString(city);
+        } catch (IOException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferEditFragment.java -> editOffer(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        offer.setLocation(() -> new SphericalPosition(address.getLatitude(),
-                address.getLongitude()));
+        Address finalAddress = address;
+        offer.setLocation(() -> new SphericalPosition(finalAddress.getLatitude(),
+                finalAddress.getLongitude()));
 
         try {
             offer.setPrice(Double.parseDouble(price));
@@ -150,7 +163,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             offerVM.edit(offer);
-            Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
@@ -162,15 +175,26 @@ public class OfferEditFragment extends Fragment {
 
     private void publishOffer() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        Address address = contextFormatter.getAddressFromString(city);
+        Address address = null;
+
+        try {
+            address = contextFormatter.getAddressFromString(city);
+        } catch (IOException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferEditFragment.java -> publishOffer(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Localizable location = () -> new SphericalPosition(address.getLatitude(),
-                address.getLongitude());
+        Address finalAddress = address;
+        Localizable location = () -> new SphericalPosition(finalAddress.getLatitude(),
+                finalAddress.getLongitude());
         double price;
 
         try {
@@ -262,7 +286,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             offerVM.add(offer);
-            Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
             Bundle bundle = new Bundle();
             bundle.putSerializable(OFFER.name(), offer);
             navController.navigate(R.id.offerDetailedFragment, bundle);
@@ -287,7 +311,17 @@ public class OfferEditFragment extends Fragment {
                     new ContextFormatter(binding.getRoot().getContext());
             dateTime = offer.getDateTime();
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
-            city = contextFormatter.getStringFromLocalizable(offer.getLocation());
+
+            try {
+                city = contextFormatter.getStringFromLocalizable(offer.getLocation());
+            } catch (IOException | UnlocalizableException e) {
+                // TODO remove debug toast
+                Toast.makeText(getActivity(),
+                        "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
             price = String.valueOf(offer.getPrice());
             participants = String.valueOf(offer.getMaxParticipants());
             description = offer.getDescription();

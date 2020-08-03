@@ -3,7 +3,6 @@ package meet_eat.app.fragment;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -40,25 +39,15 @@ public class ContextFormatter {
         return String.format(context.getResources().getString(R.string.price_format), price) + context.getResources().getString(R.string.currency);
     }
 
-    public Address getAddressFromString(String location) {
+    public Address getAddressFromString(String location) throws IOException {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        try {
-
-            if (geocoder.getFromLocationName(location, 1) != null) {
-                address = geocoder.getFromLocationName(location, 1).get(0);
-            }
-
-            return address;
-        } catch (IOException e) {
-            // TODO remove debug toast
-            Toast.makeText(context,
-                    "DEBUG ContextFormatter.java -> getAddressFromString(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
-            return null;
+        if (geocoder.getFromLocationName(location, 1) != null) {
+            address = geocoder.getFromLocationName(location, 1).get(0);
         }
 
+        return address;
     }
 
     public String getStringFromAddress(Address address) {
@@ -70,16 +59,8 @@ public class ContextFormatter {
         return address.getPostalCode() + ", " + address.getSubAdminArea();
     }
 
-    public String getStringFromLocalizable(Localizable localizable) {
-
-        try {
-            return getStringFromAddress(new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(), localizable.getSphericalPosition().getLongitude(), 1).get(0));
-        } catch (IOException | UnlocalizableException e) {
-            // TODO remove debug toast
-            Toast.makeText(context, "DEBUG ContextFormatter.java -> getStringFromLocalizeable(): "
-                    + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-        return null;
+    public String getStringFromLocalizable(Localizable localizable) throws IOException,
+            UnlocalizableException {
+        return getStringFromAddress(new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(), localizable.getSphericalPosition().getLongitude(), 1).get(0));
     }
 }

@@ -60,7 +60,7 @@ public class OfferContactFragment extends Fragment {
         ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(),
                 offer.getCreator());
         offerVM.requestContact(contactRequest);
-        Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         navController.navigateUp();
     }
 

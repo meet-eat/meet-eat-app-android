@@ -34,7 +34,7 @@
     <string name="contact">Kontaktieren</string>
     <string name="cancel">Absagen</string>
     <string name="participating">Du nimmst bereits teil.</string>
-    <string name="request_send">Anfrage gesendet.</string>
+    <string name="request_sent">Anfrage gesendet.</string>
     <string name="bad_email">Ungültige E-Mail.</string>
     <string name="bad_password">Ungültiges Passwort.</string>
     <string name="bad_login">Ungültige Anmeldedaten.</string>
@@ -67,7 +67,7 @@
     <string name="contact_accept">Senden</string>
     <string name="contact_decline">Ablehnen</string>
     <string name="delete_profile_info">Möchtest du dein Profil wirklich löschen? Alle Informationen werden gelöscht und können nicht wieder hergestellt werden. Bitte bestätige die Anfrage mit deinem Passwort.</string>
-    <string name="missing_username">Nutzername darf nicht leer sein</string>
+    <string name="missing_username">Benutzername darf nicht leer sein.</string>
     <string name="currency">€</string>
     <string name="edit_subscriptions">Abonnements</string>
     <string name="unsubscribe">Deabonnieren</string>
@@ -92,4 +92,5 @@
     <string name="profile_edit_success">Profil erfolgreich bearbeitet.</string>
     <string name="invalid_price">Ungültige Preisangabe.</string>
     <string name="invalid_max_participants">Ungültige Anzahl an Teilnehmern.</string>
+    <string name="missing_location">Ort darf nicht leer sein.</string>
 </resources>

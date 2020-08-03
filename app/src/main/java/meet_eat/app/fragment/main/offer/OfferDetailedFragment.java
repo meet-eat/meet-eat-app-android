@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.io.IOException;
+
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -22,6 +24,7 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.location.Localizable;
+import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -151,7 +154,23 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
         // TODO distance
-        binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
+
+        try {
+            binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
+        } catch (IOException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        } catch (UnlocalizableException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(),
+                    "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
         // TODO profile image

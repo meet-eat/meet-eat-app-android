@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -55,7 +56,6 @@ public class RegisterFragment extends Fragment {
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
         navController = NavHostFragment.findNavController(this);
         setButtonOnClickListener();
-        home ="";
         return binding.getRoot();
     }
 
@@ -91,7 +91,14 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        Address address = contextFormatter.getAddressFromString(home);
+        Address address = null;
+
+        try {
+            address = contextFormatter.getAddressFromString(home);
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (address == null) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
@@ -116,7 +123,7 @@ public class RegisterFragment extends Fragment {
         }
 
         navigateToLogin();
-        Toast.makeText(getActivity(), R.string.request_send, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToLogin() {
