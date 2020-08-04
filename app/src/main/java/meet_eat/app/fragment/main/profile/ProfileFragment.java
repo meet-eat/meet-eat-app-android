@@ -65,7 +65,8 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileUsername.setText(user.getName());
         binding.tvProfileDescription.setText(user.getDescription());
         binding.tvProfileBirthday.setText(getAge());
-        binding.tvProfileRating.setText(String.valueOf(user.getHostRating()));
+        binding.tvProfileHostRating.setText(String.valueOf(user.getHostRating()));
+        binding.tvProfileGuestRating.setText(String.valueOf(user.getGuestRating()));
         // TODO profile image
 
         if (user.equals(userVM.getCurrentUser())) {

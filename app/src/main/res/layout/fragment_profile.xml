@@ -127,7 +127,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvProfileBirthday" />
 
                 <TextView
-                    android:id="@+id/tvProfileRating"
+                    android:id="@+id/tvProfileHostRatingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/host_rating"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileDescription" />
+
+                <TextView
+                    android:id="@+id/tvProfileHostRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -135,11 +147,13 @@
                     android:text="0"
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileDescription" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProfileHostRatingTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/ivProfileHostRating"
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileHostRatingTitle" />
 
                 <ImageView
-                    android:id="@+id/ivProfileRating"
+                    android:id="@+id/ivProfileHostRating"
+                    android:layout_margin="16dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:adjustViewBounds="true"
@@ -147,9 +161,48 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/star"
                     android:tint="@color/rating"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvProfileRating"
-                    app:layout_constraintStart_toEndOf="@+id/tvProfileRating"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileRating" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProfileHostRating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileHostRating" />
+
+                <TextView
+                    android:id="@+id/tvProfileGuestRatingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/guest_rating"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileHostRatingTitle" />
+
+                <TextView
+                    android:id="@+id/tvProfileGuestRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProfileGuestRatingTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/ivProfileHostRating"
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRatingTitle" />
+
+                <ImageView
+                    android:id="@+id/ivProfileGuestRating"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:elevation="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/star"
+                    android:tint="@color/rating"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvProfileGuestRating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
