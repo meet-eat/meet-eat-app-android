@@ -2,6 +2,8 @@ package meet_eat.app.fragment.main.rating;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,10 +12,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
+import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.entity.user.rating.Rating;
+import meet_eat.data.entity.user.rating.RatingBasis;
+import meet_eat.data.entity.user.rating.RatingValue;
 
 public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.ViewHolder> {
+
+    private static final float RATING_STEP_SIZE = 1;
 
     private RatingViewModel ratingVM;
     private ArrayList<User> currentGuests;
@@ -29,8 +37,11 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     }
 
     public void sendRatings() {
+        Rating[] ratings = new Rating[currentGuests.size()];
+
         // TODO create ratings, then: ratingVM.send(ratings);
     }
+
 
     @NonNull
     @Override
@@ -60,6 +71,19 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
         }
 
         public void setData(User user) {
+            binding.tvRateGuestUsername.setText(user.getName());
+            // TODO user.image
+            binding.rbRateGuest.setNumStars(3);
+            binding.rbRateGuest.setStepSize(RATING_STEP_SIZE);
+        }
+
+        public Rating getRatingFromUI() {
+            return createRating((int) binding.rbRateGuest.getRating());
+        }
+
+        private Rating createRating(int ratingAmount) {
+            // TODO return new Rating(RatingBasis.GUEST, RatingValue.getRatingValueByInt(ratingAmount);
+            return null;
         }
     }
 }
