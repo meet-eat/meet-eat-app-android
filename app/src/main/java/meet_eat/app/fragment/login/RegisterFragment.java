@@ -28,6 +28,9 @@ import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalLocation;
+import meet_eat.data.location.SphericalPosition;
 
 /**
  * Manages registration-related information.
@@ -50,7 +53,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
@@ -88,7 +91,7 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        Address address = null;
+        Address address;
 
         try {
             address = contextFormatter.getAddressFromString(home);
@@ -102,6 +105,8 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
+        Localizable localizable =
+                new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude()));
         home = contextFormatter.getStringFromAddress(address);
 
         if (phoneNumber == null) {
@@ -116,7 +121,8 @@ public class RegisterFragment extends Fragment {
         // TODO profile image
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
-        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false);
+        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false,
+                localizable);
 
         try {
             registerVM.register(user);
