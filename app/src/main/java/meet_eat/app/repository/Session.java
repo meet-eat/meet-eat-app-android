@@ -31,13 +31,6 @@ public class Session {
 
     private Token token;
 
-    private class TokenRepository extends EntityRepository<Token> {
-
-        protected TokenRepository(String entityPath) {
-            super(entityPath);
-        }
-    }
-
     private Session() {
     }
 
