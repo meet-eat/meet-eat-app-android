@@ -29,6 +29,8 @@ import meet_eat.data.entity.Tag;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
 import static android.view.View.GONE;
@@ -169,9 +171,10 @@ public class OfferListFragment extends Fragment {
                 () -> new SphericalPosition(48.9305065, 8.4612313)));
 
         for (int i = 0; i < 100; i++) {
+            Localizable localizable = new SphericalLocation(new SphericalPosition(0, 0));
             offerList.add(new Offer(
                     new User(new Email("tester@testi.de"), Password.createHashedPassword("123abcABC!§%"),
-                            LocalDate.of(1999, 1, 21), "Tester 2 " + "Testi 2", "+49160304050", "My description", true),
+                            LocalDate.of(1999, 1, 21), "Tester 2 " + "Testi 2", "+49160304050", "My description", true, localizable),
                     new Set<Tag>() {
                         @Override
                         public int size() {

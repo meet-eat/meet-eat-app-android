@@ -6,6 +6,9 @@ import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalLocation;
+import meet_eat.data.location.SphericalPosition;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -47,13 +50,14 @@ public class Session {
 
     public User getUser() {
         if (DEBUG) {
+            Localizable validLocalizable = new SphericalLocation(new SphericalPosition(0, 0));
             User testUser1 = new User(new Email("tester@testi.de"), Password
                     .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Gregor " +
                     "Snelting",
-                    "+49160304050", "Ich liebe PSE", true);
+                    "+49160304050", "Ich liebe PSE", true, validLocalizable);
             testUser1.addSubscription(new User(new Email("abcde@web.de"), Password
                     .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Stefan Kühnlein",
-                    "+49160323050", "Ich liebe Mathe", true));
+                    "+49160323050", "Ich liebe Mathe", true, validLocalizable));
             return testUser1;
         }
 
