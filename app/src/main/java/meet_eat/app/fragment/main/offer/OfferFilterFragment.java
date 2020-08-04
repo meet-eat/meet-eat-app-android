@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferFilterBinding;
 
 public class OfferFilterFragment extends Fragment {
@@ -21,16 +22,22 @@ public class OfferFilterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferFilterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         initializeSortSpinner();
         return binding.getRoot();
     }
 
+    /* add sorting criteria to view */
     private void initializeSortSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();
-        // TODO arrayList.add(...);
+        arrayList.add(getString(R.string.sort_spinner_item_time));
+        arrayList.add(getString(R.string.sort_spinner_item_price));
+        arrayList.add(getString(R.string.sort_spinner_item_distance));
+        arrayList.add(getString(R.string.sort_spinner_item_amount_participants));
+        arrayList.add(getString(R.string.sort_spinner_item_host_rating));
+
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<>(binding.getRoot().getContext(), android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
