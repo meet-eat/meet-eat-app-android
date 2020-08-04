@@ -2,6 +2,9 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.common.collect.Lists;
+
+import java.util.Collection;
 import java.util.Comparator;
 
 import meet_eat.app.repository.OfferRepository;
@@ -16,6 +19,7 @@ import meet_eat.data.entity.Tag;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
+import meet_eat.data.predicate.OfferPredicate;
 
 /**
  * Manages offer-related information.
@@ -47,27 +51,23 @@ public class OfferViewModel extends ViewModel {
      *
      * @return A /LIST/ containing the updated offers.
      */
-    /*public Iterable<Offer> fetchOffers() throws RequestHandlerException {
-        return offerRepository.getOffers(page, getPredicates(), null);
-    }*/
+    public Iterable<Offer> fetchOffers() throws RequestHandlerException {
+        // TODO should OfferRepository.getOffers(...) take collection of predicates?
+        return offerRepository.getOffers(page, Lists.newArrayList(getCurrentUser().getOfferPredicates()), null);
+    }
 
     /**
      * Sends a predicate update request to the
      * {@link meet_eat.app.repository.UserRepository UserRepository}.
      * Predicates are used to filter offers.
      *
-     * @param predicateList The predicates that are to be updated.
+     * @param predicates The predicates that are to be updated.
      */
-    /*public void updatePredicates(List<Predicate<Offer>> predicateList) throws
-    RequestHandlerException {
-        User currentUser = session.getUser();
-
-        for (Predicate<Offer> predicate : predicateList) {
-            currentUser.addPredicate(predicate);
-        }
-
-        userRepository.updateEntity(currentUser);
-    }*/
+    public void updatePredicates(Collection<OfferPredicate> predicates) throws RequestHandlerException {
+        getCurrentUser().clearOfferPredicates();
+        getCurrentUser().addManyOfferPredicates(predicates);
+        userRepository.updateEntity(getCurrentUser());
+    }
 
     /**
      * Requests the predicates currently stored in the
@@ -75,19 +75,8 @@ public class OfferViewModel extends ViewModel {
      *
      * @return A /LIST/ containing the predicates.
      */
-    /*public Iterable<Predicate<Offer>> getPredicates() {
-        return session.getUser().getPredicates();
-    }*/
-
-    /**
-     * Sends a comparator update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
-     * A comparator is used to sort a list of offers.
-     *
-     * @param comparators The comparators that are to be updated.
-     */
-    public void updateComparators(Comparator<Offer>... comparators) {
-        // TODO
+    public Iterable<OfferPredicate> getPredicates() {
+        return session.getUser().getOfferPredicates();
     }
 
     /**
