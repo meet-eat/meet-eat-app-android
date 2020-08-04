@@ -45,12 +45,12 @@ public class Session {
         if (DEBUG) {
             Localizable validLocalizable = new SphericalLocation(new SphericalPosition(0, 0));
             User testUser1 = new User(new Email("tester@testi.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Gregor " +
-                    "Snelting",
-                    "+49160304050", "Ich liebe PSE", true, validLocalizable);
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester " +
+                    "Testi 1",
+                    "+49160304050", "Testbeschreibung 1", true, validLocalizable);
             testUser1.addSubscription(new User(new Email("abcde@web.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Stefan Kühnlein",
-                    "+49160323050", "Ich liebe Mathe", true, validLocalizable));
+                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester Testi 2",
+                    "+49160323050", "", true, validLocalizable));
             return testUser1;
         }
 
