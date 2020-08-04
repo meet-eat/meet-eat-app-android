@@ -32,50 +32,50 @@
             android:layout_margin="16dp"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:elevation="5dp"
+            android:elevation="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivOfferEditPicture"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:elevation="4dp"
-            android:scaleType="fitCenter"
-            android:src="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ibtOfferEditEditPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/edit"
-            android:tint="@color/symbol"
-            app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
-            app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
-            app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
-            app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/oeBarrier1"
-            app:layout_constraintTop_toBottomOf="@+id/ivOfferEditPicture">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivOfferEditPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:adjustViewBounds="true"
+                    android:elevation="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@android:color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/ibtOfferEditEditPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/edit"
+                    android:tint="@color/symbol"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
 
                 <EditText
                     android:id="@+id/etOfferEditTitle"
@@ -91,7 +91,7 @@
                     android:text="@={fragment.title}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivOfferEditPicture"
                     tools:layout_editor_absoluteX="16dp" />
 
                 <TextView

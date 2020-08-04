@@ -73,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btRegister"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
 
@@ -168,7 +169,7 @@
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/etRegisterHome"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etRegisterPhone" />
@@ -183,16 +184,15 @@
                     android:elevation="5dp"
                     android:hint="@string/home"
                     android:maxLines="1"
-                    android:text="@={fragment.home}"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
+                    android:text="@={fragment.home}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.6"
-                    app:layout_constraintStart_toEndOf="@+id/tvRegisterBirthdate"
-                    app:layout_constraintTop_toBottomOf="@+id/etRegisterPhone" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvRegisterBirthdate" />
 
                 <EditText
                     android:id="@+id/etRegisterDescription"

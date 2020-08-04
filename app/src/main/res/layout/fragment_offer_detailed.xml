@@ -16,6 +16,7 @@
         android:background="@color/bgFragment">
 
         <ImageView
+            android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -30,79 +31,12 @@
             android:layout_margin="16dp"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:elevation="5dp"
+            android:elevation="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivOfferDetailedPicture"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:elevation="4dp"
-            android:scaleType="fitCenter"
-            android:src="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvOfferDetailedPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:text="@string/picture"
-            android:textColor="@color/textHint"
-            android:textSize="120sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
-            app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
-            app:layout_constraintStart_toStartOf="@+id/ivOfferDetailedPicture"
-            app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedPicture" />
-
-        <ImageButton
-            android:id="@+id/ibtOfferDetailedEdit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/edit"
-            android:tint="@color/symbol"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ibtOfferDetailedReport"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/report"
-            android:tint="@color/symbol"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ibtOfferDetailedBookmark"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:adjustViewBounds="true"
-            android:background="@null"
-            android:elevation="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/bookmark"
-            android:tint="@color/symbol"
-            app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
-            app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
-            app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -110,11 +44,78 @@
             android:layout_marginBottom="16dp"
             android:elevation="5dp"
             app:layout_constraintBottom_toTopOf="@id/odBarrier1"
-            app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivOfferDetailedPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:adjustViewBounds="true"
+                    android:elevation="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@android:color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvOfferDetailedPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:text="@string/picture"
+                    android:textColor="@color/textHint"
+                    android:textSize="120sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
+                    app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
+                    app:layout_constraintStart_toStartOf="@+id/ivOfferDetailedPicture"
+                    app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedPicture" />
+
+                <ImageButton
+                    android:id="@+id/ibtOfferDetailedEdit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/edit"
+                    android:tint="@color/symbol"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/ibtOfferDetailedReport"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/report"
+                    android:tint="@color/symbol"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/ibtOfferDetailedBookmark"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bookmark"
+                    android:tint="@color/symbol"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
+                    app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
+                    app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
 
                 <TextView
                     android:id="@+id/tvOfferDetailedTitle"
@@ -126,7 +127,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="32sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
 
                 <TextView
                     android:id="@+id/tvOfferDetailedDate"
