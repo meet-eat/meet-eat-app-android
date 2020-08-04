@@ -105,4 +105,6 @@
     <string name="sort_spinner_item_distance">Entfernung</string>
     <string name="sort_spinner_item_amount_participants">Anzahl Teilnehmer</string>
     <string name="sort_spinner_item_host_rating">Gastgeberbewertung</string>
+    <string name="missing_date">Datum darf nicht leer sein.</string>
+    <string name="invalid_date_time_interval">Zeitintervall ungültig.</string>
 </resources>

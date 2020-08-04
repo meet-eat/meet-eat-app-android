@@ -123,7 +123,7 @@ public class OfferEditFragment extends Fragment {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
         try {
-            address = contextFormatter.getAddressFromString(city);
+            address = contextFormatter.formatAddressFromString(city);
         } catch (IOException e) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return false;
@@ -301,7 +301,7 @@ public class OfferEditFragment extends Fragment {
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
 
             try {
-                city = contextFormatter.getStringFromLocalizable(offer.getLocation());
+                city = contextFormatter.formatStringFromLocalizable(offer.getLocation());
             } catch (IOException | UnlocalizableException e) {
                 // TODO remove debug toast
                 Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),

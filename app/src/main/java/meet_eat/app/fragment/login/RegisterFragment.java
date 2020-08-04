@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
@@ -83,18 +83,27 @@ public class RegisterFragment extends Fragment {
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
             return;
-        } else if (!Password.isLegalPassword(password)) {
+        }
+
+        if (!Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_password, Toast.LENGTH_SHORT).show();
             return;
-        } else if ((username == null) || username.isEmpty()) {
+        }
+
+        if ((username == null) || username.isEmpty()) {
             Toast.makeText(getActivity(), R.string.missing_username, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (birthDay == null) {
+            Toast.makeText(getActivity(), R.string.missing_date, Toast.LENGTH_SHORT).show();
             return;
         }
 
         Address address;
 
         try {
-            address = contextFormatter.getAddressFromString(home);
+            address = contextFormatter.formatAddressFromString(home);
         } catch (IOException e) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return;
@@ -107,7 +116,7 @@ public class RegisterFragment extends Fragment {
 
         Localizable localizable =
                 new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude()));
-        home = contextFormatter.getStringFromAddress(address);
+        home = contextFormatter.formatStringFromAddress(address);
 
         if (phoneNumber == null) {
             phoneNumber = "";

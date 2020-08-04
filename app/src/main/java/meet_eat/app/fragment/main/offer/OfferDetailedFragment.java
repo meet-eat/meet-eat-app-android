@@ -150,7 +150,7 @@ public class OfferDetailedFragment extends Fragment {
         // TODO distance
 
         try {
-            binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
+            binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));
         } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
             Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),

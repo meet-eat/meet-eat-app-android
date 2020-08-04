@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items_offer_filter_spinner">
+        <item>@string/sort_spinner_item_time</item>
+        <item>@string/sort_spinner_item_price</item>
+        <item>@string/sort_spinner_item_distance</item>
+        <item>@string/sort_spinner_item_amount_participants</item>
+        <item>@string/sort_spinner_item_host_rating</item>
+    </string-array>
+</resources>

@@ -43,7 +43,7 @@ public class ContextFormatter {
                 context.getResources().getString(R.string.currency);
     }
 
-    public Address getAddressFromString(String location) throws IOException {
+    public Address formatAddressFromString(String location) throws IOException {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
@@ -54,7 +54,7 @@ public class ContextFormatter {
         return address;
     }
 
-    public String getStringFromAddress(Address address) {
+    public String formatStringFromAddress(Address address) {
 
         if (Objects.requireNonNull(address).getPostalCode() == null) {
             return address.getSubAdminArea();
@@ -63,8 +63,8 @@ public class ContextFormatter {
         return address.getPostalCode() + ", " + address.getSubAdminArea();
     }
 
-    public String getStringFromLocalizable(Localizable localizable) throws IOException, UnlocalizableException {
-        return getStringFromAddress(new Geocoder(context)
+    public String formatStringFromLocalizable(Localizable localizable) throws IOException, UnlocalizableException {
+        return formatStringFromAddress(new Geocoder(context)
                 .getFromLocation(localizable.getSphericalPosition().getLatitude(),
                         localizable.getSphericalPosition().getLongitude(), 1).get(0));
     }
