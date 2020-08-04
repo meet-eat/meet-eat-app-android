@@ -63,7 +63,7 @@ public class OfferEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -92,19 +92,16 @@ public class OfferEditFragment extends Fragment {
 
     private void showDateTimePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(), this::showTimePickerDialog,
-                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(binding.getRoot().getContext(), this :: showTimePickerDialog, cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private void showTimePickerDialog(DatePicker datePicker, int year, int month,
-                                      int dayOfMonth) {
+    private void showTimePickerDialog(DatePicker datePicker, int year, int month, int dayOfMonth) {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        new TimePickerDialog(binding.getRoot().getContext(),
-                (view, hourOfDay, minute) -> {
-                    dateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth,
-                            hourOfDay, minute);
-                    binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
-                }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
+        new TimePickerDialog(binding.getRoot().getContext(), (view, hourOfDay, minute) -> {
+            dateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
+            binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
+        }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
     }
 
     private void deleteOffer() {
@@ -116,8 +113,7 @@ public class OfferEditFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -264,14 +260,12 @@ public class OfferEditFragment extends Fragment {
                     navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException e) {
                     // TODO resolve error code
-                    Toast.makeText(getActivity(),
-                            "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
 
             } else {
-                offer.setLocation(() -> new SphericalPosition(address.getLatitude(),
-                        address.getLongitude()));
+                offer.setLocation(() -> new SphericalPosition(address.getLatitude(), address.getLongitude()));
                 offer.setPrice(price);
                 offer.setMaxParticipants(participants);
                 offer.setName(title);
@@ -284,8 +278,7 @@ public class OfferEditFragment extends Fragment {
                     navController.navigateUp();
                 } catch (RequestHandlerException e) {
                     // TODO resolve error code
-                    Toast.makeText(getActivity(),
-                            "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -303,8 +296,7 @@ public class OfferEditFragment extends Fragment {
         } else {
             binding.btOfferEditPublish.setVisibility(GONE);
             title = offer.getName();
-            ContextFormatter contextFormatter =
-                    new ContextFormatter(binding.getRoot().getContext());
+            ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             dateTime = offer.getDateTime();
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
 
@@ -312,8 +304,7 @@ public class OfferEditFragment extends Fragment {
                 city = contextFormatter.getStringFromLocalizable(offer.getLocation());
             } catch (IOException | UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(getActivity(),
-                        "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),
+                Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),
                         Toast.LENGTH_LONG).show();
                 return;
             }

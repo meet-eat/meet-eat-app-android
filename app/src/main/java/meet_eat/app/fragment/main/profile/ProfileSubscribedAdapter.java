@@ -31,8 +31,7 @@ public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscr
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemProfileSubscriptionBinding binding = ItemProfileSubscriptionBinding.inflate(inflater,
-                parent, false);
+        ItemProfileSubscriptionBinding binding = ItemProfileSubscriptionBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding);
     }
 

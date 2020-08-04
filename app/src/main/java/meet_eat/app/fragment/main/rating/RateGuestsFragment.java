@@ -21,9 +21,6 @@ import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
-import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
-import static meet_eat.app.fragment.OfferListType.STANDARD;
-
 public class RateGuestsFragment extends Fragment {
 
     private FragmentRateGuestsBinding binding;
@@ -35,14 +32,14 @@ public class RateGuestsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
         rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<User>());
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
-        binding.rvRateGuests.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        binding.rvRateGuests
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
 
         if (getArguments() == null) {

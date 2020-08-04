@@ -21,7 +21,7 @@ public class OfferFilterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferFilterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         initializeSortSpinner();
@@ -31,8 +31,8 @@ public class OfferFilterFragment extends Fragment {
     private void initializeSortSpinner() {
         ArrayList<String> arrayList = new ArrayList<>();
         // TODO arrayList.add(...);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(binding.getRoot().getContext(),
-                android.R.layout.simple_spinner_item, arrayList);
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(binding.getRoot().getContext(), android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.sOfferFilterSort.setAdapter(arrayAdapter);
     }

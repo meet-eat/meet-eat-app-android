@@ -50,7 +50,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         registerVM = new ViewModelProvider(this).get(RegisterViewModel.class);
@@ -67,18 +67,15 @@ public class RegisterFragment extends Fragment {
 
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month,
-                                                              dayOfMonth) -> {
+        new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
-            ContextFormatter contextFormatter =
-                    new ContextFormatter(binding.getRoot().getContext());
+            ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             binding.tvRegisterBirthdate.setText(contextFormatter.formatDate(birthDay));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void register() {
-        ContextFormatter contextFormatter =
-                new ContextFormatter(binding.getRoot().getContext());
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
@@ -119,15 +116,13 @@ public class RegisterFragment extends Fragment {
         // TODO profile image
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
-        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber,
-                profileDescription, false);
+        User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false);
 
         try {
             registerVM.register(user);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(),
-                    "DEBUG RegisterFragment.java -> register(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> register(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 

@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -76,8 +76,8 @@ public class LoginFragment extends Fragment {
             loginVM.login(email, password);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
         }
 
         startActivity(new Intent(getActivity(), MainActivity.class));
@@ -94,8 +94,8 @@ public class LoginFragment extends Fragment {
             loginVM.resetPassword(email);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
         }
 
         Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();

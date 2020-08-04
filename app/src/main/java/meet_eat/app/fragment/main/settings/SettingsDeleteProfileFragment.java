@@ -30,7 +30,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

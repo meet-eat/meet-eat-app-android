@@ -28,15 +28,19 @@ public class ContextFormatter {
     }
 
     public String formatDate(LocalDate localDate) {
-        return localDate.format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_date_format)));
+        return localDate
+                .format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_date_format)));
     }
 
     public String formatTime(LocalTime localTime) {
-        return localTime.format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_time_format))) + " " + context.getResources().getString(R.string.european_time_calling);
+        return localTime
+                .format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_time_format))) +
+                " " + context.getResources().getString(R.string.european_time_calling);
     }
 
     public String formatPrice(Double price) {
-        return String.format(context.getResources().getString(R.string.price_format), price) + context.getResources().getString(R.string.currency);
+        return String.format(context.getResources().getString(R.string.price_format), price) +
+                context.getResources().getString(R.string.currency);
     }
 
     public Address getAddressFromString(String location) throws IOException {
@@ -59,8 +63,9 @@ public class ContextFormatter {
         return address.getPostalCode() + ", " + address.getSubAdminArea();
     }
 
-    public String getStringFromLocalizable(Localizable localizable) throws IOException,
-            UnlocalizableException {
-        return getStringFromAddress(new Geocoder(context).getFromLocation(localizable.getSphericalPosition().getLatitude(), localizable.getSphericalPosition().getLongitude(), 1).get(0));
+    public String getStringFromLocalizable(Localizable localizable) throws IOException, UnlocalizableException {
+        return getStringFromAddress(new Geocoder(context)
+                .getFromLocation(localizable.getSphericalPosition().getLatitude(),
+                        localizable.getSphericalPosition().getLongitude(), 1).get(0));
     }
 }

@@ -21,7 +21,7 @@ public class SettingsDisplayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDisplayBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         return binding.getRoot();

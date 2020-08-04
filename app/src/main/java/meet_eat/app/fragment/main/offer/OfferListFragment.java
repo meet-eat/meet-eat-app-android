@@ -47,15 +47,15 @@ public class OfferListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
         offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());
         binding.rvOfferList.setAdapter(offerListAdapter);
-        binding.rvOfferList.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        binding.rvOfferList
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         if (getArguments() == null) {
             navController.navigateUp();
@@ -169,77 +169,77 @@ public class OfferListFragment extends Fragment {
                 () -> new SphericalPosition(48.9305065, 8.4612313)));
 
         for (int i = 0; i < 100; i++) {
-            offerList.add(new Offer(new User(new Email("tester@testi.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester 2 " +
-                    "Testi 2",
-                    "+49160304050", "My description", true), new Set<Tag>() {
-                @Override
-                public int size() {
-                    return 0;
-                }
+            offerList.add(new Offer(
+                    new User(new Email("tester@testi.de"), Password.createHashedPassword("123abcABC!§%"),
+                            LocalDate.of(1999, 1, 21), "Tester 2 " + "Testi 2", "+49160304050", "My description", true),
+                    new Set<Tag>() {
+                        @Override
+                        public int size() {
+                            return 0;
+                        }
 
-                @Override
-                public boolean isEmpty() {
-                    return false;
-                }
+                        @Override
+                        public boolean isEmpty() {
+                            return false;
+                        }
 
-                @Override
-                public boolean contains(@Nullable Object o) {
-                    return false;
-                }
+                        @Override
+                        public boolean contains(@Nullable Object o) {
+                            return false;
+                        }
 
-                @NonNull
-                @Override
-                public Iterator<Tag> iterator() {
-                    return null;
-                }
+                        @NonNull
+                        @Override
+                        public Iterator<Tag> iterator() {
+                            return null;
+                        }
 
-                @NonNull
-                @Override
-                public Object[] toArray() {
-                    return new Object[0];
-                }
+                        @NonNull
+                        @Override
+                        public Object[] toArray() {
+                            return new Object[0];
+                        }
 
-                @NonNull
-                @Override
-                public <T> T[] toArray(@NonNull T[] a) {
-                    return null;
-                }
+                        @NonNull
+                        @Override
+                        public <T> T[] toArray(@NonNull T[] a) {
+                            return null;
+                        }
 
-                @Override
-                public boolean add(Tag tag) {
-                    return false;
-                }
+                        @Override
+                        public boolean add(Tag tag) {
+                            return false;
+                        }
 
-                @Override
-                public boolean remove(@Nullable Object o) {
-                    return false;
-                }
+                        @Override
+                        public boolean remove(@Nullable Object o) {
+                            return false;
+                        }
 
-                @Override
-                public boolean containsAll(@NonNull Collection<?> c) {
-                    return false;
-                }
+                        @Override
+                        public boolean containsAll(@NonNull Collection<?> c) {
+                            return false;
+                        }
 
-                @Override
-                public boolean addAll(@NonNull Collection<? extends Tag> c) {
-                    return false;
-                }
+                        @Override
+                        public boolean addAll(@NonNull Collection<? extends Tag> c) {
+                            return false;
+                        }
 
-                @Override
-                public boolean retainAll(@NonNull Collection<?> c) {
-                    return false;
-                }
+                        @Override
+                        public boolean retainAll(@NonNull Collection<?> c) {
+                            return false;
+                        }
 
-                @Override
-                public boolean removeAll(@NonNull Collection<?> c) {
-                    return false;
-                }
+                        @Override
+                        public boolean removeAll(@NonNull Collection<?> c) {
+                            return false;
+                        }
 
-                @Override
-                public void clear() {
-                }
-            }, "lasanje" + i, "mmm leker", 69.88, 1, LocalDateTime.now(),
+                        @Override
+                        public void clear() {
+                        }
+                    }, "lasanje" + i, "mmm leker", 69.88, 1, LocalDateTime.now(),
                     () -> new SphericalPosition(48.9305065, 8.4612313)));
         }
 

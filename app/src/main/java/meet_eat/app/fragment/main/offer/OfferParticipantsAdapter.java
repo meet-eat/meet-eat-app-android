@@ -36,8 +36,7 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemOfferParticipantBinding binding = ItemOfferParticipantBinding.inflate(inflater,
-                parent, false);
+        ItemOfferParticipantBinding binding = ItemOfferParticipantBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding);
     }
 

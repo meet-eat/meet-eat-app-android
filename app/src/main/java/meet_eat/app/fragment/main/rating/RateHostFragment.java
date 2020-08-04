@@ -33,7 +33,7 @@ public class RateHostFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentRateHostBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);

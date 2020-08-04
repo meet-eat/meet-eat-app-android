@@ -33,7 +33,7 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         navController = NavHostFragment.findNavController(this);

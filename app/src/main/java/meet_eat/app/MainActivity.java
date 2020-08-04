@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this::onItemClicked);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
-                toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        navigationView.setNavigationItemSelectedListener(this :: onItemClicked);
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
+                        R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -75,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 // TODO remove debug toast
-                Toast.makeText(this, "DEBUG MainActivity.java -> onItemClicked(): default case",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "DEBUG MainActivity.java -> onItemClicked(): default case", Toast.LENGTH_LONG)
+                        .show();
         }
 
         drawerLayout.close();

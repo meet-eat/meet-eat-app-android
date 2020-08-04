@@ -42,7 +42,7 @@ public class OfferDetailedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferDetailedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -50,8 +50,7 @@ public class OfferDetailedFragment extends Fragment {
 
         if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
@@ -95,8 +94,7 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -127,8 +125,7 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -156,8 +153,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedCity.setText(contextFormatter.getStringFromLocalizable(location));
         } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -186,11 +182,13 @@ public class OfferDetailedFragment extends Fragment {
     private void updateUI() {
 
         if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
-            binding.ibtOfferDetailedBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
-                    R.color.bookmarked), PorterDuff.Mode.SRC_IN);
+            binding.ibtOfferDetailedBookmark
+                    .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                            PorterDuff.Mode.SRC_IN);
         } else {
-            binding.ibtOfferDetailedBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
-                    R.color.symbol), PorterDuff.Mode.SRC_IN);
+            binding.ibtOfferDetailedBookmark
+                    .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                            PorterDuff.Mode.SRC_IN);
         }
 
         if (offer.getParticipants().contains(offerVM.getCurrentUser())) {

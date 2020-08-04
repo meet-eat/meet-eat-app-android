@@ -32,7 +32,7 @@ public class ProfileReportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileReportBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
@@ -54,8 +54,7 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void reportUser() {
-        Report report = new Report(userVM.getCurrentUser(), reportMessage != null ?
-                reportMessage : "");
+        Report report = new Report(userVM.getCurrentUser(), reportMessage != null ? reportMessage : "");
 
         try {
             userVM.report(user, report);

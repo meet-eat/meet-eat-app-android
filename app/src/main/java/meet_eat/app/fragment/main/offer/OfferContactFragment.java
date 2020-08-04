@@ -31,7 +31,7 @@ public class OfferContactFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferContactBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
@@ -39,8 +39,7 @@ public class OfferContactFragment extends Fragment {
 
         if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(),
-                    "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
@@ -57,8 +56,7 @@ public class OfferContactFragment extends Fragment {
     }
 
     private void contact() {
-        ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(),
-                offer.getCreator());
+        ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(), offer.getCreator());
         offerVM.requestContact(contactRequest);
         Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         navController.navigateUp();

@@ -10,8 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import meet_eat.app.R;
-import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
 import meet_eat.app.databinding.FragmentSettingsNotificationBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
@@ -23,7 +21,7 @@ public class SettingsNotificationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsNotificationBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         return binding.getRoot();

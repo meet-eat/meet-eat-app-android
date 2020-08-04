@@ -35,7 +35,7 @@ public class ProfileEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
@@ -67,8 +67,7 @@ public class ProfileEditFragment extends Fragment {
     private void changePassword() {
 
         if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
-            Toast.makeText(getActivity(), R.string.bad_passwords,
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.bad_passwords, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -82,8 +81,7 @@ public class ProfileEditFragment extends Fragment {
                 userVM.edit(userVM.getCurrentUser());
             } catch (RequestHandlerException e) {
                 // TODO resolve error code
-                Toast.makeText(getActivity(),
-                        "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
+                Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
 
@@ -118,8 +116,7 @@ public class ProfileEditFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(),
-                    "DEBUG RegisterFragment.java -> saveProfile(): " + e.getMessage(),
+            Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> saveProfile(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
 

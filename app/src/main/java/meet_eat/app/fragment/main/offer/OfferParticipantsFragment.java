@@ -34,14 +34,14 @@ public class OfferParticipantsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         offerParticipantsAdapter = new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
         binding.rvOfferParticipants.setAdapter(offerParticipantsAdapter);
-        binding.rvOfferParticipants.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        binding.rvOfferParticipants
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
 
         if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {

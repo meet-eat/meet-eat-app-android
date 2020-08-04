@@ -29,14 +29,14 @@ public class ProfileSubscribedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
         binding.rvProfileSubscriptions.setAdapter(profileSubscribedAdapter);
-        binding.rvProfileSubscriptions.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        binding.rvProfileSubscriptions
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
         displaySubscriberList();
         setButtonOnClickListener();
@@ -44,8 +44,7 @@ public class ProfileSubscribedFragment extends Fragment {
     }
 
     private void displaySubscriberList() {
-        profileSubscribedAdapter.updateSubscriptions(
-                new ArrayList<>(userVM.getCurrentUser().getSubscriptions()));
+        profileSubscribedAdapter.updateSubscriptions(new ArrayList<>(userVM.getCurrentUser().getSubscriptions()));
     }
 
     private void setButtonOnClickListener() {

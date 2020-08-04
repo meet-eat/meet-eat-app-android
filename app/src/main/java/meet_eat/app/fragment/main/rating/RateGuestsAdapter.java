@@ -36,8 +36,7 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemRateGuestBinding binding = ItemRateGuestBinding.inflate(inflater,
-                parent, false);
+        ItemRateGuestBinding binding = ItemRateGuestBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding);
     }
 
