@@ -4,8 +4,15 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import meet_eat.data.ObjectJsonParser;
 
 public class RequestHandler<T, S> {
 
@@ -16,13 +23,20 @@ public class RequestHandler<T, S> {
 
     public RequestHandler() {
         restTemplate = new RestTemplate();
+
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        messageConverter.setObjectMapper(new ObjectJsonParser().getObjectMapper());
+        List<HttpMessageConverter<?>> messageConverters = new LinkedList<>();
+        messageConverters.add(messageConverter);
+
+        restTemplate.setMessageConverters(messageConverters);
     }
 
     protected S handle(RequestEntity<T> requestEntity, HttpStatus expectedStatus) throws RequestHandlerException {
         ResponseEntity<S> responseEntity;
         ParameterizedTypeReference<S> typeReference = new ParameterizedTypeReference<S>() {};
         try {
-            responseEntity = new RestTemplate().exchange(requestEntity, typeReference);
+            responseEntity = restTemplate.exchange(requestEntity, typeReference);
         } catch (RestClientException exception) {
             throw new RequestHandlerException(ERROR_MESSAGE_REQUEST + exception.getMessage());
         }
