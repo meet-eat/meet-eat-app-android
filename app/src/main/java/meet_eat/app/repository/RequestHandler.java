@@ -9,7 +9,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 import meet_eat.data.ObjectJsonParser;
@@ -25,11 +25,9 @@ public class RequestHandler<T, S> {
         restTemplate = new RestTemplate();
 
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-        messageConverter.setObjectMapper(new ObjectJsonParser().getObjectMapper());
-        List<HttpMessageConverter<?>> messageConverters = new LinkedList<>();
-        messageConverters.add(messageConverter);
+        messageConverter.setObjectMapper(ObjectJsonParser.getDefaultObjectMapper());
 
-        restTemplate.setMessageConverters(messageConverters);
+        restTemplate.setMessageConverters(Collections.singletonList(messageConverter));
     }
 
     protected S handle(RequestEntity<T> requestEntity, HttpStatus expectedStatus) throws RequestHandlerException {
