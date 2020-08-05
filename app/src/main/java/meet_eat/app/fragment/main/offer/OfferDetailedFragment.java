@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
@@ -48,7 +49,7 @@ public class OfferDetailedFragment extends Fragment {
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             // TODO remove debug toast
             Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();

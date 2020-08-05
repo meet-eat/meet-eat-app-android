@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Objects;
+
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRateHostBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -39,7 +41,7 @@ public class RateHostFragment extends Fragment {
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null) {
+        if (Objects.isNull(getArguments())) {
             navController.navigate(R.id.offerListFragment);
         }
         //TODO get offer associated with rating
@@ -71,7 +73,7 @@ public class RateHostFragment extends Fragment {
 
     private void rateGuests() {
         int numStars = (int) binding.rbRateHost.getRating();
-        Rating rating = null;
+        Rating rating;
 
         switch (numStars) {
             case 1:

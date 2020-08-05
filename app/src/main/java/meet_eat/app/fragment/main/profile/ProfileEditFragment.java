@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileEditBinding;
@@ -114,11 +115,11 @@ public class ProfileEditFragment extends Fragment {
     private void saveProfile() {
         User currentUser = userVM.getCurrentUser();
 
-        if (phone != null && !phone.isEmpty()) {
+        if (Objects.nonNull(phone) && !phone.isEmpty()) {
             currentUser.setPhoneNumber(phone);
         }
 
-        if (home != null && !home.isEmpty()) {
+        if (Objects.nonNull(home) && !home.isEmpty()) {
             Address address;
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
@@ -129,7 +130,7 @@ public class ProfileEditFragment extends Fragment {
                 return;
             }
 
-            if (address == null) {
+            if (Objects.isNull(address)) {
                 Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -140,7 +141,7 @@ public class ProfileEditFragment extends Fragment {
             currentUser.setLocalizable(localizable);
         }
 
-        if (description != null && !description.isEmpty()) {
+        if (Objects.nonNull(description) && !description.isEmpty()) {
             currentUser.setDescription(description);
         }
 

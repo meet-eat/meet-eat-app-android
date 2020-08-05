@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileBinding;
@@ -40,9 +41,9 @@ public class ProfileFragment extends Fragment {
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null) {
+        if (Objects.isNull(getArguments())) {
             user = userVM.getCurrentUser();
-        } else if (getArguments().getSerializable(USER.name()) == null) {
+        } else if (Objects.isNull(getArguments().getSerializable(USER.name()))) {
             Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {

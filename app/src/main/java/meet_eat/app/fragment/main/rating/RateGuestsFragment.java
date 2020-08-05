@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRateGuestsBinding;
@@ -42,7 +43,7 @@ public class RateGuestsFragment extends Fragment {
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null) {
+        if (Objects.isNull(getArguments())) {
             navController.navigate(R.id.offerListFragment);
         }
         //TODO get offer associated with rating

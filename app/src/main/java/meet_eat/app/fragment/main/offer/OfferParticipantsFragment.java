@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
@@ -44,7 +45,7 @@ public class OfferParticipantsFragment extends Fragment {
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             Toast.makeText(getActivity(), "DEBUG: Offer not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {

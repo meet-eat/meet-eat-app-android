@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Objects;
+
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferContactBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
@@ -37,7 +39,7 @@ public class OfferContactFragment extends Fragment {
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             // TODO remove debug toast
             Toast.makeText(getActivity(), "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
             navController.navigateUp();

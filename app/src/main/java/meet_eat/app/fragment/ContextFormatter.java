@@ -52,7 +52,7 @@ public class ContextFormatter {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (geocoder.getFromLocationName(location, 1) != null) {
+        if (Objects.nonNull(geocoder.getFromLocationName(location, 1))) {
             address = geocoder.getFromLocationName(location, 1).get(0);
         }
 
@@ -61,7 +61,7 @@ public class ContextFormatter {
 
     public String formatStringFromAddress(Address address) {
 
-        if (Objects.requireNonNull(address).getPostalCode() == null) {
+        if (Objects.isNull(Objects.requireNonNull(address).getPostalCode())) {
             return address.getSubAdminArea();
         }
 

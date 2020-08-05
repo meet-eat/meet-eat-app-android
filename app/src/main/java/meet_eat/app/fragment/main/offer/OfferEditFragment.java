@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import meet_eat.app.R;
@@ -69,7 +70,7 @@ public class OfferEditFragment extends Fragment {
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(OFFER.name()) == null) {
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             isNewOffer = true;
         } else {
             isNewOffer = false;
@@ -129,12 +130,12 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
-        if (address == null) {
+        if (Objects.isNull(address)) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (priceString == null) {
+        if (Objects.isNull(priceString)) {
             Toast.makeText(getActivity(), R.string.missing_price, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -146,7 +147,7 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
-        if (participantsString == null) {
+        if (Objects.isNull(participantsString)) {
             Toast.makeText(getActivity(), R.string.missing_participants, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -158,17 +159,17 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
-        if (title == null) {
+        if (Objects.isNull(title)) {
             Toast.makeText(getActivity(), R.string.missing_title, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (description == null) {
+        if (Objects.isNull(description)) {
             Toast.makeText(getActivity(), R.string.missing_description, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (dateTime == null) {
+        if (Objects.isNull(dateTime)) {
             Toast.makeText(getActivity(), R.string.missing_date_time, Toast.LENGTH_SHORT).show();
             return false;
         } else if (dateTime.isBefore(LocalDateTime.now())) {

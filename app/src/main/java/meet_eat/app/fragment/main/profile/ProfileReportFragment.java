@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Objects;
+
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
@@ -38,7 +40,7 @@ public class ProfileReportFragment extends Fragment {
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
-        if (getArguments() == null || getArguments().getSerializable(USER.name()) == null) {
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(USER.name()))) {
             Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {
@@ -54,7 +56,7 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void reportUser() {
-        Report report = new Report(userVM.getCurrentUser(), reportMessage != null ? reportMessage : "");
+        Report report = new Report(userVM.getCurrentUser(), Objects.nonNull(reportMessage) ? reportMessage : "");
 
         try {
             userVM.report(user, report);

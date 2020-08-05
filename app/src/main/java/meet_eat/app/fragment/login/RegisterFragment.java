@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRegisterBinding;
@@ -90,12 +91,12 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        if ((username == null) || username.isEmpty()) {
+        if (Objects.isNull(username) || username.isEmpty()) {
             Toast.makeText(getActivity(), R.string.missing_username, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (birthDay == null) {
+        if (Objects.isNull(birthDay)) {
             Toast.makeText(getActivity(), R.string.missing_date, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -109,7 +110,7 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        if (address == null) {
+        if (Objects.isNull(address)) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -118,11 +119,11 @@ public class RegisterFragment extends Fragment {
                 new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude()));
         home = contextFormatter.formatStringFromAddress(address);
 
-        if (phoneNumber == null) {
+        if (Objects.isNull(phoneNumber)) {
             phoneNumber = "";
         }
 
-        if (profileDescription == null) {
+        if (Objects.isNull(profileDescription)) {
             profileDescription = "";
         }
 
