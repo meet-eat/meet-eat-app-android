@@ -45,8 +45,18 @@ public class OfferViewModel extends ViewModel {
         return session.getUser();
     }
 
-    // TODO comparators in method signature
+    public Iterable<Offer> fetchSubscribedOffers() throws RequestHandlerException {
+        // TODO sort + return offerRepository.getSubscribedOffers(getCurrentUser());
+        return null;
+    }
+
+    public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
+        // TODO sort + return getCurrentUser().getBookmarks();
+        return null;
+    }
+
     public Iterable<Offer> fetchOffers(User user) throws RequestHandlerException {
+        // TODO sort with comparators
         return offerRepository.getOffersByCreatorId(user.getIdentifier());
     }
 
@@ -56,8 +66,8 @@ public class OfferViewModel extends ViewModel {
      *
      * @return A /LIST/ containing the updated offers.
      */
-    // TODO comparators in method signature
     public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
+        // TODO sort with comparators
         predicates.addAll(getCurrentUser().getOfferPredicates());
         return offerRepository.getOffers(page, predicates, null);
     }

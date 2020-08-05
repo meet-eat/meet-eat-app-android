@@ -267,8 +267,6 @@ public class OfferListFragment extends Fragment {
             return;
         }
 
-        Collection<OfferPredicate> predicates = new ArrayList<>();
-
         try {
 
             switch (type) {
@@ -276,23 +274,13 @@ public class OfferListFragment extends Fragment {
                     offerListAdapter.updateOffers(offerVM.fetchOffers(offerVM.getCurrentUser()));
                     break;
                 case BOOKMARKED:
-                    offerListAdapter.updateOffers(offerVM.getCurrentUser().getBookmarks());
+                    // TODO offerListAdapter.updateOffers(offerVM.fetchBookmarkedOffers());
                     break;
                 case SUBSCRIBED:
-                    Collection<Offer> offersFromSubscriptions = new ArrayList<>();
-
-                    for (User subscription : offerVM.getCurrentUser().getSubscriptions()) {
-
-                        for (Offer offer : offerVM.fetchOffers(subscription)) {
-                            offersFromSubscriptions.add(offer);
-                        }
-
-                    }
-
-                    offerListAdapter.updateOffers(offersFromSubscriptions);
+                    // TODO offerListAdapter.updateOffers(offerVM.fetchSubscribedOffers());
                     break;
                 default:
-                    offerListAdapter.updateOffers(offerVM.fetchOffers(predicates));
+                    offerListAdapter.updateOffers(offerVM.fetchOffers(new ArrayList<>()));
             }
 
         } catch (RequestHandlerException e) {
