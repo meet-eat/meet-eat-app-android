@@ -3,12 +3,13 @@ package meet_eat.app.repository;
 import java.net.URI;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import meet_eat.data.Page;
 import meet_eat.data.Report;
 import meet_eat.data.RequestHeaderField;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.predicate.OfferPredicate;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -23,7 +24,7 @@ public class OfferRepository extends EntityRepository<Offer> {
         super(BASE_URL);
     }
 
-    public Iterable<Offer> getOffers(Page page, Iterable<Predicate<Offer>> predicates,
+    public Iterable<Offer> getOffers(Page page, Iterable<OfferPredicate> predicates,
                                      Iterable<Comparator<Offer>> comparators) throws RequestHandlerException {
         LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         headers.add(RequestHeaderField.PREDICATES, toJSON(predicates));
