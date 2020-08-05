@@ -1,8 +1,5 @@
 package meet_eat.app.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.RequestHeaderField;
 import meet_eat.data.entity.Token;
