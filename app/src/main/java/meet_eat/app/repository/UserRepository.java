@@ -1,6 +1,7 @@
 package meet_eat.app.repository;
 
 import meet_eat.data.entity.Tag;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -27,7 +28,8 @@ public class UserRepository extends EntityRepository<User> {
     @Override
     public User addEntity(User entity) throws RequestHandlerException {
         //No token for registration
-        RequestEntity<User> requestEntity = new RequestEntity<User>(entity, HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + BASE_URL));
+        RequestEntity<User> requestEntity = new RequestEntity<User>(Objects.requireNonNull(entity), HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + BASE_URL));
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
 

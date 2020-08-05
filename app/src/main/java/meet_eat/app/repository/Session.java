@@ -62,7 +62,7 @@ public class Session {
     }
 
     public void login(LoginCredential loginCredential) throws RequestHandlerException {
-        RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(loginCredential,
+        RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(Objects.requireNonNull(loginCredential),
                 HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + URL_LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
     }
@@ -71,7 +71,8 @@ public class Session {
         if (Objects.isNull(token)) {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
-        RequestEntity<Token> requestEntity = new RequestEntity<Token>(token, HttpMethod.DELETE, URI.create(RequestHandler.SERVER_PATH + URL_LOGOUT));
+        RequestEntity<Token> requestEntity = new RequestEntity<Token>(token, HttpMethod.DELETE,
+                URI.create(RequestHandler.SERVER_PATH + URL_LOGOUT));
         new RequestHandler<Token, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
         token = null;
     }

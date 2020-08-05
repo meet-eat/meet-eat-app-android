@@ -9,6 +9,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import meet_eat.data.ObjectJsonParser;
 
@@ -32,13 +33,14 @@ public class RequestHandler<T, S> {
         ResponseEntity<S> responseEntity;
         ParameterizedTypeReference<S> typeReference = new ParameterizedTypeReference<S>() {};
         try {
-            responseEntity = restTemplate.exchange(requestEntity, typeReference);
+            responseEntity = restTemplate.exchange(Objects.requireNonNull(requestEntity), typeReference);
         } catch (RestClientException exception) {
             throw new RequestHandlerException(ERROR_MESSAGE_REQUEST + exception.getMessage());
         }
-        if (responseEntity.getStatusCode().equals(expectedStatus)) {
+        if (responseEntity.getStatusCode().equals(Objects.requireNonNull(expectedStatus))) {
             return responseEntity.getBody();
         }
-        throw new RequestHandlerException(ERROR_MESSAGE_REQUEST + ERROR_MESSAGE_STATUS_CODE + responseEntity.getStatusCodeValue());
+        throw new RequestHandlerException(ERROR_MESSAGE_REQUEST + ERROR_MESSAGE_STATUS_CODE
+                + responseEntity.getStatusCodeValue());
     }
 }
