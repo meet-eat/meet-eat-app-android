@@ -1,6 +1,7 @@
 package meet_eat.app;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
                         R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     private boolean onItemClicked(MenuItem menuItem) {
