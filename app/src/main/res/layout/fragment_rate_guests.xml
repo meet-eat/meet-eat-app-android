@@ -34,18 +34,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRateGuests"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:elevation="10dp"
             app:layout_constraintBottom_toTopOf="@+id/btRateGuestsRate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRateGuestsOfferTitle">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRateGuests"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/tvRateGuestsOfferTitle" />
 
         <Button
             android:id="@+id/btRateGuestsRate"

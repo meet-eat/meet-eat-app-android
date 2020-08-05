@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/scrollView2">
+            app:layout_constraintBottom_toBottomOf="@id/rvOfferList">
 
             <ImageButton
                 android:id="@+id/ibtOfferListCreate"
@@ -72,18 +72,11 @@
                 app:layout_constraintTop_toTopOf="@+id/ibtOfferListFilter" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <ScrollView
-            android:id="@+id/scrollView2"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOfferList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="3dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvOfferList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </ScrollView>
+            android:elevation="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
