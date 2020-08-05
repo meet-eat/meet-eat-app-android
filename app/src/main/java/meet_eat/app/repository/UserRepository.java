@@ -32,7 +32,8 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     public Void resetPassword(Email email) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + BASE_URL + String.format(URL_RESET_PASSWORD, email.toString())));
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH
+                + BASE_URL + String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
         return new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
     }
 
