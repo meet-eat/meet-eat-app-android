@@ -39,8 +39,13 @@ public class ContextFormatter {
     }
 
     public String formatPrice(Double price) {
-        return String.format(context.getResources().getString(R.string.price_format), price) +
+        return String.format(context.getResources().getString(R.string.decimal_format), price) +
                 context.getResources().getString(R.string.currency);
+    }
+
+    public String formatDistance(Double distance) {
+        return String.format(context.getResources().getString(R.string.decimal_format), distance / 1000) +
+                context.getResources().getString(R.string.distance_unit);
     }
 
     public Address formatAddressFromString(String location) throws IOException {

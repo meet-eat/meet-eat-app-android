@@ -19,6 +19,7 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.location.UnlocalizableException;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
@@ -32,8 +33,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         currentOffers = offers;
     }
 
-    public void updateOffers(ArrayList<Offer> offers) {
-        currentOffers = offers;
+    public void updateOffers(Iterable<Offer> offers) {
+        offers.forEach(currentOffers::add);
         notifyDataSetChanged();
     }
 
@@ -71,7 +72,16 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.tvOfferCardDescription.setText(offer.getDescription());
             binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
             binding.tvOfferCardPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
-            // TODO distance
+
+            try {
+                binding.tvOfferCardDistance.setText(contextFormatter.formatDistance(offerVM.getCurrentUser().getLocalizable().getDistance(offer.getLocation())));
+            } catch (UnlocalizableException e) {
+                // TODO remove debug toast
+                Toast.makeText(binding.getRoot().getContext(), "DEBUG OfferListAdapter.java -> setData(): " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             // TODO offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));

@@ -14,11 +14,11 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 
-import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
-import static meet_eat.app.fragment.OfferListType.BOOKMARKED;
-import static meet_eat.app.fragment.OfferListType.OWN;
-import static meet_eat.app.fragment.OfferListType.STANDARD;
-import static meet_eat.app.fragment.OfferListType.SUBSCRIBED;
+import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
+import static meet_eat.app.fragment.ListType.BOOKMARKED;
+import static meet_eat.app.fragment.ListType.OWN;
+import static meet_eat.app.fragment.ListType.STANDARD;
+import static meet_eat.app.fragment.ListType.SUBSCRIBED;
 
 /**
  * Represents the main activity of the app, that is active when the user is in the logged in state.
@@ -56,19 +56,19 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.profileFragment);
                 break;
             case R.id.drawer_menu_main_offers:
-                bundle.putSerializable(TYPE.name(), STANDARD);
+                bundle.putSerializable(LIST_TYPE.name(), STANDARD);
                 navController.navigate(R.id.offerListFragment, bundle);
                 break;
             case R.id.drawer_menu_my_offers:
-                bundle.putSerializable(TYPE.name(), OWN);
+                bundle.putSerializable(LIST_TYPE.name(), OWN);
                 navController.navigate(R.id.offerListFragment, bundle);
                 break;
             case R.id.drawer_menu_bookmarked:
-                bundle.putSerializable(TYPE.name(), BOOKMARKED);
+                bundle.putSerializable(LIST_TYPE.name(), BOOKMARKED);
                 navController.navigate(R.id.offerListFragment, bundle);
                 break;
             case R.id.drawer_menu_subscriptions:
-                bundle.putSerializable(TYPE.name(), SUBSCRIBED);
+                bundle.putSerializable(LIST_TYPE.name(), SUBSCRIBED);
                 navController.navigate(R.id.offerListFragment, bundle);
                 break;
             case R.id.drawer_menu_settings:

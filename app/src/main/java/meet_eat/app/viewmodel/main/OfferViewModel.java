@@ -45,15 +45,21 @@ public class OfferViewModel extends ViewModel {
         return session.getUser();
     }
 
+    // TODO comparators in method signature
+    public Iterable<Offer> fetchOffers(User user) throws RequestHandlerException {
+        return offerRepository.getOffersByCreatorId(user.getIdentifier());
+    }
+
     /**
      * Sends an offer update request to the
      * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
      *
      * @return A /LIST/ containing the updated offers.
      */
-    public Iterable<Offer> fetchOffers() throws RequestHandlerException {
-        // TODO should OfferRepository.getOffers(...) take collection of predicates?
-        return offerRepository.getOffers(page, Lists.newArrayList(getCurrentUser().getOfferPredicates()), null);
+    // TODO comparators in method signature
+    public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
+        predicates.addAll(getCurrentUser().getOfferPredicates());
+        return offerRepository.getOffers(page, predicates, null);
     }
 
     /**

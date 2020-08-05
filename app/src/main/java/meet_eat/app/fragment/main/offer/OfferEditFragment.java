@@ -37,8 +37,8 @@ import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
-import static meet_eat.app.fragment.NavigationArgumentKey.TYPE;
-import static meet_eat.app.fragment.OfferListType.STANDARD;
+import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
+import static meet_eat.app.fragment.ListType.STANDARD;
 
 public class OfferEditFragment extends Fragment {
 
@@ -109,7 +109,7 @@ public class OfferEditFragment extends Fragment {
         try {
             offerVM.delete(offer);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
-            bundle.putSerializable(TYPE.name(), STANDARD);
+            bundle.putSerializable(LIST_TYPE.name(), STANDARD);
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code

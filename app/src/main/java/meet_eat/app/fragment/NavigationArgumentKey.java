@@ -6,5 +6,7 @@ public enum NavigationArgumentKey {
 
     USER,
 
-    TYPE
+    LIST_TYPE,
+
+    SORT_CRITERION
 }

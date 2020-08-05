@@ -27,7 +27,6 @@ public class LoginViewModel extends ViewModel {
      * @param passwordString The password of the user.
      */
     public void login(String emailString, String passwordString) throws RequestHandlerException {
-        // TODO Exception handling for non-runtime exceptions
         Email email = new Email(emailString);
         Password password = Password.createHashedPassword(passwordString);
         LoginCredential credential = new LoginCredential(email, password);

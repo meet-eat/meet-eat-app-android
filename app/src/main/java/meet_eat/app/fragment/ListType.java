@@ -1,6 +1,6 @@
 package meet_eat.app.fragment;
 
-public enum OfferListType {
+public enum ListType {
 
     STANDARD,
 

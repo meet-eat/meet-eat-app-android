@@ -1,5 +1,6 @@
 package meet_eat.app.fragment.main.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.LoginActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsDeleteProfileBinding;
 import meet_eat.app.repository.RequestHandlerException;
@@ -55,9 +57,12 @@ public class SettingsDeleteProfileFragment extends Fragment {
 
             try {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());
-                // TODO toast?
+                startActivity(new Intent(getActivity(), LoginActivity.class));
             } catch (RequestHandlerException e) {
-                // TODO
+                // TODO resolve error code
+                Toast.makeText(getActivity(),
+                        "DEBUG SettingsDeleteProfileFragment.java -> deleteProfile(): " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
 
         } else {

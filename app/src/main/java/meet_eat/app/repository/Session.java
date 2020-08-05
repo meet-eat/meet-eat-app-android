@@ -43,7 +43,7 @@ public class Session {
 
     public User getUser() {
         if (DEBUG) {
-            Localizable validLocalizable = new SphericalLocation(new SphericalPosition(0, 0));
+            Localizable validLocalizable = new SphericalLocation(new SphericalPosition(47, 8));
             User testUser1 = new User(new Email("tester@testi.de"), Password
                     .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester " +
                     "Testi 1",

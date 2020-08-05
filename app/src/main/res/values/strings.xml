@@ -88,7 +88,7 @@
     <string name="drawer_menu_main_offers">Hauptansicht</string>
     <string name="european_time_format">HH:mm</string>
     <string name="european_time_calling">Uhr</string>
-    <string name="price_format">%.2f</string>
+    <string name="decimal_format">%.2f</string>
     <string name="profile_edit_success">Profil erfolgreich bearbeitet.</string>
     <string name="invalid_price">Ungültige Preisangabe.</string>
     <string name="invalid_max_participants">Ungültige Anzahl an Teilnehmern.</string>
@@ -107,4 +107,9 @@
     <string name="sort_spinner_item_host_rating">Gastgeberbewertung</string>
     <string name="missing_date">Datum darf nicht leer sein.</string>
     <string name="invalid_date_time_interval">Zeitintervall ungültig.</string>
+    <string name="distance_unit">km</string>
+    <string name="invalid_price_interval">Preisintervall ungültig.</string>
+    <string name="invalid_distance_interval">Entfernungsintervall ungültig.</string>
+    <string name="invalid_participants_interval">Teilnehmerintervall ungültig.</string>
+    <string name="invalid_rating_interval">Bewertungsintervall ungültig.</string>
 </resources>

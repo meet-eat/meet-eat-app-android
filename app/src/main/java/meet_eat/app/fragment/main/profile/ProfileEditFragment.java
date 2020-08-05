@@ -1,5 +1,6 @@
 package meet_eat.app.fragment.main.profile;
 
+import android.location.Address;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.io.IOException;
+
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileEditBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -20,6 +23,10 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
+import meet_eat.data.location.SphericalLocation;
+import meet_eat.data.location.SphericalPosition;
+import meet_eat.data.location.UnlocalizableException;
 
 public class ProfileEditFragment extends Fragment {
 
@@ -52,8 +59,16 @@ public class ProfileEditFragment extends Fragment {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
         phone = currentUser.getPhoneNumber();
-        // TODO binding.etProfileEditHome.setText(currentUser.getHome());
-        // TODO image
+        try {
+            binding.etProfileEditHome
+                    .setText(contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable()));
+        } catch (IOException | UnlocalizableException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> initUI(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            navController.navigateUp();
+        }
+        // TODO profile image
         description = currentUser.getDescription();
     }
 
@@ -93,7 +108,7 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private void addImage() {
-        // TODO
+        // TODO profile image
     }
 
     private void saveProfile() {
@@ -104,7 +119,25 @@ public class ProfileEditFragment extends Fragment {
         }
 
         if (home != null && !home.isEmpty()) {
-            // TODO
+            Address address;
+            ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+
+            try {
+                address = contextFormatter.formatAddressFromString(home);
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (address == null) {
+                Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Localizable localizable =
+                    new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude()));
+            home = contextFormatter.formatStringFromAddress(address);
+            currentUser.setLocalizable(localizable);
         }
 
         if (description != null && !description.isEmpty()) {

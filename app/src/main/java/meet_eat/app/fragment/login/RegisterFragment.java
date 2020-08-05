@@ -126,7 +126,6 @@ public class RegisterFragment extends Fragment {
             profileDescription = "";
         }
 
-        // TODO location of user
         // TODO profile image
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);

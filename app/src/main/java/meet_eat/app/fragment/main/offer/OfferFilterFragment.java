@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -20,13 +19,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferFilterBinding;
 import meet_eat.app.fragment.ContextFormatter;
+import meet_eat.app.fragment.ListType;
+import meet_eat.app.fragment.SortCriterion;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.location.UnlocalizableException;
@@ -39,6 +42,9 @@ import meet_eat.data.predicate.numeric.ParticipantsPredicate;
 import meet_eat.data.predicate.numeric.PricePredicate;
 import meet_eat.data.predicate.numeric.RatingPredicate;
 
+import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
+import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
+
 public class OfferFilterFragment extends Fragment {
 
     private static final int MONTH_CORRECTION = 1;
@@ -46,10 +52,10 @@ public class OfferFilterFragment extends Fragment {
     private FragmentOfferFilterBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
-    private Collection<OfferPredicate> predicates;
     private LocalDateTime minDateTime;
     private LocalDateTime maxDateTime;
     private Spinner spinner;
+    private ListType originListType;
     private String minPrice;
     private String maxPrice;
     private String minDistance;
@@ -67,14 +73,18 @@ public class OfferFilterFragment extends Fragment {
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
+
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(), "DEBUG OfferFilterFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            navController.navigateUp();
+        } else {
+            originListType = (ListType) getArguments().getSerializable(LIST_TYPE.name());
+        }
+
         initializeSortSpinner();
-        initUI();
         setButtonOnClickListener();
         return binding.getRoot();
-    }
-
-    private void initUI() {
-        // TODO
     }
 
     private void setButtonOnClickListener() {
@@ -114,39 +124,57 @@ public class OfferFilterFragment extends Fragment {
     }
 
     private void saveFilters() {
-        // TODO sort
+        Collection<OfferPredicate> predicates = new ArrayList<>();
 
-        if (minDateTime != null && maxDateTime != null) {
+        if (Objects.nonNull(minDateTime) && Objects.nonNull(maxDateTime)) {
 
             if (maxDateTime.compareTo(minDateTime) < 0) {
                 Toast.makeText(getActivity(), R.string.invalid_date_time_interval, Toast.LENGTH_SHORT).show();
                 return;
-            } else {
-                predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER, minDateTime));
-                predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.BEFORE, maxDateTime));
             }
 
-        } else if (minDateTime != null) {
+        }
+
+        if (Objects.nonNull(minDateTime)) {
             predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER, minDateTime));
-        } else if (maxDateTime != null) {
+        }
+
+        if (Objects.nonNull(maxDateTime)) {
             predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.BEFORE, maxDateTime));
-        } // no else statement, because no predicates must be added
+        }
 
-        // TODO possible error for all following
+        // TODO possible parse errors for all following
 
-        if (minPrice != null) {
+        if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice)) {
+
+            if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
+                Toast.makeText(getActivity(), R.string.invalid_price_interval, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        if (Objects.nonNull(minPrice)) {
             predicates.add(new PricePredicate(DoubleOperation.GREATER, Double.parseDouble(minPrice)));
         }
 
-        if (maxPrice != null) {
+        if (Objects.nonNull(maxPrice)) {
             predicates.add(new PricePredicate(DoubleOperation.LESS, Double.parseDouble(maxPrice)));
         }
 
-        if (minDistance != null) {
+        if (Objects.nonNull(minDistance) && Objects.nonNull(maxDistance)) {
+
+            if (Double.parseDouble(minDistance) > Double.parseDouble(maxDistance)) {
+                Toast.makeText(getActivity(), R.string.invalid_distance_interval, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        if (Objects.nonNull(minDistance)) {
 
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER,
-                        Integer.parseInt(minDistance),
+                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Integer.parseInt(minDistance),
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
@@ -157,7 +185,7 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (maxDistance != null) {
+        if (Objects.nonNull(maxDistance)) {
 
             try {
                 predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Integer.parseInt(maxDistance),
@@ -171,25 +199,46 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (minParticipants != null) {
+        if (Objects.nonNull(minParticipants) && Objects.nonNull(maxParticipants)) {
+
+            if (Integer.parseInt(minParticipants) > Integer.parseInt(maxParticipants)) {
+                Toast.makeText(getActivity(), R.string.invalid_participants_interval, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        if (Objects.nonNull(minParticipants)) {
             predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Integer.parseInt(minParticipants)));
         }
 
-        if (maxParticipants != null) {
+        if (Objects.nonNull(maxParticipants)) {
             predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Integer.parseInt(maxParticipants)));
         }
 
-        if (minRating != null) {
+        if (Objects.nonNull(minRating) && Objects.nonNull(maxRating)) {
+
+            if (Double.parseDouble(minRating) > Double.parseDouble(maxRating)) {
+                Toast.makeText(getActivity(), R.string.invalid_rating_interval, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+
+        if (Objects.nonNull(minRating)) {
             predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating)));
         }
 
-        if (maxRating != null) {
+        if (Objects.nonNull(maxRating)) {
             predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating)));
         }
 
         try {
             offerVM.updatePredicates(predicates);
-            navController.navigateUp();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(SORT_CRITERION.name(), SortCriterion.values()[spinner.getSelectedItemPosition()]);
+            bundle.putSerializable(LIST_TYPE.name(), originListType);
+            navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
             Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
@@ -207,16 +256,6 @@ public class OfferFilterFragment extends Fragment {
         binding.sOfferFilterSort.setAdapter(arrayAdapter);
         spinner = binding.sOfferFilterSort;
         spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO sort
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     public String getMinPrice() {

@@ -147,7 +147,16 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedTitle.setText(offer.getName());
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
-        // TODO distance
+
+        try {
+            binding.tvOfferDetailedDistance.setText(
+                    contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
+        } catch (UnlocalizableException e) {
+            // TODO remove debug toast
+            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         try {
             binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));

@@ -105,8 +105,9 @@ public class ProfileFragment extends Fragment {
             userVM.subscribe(user);
             updateUI();
         } catch (RequestHandlerException e) {
-            // TODO non runtime exceptions
-            e.printStackTrace();
+            // TODO resolve error code
+            Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
 
     }

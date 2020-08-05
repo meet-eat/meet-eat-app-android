@@ -49,7 +49,7 @@ public class SettingsViewModel extends ViewModel {
      * {@link meet_eat.app.repository.UserRepository UserRepository}.
      *
      * @param notificationSetting The new notification setting
-     *                            TODO @throws (all viewmodels)
+     * TODO @throws (all viewmodels)
      */
     public void updateNotificationSettings(NotificationSetting notificationSetting) throws RequestHandlerException {
         User currentUser = session.getUser();
