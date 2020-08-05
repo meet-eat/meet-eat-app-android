@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Comparator;
 import java.util.Objects;
 
+import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.Page;
 import meet_eat.data.Report;
 import meet_eat.data.RequestHeaderField;
@@ -27,9 +28,9 @@ public class OfferRepository extends EntityRepository<Offer> {
     public Iterable<Offer> getOffers(Page page, Iterable<OfferPredicate> predicates,
                                      Iterable<Comparator<Offer>> comparators) throws RequestHandlerException {
         LinkedMultiValueMap<String, String> headers = getTokenHeaders();
-        headers.add(RequestHeaderField.PREDICATES, toJSON(predicates));
-        headers.add(RequestHeaderField.COMPARATORS, toJSON(comparators));
-        headers.add(RequestHeaderField.PAGE, toJSON(page));
+        headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
+        headers.add(RequestHeaderField.COMPARATORS, new ObjectJsonParser().parseObjectToJsonString(comparators));
+        headers.add(RequestHeaderField.PAGE, new ObjectJsonParser().parseObjectToJsonString(page));
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET, URI.create(BASE_URL));
         return new RequestHandler<Void, Iterable<Offer>>().handle(requestEntity, HttpStatus.OK);
     }

@@ -2,6 +2,8 @@ package meet_eat.app.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.RequestHeaderField;
 import meet_eat.data.entity.Token;
 import org.springframework.http.HttpMethod;
@@ -57,16 +59,7 @@ public abstract class EntityRepository<T extends Entity> {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
         LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
-        headers.add(RequestHeaderField.TOKEN, toJSON(token));
+        headers.add(RequestHeaderField.TOKEN, new ObjectJsonParser().parseObjectToJsonString(token));
         return headers;
-    }
-
-    protected <U> String toJSON(U obj) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch(JsonProcessingException jsonProcessingException) {
-            throw new RuntimeException(jsonProcessingException.getMessage());
-        }
     }
 }
