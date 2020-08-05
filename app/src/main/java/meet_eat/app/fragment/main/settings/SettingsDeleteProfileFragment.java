@@ -53,7 +53,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
             return;
         }
 
-        if (Password.createHashedPassword(password).equals(settingsVM.getCurrentUser().getPassword())) {
+        if (Password.createHashedPassword(password).matches(settingsVM.getCurrentUser().getPassword())) {
 
             try {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());

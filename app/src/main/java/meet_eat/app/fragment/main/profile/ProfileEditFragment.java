@@ -90,7 +90,7 @@ public class ProfileEditFragment extends Fragment {
         Password oldPassword = Password.createHashedPassword(oldPasswordString);
         Password newPassword = Password.createHashedPassword(newPasswordString);
 
-        if (oldPassword.equals(userVM.getCurrentUser().getPassword())) {
+        if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
             userVM.getCurrentUser().setPassword(newPassword);
 
             try {
