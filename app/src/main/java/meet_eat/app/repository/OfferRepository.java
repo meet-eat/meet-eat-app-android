@@ -31,7 +31,8 @@ public class OfferRepository extends EntityRepository<Offer> {
         headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
         headers.add(RequestHeaderField.COMPARATORS, new ObjectJsonParser().parseObjectToJsonString(comparators));
         headers.add(RequestHeaderField.PAGE, new ObjectJsonParser().parseObjectToJsonString(page));
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET, URI.create(BASE_URL));
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + BASE_URL));
         return new RequestHandler<Void, Iterable<Offer>>().handle(requestEntity, HttpStatus.OK);
     }
 
