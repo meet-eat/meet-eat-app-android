@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferCardBinding;
@@ -34,6 +35,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }
 
     public void updateOffers(Iterable<Offer> offers) {
+        if(Objects.isNull(offers)) {
+            return;
+        }
         offers.forEach(currentOffers::add);
         notifyDataSetChanged();
     }
