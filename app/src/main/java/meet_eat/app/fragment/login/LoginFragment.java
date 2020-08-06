@@ -22,8 +22,6 @@ import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 
-import static meet_eat.app.LoginActivity.DEBUG;
-
 /**
  * This is the login page. It is the first page the user sees when opening the app. The user can
  * log in by providing his email and password or request to reset his password by providing only
@@ -66,23 +64,10 @@ public class LoginFragment extends Fragment {
 
     private void login() {
 
-        if (DEBUG) {
-
-            try {
-                loginVM.login("tester@example.com", "123abcABC!§%");
-                startActivity(new Intent(getActivity(), MainActivity.class));
-            } catch (RequestHandlerException e) {
-                // TODO resolve error code
-                Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-        if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
+        /*if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         try {
             loginVM.login(email, password);

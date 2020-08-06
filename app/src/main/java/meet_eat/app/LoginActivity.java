@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    public static final boolean DEBUG = true;
-
     private long timeInMillis = 0;
 
     @Override

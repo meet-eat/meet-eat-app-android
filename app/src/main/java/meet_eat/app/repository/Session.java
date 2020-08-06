@@ -1,5 +1,7 @@
 package meet_eat.app.repository;
 
+import android.util.Log;
+
 import meet_eat.data.LoginCredential;
 import meet_eat.data.entity.Token;
 import meet_eat.data.entity.user.Email;
@@ -22,8 +24,6 @@ import java.util.Objects;
 
 public class Session {
 
-    private static final boolean DEBUG = false;
-
     private static Session session;
     private static final String URL_LOGIN = "/login"; //TODO
     private static final String URL_LOGOUT = "/logout"; //TODO
@@ -42,17 +42,6 @@ public class Session {
     }
 
     public User getUser() {
-        if (DEBUG) {
-            Localizable validLocalizable = new SphericalLocation(new SphericalPosition(47, 8));
-            User testUser1 = new User(new Email("tester@testi.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester " +
-                    "Testi 1",
-                    "+49160304050", "Testbeschreibung 1", true, validLocalizable);
-            testUser1.addSubscription(new User(new Email("abcde@web.de"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester Testi 2",
-                    "+49160323050", "", true, validLocalizable));
-            return testUser1;
-        }
 
         return token.getUser();
     }

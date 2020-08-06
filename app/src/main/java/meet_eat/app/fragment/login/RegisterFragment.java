@@ -3,6 +3,7 @@ package meet_eat.app.fragment.login;
 import android.app.DatePickerDialog;
 import android.location.Address;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,6 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
-
-import static meet_eat.app.LoginActivity.DEBUG;
 
 /**
  * Manages registration-related information.
@@ -81,24 +80,6 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register() {
-
-        if(DEBUG) {
-            Localizable validLocalizable = new SphericalLocation(new SphericalPosition(47, 8));
-            User user = new User(new Email("tester@example.com"), Password
-                    .createHashedPassword("123abcABC!§%"), LocalDate.of(1999, 1, 21), "Tester " +
-                    "Testi 1",
-                    "+999999999", "Testbeschreibung 1", true, validLocalizable);
-            try {
-                registerVM.register(user);
-                navigateToLogin();
-                Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
-            } catch (RequestHandlerException e) {
-                // TODO resolve error code
-                Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> register(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-
-        }
 
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
