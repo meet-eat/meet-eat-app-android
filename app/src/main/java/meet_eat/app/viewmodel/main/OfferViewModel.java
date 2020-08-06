@@ -26,14 +26,12 @@ import meet_eat.data.predicate.OfferPredicate;
  */
 public class OfferViewModel extends ViewModel {
 
-    public static final int PAGE_SIZE = 50;
-    public static final int PAGE_INDEX = 0;
+    private static final Page PAGE = new Page(0, 1000);
 
     private final OfferRepository offerRepository = new OfferRepository();
     private final UserRepository userRepository = new UserRepository();
     private final TagRepository tagRepository = new TagRepository();
     private final Session session = Session.getInstance();
-    private final Page page = new Page(PAGE_INDEX, PAGE_SIZE);
 
     /**
      * Requests the object of the user currently logged in to the device from the
@@ -56,8 +54,7 @@ public class OfferViewModel extends ViewModel {
     }
 
     public Iterable<Offer> fetchOffers(User user) throws RequestHandlerException {
-        // TODO sort with comparators
-        return offerRepository.getOffersByCreatorId(user.getIdentifier());
+        return offerRepository.getOffersByCreator(user, PAGE, user.getOfferPredicates(), user.getOfferComparator());
     }
 
     /**
@@ -67,9 +64,8 @@ public class OfferViewModel extends ViewModel {
      * @return A /LIST/ containing the updated offers.
      */
     public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
-        // TODO sort with comparators
         predicates.addAll(getCurrentUser().getOfferPredicates());
-        return offerRepository.getOffers(page, predicates, null);
+        return offerRepository.getOffers(PAGE, predicates, getCurrentUser().getOfferComparator());
     }
 
     /**

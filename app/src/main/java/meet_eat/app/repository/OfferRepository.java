@@ -1,16 +1,22 @@
 package meet_eat.app.repository;
 
+import com.google.common.collect.Lists;
+
 import java.net.URI;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.Page;
 import meet_eat.data.Report;
 import meet_eat.data.RequestHeaderField;
+import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.user.User;
 import meet_eat.data.predicate.OfferPredicate;
+import meet_eat.data.predicate.chrono.ChronoLocalDateTimeOperation;
+import meet_eat.data.predicate.chrono.LocalDateTimePredicate;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -33,26 +39,40 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     public Iterable<Offer> getOffers(Page page, Iterable<OfferPredicate> predicates,
-                                     Iterable<Comparator<Offer>> comparators) throws RequestHandlerException {
+                                     OfferComparator comparator) throws RequestHandlerException {
+        OfferPredicate timePredicate = new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER, LocalDateTime.now());
+        List<OfferPredicate> predicateList = Lists.newArrayList(predicates);
+        predicateList.add(timePredicate);
+        predicates = predicateList;
+
         LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
-        headers.add(RequestHeaderField.COMPARATORS, new ObjectJsonParser().parseObjectToJsonString(comparators));
+        headers.add(RequestHeaderField.COMPARATORS, new ObjectJsonParser().parseObjectToJsonString(comparator));
         headers.add(RequestHeaderField.PAGE, new ObjectJsonParser().parseObjectToJsonString(page));
+
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + BASE_URL));
         return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
 
     /**
-     * Returns the offers of the user with the corresponding identifier from the repository.
+     * Returns the offers from the repository that were created by the corresponding creator.
      *
-     * @param identifier the corresponding identifier of the user whose offers are to be returned
-     * @return the offers of the user with the corresponding identifier from the repository
+     * @param creator the corresponding creator whose offers are to be returned
+     * @return the offers from the repository that were created by the corresponding creator
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Iterable<Offer> getOffersByCreatorId(String identifier) throws RequestHandlerException {
+    public Iterable<Offer> getOffersByCreator(User creator, Page page, Iterable<OfferPredicate> predicates,
+                                              OfferComparator comparator) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(identifier)));
+                URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(creator.getIdentifier())));
+        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
+    }
+
+    public Iterable<Offer> getOffersBySubscriptions(User user, Page page, Iterable<OfferPredicate> predicates,
+                                                OfferComparator comparator) throws RequestHandlerException {
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(user.getIdentifier())));
         return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
 
