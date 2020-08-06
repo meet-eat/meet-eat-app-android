@@ -90,12 +90,15 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // TODO offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
-            if (offerVM.isBookmarked(offer)) {
-                binding.ibtOfferCardBookmark
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
-            }
+            if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
 
-            binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
+                if (offerVM.isBookmarked(offer)) {
+                    binding.ibtOfferCardBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                }
+
+                binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
+            }
         }
 
         private void changeBookmark(Offer offer) {

@@ -43,7 +43,7 @@ public class OfferDetailedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferDetailedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -186,7 +186,10 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedParticipants.setVisibility(GONE);
         }
 
-        updateUI();
+        if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+            updateUI();
+        }
+
     }
 
     private void updateUI() {
