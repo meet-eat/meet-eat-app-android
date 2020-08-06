@@ -86,16 +86,6 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Requests the predicates currently stored in the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
-     *
-     * @return A /LIST/ containing the predicates.
-     */
-    public Iterable<OfferPredicate> getPredicates() {
-        return session.getUser().getOfferPredicates();
-    }
-
-    /**
      * Sends a request to the {@link meet_eat.app.repository.OfferRepository OfferRepository} to
      * add a new offer.
      *
