@@ -46,7 +46,7 @@ public abstract class EntityRepository<T extends Entity> {
      *
      * @param entity the entity to be added to the repository
      * @return the entity added to the repository
-     * @throws RequestHandlerException
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T addEntity(T entity) throws RequestHandlerException {
         RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
@@ -59,7 +59,7 @@ public abstract class EntityRepository<T extends Entity> {
      *
      * @param entity the entity that should be updated within the repository
      * @return the entity that was updated within the repository
-     * @throws RequestHandlerException
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T updateEntity(T entity) throws RequestHandlerException {
         RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
@@ -71,7 +71,7 @@ public abstract class EntityRepository<T extends Entity> {
      * Deletes an entity from the repository.
      *
      * @param entity the entity to be deleted from the repository
-     * @throws RequestHandlerException
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void deleteEntity(T entity) throws RequestHandlerException {
         RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
@@ -84,7 +84,7 @@ public abstract class EntityRepository<T extends Entity> {
      *
      * @param identifier the identifier of the user to be returned from the repository
      * @return the user with the corresponding identifier from the repository
-     * @throws RequestHandlerException
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T getEntityById(String identifier) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
