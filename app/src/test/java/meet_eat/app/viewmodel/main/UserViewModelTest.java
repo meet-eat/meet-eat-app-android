@@ -18,6 +18,7 @@ import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.util.Assert.isTrue;
 
 public class UserViewModelTest {
@@ -84,6 +85,7 @@ public class UserViewModelTest {
 
     @Test
     public void testEditUser() throws RequestHandlerException {
+        // changing email is omitted, there is no such functionality in the app
         registeredUser.setPhoneNumber("");
         registeredUser.setDescription("");
         registeredUser.setBirthDay(LocalDate.MIN);
@@ -95,6 +97,16 @@ public class UserViewModelTest {
         new UserViewModel().edit(registeredUser);
 
         testGetCurrentUser();
+    }
+
+    @Test
+    public void testChangePassword() throws RequestHandlerException {
+        UserViewModel userVM = new UserViewModel();
+        Password newPassword = Password.createHashedPassword("HelloWorld1!");
+        registeredUser.setPassword(newPassword);
+        userVM.edit(registeredUser);
+
+        assertTrue(newPassword.matches(userVM.getCurrentUser().getPassword()));
     }
 
     @Test(expected = NullPointerException.class)
