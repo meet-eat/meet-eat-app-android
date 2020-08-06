@@ -64,10 +64,10 @@ public class LoginFragment extends Fragment {
 
     private void login() {
 
-        /*if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
+        if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
-        }*/
+        }
 
         try {
             loginVM.login(email, password);
