@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavController navController;
+    private long timeInMillis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this :: onItemClicked);
+        navigationView.setNavigationItemSelectedListener(this::onItemClicked);
         ActionBarDrawerToggle toggle =
                 new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
                         R.string.navigation_drawer_close);
@@ -92,8 +93,19 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (timeInMillis == 0) {
+                timeInMillis = System.currentTimeMillis();
+                Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
+            } else {
+                if (System.currentTimeMillis() - timeInMillis < 1200) {
+                    super.onBackPressed();
+                    timeInMillis = 0;
+                } else {
+                    timeInMillis = System.currentTimeMillis();
+                }
+            }
         }
+
 
     }
 }
