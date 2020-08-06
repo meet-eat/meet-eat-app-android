@@ -1,27 +1,19 @@
 package meet_eat.app.repository;
 
-import android.util.Log;
-
 import meet_eat.data.LoginCredential;
 import meet_eat.data.entity.Token;
-import meet_eat.data.entity.user.Email;
-import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 
-import meet_eat.data.location.Localizable;
-import meet_eat.data.location.SphericalLocation;
-import meet_eat.data.location.SphericalPosition;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Represents and manages the singleton instance of a user's session in the application.
+ */
 public class Session {
 
     private static Session session;
@@ -31,9 +23,17 @@ public class Session {
 
     private Token token;
 
+    /**
+     * Creates a session.
+     */
     private Session() {
     }
 
+    /**
+     * Returns the singleton instance of the session.
+     *
+     * @return the singleton instance of the session
+     */
     public static Session getInstance() {
         if (Objects.isNull(session)) {
             session = new Session();
@@ -41,21 +41,41 @@ public class Session {
         return session;
     }
 
+    /**
+     * Returns the user associated with the session.
+     *
+     * @return the user associated with the session
+     */
     public User getUser() {
-
         return token.getUser();
     }
 
+    /**
+     * Returns the token associated with the session.
+     *
+     * @return the token associated with the session
+     */
     public Token getToken() {
         return token;
     }
 
+    /**
+     * Logs in the user with the corresponding login credentials.
+     *
+     * @param loginCredential the login credentials of the user to be logged in
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public void login(LoginCredential loginCredential) throws RequestHandlerException {
         RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(Objects.requireNonNull(loginCredential),
                 HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + URL_LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
     }
 
+    /**
+     * Logs out the user associated with the session.
+     *
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public void logout() throws RequestHandlerException {
         if (Objects.isNull(token)) {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
