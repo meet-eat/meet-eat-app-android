@@ -20,11 +20,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferEditBinding;
@@ -33,13 +31,14 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
+import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
-import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
-import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
 import static meet_eat.app.fragment.ListType.STANDARD;
+import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
+import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 public class OfferEditFragment extends Fragment {
 
@@ -64,7 +63,7 @@ public class OfferEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -187,75 +186,9 @@ public class OfferEditFragment extends Fragment {
         if (setOfferDetails()) {
 
             if (isNewOffer) {
-                offer = new Offer(offerVM.getCurrentUser(), new Set<Tag>() {
-                    @Override
-                    public int size() {
-                        return 0;
-                    }
-
-                    @Override
-                    public boolean isEmpty() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean contains(@Nullable Object o) {
-                        return false;
-                    }
-
-                    @NonNull
-                    @Override
-                    public Iterator<Tag> iterator() {
-                        return null;
-                    }
-
-                    @NonNull
-                    @Override
-                    public Object[] toArray() {
-                        return new Object[0];
-                    }
-
-                    @NonNull
-                    @Override
-                    public <T> T[] toArray(@NonNull T[] a) {
-                        return null;
-                    }
-
-                    @Override
-                    public boolean add(Tag tag) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean remove(@Nullable Object o) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean containsAll(@NonNull Collection<?> c) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean addAll(@NonNull Collection<? extends Tag> c) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean retainAll(@NonNull Collection<?> c) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean removeAll(@NonNull Collection<?> c) {
-                        return false;
-                    }
-
-                    @Override
-                    public void clear() {
-                    }
-                }, title, description, price, participants, dateTime,
-                        () -> new SphericalPosition(address.getLatitude(), address.getLongitude()));
+                offer = new Offer(offerVM.getCurrentUser(), new HashSet<Tag>(), title, description, price, participants,
+                        dateTime,
+                        new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
 
                 try {
                     offerVM.add(offer);
@@ -264,12 +197,13 @@ public class OfferEditFragment extends Fragment {
                     navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException e) {
                     // TODO resolve error code
-                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
+                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> saveOffer(): " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
 
             } else {
-                offer.setLocation(() -> new SphericalPosition(address.getLatitude(), address.getLongitude()));
+                offer.setLocation(
+                        new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
                 offer.setPrice(price);
                 offer.setMaxParticipants(participants);
                 offer.setName(title);
