@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class Session {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static Session session;
     private static final String URL_LOGIN = "/login"; //TODO
