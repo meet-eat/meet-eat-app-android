@@ -113,6 +113,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                                     PorterDuff.Mode.SRC_IN);
                 }
 
+                notifyDataSetChanged();
             } catch (RequestHandlerException e) {
                 Toast.makeText(binding.getRoot().getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT)
                         .show();

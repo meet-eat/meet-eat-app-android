@@ -43,7 +43,7 @@ public class ProfileEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
@@ -60,15 +60,16 @@ public class ProfileEditFragment extends Fragment {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
         phone = currentUser.getPhoneNumber();
+
         try {
-            binding.etProfileEditHome
-                    .setText(contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable()));
+            home = contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable());
         } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
             Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> initUI(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
             navController.navigateUp();
         }
+
         // TODO profile image
         description = currentUser.getDescription();
     }
@@ -95,13 +96,13 @@ public class ProfileEditFragment extends Fragment {
 
             try {
                 userVM.edit(userVM.getCurrentUser());
+                Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
             } catch (RequestHandlerException e) {
                 // TODO resolve error code
                 Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
 
-            Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
         }
