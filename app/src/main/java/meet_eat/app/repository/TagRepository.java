@@ -20,6 +20,6 @@ public class TagRepository extends EntityRepository<Tag> {
     public Iterable<Tag> getTags() throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + BASE_URL));
-        return new RequestHandler<Void, Iterable<Tag>>().handle(requestEntity, HttpStatus.OK);
+        return new RequestHandler<Void, Tag>().handleIterable(requestEntity, HttpStatus.OK);
     }
 }

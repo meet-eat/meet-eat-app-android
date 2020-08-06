@@ -8,6 +8,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import meet_eat.data.ObjectJsonParser;
 
 public class RequestHandler<T, S> {
 
-    public static final String SERVER_PATH = "http://karlsruhe.gstuer.com:8443";
+    public static final String SERVER_PATH = "http://192.168.178.26:8443";
     private static final String ERROR_MESSAGE_REQUEST = "Request failed. ";
     private static final String ERROR_MESSAGE_STATUS_CODE = "Error code: ";
     private final RestTemplate restTemplate;
@@ -30,8 +31,17 @@ public class RequestHandler<T, S> {
     }
 
     protected S handle(RequestEntity<T> requestEntity, HttpStatus expectedStatus) throws RequestHandlerException {
-        ResponseEntity<S> responseEntity;
         ParameterizedTypeReference<S> typeReference = new ParameterizedTypeReference<S>() {};
+        return executeExchange(requestEntity, expectedStatus, typeReference);
+    }
+
+    protected Iterable<S> handleIterable(RequestEntity<T> requestEntity, HttpStatus expectedStatus) throws RequestHandlerException {
+        ParameterizedTypeReference<S[]> typeReference = new ParameterizedTypeReference<S[]>() {};
+        return Arrays.asList(executeExchange(requestEntity, expectedStatus, typeReference));
+    }
+
+    private <U> U executeExchange(RequestEntity<T> requestEntity, HttpStatus expectedStatus, ParameterizedTypeReference<U> typeReference) throws RequestHandlerException {
+        ResponseEntity<U> responseEntity;
         try {
             responseEntity = restTemplate.exchange(Objects.requireNonNull(requestEntity), typeReference);
         } catch (RestClientException exception) {

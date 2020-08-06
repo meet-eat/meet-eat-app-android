@@ -1,6 +1,7 @@
 package meet_eat.app.repository;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -33,13 +34,13 @@ public class OfferRepository extends EntityRepository<Offer> {
         headers.add(RequestHeaderField.PAGE, new ObjectJsonParser().parseObjectToJsonString(page));
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + BASE_URL));
-        return new RequestHandler<Void, Iterable<Offer>>().handle(requestEntity, HttpStatus.OK);
+        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
 
     public Iterable<Offer> getOffersByCreatorId(String identifier) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(identifier)));
-        return new RequestHandler<Void, Iterable<Offer>>().handle(requestEntity, HttpStatus.OK);
+        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
 
     public void report(Offer offer, Report report) throws RequestHandlerException {
