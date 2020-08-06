@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (timeInMillis == 0) {
             timeInMillis = System.currentTimeMillis();
             Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
