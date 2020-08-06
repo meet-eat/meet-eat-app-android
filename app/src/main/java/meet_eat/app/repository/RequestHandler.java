@@ -16,7 +16,7 @@ import meet_eat.data.ObjectJsonParser;
 
 public class RequestHandler<T, S> {
 
-    public static final String SERVER_PATH = "http://192.168.178.26:8443";
+    public static final String SERVER_PATH = "http://karlsruhe.gstuer.com:8443";
     private static final String ERROR_MESSAGE_REQUEST = "Request failed. ";
     private static final String ERROR_MESSAGE_STATUS_CODE = "Error code: ";
     private final RestTemplate restTemplate;
