@@ -54,29 +54,27 @@ public class SettingsViewModelTest {
         assertNotNull(settingsVM.getCurrentUser());
     }
 
-    // Not yet implemented
-    @Ignore
+    @Ignore("Not yet implemented")
     @Test(expected = NullPointerException.class)
     public void testUpdateNotificationSettingsWithNull() throws RequestHandlerException {
         settingsVM.updateNotificationSettings(null);
     }
 
-    // Not yet implemented
-    @Ignore
+
+    @Ignore("Not yet implemented")
     @Test(expected = NullPointerException.class)
     public void testUpdateDisplaySettings() throws RequestHandlerException {
         settingsVM.updateDisplaySettings(null);
     }
 
-    // Conflict with @AfterClass
-    @Ignore
+    @Ignore("Conflict with @AfterClass")
     @Test
     public void testLogout() throws RequestHandlerException {
         settingsVM.logout();
     }
 
-    // Conflict with @AfterClass
-    @Ignore
+
+    @Ignore("Conflict with @AfterClass")
     @Test(expected = NullPointerException.class)
     public void testDeleteUserWithNull() throws RequestHandlerException {
         settingsVM.deleteUser(null);
