@@ -64,7 +64,7 @@ public class OfferEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -93,7 +93,7 @@ public class OfferEditFragment extends Fragment {
 
     private void showDateTimePicker() {
         Calendar cal = new GregorianCalendar();
-        new DatePickerDialog(binding.getRoot().getContext(), this :: showTimePickerDialog, cal.get(Calendar.YEAR),
+        new DatePickerDialog(binding.getRoot().getContext(), this::showTimePickerDialog, cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 

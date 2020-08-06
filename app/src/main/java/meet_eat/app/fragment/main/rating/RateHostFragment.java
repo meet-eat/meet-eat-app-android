@@ -27,15 +27,16 @@ import meet_eat.data.entity.user.rating.RatingValue;
 public class RateHostFragment extends Fragment {
 
     private static final float RATING_STEP_SIZE = 1;
+
     private FragmentRateHostBinding binding;
-    private RatingViewModel ratingVM;
     private NavController navController;
+    private RatingViewModel ratingVM;
     private Offer offer;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentRateHostBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);

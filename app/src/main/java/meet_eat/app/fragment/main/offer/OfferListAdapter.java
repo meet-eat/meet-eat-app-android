@@ -35,7 +35,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }
 
     public void updateOffers(Iterable<Offer> offers) {
-        if(Objects.isNull(offers)) {
+        if (Objects.isNull(offers)) {
             return;
         }
         offers.forEach(currentOffers::add);
@@ -70,19 +70,19 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         }
 
         public void setData(Offer offer) {
-            ContextFormatter contextFormatter =
-                    new ContextFormatter(binding.getRoot().getContext());
+            ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferCardTitle.setText(offer.getName());
             binding.tvOfferCardDescription.setText(offer.getDescription());
             binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
             binding.tvOfferCardPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
 
             try {
-                binding.tvOfferCardDistance.setText(contextFormatter.formatDistance(offerVM.getCurrentUser().getLocalizable().getDistance(offer.getLocation())));
+                binding.tvOfferCardDistance.setText(contextFormatter
+                        .formatDistance(offerVM.getCurrentUser().getLocalizable().getDistance(offer.getLocation())));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(binding.getRoot().getContext(), "DEBUG OfferListAdapter.java -> setData(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(binding.getRoot().getContext(),
+                        "DEBUG OfferListAdapter.java -> setData(): " + e.getMessage(), Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -91,7 +91,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
             if (offerVM.isBookmarked(offer)) {
-                binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                binding.ibtOfferCardBookmark
+                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
             }
 
             binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
@@ -102,25 +103,26 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
                 if (offerVM.isBookmarked(offer)) {
                     offerVM.removeBookmark(offer);
-                    binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
-                            R.color.bookmarked), PorterDuff.Mode.SRC_IN);
+                    binding.ibtOfferCardBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                                    PorterDuff.Mode.SRC_IN);
                 } else {
                     offerVM.addBookmark(offer);
-                    binding.ibtOfferCardBookmark.setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(),
-                            R.color.symbol), PorterDuff.Mode.SRC_IN);
+                    binding.ibtOfferCardBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                                    PorterDuff.Mode.SRC_IN);
                 }
 
             } catch (RequestHandlerException e) {
-                Toast.makeText(binding.getRoot().getContext(), "Exception " + e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.getRoot().getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
             }
         }
 
         private void navigateToOfferDetailed(Offer offer) {
             Bundle bundle = new Bundle();
             bundle.putSerializable(OFFER.name(), offer);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.offerDetailedFragment,
-                    bundle);
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.offerDetailedFragment, bundle);
         }
     }
 }

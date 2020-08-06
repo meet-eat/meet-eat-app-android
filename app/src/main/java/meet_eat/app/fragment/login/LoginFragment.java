@@ -32,6 +32,7 @@ import meet_eat.data.entity.user.Password;
 public class LoginFragment extends Fragment {
 
     private static final boolean DEBUG = true;
+    
     private FragmentLoginBinding binding;
     private LoginViewModel loginVM;
     private NavController navController;
@@ -41,7 +42,7 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -92,13 +93,13 @@ public class LoginFragment extends Fragment {
 
         try {
             loginVM.resetPassword(email);
+            Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
             Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(), Toast.LENGTH_LONG)
                     .show();
         }
 
-        Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
     }
 
     public String getEmail() {

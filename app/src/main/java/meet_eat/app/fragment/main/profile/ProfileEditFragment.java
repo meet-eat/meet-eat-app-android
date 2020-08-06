@@ -33,17 +33,17 @@ public class ProfileEditFragment extends Fragment {
 
     private FragmentProfileEditBinding binding;
     private UserViewModel userVM;
+    private NavController navController;
     private String phone;
     private String oldPasswordString;
     private String newPasswordString;
     private String home;
     private String description;
-    private NavController navController;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);

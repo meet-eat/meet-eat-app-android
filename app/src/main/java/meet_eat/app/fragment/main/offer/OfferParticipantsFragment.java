@@ -28,14 +28,14 @@ public class OfferParticipantsFragment extends Fragment {
 
     private FragmentOfferParticipantsBinding binding;
     private OfferViewModel offerVM;
-    private OfferParticipantsAdapter offerParticipantsAdapter;
     private NavController navController;
+    private OfferParticipantsAdapter offerParticipantsAdapter;
     private Offer offer;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);

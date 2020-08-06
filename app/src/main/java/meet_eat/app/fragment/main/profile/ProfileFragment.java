@@ -29,14 +29,14 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
-    private NavController navController;
     private UserViewModel userVM;
+    private NavController navController;
     private User user;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);

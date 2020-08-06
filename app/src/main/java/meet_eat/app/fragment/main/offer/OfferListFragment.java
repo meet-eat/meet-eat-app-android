@@ -50,9 +50,10 @@ import static meet_eat.app.fragment.SortCriterion.TIME;
 public class OfferListFragment extends Fragment {
 
     private static final boolean DEBUG = true;
+
     private FragmentOfferListBinding binding;
-    private NavController navController;
     private OfferViewModel offerVM;
+    private NavController navController;
     private OfferListAdapter offerListAdapter;
     private ListType type;
     private SortCriterion sortCriterion;
@@ -60,7 +61,7 @@ public class OfferListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
@@ -192,8 +193,8 @@ public class OfferListFragment extends Fragment {
                 Localizable localizable = new SphericalLocation(new SphericalPosition(0, 0));
                 offerList.add(new Offer(
                         new User(new Email("tester@testi.de"), Password.createHashedPassword("123abcABC!§%"),
-                                LocalDate.of(1999, 1, 21), "Tester 2 " + "Testi 2", "+49160304050", "My description", true,
-                                localizable), new Set<Tag>() {
+                                LocalDate.of(1999, 1, 21), "Tester 2 " + "Testi 2", "+49160304050", "My description",
+                                true, localizable), new Set<Tag>() {
                     @Override
                     public int size() {
                         return 0;

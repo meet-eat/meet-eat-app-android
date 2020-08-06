@@ -26,14 +26,14 @@ public class RateGuestsFragment extends Fragment {
 
     private FragmentRateGuestsBinding binding;
     private RatingViewModel ratingVM;
-    private RateGuestsAdapter rateGuestsAdapter;
     private NavController navController;
+    private RateGuestsAdapter rateGuestsAdapter;
     private Offer offer;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);

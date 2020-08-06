@@ -23,13 +23,13 @@ public class ProfileSubscribedFragment extends Fragment {
 
     private FragmentProfileSubscribedBinding binding;
     private UserViewModel userVM;
-    private ProfileSubscribedAdapter profileSubscribedAdapter;
     private NavController navController;
+    private ProfileSubscribedAdapter profileSubscribedAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
