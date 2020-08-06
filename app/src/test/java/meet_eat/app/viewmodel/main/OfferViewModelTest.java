@@ -21,6 +21,8 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.util.Assert.isTrue;
 
 public class OfferViewModelTest {
@@ -75,7 +77,7 @@ public class OfferViewModelTest {
 
     @Test
     public void testGetCurrentUser() {
-        Assert.notNull(offerVM.getCurrentUser());
+        assertEquals(registeredUser, offerVM.getCurrentUser());
     }
 
     @Test

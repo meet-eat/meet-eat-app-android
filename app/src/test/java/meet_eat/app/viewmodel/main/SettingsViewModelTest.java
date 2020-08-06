@@ -1,6 +1,5 @@
 package meet_eat.app.viewmodel.main;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -17,6 +16,7 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SettingsViewModelTest {
@@ -51,7 +51,7 @@ public class SettingsViewModelTest {
 
     @Test
     public void testGetCurrentUser() {
-        assertNotNull(settingsVM.getCurrentUser());
+        assertEquals(registeredUser, new SettingsViewModel().getCurrentUser());
     }
 
     @Ignore("Not yet implemented")
