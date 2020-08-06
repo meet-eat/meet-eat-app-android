@@ -2,7 +2,9 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
+import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
+import meet_eat.app.repository.UserRepository;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.rating.Rating;
 
@@ -29,8 +31,10 @@ public class RatingViewModel extends ViewModel {
      *
      * @param rating The new rating.
      */
-    public void send(Rating rating) {
-        session.getUser().addRating(rating);
+    public void send(Rating rating) throws RequestHandlerException {
+        User user = session.getUser();
+        user.addRating(rating);
+        new UserRepository().updateEntity(user);
     }
 
     /**
@@ -39,7 +43,7 @@ public class RatingViewModel extends ViewModel {
      *
      * @param ratings The new ratings.
      */
-    public void send(Rating... ratings) {
+    public void send(Rating... ratings) throws RequestHandlerException {
 
         for (Rating rating : ratings) {
             send(rating);

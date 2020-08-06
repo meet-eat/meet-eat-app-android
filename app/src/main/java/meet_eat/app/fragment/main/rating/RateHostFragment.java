@@ -18,6 +18,7 @@ import java.util.Objects;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRateHostBinding;
 import meet_eat.app.fragment.ContextFormatter;
+import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.rating.Rating;
@@ -99,6 +100,10 @@ public class RateHostFragment extends Fragment {
 
         }
 
-        ratingVM.send(rating);
+        try {
+            ratingVM.send(rating);
+        } catch (RequestHandlerException e) {
+            e.printStackTrace();
+        }
     }
 }
