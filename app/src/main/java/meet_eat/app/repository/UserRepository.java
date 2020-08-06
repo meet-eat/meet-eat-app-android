@@ -47,9 +47,9 @@ public class UserRepository extends EntityRepository<User> {
         throw new UnsupportedOperationException(ERROR_MESSAGE_NOT_IMPLEMENTED);
     }
 
-    public void report(User user, Report report) throws RequestHandlerException {
+    public User report(User user, Report report) throws RequestHandlerException {
         Objects.requireNonNull(user);
         user.addReport(Objects.requireNonNull(report));
-        updateEntity(user);
+        return updateEntity(user);
     }
 }
