@@ -176,7 +176,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
         // TODO tags
 
-        if (offerVM.getCurrentUser().equals(offer.getCreator())) {
+        if (offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
             binding.ibtOfferDetailedReport.setVisibility(GONE);
             binding.btOfferDetailedParticipate.setVisibility(GONE);
             binding.btOfferDetailedContact.setVisibility(GONE);
