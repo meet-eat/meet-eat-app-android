@@ -61,11 +61,12 @@ public class OfferRepository extends EntityRepository<Offer> {
      *
      * @param offer the offer to be reported
      * @param report the report to be submitted
+     * @return the offer that was reported within the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void report(Offer offer, Report report) throws RequestHandlerException {
+    public Offer report(Offer offer, Report report) throws RequestHandlerException {
         Objects.requireNonNull(offer);
         offer.addReport(Objects.requireNonNull(report));
-        updateEntity(offer);
+        return updateEntity(offer);
     }
 }
