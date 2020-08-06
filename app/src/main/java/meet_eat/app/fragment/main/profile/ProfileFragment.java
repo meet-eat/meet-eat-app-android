@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileGuestRating.setText(String.valueOf(user.getGuestRating()));
         // TODO profile image
 
-        if (user.equals(userVM.getCurrentUser())) {
+        if (user.getIdentifier().equals(userVM.getCurrentUser().getIdentifier())) {
             binding.ibtProfileReport.setVisibility(GONE);
             binding.btProfileSubscribe.setVisibility(GONE);
         } else {
