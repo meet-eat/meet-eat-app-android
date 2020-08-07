@@ -14,14 +14,14 @@
     <string name="settings">Einstellungen</string>
     <string name="notification">Benachrichtigung</string>
     <string name="appearance">Darstellung</string>
-    <string name="about">Über</string>
+    <string name="about">Einige ausgegraute Knöpfe wurden deaktiviert. Diese dienen nur Präsentationszwecken und repräsentieren keine endgültig implementierten Funktionalitäten.</string>
     <string name="delete_profile">Profil löschen</string>
     <string name="logout">Abmelden</string>
     <string name="old_password">Altes Passwort</string>
     <string name="new_password">Neues Passwort</string>
     <string name="change_password">Ändern</string>
     <string name="save">Speichern</string>
-    <string name="picture">BILD</string>
+    <string name="picture">Angebots Bild</string>
     <string name="title">Angebotstitel</string>
     <string name="date_time">Zeit</string>
     <string name="price">Preis</string>
@@ -114,4 +114,5 @@
     <string name="invalid_rating_interval">Bewertungsintervall ungültig.</string>
     <string name="invalid_date_time">Zeitangabe in der Vergangenheit.</string>
     <string name="on_back_pressed_message">Zum Verlassen noch einmal drücken</string>
+    <string name="profile_user_age">Alter:</string>
 </resources>

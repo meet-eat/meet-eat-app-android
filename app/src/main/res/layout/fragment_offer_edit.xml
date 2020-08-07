@@ -53,13 +53,30 @@
                 <ImageView
                     android:id="@+id/ivOfferEditPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="120dp"
                     android:adjustViewBounds="true"
                     android:elevation="4dp"
                     android:scaleType="fitCenter"
                     android:src="@android:color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvOfferEditPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_tag"
+                    android:elevation="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/picture"
+                    android:textAlignment="center"
+                    android:textColor="@color/textHint"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
+                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
 
                 <ImageButton
                     android:id="@+id/ibtOfferEditEditPicture"
@@ -204,21 +221,6 @@
                     android:textColor="@color/textHint"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etOfferEditDescription" />
-
-                <TextView
-                    android:id="@+id/tvOfferEditTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_tag"
-                    android:elevation="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="@string/tag"
-                    android:textColor="@color/textHint"
-                    app:layout_constraintBottom_toBottomOf="@+id/btOfferEditAddTag"
-                    app:layout_constraintStart_toEndOf="@+id/btOfferEditAddTag"
-                    app:layout_constraintTop_toTopOf="@+id/btOfferEditAddTag" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

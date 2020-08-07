@@ -62,6 +62,7 @@
                 android:layout_gravity="bottom|right"
                 android:adjustViewBounds="true"
                 android:background="@drawable/bg_button"
+                android:backgroundTint="@color/symbol"
                 android:elevation="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add"
@@ -70,19 +71,21 @@
 
         <TextView
             android:id="@+id/tvProfileEditEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textAlignment="textEnd"
             android:elevation="5dp"
             android:text="@string/e_mail"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"
             app:layout_constraintTop_toBottomOf="@+id/ibtBack" />
 
         <TextView
             android:id="@+id/tvProfileEditUsername"
-            android:layout_width="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
@@ -90,7 +93,20 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout"
             app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
+            android:text="@string/profile_user_age"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tvProfileEditBirthday"
+            app:layout_constraintEnd_toStartOf="@+id/tvProfileEditBirthday"
+            app:layout_constraintTop_toTopOf="@+id/tvProfileEditBirthday" />
 
         <TextView
             android:id="@+id/tvProfileEditBirthday"
@@ -100,17 +116,15 @@
             android:elevation="5dp"
             android:text="0"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvProfileEditUsername" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btProfileEditSave"
-            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditBirthday">
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

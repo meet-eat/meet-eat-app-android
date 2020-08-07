@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,8 +9,7 @@
             type="meet_eat.app.fragment.main.settings.SettingsFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
@@ -50,7 +50,7 @@
             android:elevation="5dp"
             android:focusable="true"
             android:text="@string/notification"
-            android:textColor="@android:color/white"
+            android:textColor="@color/symbol"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSettings" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:checked="false"
-            android:drawableTint="#FFFFFF"
+            android:drawableTint="@color/symbol"
             app:layout_constraintBottom_toBottomOf="@+id/tvSettingsNotificationMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSettingsNotificationMenu" />
@@ -75,22 +75,22 @@
             android:elevation="5dp"
             android:focusable="true"
             android:text="@string/appearance"
-            android:textColor="@android:color/white"
+            android:textColor="@color/symbol"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSettingsNotificationMenu" />
 
         <TextView
             android:id="@+id/tvSettingsAbout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
             android:text="@string/about"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/ivSettingsInfo"
-            app:layout_constraintStart_toEndOf="@+id/ivSettingsInfo"
-            app:layout_constraintTop_toTopOf="@+id/ivSettingsInfo" />
+            app:layout_constraintBottom_toTopOf="@+id/btSettingsDelete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivSettingsInfo" />
 
         <ImageView
             android:id="@+id/ivSettingsInfo"
@@ -102,8 +102,9 @@
             android:scaleType="fitCenter"
             android:src="@drawable/info"
             android:tint="@color/symbol"
-            app:layout_constraintBottom_toTopOf="@+id/btSettingsDelete"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/tvSettingsAbout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvSettingsAbout" />
 
         <Button
             android:id="@+id/btSettingsDelete"
