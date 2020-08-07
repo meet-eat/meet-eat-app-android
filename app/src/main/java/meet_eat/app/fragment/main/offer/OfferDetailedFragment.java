@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,9 +86,11 @@ public class OfferDetailedFragment extends Fragment {
         try {
 
             if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
+                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
                 offer.removeParticipant(offerVM.getCurrentUser());
                 offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
             } else {
+                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
                 offer.addParticipant(offerVM.getCurrentUser());
                 offerVM.participate(offer);
             }
@@ -184,7 +185,8 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedParticipants.setVisibility(GONE);
         }
 
-        if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+        if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier()) ||
+                !offer.getParticipants().contains(offerVM.getCurrentUser())) {
             updateUI();
         } else {
             binding.ibtOfferDetailedBookmark.setVisibility(GONE);

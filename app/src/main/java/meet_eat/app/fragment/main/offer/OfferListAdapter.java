@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -91,7 +90,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // TODO offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
-            if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+            if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier()) ||
+                    !offer.getParticipants().contains(offerVM.getCurrentUser())) {
 
                 if (offerVM.isBookmarked(offer)) {
                     binding.ibtOfferCardBookmark
