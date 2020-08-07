@@ -168,7 +168,7 @@ public class OfferDetailedFragment extends Fragment {
         }
 
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
-        binding.tvOfferDetailedParticipants.setText(String.valueOf(offer.getMaxParticipants()));
+        binding.tvOfferDetailedParticipants.setText(offer.getParticipants().size() + "/" + offer.getMaxParticipants());
         // TODO profile image
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());
         binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
@@ -191,7 +191,6 @@ public class OfferDetailedFragment extends Fragment {
         } else {
             binding.ibtOfferDetailedBookmark.setVisibility(GONE);
         }
-
     }
 
     private void updateUI() {
@@ -214,5 +213,6 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedParticipating.setVisibility(GONE);
         }
 
+        binding.tvOfferDetailedParticipants.setText(offer.getParticipants().size() + "/" + offer.getMaxParticipants());
     }
 }

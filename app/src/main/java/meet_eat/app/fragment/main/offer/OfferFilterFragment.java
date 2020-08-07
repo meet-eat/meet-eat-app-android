@@ -177,7 +177,7 @@ public class OfferFilterFragment extends Fragment {
         if (Objects.nonNull(minDistance) && !minDistance.isEmpty()) {
 
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance),
+                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
@@ -190,7 +190,7 @@ public class OfferFilterFragment extends Fragment {
         if (Objects.nonNull(maxDistance) && !maxDistance.isEmpty()) {
 
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance),
+                predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
@@ -211,11 +211,11 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minParticipants) && !minParticipants.isEmpty()) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants)));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants) - 1));
         }
 
         if (Objects.nonNull(maxParticipants) && !maxParticipants.isEmpty()) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants)));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants) + 1));
         }
 
         if (Objects.nonNull(minRating) && Objects.nonNull(maxRating) && !minRating.isEmpty() && !maxRating.isEmpty()) {
@@ -228,20 +228,20 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minRating) && !minRating.isEmpty()) {
-            predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating)));
+            predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating) - 1));
         }
 
         if (Objects.nonNull(maxRating) && !maxRating.isEmpty()) {
-            predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating)));
+            predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating) + 1));
         }
 
         try {
-            offerVM.updatePredicates(predicates);
             Bundle bundle = new Bundle();
             bundle.putSerializable(SORT_CRITERION.name(),
                     new OfferComparator(OfferComparableField.values()[spinner.getSelectedItemPosition()],
                             offerVM.getCurrentUser().getLocalizable()));
             bundle.putSerializable(LIST_TYPE.name(), originListType);
+            offerVM.updatePredicates(predicates);
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code

@@ -115,5 +115,4 @@
     <string name="invalid_date_time">Zeitangabe in der Vergangenheit.</string>
     <string name="on_back_pressed_message">Zum Verlassen noch einmal drücken</string>
     <string name="profile_user_age">Alter:</string>
-    <string name="login_in_process">Anmeldung wird ausgeführt. Bitte warten.</string>
 </resources>
