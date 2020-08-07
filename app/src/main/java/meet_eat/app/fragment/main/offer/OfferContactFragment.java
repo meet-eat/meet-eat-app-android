@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.main.offer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,8 @@ public class OfferContactFragment extends Fragment {
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferContactFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
+                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());

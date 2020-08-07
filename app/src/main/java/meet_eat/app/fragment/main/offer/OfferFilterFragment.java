@@ -3,6 +3,7 @@ package meet_eat.app.fragment.main.offer;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +76,8 @@ public class OfferFilterFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
-            // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferFilterFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
+                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             originListType = (ListType) getArguments().getSerializable(LIST_TYPE.name());
@@ -178,8 +179,7 @@ public class OfferFilterFragment extends Fragment {
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(getActivity(), "DEBUG OfferFilterFragment.java -> saveFilters(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + e.getMessage());
                 return;
             }
 
@@ -192,8 +192,7 @@ public class OfferFilterFragment extends Fragment {
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(getActivity(), "DEBUG OfferFilterFragment.java -> saveFilters(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + e.getMessage());
                 return;
             }
 
@@ -241,17 +240,19 @@ public class OfferFilterFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferFilterFragment.saveFilters.243: " + e.getMessage());
         }
-
     }
 
     // add sorting criteria to view
     private void initializeSortSpinner() {
-        ArrayAdapter arrayAdapter = ArrayAdapter
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(binding.getRoot().getContext(), R.layout.color_spinner_layout,
+                        getResources().getStringArray(R.array.items_offer_filter_spinner));
+
+        /*ArrayAdapter arrayAdapter = ArrayAdapter
                 .createFromResource(binding.getRoot().getContext(), R.array.items_offer_filter_spinner,
-                        R.layout.color_spinner_layout);
+                        R.layout.color_spinner_layout);*/
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.sOfferFilterSort.setAdapter(arrayAdapter);
         spinner = binding.sOfferFilterSort;

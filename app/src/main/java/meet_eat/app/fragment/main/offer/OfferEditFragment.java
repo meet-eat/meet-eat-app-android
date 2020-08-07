@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.location.Address;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,8 +114,7 @@ public class OfferEditFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + e.getMessage());
         }
 
     }
@@ -197,8 +197,7 @@ public class OfferEditFragment extends Fragment {
                     navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException e) {
                     // TODO resolve error code
-                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> saveOffer(): " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
 
             } else {
@@ -216,8 +215,7 @@ public class OfferEditFragment extends Fragment {
                     navController.navigateUp();
                 } catch (RequestHandlerException e) {
                     // TODO resolve error code
-                    Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> deleteOffer(): " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
 
             }
@@ -242,8 +240,7 @@ public class OfferEditFragment extends Fragment {
                 city = contextFormatter.formatStringFromLocalizable(offer.getLocation());
             } catch (IOException | UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(getActivity(), "DEBUG OfferEditFragment.java -> initUI(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "In OfferEditFragment.initUI: " + e.getMessage());
                 return;
             }
 

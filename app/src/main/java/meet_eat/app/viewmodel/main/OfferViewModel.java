@@ -1,5 +1,7 @@
 package meet_eat.app.viewmodel.main;
 
+import android.util.Log;
+
 import androidx.lifecycle.ViewModel;
 
 import com.google.common.collect.Lists;
@@ -78,6 +80,9 @@ public class OfferViewModel extends ViewModel {
     public void updatePredicates(Collection<OfferPredicate> predicates) throws RequestHandlerException {
         getCurrentUser().clearOfferPredicates();
         getCurrentUser().addManyOfferPredicates(predicates);
+        for (OfferPredicate op : getCurrentUser().getOfferPredicates()) {
+            Log.i("DEBUG offerpredicate", op.toString() + "\n");
+        }
         userRepository.updateEntity(getCurrentUser());
     }
 

@@ -141,8 +141,7 @@ public class RegisterFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> register(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In RegisterFragment.register: " + e.getMessage());
         }
 
     }

@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.main.offer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,16 +47,19 @@ public class OfferParticipantsFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
-            Toast.makeText(getActivity(), "DEBUG: Offer not given", Toast.LENGTH_SHORT).show();
+            Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
+                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
+        offerParticipantsAdapter.updateParticipants(new ArrayList<>(offer.getParticipants()));
         setButtonOnClickListener();
         return binding.getRoot();
     }
 
     private void setButtonOnClickListener() {
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 }

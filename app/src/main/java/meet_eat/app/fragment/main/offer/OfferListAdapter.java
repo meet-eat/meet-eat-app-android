@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.offer;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -82,8 +83,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         .formatDistance(offerVM.getCurrentUser().getLocalizable().getDistance(offer.getLocation())));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
-                Toast.makeText(binding.getRoot().getContext(),
-                        "DEBUG OfferListAdapter.java -> setData(): " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "In OfferListAdapter.setData: " + e.getMessage());
                 return;
             }
 
@@ -123,9 +123,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
                 notifyDataSetChanged();
             } catch (RequestHandlerException e) {
-                Toast.makeText(binding.getRoot().getContext(),
-                        "DEBUG OfferListAdapter.java -> changeBookmark(): " + e.getMessage(), Toast.LENGTH_SHORT)
-                        .show();
+                Log.i("DEBUG", "In OfferListAdapter.changeBookmark: " + e.getMessage());
             }
 
         }

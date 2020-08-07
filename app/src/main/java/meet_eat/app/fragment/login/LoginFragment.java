@@ -2,6 +2,7 @@ package meet_eat.app.fragment.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,8 +93,7 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(), Toast.LENGTH_LONG)
-                    .show();
+            Log.i("DEBUG", "In LoginFragment.login: " + e.getMessage());
         }
 
     }

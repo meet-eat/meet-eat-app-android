@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.offer;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class OfferDetailedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferDetailedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
@@ -51,7 +52,8 @@ public class OfferDetailedFragment extends Fragment {
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> getArguments", Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "OfferDetailedFragment.getArguments: " + "getArguments() null or getArguments()" +
+                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
@@ -95,8 +97,7 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + e.getMessage());
         }
 
     }
@@ -126,8 +127,7 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> participateOffer(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.bookmark: " + e.getMessage());
         }
 
     }
@@ -154,8 +154,7 @@ public class OfferDetailedFragment extends Fragment {
                     contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
         } catch (UnlocalizableException e) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
             return;
         }
 
@@ -163,8 +162,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));
         } catch (IOException | UnlocalizableException e) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferDetailedFragment.java -> initUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
             return;
         }
 

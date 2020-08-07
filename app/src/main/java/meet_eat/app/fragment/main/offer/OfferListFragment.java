@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.main.offer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,8 +133,7 @@ public class OfferListFragment extends Fragment {
 
         } catch (RequestHandlerException e) {
             // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG OfferListFragment.java -> updateOffers(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferListFragment.updateOffers: " + e.getMessage());
         }
 
     }
