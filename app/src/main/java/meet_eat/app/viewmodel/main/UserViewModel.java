@@ -63,7 +63,8 @@ public class UserViewModel extends ViewModel {
      * @param toBeUnsubscribed the user to be unsubscribed from
      */
     public void unsubscribe(User toBeUnsubscribed) throws RequestHandlerException {
-        getCurrentUser().removeSubscriptions(toBeUnsubscribed);
-        userRepository.updateEntity(getCurrentUser());
+        User modifiedUser = getCurrentUser();
+        modifiedUser.addSubscription(toBeUnsubscribed);
+        edit(modifiedUser);
     }
 }
