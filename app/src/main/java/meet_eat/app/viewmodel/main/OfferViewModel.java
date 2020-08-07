@@ -1,13 +1,9 @@
 package meet_eat.app.viewmodel.main;
 
-import android.util.Log;
-
 import androidx.lifecycle.ViewModel;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 
 import meet_eat.app.repository.OfferRepository;
 import meet_eat.app.repository.RequestHandlerException;
@@ -36,34 +32,68 @@ public class OfferViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
-     * Requests the object of the user currently logged in to the device from the
-     * {@link meet_eat.app.repository.Session Session}.
+     * Requests the currently logged in user from the {@link Session}.
      *
-     * @return The current user.
+     * @return the user that is currently logged in
      */
     public User getCurrentUser() {
         return session.getUser();
     }
 
+    /**
+     * Gets the offers of the subscribed users.
+     *
+     * @return the offers of the subscribed users
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Iterable<Offer> fetchSubscribedOffers() throws RequestHandlerException {
-        // TODO sort + return offerRepository.getSubscribedOffers(getCurrentUser());
-        return null;
+        User currentUser = getCurrentUser();
+        ArrayList<Offer> offers = new ArrayList<>();
+
+        for (User subscription : currentUser.getSubscriptions()) {
+            for (Offer offer : offerRepository
+                    .getOffersBySubscriptions(subscription, PAGE, currentUser.getOfferPredicates(),
+                            currentUser.getOfferComparator())) {
+                offers.add(offer);
+            }
+        }
+
+        return offers;
     }
 
+    /**
+     * Gets the user's bookmarked offers.
+     *
+     * @return the user's bookmarked offers
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
-        // TODO sort + return getCurrentUser().getBookmarks();
-        return null;
+        ArrayList<Offer> offers = new ArrayList<>();
+        for (Offer bookmarkedOffer : getCurrentUser().getBookmarks()) {
+            offerRepository.getOffersByCreator(bookmarkedOffer.getCreator(), PAGE, new ArrayList<>(),
+                    getCurrentUser().getOfferComparator()).forEach(offers::add);
+
+        }
+        return offers;
     }
 
+    /**
+     * Gets the specified user's offers.
+     *
+     * @return the specified user's offers
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Iterable<Offer> fetchOffers(User user) throws RequestHandlerException {
         return offerRepository.getOffersByCreator(user, PAGE, user.getOfferPredicates(), user.getOfferComparator());
     }
 
     /**
-     * Sends an offer update request to the
-     * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
+     * Gets offers based on the given predicates, together with the already
+     * stored predicates.
      *
-     * @return A /LIST/ containing the updated offers.
+     * @return an {@link Iterable} containing the updated offers
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     * @see OfferRepository
      */
     public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
         predicates.addAll(getCurrentUser().getOfferPredicates());
@@ -71,68 +101,67 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Sends a predicate update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
-     * Predicates are used to filter offers.
+     * Overwrites the user's predicates, then updates the user entity.
      *
-     * @param predicates The predicates that are to be updated.
+     * @param predicates the predicates that are to be updated
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void updatePredicates(Collection<OfferPredicate> predicates) throws RequestHandlerException {
         getCurrentUser().clearOfferPredicates();
         getCurrentUser().addManyOfferPredicates(predicates);
-        for (OfferPredicate op : getCurrentUser().getOfferPredicates()) {
-            Log.i("DEBUG offerpredicate", op.toString() + "\n");
-        }
         userRepository.updateEntity(getCurrentUser());
     }
 
     /**
-     * Sends a request to the {@link meet_eat.app.repository.OfferRepository OfferRepository} to
-     * add a new offer.
+     * Adds an {@link Offer} entity to the {@link OfferRepository}.
      *
-     * @param offer The offer to be added.
+     * @param offer the offer to be added
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void add(Offer offer) throws RequestHandlerException {
         offerRepository.addEntity(offer);
     }
 
     /**
-     * Sends a deletion request to the
-     * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
+     * Removes an {@link Offer} entity from the {@link OfferRepository}.
      *
-     * @param offer The offer to be deleted.
+     * @param offer the offer to be removed
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void delete(Offer offer) throws RequestHandlerException {
         offerRepository.deleteEntity(offer);
     }
 
     /**
-     * Sends an update request for an existing offer to the
-     * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
+     * Updates an edited {@link Offer} entity in the {@link OfferRepository}.
      *
-     * @param offer The offer that was modified.
+     * @param offer the modified offer to be updated
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void edit(Offer offer) throws RequestHandlerException {
         offerRepository.updateEntity(offer);
     }
 
     /**
-     * Adds the current user to an offer, then sends an offer update request to the
-     * {@link meet_eat.app.repository.OfferRepository OfferRepository}.
+     * Adds the current user to an offers participant list,
+     * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
-     * @param offer The offer, wherein the current user is to be added.
+     * @param offer the offer wherein the current user is to be added
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void participate(Offer offer) throws RequestHandlerException {
-        offer.addParticipant(session.getUser());
+        removeBookmark(offer);
+        offer.addParticipant(getCurrentUser());
         offerRepository.updateEntity(offer);
     }
 
     /**
-     * Sends a request to the {@link meet_eat.app.repository.OfferRepository OfferRepository}
-     * to update an offer after a {@param participant} was removed from it.
+     * Removes the current user from an offers participant list,
+     * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
-     * @param participant The participant that is to be removed.
-     * @param offer       The offer, whereof the participant is to be removed.
+     * @param participant the participant that is to be removed
+     * @param offer       the offer whereof the participant is to be removed
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
         offer.removeParticipant(participant);
@@ -140,20 +169,19 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Sends a "{@link ContactRequest ContactRequest}" request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Sends a {@link ContactRequest} to the {@link UserRepository}.
      *
-     * @param request The contact request.
+     * @param request the contact request
      */
     public void requestContact(ContactRequest request) {
         userRepository.requestContact(request);
     }
 
     /**
-     * Sends a request including consent and the contact data to be given to the requester
-     * to the {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Sends a request with the contact data to be given to the requester
+     * to the {@link UserRepository}.
      *
-     * @param contact The contact data that is to be sent.
+     * @param contact the contact data that is to be sent
      */
     public void sendContact(ContactData contact) {
         userRepository.sendContactData(contact);
@@ -161,24 +189,25 @@ public class OfferViewModel extends ViewModel {
 
     /**
      * Sends a report request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * {@link UserRepository}.
      *
-     * @param user   The user that is to be reported.
-     * @param report The report sent to the
-     *               {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * @param user   the user that is to be reported
+     * @param report the report sent to the {@link UserRepository}
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void report(User user, Report report) throws RequestHandlerException {
         userRepository.report(user, report);
     }
 
     /**
-     * Sends a user update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Adds an {@link Offer} to the current user's bookmarks,
+     * then sends a user update request to the {@link UserRepository}.
      *
-     * @param offer The offer to be added to the users /LIST/ of bookmarks.
+     * @param offer the offer to be added to the users bookmarks
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void addBookmark(Offer offer) throws RequestHandlerException {
-        User currentUser = session.getUser();
+        User currentUser = getCurrentUser();
 
         if (!isBookmarked(offer)) {
             currentUser.addBookmark(offer);
@@ -187,13 +216,14 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Sends a user update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Removes an {@link Offer} from the current user's bookmarks, then sends a user update request to the
+     * {@link UserRepository}.
      *
      * @param offer The offer to be added to the users /LIST/ of bookmarks.
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
-        User currentUser = session.getUser();
+        User currentUser = getCurrentUser();
 
         if (isBookmarked(offer)) {
             currentUser.removeBookmark(offer);
@@ -202,20 +232,20 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Checks if offer is already bookmarked by user.
+     * Checks if the given {@link Offer} is already bookmarked by the current user.
      *
-     * @param offer The offer to be checked.
-     * @return true if the offer is already bookmarked, else false.
+     * @param offer the offer to be checked
+     * @return true if the offer is already bookmarked
      */
     public boolean isBookmarked(Offer offer) {
-        return session.getUser().getBookmarks().contains(offer);
+        return getCurrentUser().getBookmarks().contains(offer);
     }
 
     /**
-     * Requests every existing tag off of the
-     * {@link meet_eat.app.repository.TagRepository TagRepository}.
+     * Requests every existing tag off of the- {@link TagRepository}.
      *
-     * @return A /LIST/ containing the tags.
+     * @return An {@link Iterable} containing the tags.
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Tag> getAllTags() throws RequestHandlerException {
         return tagRepository.getTags();
