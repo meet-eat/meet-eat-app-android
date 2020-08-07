@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.main.rating;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,8 +95,7 @@ public class RateHostFragment extends Fragment {
                 rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_5, ratingVM.getCurrentUser());
                 break;
             default:
-                // TODO remove debug toast
-                Toast.makeText(getActivity(), "DEBUG RateHostFragment -> rateGuests()", Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "RateHostFragment.rateGuests");
                 return;
 
         }

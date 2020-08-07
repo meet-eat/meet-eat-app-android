@@ -140,7 +140,8 @@ public class RegisterFragment extends Fragment {
             navigateToLogin();
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In RegisterFragment.register: " + e.getMessage());
         }
 

@@ -244,7 +244,8 @@ public class OfferFilterFragment extends Fragment {
             offerVM.updatePredicates(predicates);
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In OfferFilterFragment.saveFilters.243: " + e.getMessage());
         }
     }

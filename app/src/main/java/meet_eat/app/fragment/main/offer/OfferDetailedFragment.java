@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,8 @@ public class OfferDetailedFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
-            // TODO remove debug toast
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "OfferDetailedFragment.getArguments: " + "getArguments() null or getArguments()" +
                     ".getSerializable() null");
             navController.navigateUp();
@@ -97,7 +99,8 @@ public class OfferDetailedFragment extends Fragment {
 
             updateUI();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + e.getMessage());
         }
 
@@ -125,7 +128,8 @@ public class OfferDetailedFragment extends Fragment {
 
             updateUI();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In OfferDetailedFragment.bookmark: " + e.getMessage());
         }
 

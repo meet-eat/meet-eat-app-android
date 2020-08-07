@@ -72,7 +72,8 @@ public class SettingsFragment extends Fragment {
             settingsVM.logout();
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> logout(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
@@ -98,7 +99,8 @@ public class SettingsFragment extends Fragment {
         try {
             settingsVM.updateNotificationSettings(newNotificationSetting);
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> toggleNotification(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }

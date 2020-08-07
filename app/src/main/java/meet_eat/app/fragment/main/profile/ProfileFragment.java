@@ -112,7 +112,8 @@ public class ProfileFragment extends Fragment {
 
             updateUI();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }

@@ -98,7 +98,8 @@ public class ProfileEditFragment extends Fragment {
                     userVM.edit(userVM.getCurrentUser());
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
                 } catch (RequestHandlerException e) {
-                    // TODO resolve error code
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                            .show();
                     Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
@@ -153,7 +154,8 @@ public class ProfileEditFragment extends Fragment {
             userVM.edit(currentUser);
             Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> saveProfile(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }

@@ -32,7 +32,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -59,7 +59,8 @@ public class SettingsDeleteProfileFragment extends Fragment {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             } catch (RequestHandlerException e) {
-                // TODO resolve error code
+                Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                        .show();
                 Toast.makeText(getActivity(),
                         "DEBUG SettingsDeleteProfileFragment.java -> deleteProfile(): " + e.getMessage(),
                         Toast.LENGTH_LONG).show();

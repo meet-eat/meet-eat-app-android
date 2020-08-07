@@ -113,7 +113,8 @@ public class OfferEditFragment extends Fragment {
             bundle.putSerializable(LIST_TYPE.name(), STANDARD);
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + e.getMessage());
         }
 
@@ -201,7 +202,8 @@ public class OfferEditFragment extends Fragment {
                     bundle.putSerializable(OFFER.name(), offer);
                     navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException e) {
-                    // TODO resolve error code
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                            .show();
                     Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
 
@@ -219,7 +221,8 @@ public class OfferEditFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     navController.navigateUp();
                 } catch (RequestHandlerException e) {
-                    // TODO resolve error code
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                            .show();
                     Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
 

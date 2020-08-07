@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Objects;
+
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentLoginBinding;
@@ -92,8 +94,9 @@ public class LoginFragment extends Fragment {
             loginVM.resetPassword(email);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
-            Log.i("DEBUG", "In LoginFragment.login: " + e.getMessage());
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
+            Log.i("DEBUG", "In LoginFragment.reset: " + e.getMessage());
         }
 
     }
