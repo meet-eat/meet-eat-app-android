@@ -152,7 +152,8 @@ public class UserViewModelTest {
     public void testSubscribeWithUnregisteredUser() throws RequestHandlerException {
         // if exception is not thrown, check if unregisteredUser is in users subscriber list
         User unregisteredUser =
-                new User(new Email(testEmail), Password.createHashedPassword(password), LocalDate.of(2000, 1, 1),
+                new User(new Email(uniqueIdentifier + 42 + testEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1),
                         username, phoneNumber, profileDescription, true,
                         new SphericalLocation(new SphericalPosition(0, 0)));
 
