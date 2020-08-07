@@ -46,19 +46,10 @@ public class OfferViewModel extends ViewModel {
      * @return the offers of the subscribed users
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Iterable<Offer> fetchSubscribedOffers() throws RequestHandlerException {
+    public Iterable<Offer> fetchOffersOfSubscriptions() throws RequestHandlerException {
         User currentUser = getCurrentUser();
-        ArrayList<Offer> offers = new ArrayList<>();
-
-        for (User subscription : currentUser.getSubscriptions()) {
-            for (Offer offer : offerRepository
-                    .getOffersBySubscriptions(subscription, PAGE, currentUser.getOfferPredicates(),
-                            currentUser.getOfferComparator())) {
-                offers.add(offer);
-            }
-        }
-
-        return offers;
+        return offerRepository.getOffersBySubscriptions(currentUser, PAGE, currentUser.getOfferPredicates(),
+                currentUser.getOfferComparator());
     }
 
     /**

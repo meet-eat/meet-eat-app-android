@@ -101,7 +101,7 @@ public class OfferViewModelTest {
 
     @Test
     public void testFetchSubscribedOffers() throws RequestHandlerException {
-        offerVM.fetchSubscribedOffers();
+        offerVM.fetchOffersOfSubscriptions();
     }
 
     @Test
