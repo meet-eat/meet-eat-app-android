@@ -159,7 +159,7 @@
                     android:background="@drawable/bg_edittext"
                     android:clickable="true"
                     android:elevation="5dp"
-                    android:hint="@string/price"
+                    android:hint="@{@string/price.concat(@string/whitespace).concat(@string/currency)}"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:paddingLeft="20dp"

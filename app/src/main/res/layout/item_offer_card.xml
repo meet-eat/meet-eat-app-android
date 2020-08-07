@@ -13,7 +13,6 @@
             android:id="@+id/ivOfferCardPicture"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:adjustViewBounds="true"
             android:backgroundTint="@color/foreignOffer"
             android:scaleType="fitCenter"
             android:src="@drawable/bg_edittext"
