@@ -34,7 +34,7 @@ public class UserRepository extends EntityRepository<User> {
     public User addEntity(User entity) throws RequestHandlerException {
         //No token for registration
         RequestEntity<User> requestEntity = new RequestEntity<User>(Objects.requireNonNull(entity), HttpMethod.POST,
-                URI.create(RequestHandler.SERVER_PATH + EndpointPath.USERS));
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath()));
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
 
@@ -47,7 +47,7 @@ public class UserRepository extends EntityRepository<User> {
      */
     public void resetPassword(Email email) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH
-                + EndpointPath.USERS + String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
+                + getEntityPath() + String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
         new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
     }
 
