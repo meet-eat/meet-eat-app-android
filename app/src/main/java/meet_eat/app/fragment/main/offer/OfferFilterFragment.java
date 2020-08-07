@@ -175,7 +175,7 @@ public class OfferFilterFragment extends Fragment {
         if (Objects.nonNull(minDistance)) {
 
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Integer.parseInt(minDistance),
+                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance),
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
@@ -188,7 +188,7 @@ public class OfferFilterFragment extends Fragment {
         if (Objects.nonNull(maxDistance)) {
 
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Integer.parseInt(maxDistance),
+                predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance),
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
                 // TODO remove debug toast
@@ -208,11 +208,11 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minParticipants)) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Integer.parseInt(minParticipants)));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants)));
         }
 
         if (Objects.nonNull(maxParticipants)) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Integer.parseInt(maxParticipants)));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants)));
         }
 
         if (Objects.nonNull(minRating) && Objects.nonNull(maxRating)) {
