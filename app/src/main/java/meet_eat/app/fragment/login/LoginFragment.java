@@ -76,9 +76,9 @@ public class LoginFragment extends Fragment {
             loginVM.login(email, password);
             startActivity(new Intent(getActivity(), MainActivity.class));
         } catch (RequestHandlerException e) {
-            // TODO resolve error code
-            Toast.makeText(getActivity(), "DEBUG LoginFragment.java -> login(): " + e.getMessage(), Toast.LENGTH_LONG)
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
                     .show();
+            Log.i("DEBUG", "In LoginFragment.login: " + e.getMessage());
         }
 
     }
