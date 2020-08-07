@@ -133,7 +133,7 @@ public class OfferRepository extends EntityRepository<Offer> {
         RequestEntity<User> requestEntity = new RequestEntity<User>(
                 Objects.requireNonNull(participant),
                 headers,
-                HttpMethod.POST,
+                HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
         return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.OK);
     }
