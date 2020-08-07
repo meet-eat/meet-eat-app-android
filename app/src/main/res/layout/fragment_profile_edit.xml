@@ -97,18 +97,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:text="@string/profile_user_age"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/tvProfileEditBirthday"
-            app:layout_constraintEnd_toStartOf="@+id/tvProfileEditBirthday"
-            app:layout_constraintTop_toTopOf="@+id/tvProfileEditBirthday" />
-
-        <TextView
             android:id="@+id/tvProfileEditBirthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

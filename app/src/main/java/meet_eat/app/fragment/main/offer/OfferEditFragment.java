@@ -158,6 +158,11 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
+        if (participants < 1) {
+            Toast.makeText(getActivity(), R.string.invalid_max_participants, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (Objects.isNull(title)) {
             Toast.makeText(getActivity(), R.string.missing_title, Toast.LENGTH_SHORT).show();
             return false;

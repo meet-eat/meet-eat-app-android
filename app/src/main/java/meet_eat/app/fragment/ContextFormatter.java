@@ -44,8 +44,7 @@ public class ContextFormatter {
     }
 
     public String formatDistance(Double distance) {
-        return String.format(context.getResources().getString(R.string.decimal_format), distance / 1000) +
-                context.getResources().getString(R.string.distance_unit);
+        return String.valueOf((int) (distance / 1000)) + context.getResources().getString(R.string.distance_unit);
     }
 
     public Address formatAddressFromString(String location) throws IOException {
