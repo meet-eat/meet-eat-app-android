@@ -1,7 +1,6 @@
 package meet_eat.app.repository;
 
 import meet_eat.data.EndpointPath;
-import meet_eat.data.entity.Tag;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -16,11 +15,17 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
 
+/**
+ * Represents the administrative unit that controls access and manipulation of users within a repository.
+ */
 public class UserRepository extends EntityRepository<User> {
-    
+
     private static final String URL_RESET_PASSWORD = "/%s/password/reset"; //TODO
     private static final String ERROR_MESSAGE_NOT_IMPLEMENTED = "Not implemented yet.";
 
+    /**
+     * Creates a user repository.
+     */
     public UserRepository() {
         super(EndpointPath.USERS);
     }
@@ -33,20 +38,46 @@ public class UserRepository extends EntityRepository<User> {
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
 
-    public Void resetPassword(Email email) throws RequestHandlerException {
+    /**
+     * Resets the user's password with the corresponding e-mail address.
+     *
+     * @param email the e-mail address of the user whose password is to be reset
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public void resetPassword(Email email) throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH
                 + EndpointPath.USERS + String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
-        return new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
+        new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
     }
 
-    public void requestContact(ContactRequest contactRequest) {
+    /**
+     * Executes a contact request.
+     *
+     * @param contactRequest the contact request to be executed
+     * @throws UnsupportedOperationException because the method is not implemented yet
+     */
+    public void requestContact(ContactRequest contactRequest) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(ERROR_MESSAGE_NOT_IMPLEMENTED);
     }
 
-    public void sendContactData(ContactData data) {
+    /**
+     * Transmits contact information to the contact request creator.
+     *
+     * @param data the contact information to be transmitted
+     * @throws UnsupportedOperationException because the method is not implemented yet
+     */
+    public void sendContactData(ContactData data) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(ERROR_MESSAGE_NOT_IMPLEMENTED);
     }
 
+    /**
+     * Reports a user in the repository by submitting a report.
+     *
+     * @param user   the user to be reported
+     * @param report the report to be submitted
+     * @return the user that was reported within the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public User report(User user, Report report) throws RequestHandlerException {
         Objects.requireNonNull(user);
         user.addReport(Objects.requireNonNull(report));
