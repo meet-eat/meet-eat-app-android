@@ -90,21 +90,24 @@ public class ProfileEditFragment extends Fragment {
 
         Password oldPassword = Password.createHashedPassword(oldPasswordString);
         Password newPassword = Password.createHashedPassword(newPasswordString);
+        try {
+            if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
+                userVM.getCurrentUser().setPassword(newPassword);
 
-        if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
-            userVM.getCurrentUser().setPassword(newPassword);
+                try {
+                    userVM.edit(userVM.getCurrentUser());
+                    Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
+                } catch (RequestHandlerException e) {
+                    // TODO resolve error code
+                    Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
 
-            try {
-                userVM.edit(userVM.getCurrentUser());
-                Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
-            } catch (RequestHandlerException e) {
-                // TODO resolve error code
-                Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
             }
-
-        } else {
-            Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
+        }catch (IllegalStateException exception) {
+            Toast.makeText(getActivity(), "Bitte aus und wieder einloggen", Toast.LENGTH_SHORT).show();
         }
 
     }
