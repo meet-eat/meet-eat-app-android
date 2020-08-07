@@ -44,9 +44,9 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
-        binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
-        binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navigateToSettingsDisplay());
-        binding.tvSettingsNotificationMenu.setOnClickListener(event -> navigateToSettingsNotification());
+        // binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
+        // binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navigateToSettingsDisplay());
+        // binding.tvSettingsNotificationMenu.setOnClickListener(event -> navigateToSettingsNotification());
         binding.btSettingsDelete.setOnClickListener(event -> navigateToSettingsDeleteProfile());
         binding.btSettingsLogout.setOnClickListener(event -> logout());
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());

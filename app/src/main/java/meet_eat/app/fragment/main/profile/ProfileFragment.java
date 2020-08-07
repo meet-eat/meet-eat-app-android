@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btProfileSubscribe.setOnClickListener(event -> subscribe());
-        binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
+        // binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
         binding.ibtProfileEdit.setOnClickListener(event -> navigateToProfileEdit());
     }
 

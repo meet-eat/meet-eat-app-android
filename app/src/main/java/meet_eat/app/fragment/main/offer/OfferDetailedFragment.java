@@ -68,13 +68,13 @@ public class OfferDetailedFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.ibtOfferDetailedEdit.setOnClickListener(event -> navigateToOfferEdit());
-        binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
+        // binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
         binding.ibtOfferDetailedBookmark.setOnClickListener(event -> bookmark());
         binding.btOfferDetailedParticipants.setOnClickListener(event -> navigateToOfferParticipants());
         binding.ivOfferDetailedProfile.setOnClickListener(event -> navigateToProfile());
         binding.tvOfferDetailedUsername.setOnClickListener(event -> navigateToProfile());
         binding.btOfferDetailedParticipate.setOnClickListener(event -> participateOffer());
-        binding.btOfferDetailedContact.setOnClickListener(event -> navigateToOfferContact());
+        // binding.btOfferDetailedContact.setOnClickListener(event -> navigateToOfferContact());
     }
 
     private void navigateToOfferContact() {

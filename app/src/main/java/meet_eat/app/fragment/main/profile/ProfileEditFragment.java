@@ -77,7 +77,7 @@ public class ProfileEditFragment extends Fragment {
     private void setButtonOnClickListener() {
         binding.btProfileEditChangePassword.setOnClickListener(event -> changePassword());
         binding.btProfileEditSave.setOnClickListener(event -> saveProfile());
-        binding.ibtProfileEditAdd.setOnClickListener(event -> addImage());
+        // binding.ibtProfileEditAdd.setOnClickListener(event -> addImage());
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
 
