@@ -15,11 +15,13 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 
-import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
+import java.util.Objects;
+
 import static meet_eat.app.fragment.ListType.BOOKMARKED;
 import static meet_eat.app.fragment.ListType.OWN;
 import static meet_eat.app.fragment.ListType.STANDARD;
 import static meet_eat.app.fragment.ListType.SUBSCRIBED;
+import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
 
 /**
  * Represents the main activity of the app, that is active when the user is in the logged in state.
@@ -77,10 +79,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.drawer_menu_settings:
                 navController.navigate(R.id.settingsFragment);
                 break;
-            default:
-                // TODO remove debug toast
-                Toast.makeText(this, "DEBUG MainActivity.java -> onItemClicked(): default case", Toast.LENGTH_LONG)
-                        .show();
         }
 
         drawerLayout.close();
@@ -90,22 +88,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if (Objects.nonNull(navController.getCurrentBackStackEntry()) &&
+                (navController.getCurrentBackStackEntry().getDestination().getId() == R.id.offerEditFragment ||
+                        navController.getCurrentBackStackEntry().getDestination().getId() ==
+                                R.id.profileEditFragment)) {
+            return;
+        }
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            if (timeInMillis == 0) {
-                timeInMillis = System.currentTimeMillis();
-                Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
-            } else {
-                if (System.currentTimeMillis() - timeInMillis < 1200) {
-                    super.onBackPressed();
-                    timeInMillis = 0;
-                } else {
-                    timeInMillis = System.currentTimeMillis();
-                }
-            }
-        }
 
+            if (navController.getCurrentBackStackEntry() == null) {
+
+                if (timeInMillis == 0) {
+                    timeInMillis = System.currentTimeMillis();
+                    Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
+                } else {
+
+                    if (System.currentTimeMillis() - timeInMillis < 1200) {
+                        super.onBackPressed();
+                        timeInMillis = 0;
+                    } else {
+                        timeInMillis = System.currentTimeMillis();
+                    }
+
+                }
+
+            } else {
+                super.onBackPressed();
+            }
+
+        }
 
     }
 }

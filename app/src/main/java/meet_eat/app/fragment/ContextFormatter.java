@@ -44,14 +44,14 @@ public class ContextFormatter {
     }
 
     public String formatDistance(Double distance) {
-        return String.valueOf((int) (distance / 1000)) + context.getResources().getString(R.string.distance_unit);
+        return (int) (distance / 1000) + context.getResources().getString(R.string.distance_unit);
     }
 
     public Address formatAddressFromString(String location) throws IOException {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocationName(location, 1))) {
+        if (Objects.nonNull(geocoder.getFromLocationName(location, 1)) && geocoder.getFromLocationName(location, 1).size() > 0) {
             address = geocoder.getFromLocationName(location, 1).get(0);
         }
 

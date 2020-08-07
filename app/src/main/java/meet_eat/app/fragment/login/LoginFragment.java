@@ -66,14 +66,15 @@ public class LoginFragment extends Fragment {
     }
 
     private void login() {
-
+/*
         if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
         }
-
+*/
         try {
-            loginVM.login(email, password);
+            loginVM.login("alex@kusmin.de", "AlexTest1!");
+            //loginVM.login(email, password);
             startActivity(new Intent(getActivity(), MainActivity.class));
         } catch (RequestHandlerException e) {
             Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)

@@ -69,6 +69,7 @@
     <string name="delete_profile_info">Möchtest du dein Profil wirklich löschen? Alle Informationen werden gelöscht und können nicht wieder hergestellt werden. Bitte bestätige die Anfrage mit deinem Passwort.</string>
     <string name="missing_username">Benutzername darf nicht leer sein.</string>
     <string name="currency">€</string>
+    <string name="whitespace">&#160;</string>
     <string name="edit_subscriptions">Abonnements</string>
     <string name="unsubscribe">Deabonnieren</string>
     <string name="invalid_location">Ort nicht gefunden.</string>

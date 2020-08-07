@@ -10,7 +10,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
@@ -35,6 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10"
             android:text="@string/delete_profile"
             android:textColor="@android:color/white"
             android:textSize="32sp"
@@ -48,6 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10"
             android:text="@string/delete_profile_info"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -65,9 +68,9 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:text="@={fragment.password}"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text="@={fragment.password}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
             app:layout_constraintTop_toBottomOf="@+id/tvSettingsDeleteProfileText" />

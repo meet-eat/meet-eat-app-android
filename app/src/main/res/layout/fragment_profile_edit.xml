@@ -72,6 +72,8 @@
         <TextView
             android:id="@+id/tvProfileEditEmail"
             android:layout_width="0dp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
@@ -85,6 +87,8 @@
         <TextView
             android:id="@+id/tvProfileEditUsername"
             android:layout_width="0dp"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
@@ -99,6 +103,8 @@
         <TextView
             android:id="@+id/tvProfileEditBirthday"
             android:layout_width="wrap_content"
+            android:shadowColor="@android:color/black"
+            android:shadowRadius="10"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="5dp"
