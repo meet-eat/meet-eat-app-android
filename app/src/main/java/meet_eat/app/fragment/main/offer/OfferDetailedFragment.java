@@ -147,7 +147,7 @@ public class OfferDetailedFragment extends Fragment {
 
     private void initUI() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-        // TODO offer image
+        // add offer image
         binding.tvOfferDetailedTitle.setText(offer.getName());
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
@@ -171,11 +171,11 @@ public class OfferDetailedFragment extends Fragment {
 
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
         binding.tvOfferDetailedParticipants.setText(offer.getParticipants().size() + "/" + offer.getMaxParticipants());
-        // TODO profile image
+        // add profile image
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());
         binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
-        // TODO tags
+        // add tags
 
         if (offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
             binding.ibtOfferDetailedReport.setVisibility(GONE);

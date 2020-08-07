@@ -87,7 +87,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             }
 
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
-            // TODO offer image
+            // add offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
             if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier()) &&

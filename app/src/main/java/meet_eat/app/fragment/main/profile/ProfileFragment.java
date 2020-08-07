@@ -68,7 +68,7 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileBirthday.setText(getAge());
         binding.tvProfileHostRating.setText(String.valueOf(user.getHostRating()));
         binding.tvProfileGuestRating.setText(String.valueOf(user.getGuestRating()));
-        // TODO profile image
+        // add profile image
 
         if (user.getIdentifier().equals(userVM.getCurrentUser().getIdentifier())) {
             binding.ibtProfileReport.setVisibility(GONE);

@@ -182,8 +182,8 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
-        // TODO offer image
-        // TODO tags
+        // add offer image
+        // add tags
         return true;
     }
 

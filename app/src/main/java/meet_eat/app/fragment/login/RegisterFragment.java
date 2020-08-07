@@ -129,7 +129,7 @@ public class RegisterFragment extends Fragment {
             profileDescription = "";
         }
 
-        // TODO profile image
+        // add profile image
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false,

@@ -61,7 +61,7 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
 
         public void setData(User user) {
             binding.tvOfferParticipantUsername.setText(user.getName());
-            // TODO profile image
+            // add profile image
             binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile(user));
             binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile(user));
         }

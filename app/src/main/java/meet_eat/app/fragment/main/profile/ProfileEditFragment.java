@@ -70,7 +70,7 @@ public class ProfileEditFragment extends Fragment {
             navController.navigateUp();
         }
 
-        // TODO profile image
+        // add profile image
         description = currentUser.getDescription();
     }
 
@@ -114,7 +114,7 @@ public class ProfileEditFragment extends Fragment {
     }
 
     private void addImage() {
-        // TODO profile image
+        // add profile image
     }
 
     private void saveProfile() {

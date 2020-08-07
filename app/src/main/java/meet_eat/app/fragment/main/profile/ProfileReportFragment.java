@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Objects;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
@@ -61,7 +62,8 @@ public class ProfileReportFragment extends Fragment {
         try {
             userVM.report(user, report);
             navController.navigateUp();
-            // TODO toast?
+            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text), Toast.LENGTH_SHORT)
+                    .show();
         } catch (RequestHandlerException e) {
             // TODO timeout etc
         }

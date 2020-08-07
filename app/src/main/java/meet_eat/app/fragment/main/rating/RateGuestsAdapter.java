@@ -72,7 +72,7 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
 
         public void setData(User user) {
             binding.tvRateGuestUsername.setText(user.getName());
-            // TODO user.image
+            // add user image
             binding.rbRateGuest.setNumStars(3);
             binding.rbRateGuest.setStepSize(RATING_STEP_SIZE);
         }
