@@ -1,7 +1,6 @@
 package meet_eat.app.viewmodel.login;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -16,7 +15,7 @@ import meet_eat.data.location.SphericalPosition;
 
 public class LoginViewModelTest {
 
-    private static final String validRegisteredEmail = "registered-email@example.com";
+    private static final String validRegisteredEmail = "@example.com";
     private static final String validUnregisteredEmail = "unregistered-email@example.com";
     private static final String invalidEmail = "email example";
     private static final String password = "ABcd12§$";
@@ -37,12 +36,14 @@ public class LoginViewModelTest {
 
     @Test
     public void testRegisterLoginDeleteUser() throws RequestHandlerException {
-        User registeredUser = new User(new Email(validRegisteredEmail), Password.createHashedPassword(password),
+        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
+        User registeredUser = new User(new Email(uniqueIdentifier + validRegisteredEmail),
+                Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, description, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
-        loginVM.login(validRegisteredEmail, password);
-        settingsVM.deleteUser(registeredUser);
+        loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
+        settingsVM.deleteUser(settingsVM.getCurrentUser());
     }
 
     @Test(expected = RequestHandlerException.class)

@@ -17,10 +17,11 @@ import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RatingViewModelTest {
 
-    private static final String registeredEmail = "registered-email@example.com";
+    private static final String registeredEmail = "@example.com";
     private static final String password = "ABcd12§$";
     private static final String username = "Registered User";
     private static final String phoneNumber = "0123456789";
@@ -35,22 +36,23 @@ public class RatingViewModelTest {
         LoginViewModel loginVM = new LoginViewModel();
         settingsVM = new SettingsViewModel();
 
+        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
         registeredUser =
-                new User(new Email(registeredEmail), Password.createHashedPassword(password), LocalDate.of(2000, 1, 1),
-                        username, phoneNumber, profileDescription, true,
+                new User(new Email(uniqueIdentifier + registeredEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                         new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
-        loginVM.login(registeredEmail, password);
+        loginVM.login(uniqueIdentifier + registeredEmail, password);
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
-        settingsVM.deleteUser(registeredUser);
+        settingsVM.deleteUser(settingsVM.getCurrentUser());
     }
 
     @Test
     public void testGetCurrentUser() {
-        assertEquals(registeredUser, new RatingViewModel().getCurrentUser());
+        assertNotNull(new RatingViewModel().getCurrentUser().getIdentifier());
     }
 
     @Test(expected = NullPointerException.class)

@@ -22,6 +22,7 @@ import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.location.UnlocalizableException;
 
+import static android.view.View.GONE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
@@ -98,29 +99,35 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 }
 
                 binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
+            } else {
+                binding.ibtOfferCardBookmark.setVisibility(GONE);
             }
+
         }
 
         private void changeBookmark(Offer offer) {
+
             try {
 
                 if (offerVM.isBookmarked(offer)) {
                     offerVM.removeBookmark(offer);
                     binding.ibtOfferCardBookmark
-                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
                                     PorterDuff.Mode.SRC_IN);
                 } else {
                     offerVM.addBookmark(offer);
                     binding.ibtOfferCardBookmark
-                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
                                     PorterDuff.Mode.SRC_IN);
                 }
 
                 notifyDataSetChanged();
             } catch (RequestHandlerException e) {
-                Toast.makeText(binding.getRoot().getContext(), "Exception " + e.getMessage(), Toast.LENGTH_SHORT)
+                Toast.makeText(binding.getRoot().getContext(),
+                        "DEBUG OfferListAdapter.java -> changeBookmark(): " + e.getMessage(), Toast.LENGTH_SHORT)
                         .show();
             }
+
         }
 
         private void navigateToOfferDetailed(Offer offer) {

@@ -188,6 +188,8 @@ public class OfferDetailedFragment extends Fragment {
 
         if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
             updateUI();
+        } else {
+            binding.ibtOfferDetailedBookmark.setVisibility(GONE);
         }
 
     }

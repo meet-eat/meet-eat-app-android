@@ -3,8 +3,6 @@ package meet_eat.app.viewmodel.login;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import meet_eat.app.repository.RequestHandlerException;
 
 public class RegisterViewModelTest {
