@@ -143,7 +143,7 @@ public class OfferViewModel extends ViewModel {
     public void participate(Offer offer) throws RequestHandlerException {
         removeBookmark(offer);
         offer.addParticipant(getCurrentUser());
-        offerRepository.updateEntity(offer);
+        edit(offer);
     }
 
     /**
