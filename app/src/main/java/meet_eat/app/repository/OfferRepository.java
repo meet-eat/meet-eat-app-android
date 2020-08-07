@@ -31,6 +31,7 @@ public class OfferRepository extends EntityRepository<Offer> {
 
     private static final String OWNER_ID_URL = "?owner=";
     private static final String SUBSCRIBER_ID_URL = "?subscriber=";
+    private static final String URI_PATH_PARTICIPANTS = "/participants";
 
     /**
      * Creates an {@link Offer offer} repository.
@@ -107,8 +108,38 @@ public class OfferRepository extends EntityRepository<Offer> {
         return updateEntity(offer);
     }
 
+    public Offer addParticipant(Offer offer, User participant) throws RequestHandlerException {
+        Objects.requireNonNull(offer);
+        String offerIdentifier = Objects.requireNonNull(offer.getIdentifier());
+        String uriOfferIdentifier = "/" + offerIdentifier;
+
+        // Handle request
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        RequestEntity<User> requestEntity = new RequestEntity<User>(
+                Objects.requireNonNull(participant),
+                headers,
+                HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
+        return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.CREATED);
+    }
+
+    public Offer removeParticipant(Offer offer, User participant) throws RequestHandlerException {
+        Objects.requireNonNull(offer);
+        String offerIdentifier = Objects.requireNonNull(offer.getIdentifier());
+        String uriOfferIdentifier = "/" + offerIdentifier;
+
+        // Handle request
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        RequestEntity<User> requestEntity = new RequestEntity<User>(
+                Objects.requireNonNull(participant),
+                headers,
+                HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
+        return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.OK);
+    }
+
     /**
-     * Returns the {@link Offer offers} provided by the server at the {@link EndpointPath endpoint} with the given uri
+     * Returns the {@link Offer offers} provided by the server at the {@link EndpointPath endpoint} with the given URI
      * path segment. Here, offers are returned {@link Page page}-based, filtered according to given
      * {@link OfferPredicate predicates} and sorted using the {@link OfferComparator comparator}.
      *
