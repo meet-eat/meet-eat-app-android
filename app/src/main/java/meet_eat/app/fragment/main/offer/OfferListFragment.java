@@ -107,10 +107,10 @@ public class OfferListFragment extends Fragment {
                     offerListAdapter.updateOffers(offerVM.fetchOffers(offerVM.getCurrentUser()));
                     break;
                 case BOOKMARKED:
-                    // TODO offerListAdapter.updateOffers(offerVM.fetchBookmarkedOffers());
+                    offerListAdapter.updateOffers(offerVM.fetchBookmarkedOffers());
                     break;
                 case SUBSCRIBED:
-                    // TODO offerListAdapter.updateOffers(offerVM.fetchSubscribedOffers());
+                    offerListAdapter.updateOffers(offerVM.fetchOffersOfSubscriptions());
                     break;
                 default:
                     offerListAdapter.updateOffers(offerVM.fetchOffers(new ArrayList<>()));

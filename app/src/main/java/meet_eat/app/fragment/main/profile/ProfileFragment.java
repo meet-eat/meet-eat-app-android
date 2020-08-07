@@ -103,7 +103,13 @@ public class ProfileFragment extends Fragment {
     private void subscribe() {
 
         try {
-            userVM.subscribe(user);
+
+            if (!userVM.getCurrentUser().getSubscriptions().contains(user)) {
+                userVM.subscribe(user);
+            } else {
+                userVM.unsubscribe(user);
+            }
+
             updateUI();
         } catch (RequestHandlerException e) {
             // TODO resolve error code
