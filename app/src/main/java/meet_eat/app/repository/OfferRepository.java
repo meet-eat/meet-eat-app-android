@@ -110,31 +110,43 @@ public class OfferRepository extends EntityRepository<Offer> {
         return updateEntity(offer);
     }
 
+    /**
+     * Adds a {@link User participant} to an {@link Offer offer} in the repository.
+     *
+     * @param offer the offer where the participant is to be added
+     * @param participant the participant to be added to the offer
+     * @return the latest version of the offer from the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Offer addParticipant(Offer offer, User participant) throws RequestHandlerException {
         Objects.requireNonNull(offer);
-        String offerIdentifier = Objects.requireNonNull(offer.getIdentifier());
-        String uriOfferIdentifier = "/" + offerIdentifier;
+        String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
 
         // Handle request
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<User> requestEntity = new RequestEntity<User>(
                 Objects.requireNonNull(participant),
-                headers,
+                getTokenHeaders(),
                 HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
         return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.CREATED);
     }
 
+    /**
+     * Removes a {@link User participant} from an {@link Offer offer} in the repository.
+     *
+     * @param offer the offer where the participant is to be removed
+     * @param participant the participant to be removed from the offer
+     * @return the latest version of the offer from the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Offer removeParticipant(Offer offer, User participant) throws RequestHandlerException {
         Objects.requireNonNull(offer);
-        String offerIdentifier = Objects.requireNonNull(offer.getIdentifier());
-        String uriOfferIdentifier = "/" + offerIdentifier;
+        String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
 
         // Handle request
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<User> requestEntity = new RequestEntity<User>(
                 Objects.requireNonNull(participant),
-                headers,
+                getTokenHeaders(),
                 HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
         return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.OK);
