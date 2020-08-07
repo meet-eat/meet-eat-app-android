@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -81,7 +82,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 binding.tvOfferCardDistance.setText(contextFormatter
                         .formatDistance(offerVM.getCurrentUser().getLocalizable().getDistance(offer.getLocation())));
             } catch (UnlocalizableException e) {
-                // TODO remove debug toast
+                Toast.makeText(binding.getRoot().getContext(),
+                        binding.getRoot().getResources().getString(R.string.invalid_location), Toast.LENGTH_SHORT)
+                        .show();
                 Log.i("DEBUG", "In OfferListAdapter.setData: " + e.getMessage());
                 return;
             }
@@ -139,6 +142,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
                 notifyDataSetChanged();
             } catch (RequestHandlerException e) {
+                Toast.makeText(binding.getRoot().getContext(), R.string.request_handler_exception_toast_error_message,
+                        Toast.LENGTH_LONG).show();
                 Log.i("DEBUG", "In OfferListAdapter.changeBookmark: " + e.getMessage());
             }
 

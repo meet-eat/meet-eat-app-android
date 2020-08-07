@@ -156,7 +156,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedDistance.setText(
                     contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
         } catch (UnlocalizableException e) {
-            // TODO remove debug toast
+            Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
             Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
             return;
         }
@@ -164,13 +164,14 @@ public class OfferDetailedFragment extends Fragment {
         try {
             binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));
         } catch (IOException | UnlocalizableException e) {
-            // TODO remove debug toast
+            Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
             Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
             return;
         }
 
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
-        binding.tvOfferDetailedParticipants.setText(offer.getParticipants().size() + "/" + offer.getMaxParticipants());
+        String participantsText = offer.getParticipants().size() + "/" + offer.getMaxParticipants();
+        binding.tvOfferDetailedParticipants.setText(participantsText);
         // add profile image
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());
         binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
@@ -214,7 +215,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedParticipate.setText(R.string.participate);
             binding.tvOfferDetailedParticipating.setVisibility(GONE);
         }
-
-        binding.tvOfferDetailedParticipants.setText(offer.getParticipants().size() + "/" + offer.getMaxParticipants());
+        String participantsText = offer.getParticipants().size() + "/" + offer.getMaxParticipants();
+        binding.tvOfferDetailedParticipants.setText(participantsText);
     }
 }

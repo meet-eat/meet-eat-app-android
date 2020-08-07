@@ -62,10 +62,11 @@ public class ProfileReportFragment extends Fragment {
         try {
             userVM.report(user, report);
             navController.navigateUp();
-            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text), Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text),
+                    Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
-            // TODO timeout etc
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
         }
 
     }

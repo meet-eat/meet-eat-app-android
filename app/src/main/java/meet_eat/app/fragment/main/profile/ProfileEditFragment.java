@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.profile;
 
 import android.location.Address;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class ProfileEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
@@ -64,9 +65,9 @@ public class ProfileEditFragment extends Fragment {
         try {
             home = contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable());
         } catch (IOException | UnlocalizableException e) {
-            // TODO remove debug toast
-            Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> initUI(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
+            Log.i("DEBUG", "ProfileEditFragment.java -> initUI(): " + e.getMessage());
             navController.navigateUp();
         }
 
@@ -98,17 +99,18 @@ public class ProfileEditFragment extends Fragment {
                     userVM.edit(userVM.getCurrentUser());
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
                 } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                            .show();
-                    Toast.makeText(getActivity(), "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(),
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
                             Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),
+                            "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(), Toast.LENGTH_LONG)
+                            .show();
                 }
 
             } else {
                 Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
             }
-        }catch (IllegalStateException exception) {
-            Toast.makeText(getActivity(), "Bitte aus und wieder einloggen", Toast.LENGTH_SHORT).show();
+        } catch (IllegalStateException exception) {
+            Toast.makeText(getActivity(), "Bitte aus- und wieder einloggen", Toast.LENGTH_SHORT).show();
         }
 
     }

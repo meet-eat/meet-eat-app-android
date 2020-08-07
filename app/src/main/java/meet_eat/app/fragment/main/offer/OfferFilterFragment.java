@@ -180,7 +180,7 @@ public class OfferFilterFragment extends Fragment {
                 predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
-                // TODO remove debug toast
+                Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
                 Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + e.getMessage());
                 return;
             }
@@ -193,7 +193,7 @@ public class OfferFilterFragment extends Fragment {
                 predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException e) {
-                // TODO remove debug toast
+                Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
                 Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + e.getMessage());
                 return;
             }

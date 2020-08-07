@@ -247,7 +247,7 @@ public class OfferEditFragment extends Fragment {
             try {
                 city = contextFormatter.formatStringFromLocalizable(offer.getLocation());
             } catch (IOException | UnlocalizableException e) {
-                // TODO remove debug toast
+                Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
                 Log.i("DEBUG", "In OfferEditFragment.initUI: " + e.getMessage());
                 return;
             }

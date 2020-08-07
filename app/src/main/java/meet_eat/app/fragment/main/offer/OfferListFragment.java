@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,7 +118,8 @@ public class OfferListFragment extends Fragment {
             }
 
         } catch (RequestHandlerException e) {
-            // TODO remove debug toast
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
+                    .show();
             Log.i("DEBUG", "In OfferListFragment.updateOffers: " + e.getMessage());
         }
 
