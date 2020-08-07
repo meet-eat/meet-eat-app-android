@@ -1,10 +1,10 @@
 package meet_eat.app.repository;
 
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import meet_eat.data.ObjectJsonParser;
@@ -119,17 +119,18 @@ public class OfferRepository extends EntityRepository<Offer> {
                                         OfferComparator comparator) throws RequestHandlerException {
         LocalDateTimePredicate timePredicate = new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER,
                 LocalDateTime.now());
-        predicates = Iterables.concat(Objects.requireNonNull(predicates), Collections.singletonList(timePredicate));
+        List<OfferPredicate> predicateList = Lists.newLinkedList(Objects.requireNonNull(predicates));
+        predicateList.add(timePredicate);
 
-        //create headers
+        // Create request header map
         LinkedMultiValueMap<String, String> headers = getTokenHeaders();
-        headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
+        headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicateList));
         headers.add(RequestHeaderField.COMPARATORS,
                 new ObjectJsonParser().parseObjectToJsonString(Objects.requireNonNull(comparator)));
         headers.add(RequestHeaderField.PAGE,
                 new ObjectJsonParser().parseObjectToJsonString(Objects.requireNonNull(page)));
 
-        //server request
+        // Handle request
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + Objects.requireNonNull(uriPathSegment)));
         return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
