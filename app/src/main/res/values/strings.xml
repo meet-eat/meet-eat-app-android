@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Meet &amp; Eat</string>
-    <string name="e_mail">E-Mail</string>
+    <string name="app_name" translatable="false">Meet &amp; Eat</string>
+    <string name="e_mail" translatable="false">E-Mail</string>
     <string name="password">Passwort</string>
     <string name="reset_password">Passwort vergessen?</string>
     <string name="login">Anmelden</string>
@@ -14,14 +14,14 @@
     <string name="settings">Einstellungen</string>
     <string name="notification">Benachrichtigung</string>
     <string name="appearance">Darstellung</string>
-    <string name="about">Einige ausgegraute Knöpfe wurden deaktiviert. Diese dienen nur Präsentationszwecken und repräsentieren keine endgültig implementierten Funktionalitäten.</string>
+    <string name="about">Einige ausgegraute Knöpfe wurden deaktiviert. Diese dienen nur Präsentationszwecken und repräsentieren noch nicht implementierte Funktionalitäten.</string>
     <string name="delete_profile">Profil löschen</string>
     <string name="logout">Abmelden</string>
     <string name="old_password">Altes Passwort</string>
     <string name="new_password">Neues Passwort</string>
     <string name="change_password">Ändern</string>
     <string name="save">Speichern</string>
-    <string name="picture">Angebots Bild</string>
+    <string name="picture">Angebotsbild</string>
     <string name="title">Angebotstitel</string>
     <string name="date_time">Zeit</string>
     <string name="price">Preis</string>
@@ -29,7 +29,7 @@
     <string name="city">Stadt</string>
     <string name="participants">Teilnehmer</string>
     <string name="offer_description">Angebotsbeschreibung</string>
-    <string name="tag">Tag</string>
+    <string name="tag" translatable="false">Tag</string>
     <string name="participate">Teilnehmen</string>
     <string name="contact">Kontaktieren</string>
     <string name="cancel">Absagen</string>
@@ -38,15 +38,14 @@
     <string name="bad_email">Ungültige E-Mail.</string>
     <string name="bad_password">Ungültiges Passwort.</string>
     <string name="bad_login">Ungültige Anmeldedaten.</string>
-    <string name="map_api_key">api</string>
+    <string name="map_api_key" translatable="false">api</string>
     <string name="publish">Veröffentlichen</string>
     <string name="delete_offer">Löschen</string>
-    <string name="add_tag">+ Tag</string>
+    <string name="add_tag" translatable="false">+ Tag</string>
     <string name="rate">Bewerten</string>
     <string name="subscribed">Abonnierte Benutzer</string>
     <string name="minutes">Minuten</string>
-    <string name="notification_hint">Erhalte eine Benachrichtigung vor jeder Verabredung an der
-        du teilnimmst.</string>
+    <string name="notification_hint">Erhalte eine Benachrichtigung vor jeder Verabredung an der du teilnimmst.</string>
     <string name="standard">Standard</string>
     <string name="bright">Hell</string>
     <string name="dark">Dunkel</string>
@@ -63,13 +62,13 @@
     <string name="max">max</string>
     <string name="contact_info">Benutzer</string>
     <string name="contactRequest">Kontaktanfrage</string>
-    <string name="contact_text">Der Benutzer fragt deine Kontaktdaten an. Wähle aus, welche du ihm schicken möchtest.</string>
+    <string name="contact_text">Ein Benutzer fragt deine Kontaktdaten an. Wähle aus, ob, und wenn ja, welche du ihm schicken möchtest.</string>
     <string name="contact_accept">Senden</string>
     <string name="contact_decline">Ablehnen</string>
     <string name="delete_profile_info">Möchtest du dein Profil wirklich löschen? Alle Informationen werden gelöscht und können nicht wieder hergestellt werden. Bitte bestätige die Anfrage mit deinem Passwort.</string>
     <string name="missing_username">Benutzername darf nicht leer sein.</string>
     <string name="currency">€</string>
-    <string name="whitespace">&#160;</string>
+    <string name="whitespace" translatable="false">&#160;</string>
     <string name="edit_subscriptions">Abonnements</string>
     <string name="unsubscribe">Deabonnieren</string>
     <string name="invalid_location">Ort nicht gefunden.</string>
@@ -83,19 +82,19 @@
     <string name="drawer_menu_subscriptions">Abonnements</string>
     <string name="drawer_menu_settings">Einstellungen</string>
     <string name="drawer_menu_logout">Abmelden</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="european_date_format">dd.MM.uuuu</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="european_date_format" translatable="false">dd.MM.uuuu</string>
     <string name="drawer_menu_main_offers">Hauptansicht</string>
-    <string name="european_time_format">HH:mm</string>
+    <string name="european_time_format" translatable="false">HH:mm</string>
     <string name="european_time_calling">Uhr</string>
-    <string name="decimal_format">%.2f</string>
+    <string name="decimal_format" translatable="false">%.2f</string>
     <string name="profile_edit_success">Profil erfolgreich bearbeitet.</string>
     <string name="invalid_price">Ungültige Preisangabe.</string>
     <string name="invalid_max_participants">Ungültige Anzahl an Teilnehmern.</string>
     <string name="missing_location">Ort darf nicht leer sein.</string>
     <string name="missing_price">Preis darf nicht leer sein.</string>
-    <string name="missing_participants">Teilnehmer darf nicht leer sein.</string>
+    <string name="missing_participants">Teilnehmerfeld darf nicht leer sein.</string>
     <string name="missing_title">Titel darf nicht leer sein.</string>
     <string name="missing_description">Beschreibung darf nicht leer sein.</string>
     <string name="missing_date_time">Zeit darf nicht leer sein.</string>
@@ -113,9 +112,9 @@
     <string name="invalid_distance_interval">Entfernungsintervall ungültig.</string>
     <string name="invalid_participants_interval">Teilnehmerintervall ungültig.</string>
     <string name="invalid_rating_interval">Bewertungsintervall ungültig.</string>
-    <string name="invalid_date_time">Zeitangabe in der Vergangenheit.</string>
+    <string name="invalid_date_time">Zeitangabe liegt in der Vergangenheit.</string>
     <string name="on_back_pressed_message">Zum Verlassen noch einmal drücken</string>
     <string name="profile_user_age">Alter:</string>
-    <string name="request_handler_exception_toast_error_message">Es ist ein Fehler aufgetreten</string>
-    <string name="reported_toast_text">gemeldet</string>
+    <string name="request_handler_exception_toast_error_message">Es ist ein Fehler aufgetreten.</string>
+    <string name="reported_toast_text">gemeldet.</string>
 </resources>
