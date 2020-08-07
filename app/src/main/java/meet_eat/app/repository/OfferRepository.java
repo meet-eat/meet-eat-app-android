@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import meet_eat.data.EndpointPath;
 import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.Page;
 import meet_eat.data.Report;
@@ -28,7 +29,6 @@ import org.springframework.util.LinkedMultiValueMap;
  */
 public class OfferRepository extends EntityRepository<Offer> {
 
-    private static final String BASE_URL = "/offers"; //TODO
     private static final String OWNER_ID_URL = "?owner=";
     private static final String SUBSCRIBER_ID_URL = "?subscriber=";
 
@@ -36,7 +36,7 @@ public class OfferRepository extends EntityRepository<Offer> {
      * Creates an offer repository.
      */
     public OfferRepository() {
-        super(BASE_URL);
+        super(EndpointPath.OFFERS);
     }
 
     /**
@@ -51,7 +51,7 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     public Iterable<Offer> getOffers(Page page, Iterable<OfferPredicate> predicates,
                                      OfferComparator comparator) throws RequestHandlerException {
-        return fetchOffers(BASE_URL, Objects.requireNonNull(page), Objects.requireNonNull(predicates),
+        return fetchOffers(EndpointPath.OFFERS, Objects.requireNonNull(page), Objects.requireNonNull(predicates),
                 Objects.requireNonNull(comparator));
     }
 
@@ -68,7 +68,7 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     public Iterable<Offer> getOffersByCreator(User creator, Page page, Iterable<OfferPredicate> predicates,
                                               OfferComparator comparator) throws RequestHandlerException {
-        return fetchOffers(BASE_URL + OWNER_ID_URL + Objects.requireNonNull(creator).getIdentifier(),
+        return fetchOffers(EndpointPath.OFFERS + OWNER_ID_URL + Objects.requireNonNull(creator).getIdentifier(),
                 Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 
@@ -86,7 +86,7 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     public Iterable<Offer> getOffersBySubscriptions(User subscriber, Page page, Iterable<OfferPredicate> predicates,
                                                     OfferComparator comparator) throws RequestHandlerException {
-        return fetchOffers(BASE_URL + SUBSCRIBER_ID_URL + Objects.requireNonNull(subscriber).getIdentifier(),
+        return fetchOffers(EndpointPath.OFFERS + SUBSCRIBER_ID_URL + Objects.requireNonNull(subscriber).getIdentifier(),
                 Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 

@@ -1,5 +1,6 @@
 package meet_eat.app.repository;
 
+import meet_eat.data.EndpointPath;
 import meet_eat.data.LoginCredential;
 import meet_eat.data.entity.Token;
 import meet_eat.data.entity.user.User;
@@ -17,8 +18,6 @@ import java.util.Objects;
 public class Session {
 
     private static Session session;
-    private static final String URL_LOGIN = "/login"; //TODO
-    private static final String URL_LOGOUT = "/logout"; //TODO
     private static final String ERROR_MESSAGE_NOT_LOGGED_IN = "Cannot logout session with null token.";
 
     private Token token;
@@ -67,7 +66,7 @@ public class Session {
      */
     public void login(LoginCredential loginCredential) throws RequestHandlerException {
         RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(Objects.requireNonNull(loginCredential),
-                HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + URL_LOGIN));
+                HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
     }
 
@@ -81,7 +80,7 @@ public class Session {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
         RequestEntity<Token> requestEntity = new RequestEntity<Token>(token, HttpMethod.DELETE,
-                URI.create(RequestHandler.SERVER_PATH + URL_LOGOUT));
+                URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGOUT));
         new RequestHandler<Token, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
         token = null;
     }
