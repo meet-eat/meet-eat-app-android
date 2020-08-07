@@ -211,11 +211,11 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minParticipants) && !minParticipants.isEmpty()) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants) - 1));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants)));
         }
 
         if (Objects.nonNull(maxParticipants) && !maxParticipants.isEmpty()) {
-            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants) + 1));
+            predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants)));
         }
 
         if (Objects.nonNull(minRating) && Objects.nonNull(maxRating) && !minRating.isEmpty() && !maxRating.isEmpty()) {
@@ -228,11 +228,11 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minRating) && !minRating.isEmpty()) {
-            predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating) - 1));
+            predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating)));
         }
 
         if (Objects.nonNull(maxRating) && !maxRating.isEmpty()) {
-            predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating) + 1));
+            predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating)));
         }
 
         try {
