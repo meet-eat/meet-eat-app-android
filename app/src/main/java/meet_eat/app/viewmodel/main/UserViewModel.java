@@ -17,52 +17,53 @@ public class UserViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
-     * Requests the object of the user currently logged in to the device from the
-     * {@link meet_eat.app.repository.Session Session}.
+     * Requests the currently logged in user from the {@link Session}.
      *
-     * @return The current user.
+     * @return the user that is currently logged in
      */
     public User getCurrentUser() {
         return session.getUser();
     }
 
     /**
-     * Sends a user update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Updates the user in the {@link UserRepository}.
      *
-     * @param editedUser The user that is to be updated.
+     * @param editedUser the user to be updated
      */
     public void edit(User editedUser) throws RequestHandlerException {
         userRepository.updateEntity(editedUser);
     }
 
     /**
-     * Sends a report request to the {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Reports a user in the {@link UserRepository}.
      *
-     * @param user   The user that is to be reported.
-     * @param report The report.
+     * @param toBeReported the user that is to be reported
+     * @param report       the report
      */
-    public void report(User user, Report report) throws RequestHandlerException {
-        userRepository.report(user, report);
+    public void report(User toBeReported, Report report) throws RequestHandlerException {
+        userRepository.report(toBeReported, report);
+    }
+
+    /**
+     * Adds the given {@link User} to the current user's subcriptions, then
+     * updates the current user in the {@link UserRepository}
+     *
+     * @param toBeSubscribed the user to be subscribed to
+     */
+    public void subscribe(User toBeSubscribed) throws RequestHandlerException {
+        User modifiedUser = getCurrentUser();
+        modifiedUser.addSubscription(toBeSubscribed);
+        edit(modifiedUser);
     }
 
     /**
      * Sends an update request to the {@link meet_eat.app.repository.UserRepository UserRepository},
      * containing the modified user object.
      *
-     * @param user The user object with an updated subscriber list.
+     * @param toBeUnsubscribed the user to be unsubscribed from
      */
-    public void subscribe(User user) throws RequestHandlerException {
-        userRepository.updateEntity(user);
-    }
-
-    /**
-     * Sends an update request to the {@link meet_eat.app.repository.UserRepository UserRepository},
-     * containing the modified user object.
-     *
-     * @param user The user object with an updated subscriber list.
-     */
-    public void unsubscribe(User user) throws RequestHandlerException {
-        userRepository.updateEntity(user);
+    public void unsubscribe(User toBeUnsubscribed) throws RequestHandlerException {
+        getCurrentUser().removeSubscriptions(toBeUnsubscribed);
+        userRepository.updateEntity(getCurrentUser());
     }
 }
