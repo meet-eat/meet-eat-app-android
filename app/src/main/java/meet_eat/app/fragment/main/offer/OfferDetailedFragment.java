@@ -118,10 +118,8 @@ public class OfferDetailedFragment extends Fragment {
         try {
 
             if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
-                offerVM.getCurrentUser().removeBookmark(offer);
                 offerVM.removeBookmark(offer);
             } else {
-                offerVM.getCurrentUser().addBookmark(offer);
                 offerVM.addBookmark(offer);
             }
 
