@@ -200,7 +200,8 @@ public class OfferEditFragment extends Fragment {
                     offerVM.add(offer);
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     bundle.putSerializable(OFFER.name(), offer);
-                    navController.navigate(R.id.offerDetailedFragment, bundle);
+                    // quick fix navController.navigate(R.id.offerDetailedFragment, bundle);
+                    navController.navigateUp();
                 } catch (RequestHandlerException e) {
                     Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
                             .show();
