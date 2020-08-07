@@ -115,7 +115,7 @@ public class OfferViewModel extends ViewModel {
     /**
      * Adds an {@link Offer} entity to the {@link OfferRepository}.
      *
-     * @param offer the offer to be added
+     * @param offer the new offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void add(Offer offer) throws RequestHandlerException {

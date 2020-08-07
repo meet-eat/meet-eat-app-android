@@ -2,6 +2,8 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.Set;
+
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
 import meet_eat.app.repository.UserRepository;
@@ -18,55 +20,55 @@ public class SettingsViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
-     * Requests the object of the user currently logged in to the device from the
-     * {@link meet_eat.app.repository.Session Session}.
+     * Requests the currently logged in user from the {@link Session}.
      *
-     * @return The current user.
+     * @return the user that is currently logged in
      */
     public User getCurrentUser() {
         return session.getUser();
     }
 
     /**
-     * Sends a user deletion request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Removes a {@link User} entity from the {@link UserRepository}.
      *
-     * @param user The user to be deleted.
+     * @param user the user to be deleted
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void deleteUser(User user) throws RequestHandlerException {
         userRepository.deleteEntity(user);
     }
 
     /**
-     * Sends a logout request to the {@link meet_eat.app.repository.Session Session}.
+     * Logs out the user via the {@link Session}.
+     *
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void logout() throws RequestHandlerException {
         session.logout();
     }
 
     /**
-     * Sends a setting update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Adds the given {@link NotificationSetting} to the user's settings, then updates the
+     * {@link User} entity in the {@link UserRepository}.
      *
-     * @param notificationSetting The new notification setting
-     * TODO @throws (all viewmodels)
+     * @param notificationSetting the new notification setting
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void updateNotificationSettings(NotificationSetting notificationSetting) throws RequestHandlerException {
-        User currentUser = session.getUser();
-        // TODO remove old notification setting?
+        User currentUser = getCurrentUser();
         currentUser.addSetting(notificationSetting);
         userRepository.updateEntity(currentUser);
     }
 
     /**
-     * Sends a setting update request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * Adds the given {@link DisplaySetting} to the user's settings, then updates the
+     * {@link User} entity in the {@link UserRepository}.
      *
-     * @param displaySetting The new display setting.
+     * @param displaySetting the new display setting
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void updateDisplaySettings(DisplaySetting displaySetting) throws RequestHandlerException {
-        User currentUser = session.getUser();
-        // TODO remove old display setting?
+        User currentUser = getCurrentUser();
         currentUser.addSetting(displaySetting);
         userRepository.updateEntity(currentUser);
     }

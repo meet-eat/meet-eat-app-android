@@ -16,32 +16,31 @@ public class RatingViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
-     * Requests the object of the user currently logged in to the device from the
-     * {@link meet_eat.app.repository.Session Session}.
+     * Requests the currently logged in user from the {@link Session}.
      *
-     * @return The current user.
+     * @return the user that is currently logged in
      */
     public User getCurrentUser() {
         return session.getUser();
     }
 
     /**
-     * Sends a request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository} to add a new rating.
+     * Adds a new {@link Rating} to the current user, then updates the
+     * current user in the {@link UserRepository}.
      *
-     * @param rating The new rating.
+     * @param rating the new rating
      */
     public void send(Rating rating) throws RequestHandlerException {
-        User user = session.getUser();
+        User user = getCurrentUser();
         user.addRating(rating);
         new UserRepository().updateEntity(user);
     }
 
     /**
-     * Sends multiple requests to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository} to add new ratings.
+     * Adds each {@link Rating} to the current user, then updates the
+     * current user in the {@link UserRepository}.
      *
-     * @param ratings The new ratings.
+     * @param ratings the new ratings
      */
     public void send(Rating... ratings) throws RequestHandlerException {
 
