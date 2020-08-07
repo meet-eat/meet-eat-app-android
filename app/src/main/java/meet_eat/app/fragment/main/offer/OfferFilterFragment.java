@@ -30,9 +30,10 @@ import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferFilterBinding;
 import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.fragment.ListType;
-import meet_eat.app.fragment.SortCriterion;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
+import meet_eat.data.comparator.OfferComparableField;
+import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.location.UnlocalizableException;
 import meet_eat.data.predicate.OfferPredicate;
 import meet_eat.data.predicate.chrono.ChronoLocalDateTimeOperation;
@@ -235,7 +236,9 @@ public class OfferFilterFragment extends Fragment {
         try {
             offerVM.updatePredicates(predicates);
             Bundle bundle = new Bundle();
-            bundle.putSerializable(SORT_CRITERION.name(), SortCriterion.values()[spinner.getSelectedItemPosition()]);
+            bundle.putSerializable(SORT_CRITERION.name(),
+                    new OfferComparator(OfferComparableField.values()[spinner.getSelectedItemPosition()],
+                            offerVM.getCurrentUser().getLocalizable()));
             bundle.putSerializable(LIST_TYPE.name(), originListType);
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException e) {
