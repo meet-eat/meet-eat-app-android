@@ -103,6 +103,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 binding.ibtOfferCardBookmark.setVisibility(GONE);
             }
 
+            setColorOfOfferCard(offer);
+
+        }
+
+        private void setColorOfOfferCard(Offer offer) {
+
+            if (offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+                binding.ivOfferCardPicture
+                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.ownOffer),
+                                PorterDuff.Mode.SRC_IN);
+            } else if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
+                binding.ivOfferCardPicture.setColorFilter(
+                        ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
+                        PorterDuff.Mode.SRC_IN);
+            }
+
         }
 
         private void changeBookmark(Offer offer) {
