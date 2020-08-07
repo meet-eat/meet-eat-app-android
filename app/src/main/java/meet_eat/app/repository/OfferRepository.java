@@ -71,7 +71,8 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     public Iterable<Offer> getOffersByCreator(User creator, Page page, Iterable<OfferPredicate> predicates,
                                               OfferComparator comparator) throws RequestHandlerException {
-        return fetchOffers(getEntityPath() + OWNER_ID_URL + Objects.requireNonNull(creator).getIdentifier(),
+        Objects.requireNonNull(creator);
+        return fetchOffers(getEntityPath() + OWNER_ID_URL + Objects.requireNonNull(creator.getIdentifier()),
                 Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 
@@ -90,7 +91,8 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     public Iterable<Offer> getOffersBySubscriptions(User subscriber, Page page, Iterable<OfferPredicate> predicates,
                                                     OfferComparator comparator) throws RequestHandlerException {
-        return fetchOffers(getEntityPath() + SUBSCRIBER_ID_URL + Objects.requireNonNull(subscriber).getIdentifier(),
+        Objects.requireNonNull(subscriber);
+        return fetchOffers(getEntityPath() + SUBSCRIBER_ID_URL + Objects.requireNonNull(subscriber.getIdentifier()),
                 Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 
