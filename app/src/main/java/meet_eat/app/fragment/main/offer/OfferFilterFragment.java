@@ -147,7 +147,7 @@ public class OfferFilterFragment extends Fragment {
 
         // TODO possible parse errors for all following
 
-        if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice)) {
+        if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice) && !minPrice.isEmpty() && !maxPrice.isEmpty()) {
 
             if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
                 Toast.makeText(getActivity(), R.string.invalid_price_interval, Toast.LENGTH_SHORT).show();
@@ -156,15 +156,16 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(minPrice)) {
+        if (Objects.nonNull(minPrice) && !minPrice.isEmpty()) {
             predicates.add(new PricePredicate(DoubleOperation.GREATER, Double.parseDouble(minPrice)));
         }
 
-        if (Objects.nonNull(maxPrice)) {
+        if (Objects.nonNull(maxPrice) && !maxPrice.isEmpty()) {
             predicates.add(new PricePredicate(DoubleOperation.LESS, Double.parseDouble(maxPrice)));
         }
 
-        if (Objects.nonNull(minDistance) && Objects.nonNull(maxDistance)) {
+        if (Objects.nonNull(minDistance) && Objects.nonNull(maxDistance) && !minDistance.isEmpty() &&
+                !maxDistance.isEmpty()) {
 
             if (Double.parseDouble(minDistance) > Double.parseDouble(maxDistance)) {
                 Toast.makeText(getActivity(), R.string.invalid_distance_interval, Toast.LENGTH_SHORT).show();
@@ -173,7 +174,7 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(minDistance)) {
+        if (Objects.nonNull(minDistance) && !minDistance.isEmpty()) {
 
             try {
                 predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance),
@@ -186,7 +187,7 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(maxDistance)) {
+        if (Objects.nonNull(maxDistance) && !maxDistance.isEmpty()) {
 
             try {
                 predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance),
@@ -199,7 +200,8 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(minParticipants) && Objects.nonNull(maxParticipants)) {
+        if (Objects.nonNull(minParticipants) && Objects.nonNull(maxParticipants) && !minParticipants.isEmpty() &&
+                !maxParticipants.isEmpty()) {
 
             if (Integer.parseInt(minParticipants) > Integer.parseInt(maxParticipants)) {
                 Toast.makeText(getActivity(), R.string.invalid_participants_interval, Toast.LENGTH_SHORT).show();
@@ -208,15 +210,15 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(minParticipants)) {
+        if (Objects.nonNull(minParticipants) && !minParticipants.isEmpty()) {
             predicates.add(new ParticipantsPredicate(DoubleOperation.GREATER, Double.parseDouble(minParticipants)));
         }
 
-        if (Objects.nonNull(maxParticipants)) {
+        if (Objects.nonNull(maxParticipants) && !maxParticipants.isEmpty()) {
             predicates.add(new ParticipantsPredicate(DoubleOperation.LESS, Double.parseDouble(maxParticipants)));
         }
 
-        if (Objects.nonNull(minRating) && Objects.nonNull(maxRating)) {
+        if (Objects.nonNull(minRating) && Objects.nonNull(maxRating) && !minRating.isEmpty() && !maxRating.isEmpty()) {
 
             if (Double.parseDouble(minRating) > Double.parseDouble(maxRating)) {
                 Toast.makeText(getActivity(), R.string.invalid_rating_interval, Toast.LENGTH_SHORT).show();
@@ -225,11 +227,11 @@ public class OfferFilterFragment extends Fragment {
 
         }
 
-        if (Objects.nonNull(minRating)) {
+        if (Objects.nonNull(minRating) && !minRating.isEmpty()) {
             predicates.add(new RatingPredicate(DoubleOperation.GREATER, Double.parseDouble(minRating)));
         }
 
-        if (Objects.nonNull(maxRating)) {
+        if (Objects.nonNull(maxRating) && !maxRating.isEmpty()) {
             predicates.add(new RatingPredicate(DoubleOperation.LESS, Double.parseDouble(maxRating)));
         }
 
