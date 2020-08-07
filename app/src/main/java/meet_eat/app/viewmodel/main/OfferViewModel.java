@@ -58,14 +58,8 @@ public class OfferViewModel extends ViewModel {
      * @return the user's bookmarked offers
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
-        ArrayList<Offer> offers = new ArrayList<>();
-        for (Offer bookmarkedOffer : getCurrentUser().getBookmarks()) {
-            offerRepository.getOffersByCreator(bookmarkedOffer.getCreator(), PAGE, new ArrayList<>(),
-                    getCurrentUser().getOfferComparator()).forEach(offers::add);
-
-        }
-        return offers;
+    public Iterable<Offer> fetchBookmarkedOffers() {
+        return getCurrentUser().getBookmarks();
     }
 
     /**
