@@ -39,7 +39,7 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     public void sendRatings() {
         Rating[] ratings = new Rating[currentGuests.size()];
 
-        // TODO create ratings, then: ratingVM.send(ratings);
+        // create ratings, then: ratingVM.send(ratings);
     }
 
 
@@ -82,8 +82,8 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
         }
 
         private Rating createRating(int ratingAmount) {
-            // TODO return new Rating(RatingBasis.GUEST, RatingValue.getRatingValueByInt(ratingAmount);
-            return null;
+            return new Rating(RatingBasis.GUEST, RatingValue.getRatingValueByInteger(ratingAmount),
+                    ratingVM.getCurrentUser());
         }
     }
 }

@@ -145,8 +145,6 @@ public class OfferFilterFragment extends Fragment {
             predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.BEFORE, maxDateTime));
         }
 
-        // TODO possible parse errors for all following
-
         if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice) && !minPrice.isEmpty() && !maxPrice.isEmpty()) {
 
             if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {

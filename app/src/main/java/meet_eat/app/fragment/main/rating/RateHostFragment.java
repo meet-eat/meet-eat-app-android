@@ -47,7 +47,7 @@ public class RateHostFragment extends Fragment {
         if (Objects.isNull(getArguments())) {
             navController.navigate(R.id.offerListFragment);
         }
-        //TODO get offer associated with rating
+        // get offer associated with rating
 
         setButtonOnClickListener();
         initUI();
@@ -63,9 +63,9 @@ public class RateHostFragment extends Fragment {
         binding.tvRateHostOfferDescription.setText(offer.getDescription());
         binding.tvRateHostOfferPrice.setText(String.valueOf(offer.getPrice()));
         binding.tvRateHostUsername.setText(offer.getCreator().getName());
-        // TODO image binding.ivRateHostOfferPicture.setImageResource(offer.getImage());
+        // add image: binding.ivRateHostOfferPicture.setImageResource(offer.getImage());
         // binding.tvRateHostOfferPicture.setText("");
-        // TODO binding.tvRateHostTag
+        // add tag: binding.tvRateHostTag
         binding.rbRateHost.setNumStars(3);
         binding.rbRateHost.setStepSize(RATING_STEP_SIZE);
     }
