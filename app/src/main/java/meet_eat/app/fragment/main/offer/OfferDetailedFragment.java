@@ -16,8 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.common.collect.Streams;
+
 import java.io.IOException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
@@ -25,6 +28,7 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.user.User;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.UnlocalizableException;
 
@@ -84,16 +88,15 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void participateOffer() {
-
         try {
+            Stream<User> participants = offer.getParticipants().stream();
+            String userIdentifier = offerVM.getCurrentUser().getIdentifier();
 
-            if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
-                offer.removeParticipant(offerVM.getCurrentUser());
-                offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
+            if (participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier))) {
+                offer = offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
                 binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
             } else {
-                offer.addParticipant(offerVM.getCurrentUser());
-                offerVM.participate(offer);
+                offer = offerVM.participate(offer);
                 binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             }
 
@@ -103,7 +106,6 @@ public class OfferDetailedFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + e.getMessage());
         }
-
     }
 
     private void navigateToProfile() {

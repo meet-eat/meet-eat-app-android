@@ -134,10 +134,10 @@ public class OfferViewModel extends ViewModel {
      * @param offer the offer wherein the current user is to be added
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void participate(Offer offer) throws RequestHandlerException {
+    // TODO Return ins doc
+    public Offer participate(Offer offer) throws RequestHandlerException {
         removeBookmark(offer);
-        offer.addParticipant(getCurrentUser());
-        edit(offer);
+        return offerRepository.addParticipant(offer, getCurrentUser());
     }
 
     /**
@@ -148,9 +148,9 @@ public class OfferViewModel extends ViewModel {
      * @param offer       the offer whereof the participant is to be removed
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
-        offer.removeParticipant(participant);
-        offerRepository.updateEntity(offer);
+    // TODO Return ins doc
+    public Offer cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
+        return offerRepository.removeParticipant(offer, participant);
     }
 
     /**
