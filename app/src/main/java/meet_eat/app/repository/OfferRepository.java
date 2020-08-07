@@ -1,10 +1,10 @@
 package meet_eat.app.repository;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Iterables;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 
 import meet_eat.data.ObjectJsonParser;
@@ -30,6 +30,7 @@ public class OfferRepository extends EntityRepository<Offer> {
 
     private static final String BASE_URL = "/offers"; //TODO
     private static final String OWNER_ID_URL = "?owner=";
+    private static final String SUBSCRIBER_ID_URL = "?subscriber=";
 
     /**
      * Creates an offer repository.
@@ -38,48 +39,61 @@ public class OfferRepository extends EntityRepository<Offer> {
         super(BASE_URL);
     }
 
+    /**
+     * Returns offers page-based from the repository. The returned offers are filtered according to
+     * given given predicates and sorted using the comparator.
+     *
+     * @param page       the page object used for page-based addressing
+     * @param predicates the predicates used to filter the offers
+     * @param comparator the comparator used to sort the offers
+     * @return the offers matching the given specifications
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Iterable<Offer> getOffers(Page page, Iterable<OfferPredicate> predicates,
                                      OfferComparator comparator) throws RequestHandlerException {
-        OfferPredicate timePredicate = new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER, LocalDateTime.now());
-        List<OfferPredicate> predicateList = Lists.newArrayList(predicates);
-        predicateList.add(timePredicate);
-        predicates = predicateList;
-
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
-        headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
-        headers.add(RequestHeaderField.COMPARATORS, new ObjectJsonParser().parseObjectToJsonString(comparator));
-        headers.add(RequestHeaderField.PAGE, new ObjectJsonParser().parseObjectToJsonString(page));
-
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + BASE_URL));
-        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
+        return fetchOffers(BASE_URL, Objects.requireNonNull(page), Objects.requireNonNull(predicates),
+                Objects.requireNonNull(comparator));
     }
 
     /**
-     * Returns the offers from the repository that were created by the corresponding creator.
+     * Returns the offers created by the corresponding creator from the repository. Here, offers
+     * are returned page-based, filtered according to given predicates and sorted using the comparator.
      *
-     * @param creator the corresponding creator whose offers are to be returned
-     * @return the offers from the repository that were created by the corresponding creator
+     * @param creator    the corresponding creator whose offers are to be returned from the repository
+     * @param page       the page object used for page-based addressing
+     * @param predicates the predicates used to filter the offers
+     * @param comparator the comparator used to sort the offers
+     * @return the offers matching the given specifications
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Offer> getOffersByCreator(User creator, Page page, Iterable<OfferPredicate> predicates,
                                               OfferComparator comparator) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(creator.getIdentifier())));
-        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
+        return fetchOffers(BASE_URL + OWNER_ID_URL + Objects.requireNonNull(creator).getIdentifier(),
+                Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 
-    public Iterable<Offer> getOffersBySubscriptions(User user, Page page, Iterable<OfferPredicate> predicates,
-                                                OfferComparator comparator) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + BASE_URL + OWNER_ID_URL + Objects.requireNonNull(user.getIdentifier())));
-        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
+    /**
+     * Returns the offers created by the users who are subscribed by the subscriber. Here, offers
+     * are returned page-based, filtered according to given predicates and sorted using the comparator.
+     *
+     * @param subscriber the subscriber from whom the offers which are created by the users he subscribed
+     *                   are to be returned from the repository
+     * @param page       the page object used for page-based addressing
+     * @param predicates the predicates used to filter the offers
+     * @param comparator the comparator used to sort the offers
+     * @return the offers matching the given specifications
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Iterable<Offer> getOffersBySubscriptions(User subscriber, Page page, Iterable<OfferPredicate> predicates,
+                                                    OfferComparator comparator) throws RequestHandlerException {
+        return fetchOffers(BASE_URL + SUBSCRIBER_ID_URL + Objects.requireNonNull(subscriber).getIdentifier(),
+                Objects.requireNonNull(page), Objects.requireNonNull(predicates), Objects.requireNonNull(comparator));
     }
 
     /**
      * Reports an offer in the repository by submitting a report.
      *
-     * @param offer the offer to be reported
+     * @param offer  the offer to be reported
      * @param report the report to be submitted
      * @return the offer that was reported within the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
@@ -88,5 +102,36 @@ public class OfferRepository extends EntityRepository<Offer> {
         Objects.requireNonNull(offer);
         offer.addReport(Objects.requireNonNull(report));
         return updateEntity(offer);
+    }
+
+    /**
+     * Returns the offers provided by the server at the endpoint with the given uri path segment. Here, offers
+     * are returned page-based, filtered according to given predicates and sorted using the comparator.
+     *
+     * @param uriPathSegment the uri path segment of the server endpoint from which the offers are to be requested
+     * @param page           the page object used for page-based addressing
+     * @param predicates     the predicates used to filter the offers
+     * @param comparator     the comparator used to sort the offers
+     * @return the offers matching the given specifications
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    private Iterable<Offer> fetchOffers(String uriPathSegment, Page page, Iterable<OfferPredicate> predicates,
+                                        OfferComparator comparator) throws RequestHandlerException {
+        LocalDateTimePredicate timePredicate = new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER,
+                LocalDateTime.now());
+        predicates = Iterables.concat(Objects.requireNonNull(predicates), Collections.singletonList(timePredicate));
+
+        //create headers
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        headers.add(RequestHeaderField.PREDICATES, new ObjectJsonParser().parseObjectToJsonString(predicates));
+        headers.add(RequestHeaderField.COMPARATORS,
+                new ObjectJsonParser().parseObjectToJsonString(Objects.requireNonNull(comparator)));
+        headers.add(RequestHeaderField.PAGE,
+                new ObjectJsonParser().parseObjectToJsonString(Objects.requireNonNull(page)));
+
+        //server request
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + Objects.requireNonNull(uriPathSegment)));
+        return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
 }
