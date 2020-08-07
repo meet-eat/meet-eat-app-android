@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.Objects;
 
 /**
- * Represents and manages the singleton instance of a user's session in the application.
+ * Represents and manages the singleton instance of a {@link User user}'s {@link Session session} in the application.
  */
 public class Session {
 
@@ -23,13 +23,13 @@ public class Session {
     private Token token;
 
     /**
-     * Creates a session.
+     * Creates a {@link Session session}.
      */
     private Session() {
     }
 
     /**
-     * Returns the singleton instance of the session.
+     * Returns the singleton instance of the {@link Session session}.
      *
      * @return the singleton instance of the session
      */
@@ -41,7 +41,7 @@ public class Session {
     }
 
     /**
-     * Returns the user associated with the session.
+     * Returns the {@link User user} associated with the {@link Session session}.
      *
      * @return the user associated with the session
      */
@@ -50,7 +50,7 @@ public class Session {
     }
 
     /**
-     * Returns the token associated with the session.
+     * Returns the {@link Token token} associated with the {@link Session session}.
      *
      * @return the token associated with the session
      */
@@ -59,7 +59,7 @@ public class Session {
     }
 
     /**
-     * Logs in the user with the corresponding login credentials.
+     * Logs in the {@link User user} with the corresponding {@link LoginCredential login credentials}.
      *
      * @param loginCredential the login credentials of the user to be logged in
      * @throws RequestHandlerException if an error occurs when requesting the repository
@@ -71,7 +71,7 @@ public class Session {
     }
 
     /**
-     * Logs out the user associated with the session.
+     * Logs out the {@link User user} associated with the {@link Session session}.
      *
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */

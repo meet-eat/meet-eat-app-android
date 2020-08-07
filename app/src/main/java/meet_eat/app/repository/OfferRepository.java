@@ -25,7 +25,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.util.LinkedMultiValueMap;
 
 /**
- * Represents the administrative unit that controls access and manipulation of offers within a repository.
+ * Represents the administrative unit that controls access and manipulation of {@link Offer offers} within a repository.
  */
 public class OfferRepository extends EntityRepository<Offer> {
 
@@ -33,15 +33,16 @@ public class OfferRepository extends EntityRepository<Offer> {
     private static final String SUBSCRIBER_ID_URL = "?subscriber=";
 
     /**
-     * Creates an offer repository.
+     * Creates an {@link Offer offer} repository.
      */
     public OfferRepository() {
         super(EndpointPath.OFFERS);
     }
 
     /**
-     * Returns offers page-based from the repository. The returned offers are filtered according to
-     * given given predicates and sorted using the comparator.
+     * Returns {@link Offer offers} {@link Page page}-based from the repository. The returned offers are filtered
+     * according to given given {@link OfferPredicate predicates} and sorted using the {@link OfferComparator
+     * comparator}.
      *
      * @param page       the page object used for page-based addressing
      * @param predicates the predicates used to filter the offers
@@ -56,8 +57,9 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * Returns the offers created by the corresponding creator from the repository. Here, offers
-     * are returned page-based, filtered according to given predicates and sorted using the comparator.
+     * Returns the {@link Offer offers} created by the corresponding {@link User creator} from the repository.
+     * Here, offers are returned {@link Page page}-based, filtered according to given {@link OfferPredicate predicates}
+     * and sorted using the {@link OfferComparator comparator}.
      *
      * @param creator    the corresponding creator whose offers are to be returned from the repository
      * @param page       the page object used for page-based addressing
@@ -73,10 +75,11 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * Returns the offers created by the users who are subscribed by the subscriber. Here, offers
-     * are returned page-based, filtered according to given predicates and sorted using the comparator.
+     * Returns the {@link Offer offers} created by the {@link User subscribers} of the {@link User subscriber}.
+     * Here, offers are returned {@link Page page}-based, filtered according to given {@link OfferPredicate predicates}
+     * and sorted using the {@link OfferComparator comparator}.
      *
-     * @param subscriber the subscriber from whom the offers which are created by the users he subscribed
+     * @param subscriber the subscriber from whom the offers created by the subscribers he subscribed
      *                   are to be returned from the repository
      * @param page       the page object used for page-based addressing
      * @param predicates the predicates used to filter the offers
@@ -91,7 +94,7 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * Reports an offer in the repository by submitting a report.
+     * Reports an {@link Offer offers} in the repository by submitting a {@link Report report}.
      *
      * @param offer  the offer to be reported
      * @param report the report to be submitted
@@ -105,8 +108,9 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * Returns the offers provided by the server at the endpoint with the given uri path segment. Here, offers
-     * are returned page-based, filtered according to given predicates and sorted using the comparator.
+     * Returns the {@link Offer offers} provided by the server at the {@link EndpointPath endpoint} with the given uri
+     * path segment. Here, offers are returned {@link Page page}-based, filtered according to given
+     * {@link OfferPredicate predicates} and sorted using the {@link OfferComparator comparator}.
      *
      * @param uriPathSegment the uri path segment of the server endpoint from which the offers are to be requested
      * @param page           the page object used for page-based addressing

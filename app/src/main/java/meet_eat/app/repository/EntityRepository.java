@@ -27,14 +27,14 @@ public abstract class EntityRepository<T extends Entity> {
     /**
      * Creates an {@link Entity entity} repository.
      *
-     * @param entityPath the path of an entity specific endpoint on the server
+     * @param entityPath the path of an entity specific {@link meet_eat.data.EndpointPath endpoint} on the server
      */
     protected EntityRepository(String entityPath) {
         this.entityPath = entityPath;
     }
 
     /**
-     * Returns the path of an entity specific endpoint on the server.
+     * Returns the path of an {@link Entity entity} specific {@link meet_eat.data.EndpointPath endpoint} on the server.
      *
      * @return the path of an entity specific endpoint on the server
      */
@@ -43,7 +43,7 @@ public abstract class EntityRepository<T extends Entity> {
     }
 
     /**
-     * Creates a persistent entity by adding it to the repository.
+     * Creates a persistent {@link Entity entity} by adding it to the repository.
      *
      * @param entity the entity to be added to the repository
      * @return the entity added to the repository
@@ -56,7 +56,7 @@ public abstract class EntityRepository<T extends Entity> {
     }
 
     /**
-     * Updates an entity within the repository.
+     * Updates an {@link Entity entity} within the repository.
      *
      * @param entity the entity that should be updated within the repository
      * @return the entity that was updated within the repository
@@ -69,7 +69,7 @@ public abstract class EntityRepository<T extends Entity> {
     }
 
     /**
-     * Deletes an entity from the repository.
+     * Deletes an {@link Entity entity} from the repository.
      *
      * @param entity the entity to be deleted from the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
@@ -81,10 +81,10 @@ public abstract class EntityRepository<T extends Entity> {
     }
 
     /**
-     * Returns the user with the corresponding identifier from the repository.
+     * Returns the {@link Entity entity} with the corresponding identifier from the repository.
      *
-     * @param identifier the identifier of the user to be returned from the repository
-     * @return the user with the corresponding identifier from the repository
+     * @param identifier the identifier of the entity to be returned from the repository
+     * @return the entity with the corresponding identifier from the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T getEntityById(String identifier) throws RequestHandlerException {
@@ -94,7 +94,8 @@ public abstract class EntityRepository<T extends Entity> {
     }
 
     /**
-     * Returns a map representing headers initialized with token of the logged in user.
+     * Returns a {@link LinkedMultiValueMap map} representing headers initialized with {@link Token token} of the
+     * logged in user.
      *
      * @return the map representing headers initialized with token of the logged in user
      */

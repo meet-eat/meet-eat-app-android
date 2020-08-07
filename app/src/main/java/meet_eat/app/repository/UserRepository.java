@@ -16,7 +16,7 @@ import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
 
 /**
- * Represents the administrative unit that controls access and manipulation of users within a repository.
+ * Represents the administrative unit that controls access and manipulation of {@link User users} within a repository.
  */
 public class UserRepository extends EntityRepository<User> {
 
@@ -24,7 +24,7 @@ public class UserRepository extends EntityRepository<User> {
     private static final String ERROR_MESSAGE_NOT_IMPLEMENTED = "Not implemented yet.";
 
     /**
-     * Creates a user repository.
+     * Creates a {@link User user} repository.
      */
     public UserRepository() {
         super(EndpointPath.USERS);
@@ -39,7 +39,8 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Resets the user's password with the corresponding e-mail address.
+     * Resets the {@link User user}'s {@link meet_eat.data.entity.user.Password password} with the corresponding
+     * {@link Email e-mail address}.
      *
      * @param email the e-mail address of the user whose password is to be reset
      * @throws RequestHandlerException if an error occurs when requesting the repository
@@ -51,7 +52,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Executes a contact request.
+     * Executes a {@link ContactRequest contact request}.
      *
      * @param contactRequest the contact request to be executed
      * @throws UnsupportedOperationException because the method is not implemented yet
@@ -61,7 +62,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Transmits contact information to the contact request creator.
+     * Transmits {@link ContactData contact information} to the contact request {@link User creator}.
      *
      * @param data the contact information to be transmitted
      * @throws UnsupportedOperationException because the method is not implemented yet
@@ -71,7 +72,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Reports a user in the repository by submitting a report.
+     * Reports a {@link User user} in the repository by submitting a {@link Report report}.
      *
      * @param user   the user to be reported
      * @param report the report to be submitted
