@@ -11,7 +11,9 @@ import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 
 /**
- * Manages login-related information.
+ * Manages information on the login page.
+ *
+ * @see meet_eat.app.fragment.login.LoginFragment
  */
 public class LoginViewModel extends ViewModel {
 
@@ -19,12 +21,13 @@ public class LoginViewModel extends ViewModel {
     private final Session session = Session.getInstance();
 
     /**
-     * Check the parameters for semantic correctness
+     * Creates an {@link Email} and a {@link Password} object
      * and sends a login request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}.
+     * {@link UserRepository}.
      *
-     * @param emailString    The email address of the user.
-     * @param passwordString The password of the user.
+     * @param emailString    the email address of the user
+     * @param passwordString the password of the user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void login(String emailString, String passwordString) throws RequestHandlerException {
         Email email = new Email(emailString);
@@ -34,11 +37,10 @@ public class LoginViewModel extends ViewModel {
     }
 
     /**
-     * Check the parameters for semantic correctness
-     * and sends a password reset request to the
-     * {@link meet_eat.app.repository.UserRepository UserRepository}..
+     * Creates an {@link Email} object and sends a
+     * password reset request to the {@link UserRepository}.
      *
-     * @param emailString The email address of the user.
+     * @param emailString the users email address
      */
     public void resetPassword(String emailString) throws RequestHandlerException {
         Email email = new Email(emailString);
