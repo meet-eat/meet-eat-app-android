@@ -24,7 +24,7 @@ public abstract class EntityRepository<T extends Entity> {
     private final String entityPath;
 
     /**
-     * Creates an entity repository.
+     * Creates an {@link Entity entity} repository.
      *
      * @param entityPath the path of an entity specific endpoint on the server
      */
