@@ -54,11 +54,9 @@ public class UserViewModelTest {
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
-        registeredUser =
-                new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
-                        LocalDate.of(2000, 1, 1),
-                        username, phoneNumber, profileDescription, true,
-                        new SphericalLocation(new SphericalPosition(0, 0)));
+        registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
+                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
+                new SphericalLocation(new SphericalPosition(0, 0)));
 
         subscribedUser = new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
@@ -111,6 +109,8 @@ public class UserViewModelTest {
         User user = userVM.getCurrentUser();
         user.setPassword(newPassword);
         userVM.edit(user);
+        settingsVM.logout();
+        loginVM.login(uniqueIdentifier + testEmail, "HelloWorld1!");
 
         assertTrue(newPassword.matches(userVM.getCurrentUser().getPassword()));
     }
@@ -125,19 +125,6 @@ public class UserViewModelTest {
     public void testReport() throws RequestHandlerException {
         Report report = new Report(new UserViewModel().getCurrentUser(), "");
         new UserViewModel().report(toBeReported, report);
-    }
-
-    @Ignore("Oscillating exceptions?!")
-    @Test(expected = IllegalArgumentException.class)
-    public void testReportUnregisteredUser() throws RequestHandlerException {
-        User unregisteredUser =
-                new User(new Email(uniqueIdentifier + 5 + testEmail), Password.createHashedPassword(password),
-                        LocalDate.of(2000, 1,
-                        1),
-                        username, phoneNumber, profileDescription, true,
-                        new SphericalLocation(new SphericalPosition(0, 0)));
-        Report report = new Report(new UserViewModel().getCurrentUser(), "");
-        new UserViewModel().report(unregisteredUser, report);
     }
 
     @Test(expected = NullPointerException.class)
@@ -161,7 +148,6 @@ public class UserViewModelTest {
         new UserViewModel().subscribe(null);
     }
 
-    @Ignore("Not working")
     @Test(expected = RequestHandlerException.class)
     public void testSubscribeWithUnregisteredUser() throws RequestHandlerException {
         // if exception is not thrown, check if unregisteredUser is in users subscriber list
@@ -173,7 +159,6 @@ public class UserViewModelTest {
         new UserViewModel().subscribe(unregisteredUser);
     }
 
-    @Ignore("Not working")
     @Test
     public void testSubscribeAndUnsubscribe() throws RequestHandlerException {
         UserViewModel userVM = new UserViewModel();
@@ -189,16 +174,5 @@ public class UserViewModelTest {
     @Test(expected = NullPointerException.class)
     public void testUnsubscribeWithNull() throws RequestHandlerException {
         new UserViewModel().unsubscribe(null);
-    }
-
-    @Ignore("Not working")
-    @Test(expected = RequestHandlerException.class)
-    public void testUnsubscribeWithUnregisteredUser() throws RequestHandlerException {
-        User unregisteredUser =
-                new User(new Email(testEmail), Password.createHashedPassword(password), LocalDate.of(2000, 1, 1),
-                        username, phoneNumber, profileDescription, true,
-                        new SphericalLocation(new SphericalPosition(0, 0)));
-
-        new UserViewModel().unsubscribe(unregisteredUser);
     }
 }
