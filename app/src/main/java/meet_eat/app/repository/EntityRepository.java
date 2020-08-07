@@ -3,6 +3,7 @@ package meet_eat.app.repository;
 import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.RequestHeaderField;
 import meet_eat.data.entity.Token;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -29,7 +30,7 @@ public abstract class EntityRepository<T extends Entity> {
      * @param entityPath the path of an entity specific endpoint on the server
      */
     protected EntityRepository(String entityPath) {
-         this.entityPath = entityPath;
+        this.entityPath = entityPath;
     }
 
     /**

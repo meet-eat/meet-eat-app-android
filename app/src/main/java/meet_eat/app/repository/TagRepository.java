@@ -1,6 +1,8 @@
 package meet_eat.app.repository;
 
+import meet_eat.data.EndpointPath;
 import meet_eat.data.entity.Tag;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -12,13 +14,11 @@ import java.net.URI;
  */
 public class TagRepository extends EntityRepository<Tag> {
 
-    private static final String BASE_URL = "/tags"; //TODO
-
     /**
-     * Creates an tag repository.
+     * Creates a tag repository.
      */
     public TagRepository() {
-        super(BASE_URL);
+        super(EndpointPath.TAGS);
     }
 
     /**
@@ -29,7 +29,7 @@ public class TagRepository extends EntityRepository<Tag> {
      */
     public Iterable<Tag> getTags() throws RequestHandlerException {
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + BASE_URL));
+                URI.create(RequestHandler.SERVER_PATH + EndpointPath.TAGS));
         return new RequestHandler<Void, Tag>().handleIterable(requestEntity, HttpStatus.OK);
     }
 }
