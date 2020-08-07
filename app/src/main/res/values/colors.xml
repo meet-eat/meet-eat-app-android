@@ -5,6 +5,7 @@
     <color name="colorAccent">#FFCF30</color>
 
     <color name="bgEditText">#0C0C0C</color>
+    <color name="bgTextView">#33000000</color>
     <color name="textHint">#40FFFFFF</color>
     <color name="bgFragment">#303030</color>
     <color name="bgButton">#FFCF30</color>
