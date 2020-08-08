@@ -16,7 +16,7 @@ import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.predicate.OfferPredicate;
-import meet_eat.data.predicate.chrono.ChronoLocalDateTimeOperation;
+import meet_eat.data.predicate.chrono.LocalDateTimeOperation;
 import meet_eat.data.predicate.chrono.LocalDateTimePredicate;
 
 import org.springframework.http.HttpMethod;
@@ -166,7 +166,7 @@ public class OfferRepository extends EntityRepository<Offer> {
      */
     private Iterable<Offer> fetchOffers(String uriPathSegment, Page page, Iterable<OfferPredicate> predicates,
                                         OfferComparator comparator) throws RequestHandlerException {
-        LocalDateTimePredicate timePredicate = new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER,
+        LocalDateTimePredicate timePredicate = new LocalDateTimePredicate(LocalDateTimeOperation.AFTER,
                 LocalDateTime.now());
         List<OfferPredicate> predicateList = Lists.newLinkedList(Objects.requireNonNull(predicates));
         predicateList.add(timePredicate);
