@@ -161,7 +161,7 @@ public class UserViewModelTest {
         userVM.subscribe(null);
     }
 
-    @Test(expected = RequestHandlerException.class)
+    @Test(expected = NullPointerException.class)
     public void testUnsubscribeWithNull() throws RequestHandlerException {
         userVM.unsubscribe(null);
     }
