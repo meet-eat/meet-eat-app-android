@@ -108,7 +108,7 @@ public class UserRepository extends EntityRepository<User> {
         // Handle request
         LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<User> requestEntity = new RequestEntity<User>(
-                subscribedUser,
+                Objects.requireNonNull(subscribedUser),
                 headers,
                 HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
