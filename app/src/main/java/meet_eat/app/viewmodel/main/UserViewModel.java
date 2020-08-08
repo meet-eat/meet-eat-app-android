@@ -2,6 +2,8 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.stream.Stream;
+
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
 import meet_eat.app.repository.UserRepository;
@@ -51,9 +53,8 @@ public class UserViewModel extends ViewModel {
      * @param toBeSubscribed the user to be subscribed to
      */
     public void subscribe(User toBeSubscribed) throws RequestHandlerException {
-        User modifiedUser = getCurrentUser();
-        modifiedUser.addSubscription(toBeSubscribed);
-        edit(modifiedUser);
+        getCurrentUser().addSubscription(toBeSubscribed);
+        edit(getCurrentUser());
     }
 
     /**
@@ -63,8 +64,13 @@ public class UserViewModel extends ViewModel {
      * @param toBeUnsubscribed the user to be unsubscribed from
      */
     public void unsubscribe(User toBeUnsubscribed) throws RequestHandlerException {
-        User modifiedUser = getCurrentUser();
-        modifiedUser.addSubscription(toBeUnsubscribed);
-        edit(modifiedUser);
+        getCurrentUser().removeSubscriptions(toBeUnsubscribed);
+        edit(getCurrentUser());
+    }
+
+    public boolean isSubscribed(User user) {
+        Stream<User> subscriptions = getCurrentUser().getSubscriptions().stream();
+        String userIdentifier = user.getIdentifier();
+        return subscriptions.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
     }
 }

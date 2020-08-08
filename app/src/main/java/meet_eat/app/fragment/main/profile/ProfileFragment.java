@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
         } else {
             binding.ibtProfileEdit.setVisibility(GONE);
 
-            if (userVM.getCurrentUser().getSubscriptions().contains(user)) {
+            if (userVM.isSubscribed(user)) {
                 binding.btProfileSubscribe.setText(getResources().getString(R.string.unsubscribe));
             } else {
                 binding.btProfileSubscribe.setText((getResources().getString(R.string.subscribe)));
@@ -104,7 +104,7 @@ public class ProfileFragment extends Fragment {
 
         try {
 
-            if (!userVM.getCurrentUser().getSubscriptions().contains(user)) {
+            if (!userVM.isSubscribed(user)) {
                 userVM.subscribe(user);
             } else {
                 userVM.unsubscribe(user);

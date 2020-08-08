@@ -53,9 +53,8 @@ public class SettingsViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void updateNotificationSettings(NotificationSetting notificationSetting) throws RequestHandlerException {
-        User currentUser = getCurrentUser();
-        currentUser.addSetting(notificationSetting);
-        userRepository.updateEntity(currentUser);
+        getCurrentUser().addSetting(notificationSetting);
+        userRepository.updateEntity(getCurrentUser());
     }
 
     /**
@@ -66,8 +65,7 @@ public class SettingsViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void updateDisplaySettings(DisplaySetting displaySetting) throws RequestHandlerException {
-        User currentUser = getCurrentUser();
-        currentUser.addSetting(displaySetting);
-        userRepository.updateEntity(currentUser);
+        getCurrentUser().addSetting(displaySetting);
+        userRepository.updateEntity(getCurrentUser());
     }
 }

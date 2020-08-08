@@ -16,8 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.common.collect.Streams;
-
 import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -88,11 +86,10 @@ public class OfferDetailedFragment extends Fragment {
     }
 
     private void participateOffer() {
-        try {
-            Stream<User> participants = offer.getParticipants().stream();
-            String userIdentifier = offerVM.getCurrentUser().getIdentifier();
 
-            if (participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier))) {
+        try {
+
+            if (offerVM.isParticipating(offer)) {
                 offer = offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
                 binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
             } else {
@@ -106,6 +103,7 @@ public class OfferDetailedFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + e.getMessage());
         }
+
     }
 
     private void navigateToProfile() {
@@ -122,7 +120,7 @@ public class OfferDetailedFragment extends Fragment {
 
         try {
 
-            if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
+            if (offerVM.isBookmarked(offer)) {
                 offerVM.removeBookmark(offer);
             } else {
                 offerVM.addBookmark(offer);
@@ -180,7 +178,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
         // add tags
 
-        if (offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+        if (offerVM.isCreator(offer)) {
             binding.ibtOfferDetailedReport.setVisibility(GONE);
             binding.btOfferDetailedParticipate.setVisibility(GONE);
             binding.btOfferDetailedContact.setVisibility(GONE);
@@ -190,8 +188,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedParticipants.setVisibility(GONE);
         }
 
-        if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier()) &&
-                !offer.getParticipants().contains(offerVM.getCurrentUser())) {
+        if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
             updateUI();
         } else {
             binding.ibtOfferDetailedBookmark.setVisibility(GONE);
@@ -200,7 +197,7 @@ public class OfferDetailedFragment extends Fragment {
 
     private void updateUI() {
 
-        if (offerVM.getCurrentUser().getBookmarks().contains(offer)) {
+        if (offerVM.isBookmarked(offer)) {
             binding.ibtOfferDetailedBookmark
                     .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
                             PorterDuff.Mode.SRC_IN);
@@ -210,13 +207,14 @@ public class OfferDetailedFragment extends Fragment {
                             PorterDuff.Mode.SRC_IN);
         }
 
-        if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
+        if (offerVM.isParticipating(offer)) {
             binding.btOfferDetailedParticipate.setText(R.string.cancel);
             binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
         } else {
             binding.btOfferDetailedParticipate.setText(R.string.participate);
             binding.tvOfferDetailedParticipating.setVisibility(GONE);
         }
+
         String participantsText = offer.getParticipants().size() + "/" + offer.getMaxParticipants();
         binding.tvOfferDetailedParticipants.setText(participantsText);
     }

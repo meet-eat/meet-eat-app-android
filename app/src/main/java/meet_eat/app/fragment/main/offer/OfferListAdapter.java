@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferCardBinding;
@@ -21,6 +22,7 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.user.User;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
@@ -93,8 +95,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // add offer image
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
-            if (!offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier()) &&
-                    !offer.getParticipants().contains(offerVM.getCurrentUser())) {
+            if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
 
                 if (offerVM.isBookmarked(offer)) {
                     binding.ibtOfferCardBookmark
@@ -112,11 +113,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         private void setColorOfOfferCard(Offer offer) {
 
-            if (offerVM.getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier())) {
+            if (offerVM.isCreator(offer)) {
                 binding.ivOfferCardPicture
                         .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.ownOffer),
                                 PorterDuff.Mode.SRC_IN);
-            } else if (offer.getParticipants().contains(offerVM.getCurrentUser())) {
+            } else if (offerVM.isParticipating(offer)) {
                 binding.ivOfferCardPicture.setColorFilter(
                         ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
                         PorterDuff.Mode.SRC_IN);

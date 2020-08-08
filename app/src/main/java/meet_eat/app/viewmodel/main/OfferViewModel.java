@@ -2,8 +2,9 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import meet_eat.app.repository.OfferRepository;
 import meet_eat.app.repository.RequestHandlerException;
@@ -47,9 +48,8 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Offer> fetchOffersOfSubscriptions() throws RequestHandlerException {
-        User currentUser = getCurrentUser();
-        return offerRepository.getOffersBySubscriptions(currentUser, PAGE, currentUser.getOfferPredicates(),
-                currentUser.getOfferComparator());
+        return offerRepository.getOffersBySubscriptions(getCurrentUser(), PAGE, getCurrentUser().getOfferPredicates(),
+                getCurrentUser().getOfferComparator());
     }
 
     /**
@@ -192,12 +192,12 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void addBookmark(Offer offer) throws RequestHandlerException {
-        User currentUser = getCurrentUser();
 
         if (!isBookmarked(offer)) {
-            currentUser.addBookmark(offer);
-            userRepository.updateEntity(currentUser);
+            getCurrentUser().addBookmark(offer);
+            userRepository.updateEntity(getCurrentUser());
         }
+
     }
 
     /**
@@ -208,12 +208,12 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
-        User currentUser = getCurrentUser();
 
         if (isBookmarked(offer)) {
-            currentUser.removeBookmark(offer);
-            userRepository.updateEntity(currentUser);
+            getCurrentUser().removeBookmark(offer);
+            userRepository.updateEntity(getCurrentUser());
         }
+
     }
 
     /**
@@ -223,7 +223,29 @@ public class OfferViewModel extends ViewModel {
      * @return true if the offer is already bookmarked
      */
     public boolean isBookmarked(Offer offer) {
-        return getCurrentUser().getBookmarks().contains(offer);
+        Stream<Offer> bookmarks = getCurrentUser().getBookmarks().stream();
+        String offerIdentifier = offer.getIdentifier();
+        return bookmarks.anyMatch(x -> x.getIdentifier().equals(offerIdentifier));
+    }
+
+    // TODO hotfix
+    public boolean isParticipating(Offer offer) {
+        Stream<User> participants = offer.getParticipants().stream();
+        String userIdentifier = getCurrentUser().getIdentifier();
+
+        for (User participant : offer.getParticipants()) {
+
+            if (Objects.isNull(participant)) {
+                return false;
+            }
+
+        }
+
+        return participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
+    }
+
+    public boolean isCreator(Offer offer) {
+        return getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier());
     }
 
     /**
