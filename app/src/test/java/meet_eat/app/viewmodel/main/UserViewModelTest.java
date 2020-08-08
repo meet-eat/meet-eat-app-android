@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
@@ -31,13 +32,13 @@ public class UserViewModelTest {
     private static final String username = "Registered User";
     private static final String phoneNumber = "0123456789";
     private static final String profileDescription = "JUnit Test User";
+    private static final String changedPassword = "HelloWorld1!";
 
     private static SettingsViewModel settingsVM;
     private static LoginViewModel loginVM;
     private static UserViewModel userVM;
     private static User registeredUser;
     private static User toBeReported;
-    private static User toBeSubscribed;
     private static String uniqueIdentifier;
 
     @BeforeClass
@@ -52,35 +53,32 @@ public class UserViewModelTest {
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
-        toBeSubscribed = new User(new Email(uniqueIdentifier + 2 + testEmail), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
+        User toBeSubscribed =
+                new User(new Email(uniqueIdentifier + 2 + testEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
+                        new SphericalLocation(new SphericalPosition(0, 0)));
 
         registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
-        User subscribedUser =
-                new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
-                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                        new SphericalLocation(new SphericalPosition(0, 0)));
-
         registerVM.register(toBeReported);
         registerVM.register(toBeSubscribed);
         registerVM.register(registeredUser);
-        registerVM.register(subscribedUser);
         loginVM.login(uniqueIdentifier + testEmail, password);
-        System.out.println("Logged in with: " + settingsVM.getCurrentUser().getEmail() + " " +
-                settingsVM.getCurrentUser().getPassword().getHash() + "\n");
-        // userVM.subscribe(subscribedUser);
+        System.out.println("Logged in with: " + settingsVM.getCurrentUser().getEmail() + "\n");
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
-        for (int i = 1; i <= 3; i++) {
+        if (Objects.nonNull(settingsVM.getCurrentUser())) {
+            settingsVM.deleteUser(settingsVM.getCurrentUser());
+        }
+        for (int i = 1; i <= 2; i++) {
             loginVM.login(uniqueIdentifier + i + testEmail, password);
             settingsVM.deleteUser(settingsVM.getCurrentUser());
+            System.out.println("Deleted user " + settingsVM.getCurrentUser()+ "\n");
+
         }
     }
 
@@ -89,16 +87,21 @@ public class UserViewModelTest {
         assertNotNull(userVM.getCurrentUser().getIdentifier());
     }
 
-    @Ignore("subscribing does not work")
     @Test
     public void testSubscribeAndUnsubscribe() throws RequestHandlerException {
-        userVM.subscribe(toBeSubscribed);
+        settingsVM.logout();
+        loginVM.login(uniqueIdentifier + 2 + testEmail, password);
+        User toBeSubscribedReally = userVM.getCurrentUser();
+        settingsVM.logout();
+        loginVM.login(uniqueIdentifier + testEmail, changedPassword);
 
-        isTrue(userVM.getSubscriptions().contains(toBeSubscribed), "subscribing did not work");
+        userVM.subscribe(toBeSubscribedReally);
 
-        userVM.unsubscribe(toBeSubscribed);
+        isTrue(userVM.isSubscribed(toBeSubscribedReally), "subscribing did not work");
 
-        isTrue(!userVM.getSubscriptions().contains(toBeSubscribed), "unsubscribing did not work");
+        userVM.unsubscribe(toBeSubscribedReally);
+
+        isTrue(!userVM.isSubscribed(toBeSubscribedReally), "unsubscribing did not work");
     }
 
     @Test
@@ -124,7 +127,7 @@ public class UserViewModelTest {
         user.setPassword(newPassword);
         userVM.edit(user);
         settingsVM.logout();
-        loginVM.login(uniqueIdentifier + testEmail, "HelloWorld1!");
+        loginVM.login(uniqueIdentifier + testEmail, changedPassword);
         assertTrue(newPassword.matches(userVM.getCurrentUser().getPassword()));
     }
 

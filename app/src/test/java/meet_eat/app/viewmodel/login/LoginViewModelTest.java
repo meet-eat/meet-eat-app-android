@@ -1,6 +1,7 @@
 package meet_eat.app.viewmodel.login;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
+
+import static org.junit.Assert.assertNotNull;
 
 public class LoginViewModelTest {
 
@@ -30,31 +33,40 @@ public class LoginViewModelTest {
     private static SettingsViewModel settingsVM = new SettingsViewModel();
     private static String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
 
-
-    @AfterClass
-    public static void cleanUp() throws RequestHandlerException {
-        // cleanup last test in case something went wrong
-        loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
-
-        if (Objects.nonNull(Session.getInstance().getToken()) && Objects.nonNull(Session.getInstance().getUser())) {
-            settingsVM.deleteUser(settingsVM.getCurrentUser());
-        }
-    }
-
-    @Test
-    public void testRegisterLoginLogout() throws RequestHandlerException {
+    @BeforeClass
+    public static void initialize() throws RequestHandlerException {
         User registeredUser =
                 new User(new Email(uniqueIdentifier + validRegisteredEmail), Password.createHashedPassword(password),
                         LocalDate.of(2000, 1, 1), username, phoneNumber, description, true,
                         new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
+        System.out.println("Created user " + settingsVM.getCurrentUser().getEmail());
         settingsVM.logout();
     }
 
-    @Test(expected = RequestHandlerException.class)
-    public void testLoginWithUnregisteredCredentials() throws RequestHandlerException {
-        loginVM.login(validUnregisteredEmail, password);
+    @AfterClass
+    public static void cleanUp() throws RequestHandlerException {
+        // cleanup last test in case something went wrong
+        if (Session.getInstance().getToken() == null) {
+            loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
+        }
+        settingsVM.deleteUser(settingsVM.getCurrentUser());
+        System.out.println("Deleted user " + settingsVM.getCurrentUser().getEmail());
+        uniqueIdentifier = "";
+    }
+
+    @Test
+    public void testLoginLogout() throws RequestHandlerException {
+        loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
+        assertNotNull(settingsVM.getCurrentUser());
+        settingsVM.logout();
+    }
+
+    @Test
+    public void testResetPasswordWithEmailThatHasAccount() throws RequestHandlerException, InterruptedException {
+        Thread.sleep(10000);
+        loginVM.resetPassword(uniqueIdentifier + validRegisteredEmail);
     }
 
     @Test(expected = IllegalArgumentException.class)

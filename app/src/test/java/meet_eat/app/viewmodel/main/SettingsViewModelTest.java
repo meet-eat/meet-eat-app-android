@@ -60,7 +60,6 @@ public class SettingsViewModelTest {
         assertNotNull(settingsVM.getCurrentUser().getIdentifier());
     }
 
-
     @Test(expected = NullPointerException.class)
     public void testUpdateNotificationSettingsWithNull() throws RequestHandlerException {
         settingsVM.updateNotificationSettings(null);
