@@ -97,7 +97,7 @@
     <string name="old_password">Old password</string>
     <string name="bad_passwords">Old or new password invalid.</string>
     <string name="profile_user_age">Age:</string>
-    <string name="cancel">Cancellations</string>
+    <string name="cancel">Cancel</string>
     <string name="subscribed">Subscribed users</string>
     <string name="subscribe">Subscribe</string>
     <string name="edit_subscriptions">Subscriptions</string>
