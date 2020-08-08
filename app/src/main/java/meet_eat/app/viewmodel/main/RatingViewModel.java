@@ -14,6 +14,7 @@ import meet_eat.data.entity.user.rating.Rating;
 public class RatingViewModel extends ViewModel {
 
     private final Session session = Session.getInstance();
+    private final UserRepository userRepository = new UserRepository();
 
     /**
      * Requests the currently logged in user from the {@link Session}.
@@ -33,7 +34,7 @@ public class RatingViewModel extends ViewModel {
     public void send(Rating rating) throws RequestHandlerException {
         User user = getCurrentUser();
         user.addRating(rating);
-        new UserRepository().updateEntity(user);
+        userRepository.updateEntity(user);
     }
 
     /**
