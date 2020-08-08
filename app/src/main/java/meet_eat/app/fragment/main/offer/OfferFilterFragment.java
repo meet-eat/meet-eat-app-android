@@ -36,7 +36,7 @@ import meet_eat.data.comparator.OfferComparableField;
 import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.location.UnlocalizableException;
 import meet_eat.data.predicate.OfferPredicate;
-import meet_eat.data.predicate.chrono.ChronoLocalDateTimeOperation;
+import meet_eat.data.predicate.chrono.LocalDateTimeOperation;
 import meet_eat.data.predicate.chrono.LocalDateTimePredicate;
 import meet_eat.data.predicate.localizable.LocalizablePredicate;
 import meet_eat.data.predicate.numeric.DoubleOperation;
@@ -169,11 +169,11 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minDateTime)) {
-            predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.AFTER, minDateTime));
+            predicates.add(new LocalDateTimePredicate(LocalDateTimeOperation.AFTER, minDateTime));
         }
 
         if (Objects.nonNull(maxDateTime)) {
-            predicates.add(new LocalDateTimePredicate(ChronoLocalDateTimeOperation.BEFORE, maxDateTime));
+            predicates.add(new LocalDateTimePredicate(LocalDateTimeOperation.BEFORE, maxDateTime));
         }
 
         if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice) && !minPrice.isEmpty() && !maxPrice.isEmpty()) {
