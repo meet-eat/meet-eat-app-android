@@ -72,10 +72,9 @@ public class LoginFragment extends Fragment {
         try {
             loginVM.login(email, password);
             startActivity(new Intent(getActivity(), MainActivity.class));
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In LoginFragment.login: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In LoginFragment.login: " + exception.getMessage());
         }
     }
 
@@ -91,10 +90,9 @@ public class LoginFragment extends Fragment {
         try {
             loginVM.resetPassword(email);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In LoginFragment.reset: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In LoginFragment.reset: " + exception.getMessage());
         }
     }
 

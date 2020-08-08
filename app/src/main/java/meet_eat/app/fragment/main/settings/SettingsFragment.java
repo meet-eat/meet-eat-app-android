@@ -81,17 +81,14 @@ public class SettingsFragment extends Fragment {
      * @see meet_eat.app.fragment.login.LoginFragment
      */
     private void logout() {
-
         try {
             settingsVM.logout();
             startActivity(new Intent(getActivity(), LoginActivity.class));
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> logout(): " + e.getMessage(),
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> logout(): " + exception.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
-
     }
 
     /**
@@ -104,11 +101,9 @@ public class SettingsFragment extends Fragment {
 
         try {
             settingsVM.updateNotificationSettings(newNotificationSetting);
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "SettingsFragment.toggleNotification: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "SettingsFragment.toggleNotification: " + exception.getMessage());
         }
-
     }
 }

@@ -71,10 +71,9 @@ public class ProfileEditFragment extends Fragment {
         // Have to catch in case the location the user typed in is invalid
         try {
             home = contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable());
-        } catch (IOException | UnlocalizableException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "ProfileEditFragment.java -> initUI(): " + e.getMessage());
+        } catch (IOException | UnlocalizableException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "ProfileEditFragment.java -> initUI(): " + exception.getMessage());
             navController.navigateUp();
         }
 
@@ -113,18 +112,17 @@ public class ProfileEditFragment extends Fragment {
                 try {
                     userVM.edit(userVM.getCurrentUser());
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
-                } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
-                            Toast.LENGTH_LONG).show();
+                } catch (RequestHandlerException exception) {
+                    Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
                     Toast.makeText(getActivity(),
-                            "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(), Toast.LENGTH_LONG)
-                            .show();
+                            "DEBUG ProfileEditFragment.java -> changePassword(): " + exception.getMessage(),
+                            Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
             }
         } catch (IllegalStateException exception) {
-            Toast.makeText(getActivity(), "Bitte aus- und wieder einloggen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.request_relog, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -144,7 +142,7 @@ public class ProfileEditFragment extends Fragment {
 
             try {
                 address = contextFormatter.formatAddressFromString(home);
-            } catch (IOException e) {
+            } catch (IOException exception) {
                 Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -167,10 +165,9 @@ public class ProfileEditFragment extends Fragment {
         try {
             userVM.edit(currentUser);
             Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "RegisterFragment.saveProfile: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "RegisterFragment.saveProfile: " + exception.getMessage());
         }
     }
 

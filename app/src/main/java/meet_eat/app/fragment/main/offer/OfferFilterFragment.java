@@ -52,6 +52,9 @@ import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
  */
 public class OfferFilterFragment extends Fragment {
 
+    private static final int ZERO = 0;
+    private static final int M_TO_KM_FACTOR = 1000;
+
     private FragmentOfferFilterBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
@@ -162,7 +165,7 @@ public class OfferFilterFragment extends Fragment {
         Collection<OfferPredicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(minDateTime) && Objects.nonNull(maxDateTime)) {
-            if (maxDateTime.compareTo(minDateTime) < 0) {
+            if (maxDateTime.compareTo(minDateTime) < ZERO) {
                 Toast.makeText(getActivity(), R.string.invalid_date_time_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -201,22 +204,22 @@ public class OfferFilterFragment extends Fragment {
 
         if (Objects.nonNull(minDistance) && !minDistance.isEmpty()) {
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance) * 1000,
-                        offerVM.getCurrentUser().getLocalizable()));
-            } catch (UnlocalizableException e) {
+                predicates.add(new LocalizablePredicate(DoubleOperation.GREATER,
+                        Double.parseDouble(minDistance) * M_TO_KM_FACTOR, offerVM.getCurrentUser().getLocalizable()));
+            } catch (UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + e.getMessage());
+                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + exception.getMessage());
                 return;
             }
         }
 
         if (Objects.nonNull(maxDistance) && !maxDistance.isEmpty()) {
             try {
-                predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance) * 1000,
-                        offerVM.getCurrentUser().getLocalizable()));
-            } catch (UnlocalizableException e) {
+                predicates.add(new LocalizablePredicate(DoubleOperation.LESS,
+                        Double.parseDouble(maxDistance) * M_TO_KM_FACTOR, offerVM.getCurrentUser().getLocalizable()));
+            } catch (UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + e.getMessage());
+                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + exception.getMessage());
                 return;
             }
         }
@@ -261,10 +264,9 @@ public class OfferFilterFragment extends Fragment {
             bundle.putSerializable(LIST_TYPE.name(), originListType);
             offerVM.updatePredicates(predicates);
             navController.navigate(R.id.offerListFragment, bundle);
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In OfferFilterFragment.saveFilters.243: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferFilterFragment.saveFilters.243: " + exception.getMessage());
         }
     }
 

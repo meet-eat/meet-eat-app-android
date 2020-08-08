@@ -30,6 +30,9 @@ import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static int ZERO = 0;
+    private static int MAX_WAIT_TIME = 1200;
+
     private DrawerLayout drawerLayout;
     private NavController navController;
     private long timeInMillis;
@@ -87,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (Objects.nonNull(navController.getCurrentBackStackEntry()) &&
                 (navController.getCurrentBackStackEntry().getDestination().getId() == R.id.offerEditFragment ||
                         navController.getCurrentBackStackEntry().getDestination().getId() ==
@@ -98,28 +100,21 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-
             if (navController.getCurrentBackStackEntry() == null) {
-
-                if (timeInMillis == 0) {
+                if (timeInMillis == ZERO) {
                     timeInMillis = System.currentTimeMillis();
                     Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
                 } else {
-
-                    if (System.currentTimeMillis() - timeInMillis < 1200) {
+                    if (System.currentTimeMillis() - timeInMillis < MAX_WAIT_TIME) {
                         super.onBackPressed();
-                        timeInMillis = 0;
+                        timeInMillis = ZERO;
                     } else {
                         timeInMillis = System.currentTimeMillis();
                     }
-
                 }
-
             } else {
                 super.onBackPressed();
             }
-
         }
-
     }
 }

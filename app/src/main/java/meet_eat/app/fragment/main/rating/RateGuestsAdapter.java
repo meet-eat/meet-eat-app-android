@@ -2,8 +2,6 @@ package meet_eat.app.fragment.main.rating;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
-import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.rating.Rating;
@@ -22,6 +19,7 @@ import meet_eat.data.entity.user.rating.RatingValue;
 public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.ViewHolder> {
 
     private static final float RATING_STEP_SIZE = 1;
+    private static final int DEFAULT_NUM_STARS = 3;
 
     private RatingViewModel ratingVM;
     private ArrayList<User> currentGuests;
@@ -38,7 +36,6 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
 
     public void sendRatings() {
         Rating[] ratings = new Rating[currentGuests.size()];
-
         // create ratings, then: ratingVM.send(ratings);
     }
 
@@ -72,8 +69,7 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
 
         public void setData(User user) {
             binding.tvRateGuestUsername.setText(user.getName());
-            // add user image
-            binding.rbRateGuest.setNumStars(3);
+            binding.rbRateGuest.setNumStars(DEFAULT_NUM_STARS);
             binding.rbRateGuest.setStepSize(RATING_STEP_SIZE);
         }
 

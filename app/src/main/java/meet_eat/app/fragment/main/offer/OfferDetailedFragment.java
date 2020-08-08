@@ -56,8 +56,7 @@ public class OfferDetailedFragment extends Fragment {
 
         // Checks if the previous page sent a bundle of arguments containing an offer
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
             Log.i("DEBUG",
                     "OfferDetailedFragment.getArguments: getArguments() null or getArguments().getSerializable() null");
             navController.navigateUp();
@@ -111,10 +110,9 @@ public class OfferDetailedFragment extends Fragment {
             }
 
             updateUI();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + exception.getMessage());
         }
     }
 
@@ -148,10 +146,9 @@ public class OfferDetailedFragment extends Fragment {
             }
 
             updateUI();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In OfferDetailedFragment.bookmark: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferDetailedFragment.bookmark: " + exception.getMessage());
         }
     }
 
@@ -185,17 +182,17 @@ public class OfferDetailedFragment extends Fragment {
         try {
             binding.tvOfferDetailedDistance.setText(
                     contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
-        } catch (UnlocalizableException e) {
+        } catch (UnlocalizableException exception) {
             Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
+            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + exception.getMessage());
             return;
         }
 
         try {
             binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));
-        } catch (IOException | UnlocalizableException e) {
+        } catch (IOException | UnlocalizableException exception) {
             Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + e.getMessage());
+            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + exception.getMessage());
             return;
         }
 

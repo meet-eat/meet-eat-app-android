@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private long timeInMillis = 0;
+    private static int ZERO = 0;
+    private static int MAX_WAIT_TIME = 1200;
+
+    private long timeInMillis = ZERO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +28,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (timeInMillis == 0) {
+        if (timeInMillis == ZERO) {
             timeInMillis = System.currentTimeMillis();
             Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
         } else {
-            if (System.currentTimeMillis() - timeInMillis < 1200) {
+            if (System.currentTimeMillis() - timeInMillis < MAX_WAIT_TIME) {
                 super.onBackPressed();
-                timeInMillis = 0;
+                timeInMillis = ZERO;
             } else {
                 timeInMillis = System.currentTimeMillis();
                 Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();

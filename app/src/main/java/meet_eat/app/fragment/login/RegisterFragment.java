@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.common.base.Strings;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -115,7 +117,7 @@ public class RegisterFragment extends Fragment {
 
         try {
             address = contextFormatter.formatAddressFromString(home);
-        } catch (IOException e) {
+        } catch (IOException exception) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -129,14 +131,8 @@ public class RegisterFragment extends Fragment {
                 new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude()));
         home = contextFormatter.formatStringFromAddress(address);
 
-        if (Objects.isNull(phoneNumber)) {
-            phoneNumber = "";
-        }
-
-        if (Objects.isNull(profileDescription)) {
-            profileDescription = "";
-        }
-
+        phoneNumber = Strings.nullToEmpty(phoneNumber);
+        profileDescription = Strings.nullToEmpty(profileDescription);
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false,
@@ -146,10 +142,9 @@ public class RegisterFragment extends Fragment {
             registerVM.register(user);
             navController.navigate(R.id.loginFragment);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In RegisterFragment.register: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In RegisterFragment.register: " + exception.getMessage());
         }
     }
 

@@ -28,7 +28,9 @@ import meet_eat.data.predicate.OfferPredicate;
  */
 public class OfferViewModel extends ViewModel {
 
-    private static final Page PAGE = new Page(0, 1000);
+    private static final int ZERO = 0;
+    private static final int MAX_PAGE_SIZE = 1000;
+    private static final Page PAGE = new Page(ZERO, MAX_PAGE_SIZE);
 
     private final OfferRepository offerRepository = new OfferRepository();
     private final UserRepository userRepository = new UserRepository();
@@ -225,7 +227,7 @@ public class OfferViewModel extends ViewModel {
     public boolean isBookmarked(Offer offer) {
         Stream<Offer> bookmarks = getCurrentUser().getBookmarks().stream();
         String offerIdentifier = offer.getIdentifier();
-        return bookmarks.anyMatch(x -> x.getIdentifier().equals(offerIdentifier));
+        return bookmarks.anyMatch(participant -> participant.getIdentifier().equals(offerIdentifier));
     }
 
     /**
@@ -246,7 +248,7 @@ public class OfferViewModel extends ViewModel {
 
         Stream<User> participants = participantsWithoutNull.stream();
         String userIdentifier = getCurrentUser().getIdentifier();
-        return participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
+        return participants.anyMatch(participant -> participant.getIdentifier().equals(userIdentifier));
     }
 
     /**

@@ -51,8 +51,7 @@ public class ProfileFragment extends Fragment {
             user = userVM.getCurrentUser();
         } else if (Objects.isNull(getArguments().getSerializable(USER.name()))) {
             // If a user was given, but is null
-            Toast.makeText(getActivity(), getString(R.string.request_handler_exception_toast_error_message),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.toast_error_message), Toast.LENGTH_SHORT).show();
             Log.i("DEBUG", "User is null");
             navController.navigateUp();
         } else {
@@ -99,11 +98,10 @@ public class ProfileFragment extends Fragment {
                 } else {
                     binding.btProfileSubscribe.setText((getResources().getString(R.string.subscribe)));
                 }
-            } catch (RequestHandlerException e) {
+            } catch (RequestHandlerException exception) {
                 binding.btProfileSubscribe.setVisibility(GONE);
-                Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
-                        Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In ProfileFragment.updateUI: " + e.getMessage());
+                Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
+                Log.i("DEBUG", "In ProfileFragment.updateUI: " + exception.getMessage());
             }
         }
     }
@@ -141,10 +139,9 @@ public class ProfileFragment extends Fragment {
             }
 
             updateUI();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + e.getMessage(),
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + exception.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
     }

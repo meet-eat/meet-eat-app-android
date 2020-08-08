@@ -119,12 +119,11 @@ public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscr
 
             try {
                 userVM.unsubscribe(user);
-            } catch (RequestHandlerException e) {
-                Toast.makeText(binding.getRoot().getContext(), R.string.request_handler_exception_toast_error_message,
-                        Toast.LENGTH_LONG).show();
+            } catch (RequestHandlerException exception) {
+                Toast.makeText(binding.getRoot().getContext(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
                 Toast.makeText(binding.getRoot().getContext(),
-                        "DEBUG ProfileSubscribedAdapter.java -> unsubscribe(): " + e.getMessage(), Toast.LENGTH_LONG)
-                        .show();
+                        "DEBUG ProfileSubscribedAdapter.java -> unsubscribe(): " + exception.getMessage(),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

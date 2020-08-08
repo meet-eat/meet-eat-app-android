@@ -113,10 +113,9 @@ public class OfferListFragment extends Fragment {
                     offerListAdapter.updateOffers(offerVM.fetchOffers(new ArrayList<>()));
             }
 
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In OfferListFragment.updateOffers: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferListFragment.updateOffers: " + exception.getMessage());
         }
     }
 

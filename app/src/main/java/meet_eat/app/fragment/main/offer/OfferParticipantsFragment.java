@@ -5,12 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
-import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
@@ -40,9 +36,7 @@ public class OfferParticipantsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
-        OfferViewModel offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
-        OfferParticipantsAdapter offerParticipantsAdapter =
-                new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
+        OfferParticipantsAdapter offerParticipantsAdapter = new OfferParticipantsAdapter(new ArrayList<>());
         binding.rvOfferParticipants.setAdapter(offerParticipantsAdapter);
         binding.rvOfferParticipants
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

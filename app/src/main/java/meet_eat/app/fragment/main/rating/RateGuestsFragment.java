@@ -46,8 +46,8 @@ public class RateGuestsFragment extends Fragment {
         if (Objects.isNull(getArguments())) {
             navController.navigate(R.id.offerListFragment);
         }
-        // get offer associated with rating
 
+        // get offer associated with rating
         setButtonOnClickListener();
         initUI();
         return binding.getRoot();
@@ -64,11 +64,6 @@ public class RateGuestsFragment extends Fragment {
 
     private void confirmRatings() {
         rateGuestsAdapter.sendRatings();
-
-        // go to standard offer list view
         navController.navigate(R.id.offerListFragment);
-
     }
-
-
 }

@@ -58,10 +58,9 @@ public class ProfileSubscribedFragment extends Fragment {
         ArrayList<User> subscribedUsers = new ArrayList<>();
         try {
             subscribedUsers = new ArrayList<>(userVM.getSubscribedUsers());
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
-                    Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In ProfileSubscribedFragment.displaySubscriberList: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
+            Log.i("DEBUG", "In ProfileSubscribedFragment.displaySubscriberList: " + exception.getMessage());
             return;
         }
         profileSubscribedAdapter.updateSubscriptions(subscribedUsers);

@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +28,7 @@ import meet_eat.data.entity.user.rating.RatingValue;
 public class RateHostFragment extends Fragment {
 
     private static final float RATING_STEP_SIZE = 1;
+    private static final int DEFAULT_NUM_STARS = 3;
 
     private FragmentRateHostBinding binding;
     private NavController navController;
@@ -66,7 +66,7 @@ public class RateHostFragment extends Fragment {
         // add image: binding.ivRateHostOfferPicture.setImageResource(offer.getImage());
         // binding.tvRateHostOfferPicture.setText("");
         // add tag: binding.tvRateHostTag
-        binding.rbRateHost.setNumStars(3);
+        binding.rbRateHost.setNumStars(DEFAULT_NUM_STARS);
         binding.rbRateHost.setStepSize(RATING_STEP_SIZE);
     }
 
@@ -97,13 +97,12 @@ public class RateHostFragment extends Fragment {
             default:
                 Log.i("DEBUG", "RateHostFragment.rateGuests");
                 return;
-
         }
 
         try {
             ratingVM.send(rating);
-        } catch (RequestHandlerException e) {
-            e.printStackTrace();
+        } catch (RequestHandlerException exception) {
+            exception.printStackTrace();
         }
     }
 }

@@ -63,7 +63,7 @@
     <string name="date_time_min">earliest</string>
     <string name="filter_and_sort">Filter and sort</string>
     <string name="filter">Filter</string>
-    <string name="request_handler_exception_toast_error_message">An error has occurred.</string>
+    <string name="toast_error_message">An error has occurred.</string>
     <string name="notification_hint">Receive a notification before each meeting you participate in.</string>
     <string name="invalid_distance_interval">Distance interval invalid.</string>
     <string name="distance">Distance</string>

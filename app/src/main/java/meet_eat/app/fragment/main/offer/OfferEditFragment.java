@@ -131,10 +131,9 @@ public class OfferEditFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
             bundle.putSerializable(LIST_TYPE.name(), STANDARD);
             navController.navigate(R.id.offerListFragment, bundle);
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
-            Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + e.getMessage());
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + exception.getMessage());
         }
     }
 
@@ -148,7 +147,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             address = contextFormatter.formatAddressFromString(city);
-        } catch (IOException e) {
+        } catch (IOException exception) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -165,7 +164,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             price = Double.parseDouble(priceString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             Toast.makeText(getActivity(), R.string.invalid_price, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -177,7 +176,7 @@ public class OfferEditFragment extends Fragment {
 
         try {
             participants = Integer.parseInt(participantsString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             Toast.makeText(getActivity(), R.string.invalid_max_participants, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -226,10 +225,9 @@ public class OfferEditFragment extends Fragment {
                     // Prevent the user to navigate back to the offer creation page
                     navController.navigateUp();
                     // navController.navigate(R.id.offerDetailedFragment, bundle);
-                } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
-                            Toast.LENGTH_LONG).show();
-                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
+                } catch (RequestHandlerException exception) {
+                    Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + exception.getMessage());
                 }
             } else {
                 offer.setLocation(
@@ -244,10 +242,9 @@ public class OfferEditFragment extends Fragment {
                     offerVM.edit(offer);
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     navController.navigateUp();
-                } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
-                            Toast.LENGTH_LONG).show();
-                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
+                } catch (RequestHandlerException exception) {
+                    Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + exception.getMessage());
                 }
             }
         }
@@ -270,9 +267,9 @@ public class OfferEditFragment extends Fragment {
 
             try {
                 city = contextFormatter.formatStringFromLocalizable(offer.getLocation());
-            } catch (IOException | UnlocalizableException e) {
+            } catch (IOException | UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferEditFragment.initUI: " + e.getMessage());
+                Log.i("DEBUG", "In OfferEditFragment.initUI: " + exception.getMessage());
                 return;
             }
 

@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.common.base.Strings;
+
 import java.util.Objects;
 
 import meet_eat.app.R;
@@ -25,6 +27,8 @@ import meet_eat.data.entity.user.User;
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
 public class ProfileReportFragment extends Fragment {
+
+    private static final String SPACE = " ";
 
     private FragmentProfileReportBinding binding;
     private NavController navController;
@@ -42,7 +46,7 @@ public class ProfileReportFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(USER.name()))) {
-            Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
             navController.navigateUp();
         } else {
             user = (User) getArguments().getSerializable(USER.name());
@@ -57,18 +61,16 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void reportUser() {
-        Report report = new Report(userVM.getCurrentUser(), Objects.nonNull(reportMessage) ? reportMessage : "");
+        Report report = new Report(userVM.getCurrentUser(), Strings.nullToEmpty(reportMessage));
 
         try {
             userVM.report(user, report);
             navController.navigateUp();
-            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text),
+            Toast.makeText(getActivity(), user.getName() + SPACE + getString(R.string.reported_toast_text),
                     Toast.LENGTH_SHORT).show();
-        } catch (RequestHandlerException e) {
-            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                    .show();
+        } catch (RequestHandlerException exception) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
         }
-
     }
 
     public String getReportMessage() {

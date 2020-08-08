@@ -25,6 +25,12 @@ public class ContextFormatter {
      */
     public static final int MONTH_CORRECTION = 1;
 
+    private static final String SPACE = " ";
+    private static final String COMMATA = ",";
+    private static final int M_TO_KM_FACTOR = 1000;
+    private static final int ONE_LOCATION = 1;
+    private static final int ZERO = 0;
+
     private final Context context;
 
     /**
@@ -43,7 +49,7 @@ public class ContextFormatter {
      * @return the formatted {@link LocalDateTime} object
      */
     public String formatDateTime(LocalDateTime dateTime) {
-        return formatDate(dateTime.toLocalDate()) + ", " + formatTime(dateTime.toLocalTime());
+        return formatDate(dateTime.toLocalDate()) + COMMATA + SPACE + formatTime(dateTime.toLocalTime());
     }
 
     /**
@@ -66,7 +72,7 @@ public class ContextFormatter {
     public String formatTime(LocalTime localTime) {
         return localTime
                 .format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_time_format))) +
-                " " + context.getResources().getString(R.string.european_time_calling);
+                SPACE + context.getResources().getString(R.string.european_time_calling);
     }
 
     /**
@@ -87,7 +93,7 @@ public class ContextFormatter {
      * @return the formatted double
      */
     public String formatDistance(Double distance) {
-        return (int) (distance / 1000) + context.getResources().getString(R.string.distance_unit);
+        return (int) (distance / M_TO_KM_FACTOR) + context.getResources().getString(R.string.distance_unit);
     }
 
     /**
@@ -101,9 +107,9 @@ public class ContextFormatter {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocationName(location, 1)) &&
-                geocoder.getFromLocationName(location, 1).size() > 0) {
-            address = geocoder.getFromLocationName(location, 1).get(0);
+        if (Objects.nonNull(geocoder.getFromLocationName(location, ONE_LOCATION)) &&
+                geocoder.getFromLocationName(location, ONE_LOCATION).size() > ZERO) {
+            address = geocoder.getFromLocationName(location, ONE_LOCATION).get(ZERO);
         }
 
         return address;
@@ -116,7 +122,7 @@ public class ContextFormatter {
      * @return the string representation of the addresses sub-admin area and if available, also the postal code
      */
     public String formatStringFromAddress(Address address) {
-        return address.getAddressLine(0);
+        return address.getAddressLine(ZERO);
     }
 
     /**
@@ -135,9 +141,9 @@ public class ContextFormatter {
         double lng = localizable.getSphericalPosition().getLongitude();
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, 1)) &&
-                geocoder.getFromLocation(lat, lng, 1).size() > 0) {
-            address = geocoder.getFromLocation(lat, lng, 1).get(0);
+        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, ONE_LOCATION)) &&
+                geocoder.getFromLocation(lat, lng, ONE_LOCATION).size() > ZERO) {
+            address = geocoder.getFromLocation(lat, lng, ONE_LOCATION).get(ZERO);
         }
 
         if (Objects.isNull(address)) {

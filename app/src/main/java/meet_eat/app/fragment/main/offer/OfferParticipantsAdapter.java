@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferParticipantBinding;
-import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
@@ -27,10 +26,9 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
     /**
      * Initialize fields.
      *
-     * @param offerVM      the offer view model
      * @param participants the participants list
      */
-    public OfferParticipantsAdapter(OfferViewModel offerVM, ArrayList<User> participants) {
+    public OfferParticipantsAdapter(ArrayList<User> participants) {
         currentParticipants = participants;
     }
 

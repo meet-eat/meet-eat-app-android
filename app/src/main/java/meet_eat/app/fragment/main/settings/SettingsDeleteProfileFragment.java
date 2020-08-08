@@ -71,10 +71,9 @@ public class SettingsDeleteProfileFragment extends Fragment {
             try {
                 settingsVM.deleteUser(settingsVM.getCurrentUser());
                 startActivity(new Intent(getActivity(), LoginActivity.class));
-            } catch (RequestHandlerException e) {
-                Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                        .show();
-                Log.i("DEBUG", "SettingsDeleteProfileFragment.deleteProfile: " + e.getMessage());
+            } catch (RequestHandlerException exception) {
+                Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+                Log.i("DEBUG", "SettingsDeleteProfileFragment.deleteProfile: " + exception.getMessage());
             }
 
         } else {
