@@ -49,6 +49,7 @@ public class OfferViewModel extends ViewModel {
     /**
      * Gets the specified user's offers.
      *
+     * @param user the user whose offers should be fetched
      * @return the specified user's offers
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
@@ -60,13 +61,15 @@ public class OfferViewModel extends ViewModel {
      * Gets offers based on the given predicates, together with the already
      * stored predicates.
      *
+     * @param predicates the predicates to filter the offers
      * @return an {@link Iterable} containing the updated offers
      * @throws RequestHandlerException if an error occurs when requesting the repository
      * @see OfferRepository
      */
     public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
         getCurrentUser().addManyOfferPredicates(predicates);
-        return offerRepository.getOffers(PAGE, getCurrentUser().getOfferPredicates(), getCurrentUser().getOfferComparator());
+        return offerRepository
+                .getOffers(PAGE, getCurrentUser().getOfferPredicates(), getCurrentUser().getOfferComparator());
     }
 
     /**
@@ -180,7 +183,7 @@ public class OfferViewModel extends ViewModel {
      * Sends a report request to the
      * {@link UserRepository}.
      *
-     * @param user   the user that is to be reported
+     * @param user   the user who is to be reported
      * @param report the report sent to the {@link UserRepository}
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
@@ -196,19 +199,17 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void addBookmark(Offer offer) throws RequestHandlerException {
-
         if (!isBookmarked(offer)) {
             getCurrentUser().addBookmark(offer);
             userRepository.updateEntity(getCurrentUser());
         }
-
     }
 
     /**
      * Removes an {@link Offer} from the current user's bookmarks, then sends a user update request to the
      * {@link UserRepository}.
      *
-     * @param offer The offer to be added to the users /LIST/ of bookmarks.
+     * @param offer The offer to be added to the users bookmarks.
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
@@ -227,7 +228,7 @@ public class OfferViewModel extends ViewModel {
     public boolean isBookmarked(Offer offer) {
         Stream<Offer> bookmarks = getCurrentUser().getBookmarks().stream();
         String offerIdentifier = offer.getIdentifier();
-        return bookmarks.anyMatch(participant -> participant.getIdentifier().equals(offerIdentifier));
+        return bookmarks.anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offerIdentifier));
     }
 
     /**
