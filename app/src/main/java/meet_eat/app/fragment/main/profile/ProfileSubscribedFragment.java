@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 
 import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
+import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 
@@ -51,7 +52,13 @@ public class ProfileSubscribedFragment extends Fragment {
      * Updates the subscriber list by giving the adapter the {@link java.util.Set Set} of subscribers.
      */
     private void displaySubscriberList() {
-        profileSubscribedAdapter.updateSubscriptions(new ArrayList<>(userVM.getCurrentUser().getSubscriptions()));
+        ArrayList<User> subscribedUsers = new ArrayList<>();
+        try {
+            subscribedUsers = new ArrayList<>(userVM.getSubscribedUsers());
+        } catch (RequestHandlerException exception) {
+            // TODO Toast if needed
+        }
+        profileSubscribedAdapter.updateSubscriptions(subscribedUsers);
     }
 
     /**

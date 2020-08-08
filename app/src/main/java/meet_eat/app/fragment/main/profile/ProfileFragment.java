@@ -93,14 +93,18 @@ public class ProfileFragment extends Fragment {
         } else {
             binding.ibtProfileEdit.setVisibility(GONE);
 
-            if (userVM.isSubscribed(user)) {
-                binding.btProfileSubscribe.setText(getResources().getString(R.string.unsubscribe));
-            } else {
-                binding.btProfileSubscribe.setText((getResources().getString(R.string.subscribe)));
+            try {
+                if (userVM.getSubscribedUsers().contains(user)) {
+                    binding.btProfileSubscribe.setText(getResources().getString(R.string.unsubscribe));
+                } else {
+                    binding.btProfileSubscribe.setText((getResources().getString(R.string.subscribe)));
+                }
+            } catch (RequestHandlerException exception) {
+                binding.btProfileSubscribe.setVisibility(GONE);
+                Log.e("DEBUG", exception.getMessage());
+                // TODO Toast und Log
             }
-
         }
-
     }
 
     /**
@@ -129,7 +133,7 @@ public class ProfileFragment extends Fragment {
      */
     private void changeSubscription() {
         try {
-            if (!userVM.isSubscribed(user)) {
+            if (!userVM.getSubscribedUsers().contains(user)) {
                 userVM.subscribe(user);
             } else {
                 userVM.unsubscribe(user);

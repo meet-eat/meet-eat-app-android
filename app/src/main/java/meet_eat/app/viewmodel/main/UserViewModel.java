@@ -2,12 +2,16 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.stream.Stream;
+import com.google.common.collect.Lists;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
 import meet_eat.app.repository.UserRepository;
 import meet_eat.data.Report;
+import meet_eat.data.entity.Subscription;
 import meet_eat.data.entity.user.User;
 
 /**
@@ -53,8 +57,8 @@ public class UserViewModel extends ViewModel {
      * @param toBeSubscribed the user to be subscribed to
      */
     public void subscribe(User toBeSubscribed) throws RequestHandlerException {
-        getCurrentUser().addSubscription(toBeSubscribed);
-        edit(getCurrentUser());
+        Subscription subscription = new Subscription(getCurrentUser(), toBeSubscribed);
+        userRepository.addSubscription(subscription);
     }
 
     /**
@@ -64,8 +68,7 @@ public class UserViewModel extends ViewModel {
      * @param toBeUnsubscribed the user to be unsubscribed from
      */
     public void unsubscribe(User toBeUnsubscribed) throws RequestHandlerException {
-        getCurrentUser().removeSubscriptions(toBeUnsubscribed);
-        edit(getCurrentUser());
+        userRepository.removeSubscriptionByUser(getCurrentUser(), toBeUnsubscribed);
     }
 
     /**
@@ -74,9 +77,17 @@ public class UserViewModel extends ViewModel {
      * @param user the user which is to be compared
      * @return true if the current user subscribed the user
      */
-    public boolean isSubscribed(User user) {
-        Stream<User> subscriptions = getCurrentUser().getSubscriptions().stream();
-        String userIdentifier = user.getIdentifier();
-        return subscriptions.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
+    public boolean isSubscribed(User user) throws RequestHandlerException {
+        return getSubscribedUsers().contains(user);
+    }
+
+    // TODO JAVADOC
+    public Collection<Subscription> getSubscriptions() throws RequestHandlerException {
+        return Lists.newLinkedList(userRepository.getSubscriptionsOfUser(getCurrentUser()));
+    }
+
+    // TODO JAVADOC
+    public Collection<User> getSubscribedUsers() throws RequestHandlerException {
+        return getSubscriptions().stream().map(Subscription::getTargetUser).collect(Collectors.toList());
     }
 }
