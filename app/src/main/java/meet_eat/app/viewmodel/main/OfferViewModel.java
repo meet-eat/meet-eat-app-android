@@ -133,9 +133,9 @@ public class OfferViewModel extends ViewModel {
      * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
      * @param offer the offer wherein the current user is to be added
+     * @return the updated offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    // TODO Return ins doc
     public Offer participate(Offer offer) throws RequestHandlerException {
         removeBookmark(offer);
         return offerRepository.addParticipant(offer, getCurrentUser());
@@ -147,9 +147,9 @@ public class OfferViewModel extends ViewModel {
      *
      * @param participant the participant that is to be removed
      * @param offer       the offer whereof the participant is to be removed
+     * @return the updated offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    // TODO Return ins doc
     public Offer cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
         return offerRepository.removeParticipant(offer, participant);
     }
@@ -209,12 +209,10 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
-
         if (isBookmarked(offer)) {
             getCurrentUser().removeBookmark(offer);
             userRepository.updateEntity(getCurrentUser());
         }
-
     }
 
     /**

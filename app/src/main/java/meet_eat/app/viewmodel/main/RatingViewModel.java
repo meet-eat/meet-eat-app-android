@@ -43,10 +43,8 @@ public class RatingViewModel extends ViewModel {
      * @param ratings the new ratings
      */
     public void send(Rating... ratings) throws RequestHandlerException {
-
         for (Rating rating : ratings) {
             send(rating);
         }
-
     }
 }
