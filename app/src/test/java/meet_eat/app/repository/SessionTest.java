@@ -91,17 +91,6 @@ public class SessionTest extends RepositoryTestEnvironment{
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testLoginWhenLoggedIn() throws RequestHandlerException {
-        // Execution
-        Session session = Session.getInstance();
-        session.login(getRegisteredLoginCredential());
-
-        // Assertions
-        assertNotNull(session.getToken());
-        session.login(getRegisteredLoginCredential());
-    }
-
-    @Test(expected = IllegalStateException.class)
     public void testLogoutWhenLoggedOut() throws RequestHandlerException {
         // Execution
         Session session = Session.getInstance();
