@@ -31,6 +31,7 @@ public class RatingViewModelTest {
     private static final String profileDescription = "JUnit Test User";
 
     private static SettingsViewModel settingsVM;
+    private static RatingViewModel ratingVM;
     private static User registeredUser;
 
     @BeforeClass
@@ -38,6 +39,7 @@ public class RatingViewModelTest {
         RegisterViewModel registerVM = new RegisterViewModel();
         LoginViewModel loginVM = new LoginViewModel();
         settingsVM = new SettingsViewModel();
+        ratingVM = new RatingViewModel();
 
         String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
         registeredUser =
@@ -55,11 +57,16 @@ public class RatingViewModelTest {
 
     @Test
     public void testGetCurrentUser() {
-        assertNotNull(new RatingViewModel().getCurrentUser().getIdentifier());
+        assertNotNull(ratingVM.getCurrentUser().getIdentifier());
     }
 
     @Test(expected = NullPointerException.class)
     public void testSendWithNull() throws RequestHandlerException {
-        new RatingViewModel().send((Rating) null);
+        ratingVM.send((Rating) null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSendMultipleWithNull() throws RequestHandlerException {
+        ratingVM.send(new Rating[2]);
     }
 }

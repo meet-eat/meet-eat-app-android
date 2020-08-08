@@ -19,7 +19,6 @@ public class Session {
 
     private static Session session;
     private static final String ERROR_MESSAGE_NOT_LOGGED_IN = "Cannot logout session with null token.";
-    private static final String ERROR_MESSAGE_LOGGED_IN = "Already logged in.";
 
     private Token token;
 
@@ -66,9 +65,6 @@ public class Session {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void login(LoginCredential loginCredential) throws RequestHandlerException {
-        if (Objects.nonNull(token)) {
-            throw new IllegalStateException(ERROR_MESSAGE_LOGGED_IN);
-        }
         RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(Objects.requireNonNull(loginCredential),
                 HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);

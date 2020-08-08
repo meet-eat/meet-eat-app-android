@@ -65,12 +65,12 @@ public class OfferViewModelTest {
         secondUser = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(secondUser);
-        System.out.println("Registered " + secondUser.getEmail());
+        System.out.println("Created " + secondUser.getEmail());
         // Register registeredUser:
         User registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(registeredUser);
-        System.out.println("Registered " + registeredUser.getEmail());
+        System.out.println("Created " + registeredUser.getEmail());
 
         loginVM.login(uniqueIdentifier + testEmail, password);
         System.out.println("Logged in " + registeredUser.getEmail());
@@ -80,6 +80,10 @@ public class OfferViewModelTest {
     public static void cleanUp() throws RequestHandlerException {
         settingsVM.deleteUser(settingsVM.getCurrentUser());
         System.out.println("Deleted " + settingsVM.getCurrentUser().getEmail());
+        loginVM.login(uniqueIdentifier + 1 + testEmail, password);
+        settingsVM.deleteUser(settingsVM.getCurrentUser());
+        System.out.println("Deleted " + settingsVM.getCurrentUser().getEmail());
+        uniqueIdentifier = "";
     }
 
     @Test
