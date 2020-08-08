@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import meet_eat.data.Report;
 import meet_eat.data.entity.user.Email;
+import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
@@ -32,14 +33,14 @@ public class UserRepository extends EntityRepository<User> {
 
     @Override
     public User addEntity(User entity) throws RequestHandlerException {
-        //No token for registration
+        // No token for registration
         RequestEntity<User> requestEntity = new RequestEntity<User>(Objects.requireNonNull(entity), HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath()));
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
 
     /**
-     * Resets the {@link User user}'s {@link meet_eat.data.entity.user.Password password} with the corresponding
+     * Resets the {@link User user}'s {@link Password password} with the corresponding
      * {@link Email e-mail address}.
      *
      * @param email the e-mail address of the user whose password is to be reset
