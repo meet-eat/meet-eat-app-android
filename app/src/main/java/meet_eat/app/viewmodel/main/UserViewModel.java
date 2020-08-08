@@ -35,6 +35,7 @@ public class UserViewModel extends ViewModel {
      * Updates the user in the {@link UserRepository}.
      *
      * @param editedUser the user to be updated
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void edit(User editedUser) throws RequestHandlerException {
         userRepository.updateEntity(editedUser);
@@ -45,6 +46,7 @@ public class UserViewModel extends ViewModel {
      *
      * @param toBeReported the user that is to be reported
      * @param report       the report
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void report(User toBeReported, Report report) throws RequestHandlerException {
         userRepository.report(toBeReported, report);
@@ -55,6 +57,7 @@ public class UserViewModel extends ViewModel {
      * updates the current user in the {@link UserRepository}
      *
      * @param toBeSubscribed the user to be subscribed to
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void subscribe(User toBeSubscribed) throws RequestHandlerException {
         Subscription subscription = new Subscription(getCurrentUser(), toBeSubscribed);
@@ -66,6 +69,7 @@ public class UserViewModel extends ViewModel {
      * containing the modified user object.
      *
      * @param toBeUnsubscribed the user to be unsubscribed from
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void unsubscribe(User toBeUnsubscribed) throws RequestHandlerException {
         userRepository.removeSubscriptionByUser(getCurrentUser(), toBeUnsubscribed);
@@ -76,17 +80,28 @@ public class UserViewModel extends ViewModel {
      *
      * @param user the user which is to be compared
      * @return true if the current user subscribed the user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public boolean isSubscribed(User user) throws RequestHandlerException {
         return getSubscribedUsers().contains(user);
     }
 
-    // TODO JAVADOC
+    /**
+     * Gets a list of all subscriptions.
+     *
+     * @return all subscriptions
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Collection<Subscription> getSubscriptions() throws RequestHandlerException {
         return Lists.newLinkedList(userRepository.getSubscriptionsOfUser(getCurrentUser()));
     }
 
-    // TODO JAVADOC
+    /**
+     * Gets the users subscribed by the current user.
+     *
+     * @return all subscriptions of the current user
+     * @throws RequestHandlerException if an error occurs when requesting the
+     */
     public Collection<User> getSubscribedUsers() throws RequestHandlerException {
         return getSubscriptions().stream().map(Subscription::getTargetUser).collect(Collectors.toList());
     }
