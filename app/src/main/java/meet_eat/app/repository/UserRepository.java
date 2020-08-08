@@ -5,11 +5,13 @@ import meet_eat.data.EndpointPath;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.net.URI;
 import java.util.Objects;
 
 import meet_eat.data.Report;
+import meet_eat.data.entity.Subscription;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -84,5 +86,44 @@ public class UserRepository extends EntityRepository<User> {
         Objects.requireNonNull(user);
         user.addReport(Objects.requireNonNull(report));
         return updateEntity(user);
+    }
+
+    public Subscription addSubscription(Subscription subscription) throws RequestHandlerException {
+        String userIdentifier = subscription.getSourceUser().getIdentifier();
+        String uriUserIdentifier = "/" + Objects.requireNonNull(userIdentifier);
+
+        // Handle request
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        RequestEntity<Subscription> requestEntity = new RequestEntity<Subscription>(
+                subscription,
+                headers,
+                HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
+        return new RequestHandler<Subscription, Subscription>().handle(requestEntity, HttpStatus.CREATED);
+    }
+
+    public void removeSubscriptionByUser(User subscriber, User subscribedUser) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(subscriber.getIdentifier());
+
+        // Handle request
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        RequestEntity<User> requestEntity = new RequestEntity<User>(
+                subscribedUser,
+                headers,
+                HttpMethod.DELETE,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
+        new RequestHandler<User, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
+    }
+
+    public Iterable<Subscription> getSubscriptionsOfUser(User user) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
+
+        // Handle request
+        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(
+                headers,
+                HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
+        return new RequestHandler<Void, Subscription>().handleIterable(requestEntity, HttpStatus.OK);
     }
 }
