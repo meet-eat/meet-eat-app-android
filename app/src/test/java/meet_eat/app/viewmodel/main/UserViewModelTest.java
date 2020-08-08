@@ -38,7 +38,6 @@ public class UserViewModelTest {
     private static User registeredUser;
     private static User toBeReported;
     private static User toBeSubscribed;
-    private static User subscribedUser;
     private static String uniqueIdentifier;
 
     @BeforeClass
@@ -61,9 +60,10 @@ public class UserViewModelTest {
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
-        subscribedUser = new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
+        User subscribedUser =
+                new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
+                        new SphericalLocation(new SphericalPosition(0, 0)));
 
         registerVM.register(toBeReported);
         registerVM.register(toBeSubscribed);
@@ -94,11 +94,11 @@ public class UserViewModelTest {
     public void testSubscribeAndUnsubscribe() throws RequestHandlerException {
         userVM.subscribe(toBeSubscribed);
 
-        isTrue(userVM.getCurrentUser().getSubscriptions().contains(toBeSubscribed), "subscribing did not work");
+        isTrue(userVM.getSubscriptions().contains(toBeSubscribed), "subscribing did not work");
 
         userVM.unsubscribe(toBeSubscribed);
 
-        isTrue(!userVM.getCurrentUser().getSubscriptions().contains(toBeSubscribed), "unsubscribing did not work");
+        isTrue(!userVM.getSubscriptions().contains(toBeSubscribed), "unsubscribing did not work");
     }
 
     @Test
@@ -161,7 +161,7 @@ public class UserViewModelTest {
         userVM.subscribe(null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = RequestHandlerException.class)
     public void testUnsubscribeWithNull() throws RequestHandlerException {
         userVM.unsubscribe(null);
     }
