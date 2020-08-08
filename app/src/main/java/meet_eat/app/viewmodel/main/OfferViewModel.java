@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import meet_eat.app.repository.OfferRepository;
@@ -228,19 +229,11 @@ public class OfferViewModel extends ViewModel {
         return bookmarks.anyMatch(x -> x.getIdentifier().equals(offerIdentifier));
     }
 
-    // TODO hotfix
     public boolean isParticipating(Offer offer) {
-        Stream<User> participants = offer.getParticipants().stream();
+        Set<User> participantsWithNull = offer.getParticipants();
+        participantsWithNull.removeIf(Objects::isNull);
+        Stream<User> participants = participantsWithNull.stream();
         String userIdentifier = getCurrentUser().getIdentifier();
-
-        for (User participant : offer.getParticipants()) {
-
-            if (Objects.isNull(participant)) {
-                return false;
-            }
-
-        }
-
         return participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
     }
 
