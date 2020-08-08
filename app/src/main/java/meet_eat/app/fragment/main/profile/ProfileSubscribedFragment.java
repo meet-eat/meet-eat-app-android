@@ -1,9 +1,11 @@
 package meet_eat.app.fragment.main.profile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
@@ -55,8 +58,11 @@ public class ProfileSubscribedFragment extends Fragment {
         ArrayList<User> subscribedUsers = new ArrayList<>();
         try {
             subscribedUsers = new ArrayList<>(userVM.getSubscribedUsers());
-        } catch (RequestHandlerException exception) {
-            // TODO Toast if needed
+        } catch (RequestHandlerException e) {
+            Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
+                    Toast.LENGTH_SHORT).show();
+            Log.i("DEBUG", "In ProfileSubscribedFragment.displaySubscriberList: " + e.getMessage());
+            return;
         }
         profileSubscribedAdapter.updateSubscriptions(subscribedUsers);
     }
