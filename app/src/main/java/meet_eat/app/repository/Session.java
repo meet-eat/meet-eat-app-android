@@ -47,7 +47,7 @@ public class Session {
      * @return the user associated with the session
      */
     public User getUser() {
-        return token.getUser();
+        return Objects.requireNonNull(token).getUser();
     }
 
     /**
