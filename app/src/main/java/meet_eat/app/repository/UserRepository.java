@@ -21,7 +21,7 @@ import meet_eat.data.entity.user.contact.ContactRequest;
  */
 public class UserRepository extends EntityRepository<User> {
 
-    private static final String URL_RESET_PASSWORD = "/%s/password/reset"; //TODO
+    private static final String URL_RESET_PASSWORD = "/%s/password/reset";
     private static final String ERROR_MESSAGE_NOT_IMPLEMENTED = "Not implemented yet.";
 
     /**
