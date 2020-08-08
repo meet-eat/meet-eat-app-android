@@ -19,6 +19,9 @@ import meet_eat.data.location.SphericalPosition;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Not yet implemented
+ */
 public class RatingViewModelTest {
 
     private static final String registeredEmail = "@example.com";
