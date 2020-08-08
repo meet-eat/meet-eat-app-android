@@ -45,26 +45,6 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Gets the offers of the subscribed users.
-     *
-     * @return the offers of the subscribed users
-     * @throws RequestHandlerException if an error occurs when requesting the repository
-     */
-    public Iterable<Offer> fetchOffersOfSubscriptions() throws RequestHandlerException {
-        return offerRepository.getOffersBySubscriptions(getCurrentUser(), PAGE, getCurrentUser().getOfferPredicates(),
-                getCurrentUser().getOfferComparator());
-    }
-
-    /**
-     * Gets the user's bookmarked offers.
-     *
-     * @return the user's bookmarked offers
-     */
-    public Iterable<Offer> fetchBookmarkedOffers() {
-        return getCurrentUser().getBookmarks();
-    }
-
-    /**
      * Gets the specified user's offers.
      *
      * @return the specified user's offers
@@ -83,8 +63,28 @@ public class OfferViewModel extends ViewModel {
      * @see OfferRepository
      */
     public Iterable<Offer> fetchOffers(Collection<OfferPredicate> predicates) throws RequestHandlerException {
-        predicates.addAll(getCurrentUser().getOfferPredicates());
-        return offerRepository.getOffers(PAGE, predicates, getCurrentUser().getOfferComparator());
+        getCurrentUser().addManyOfferPredicates(predicates);
+        return offerRepository.getOffers(PAGE, getCurrentUser().getOfferPredicates(), getCurrentUser().getOfferComparator());
+    }
+
+    /**
+     * Gets the user's bookmarked offers.
+     *
+     * @return the user's bookmarked offers
+     */
+    public Iterable<Offer> fetchBookmarkedOffers() {
+        return getCurrentUser().getBookmarks();
+    }
+
+    /**
+     * Gets the offers of the subscribed users.
+     *
+     * @return the offers of the subscribed users
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Iterable<Offer> fetchOffersOfSubscriptions() throws RequestHandlerException {
+        return offerRepository.getOffersBySubscriptions(getCurrentUser(), PAGE, getCurrentUser().getOfferPredicates(),
+                getCurrentUser().getOfferComparator());
     }
 
     /**
@@ -93,10 +93,10 @@ public class OfferViewModel extends ViewModel {
      * @param predicates the predicates that are to be updated
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void updatePredicates(Collection<OfferPredicate> predicates) throws RequestHandlerException {
+    public User updatePredicates(Collection<OfferPredicate> predicates) throws RequestHandlerException {
         getCurrentUser().clearOfferPredicates();
         getCurrentUser().addManyOfferPredicates(predicates);
-        userRepository.updateEntity(getCurrentUser());
+        return userRepository.updateEntity(getCurrentUser());
     }
 
     /**
