@@ -17,6 +17,11 @@ import meet_eat.data.location.UnlocalizableException;
 
 public class ContextFormatter {
 
+    /**
+     * Needed to correct the months value, because the months start with 0.
+     */
+    public static final int MONTH_CORRECTION = 1;
+
     private final Context context;
 
     public ContextFormatter(Context context) {

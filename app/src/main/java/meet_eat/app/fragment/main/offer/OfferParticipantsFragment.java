@@ -25,12 +25,13 @@ import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
+/**
+ * This is the page where the participants to an offer are listed.
+ */
 public class OfferParticipantsFragment extends Fragment {
 
     private FragmentOfferParticipantsBinding binding;
-    private OfferViewModel offerVM;
     private NavController navController;
-    private OfferParticipantsAdapter offerParticipantsAdapter;
     private Offer offer;
 
     @Nullable
@@ -39,13 +40,15 @@ public class OfferParticipantsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
-        offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
-        offerParticipantsAdapter = new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
+        OfferViewModel offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        OfferParticipantsAdapter offerParticipantsAdapter =
+                new OfferParticipantsAdapter(offerVM, new ArrayList<User>());
         binding.rvOfferParticipants.setAdapter(offerParticipantsAdapter);
         binding.rvOfferParticipants
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         navController = NavHostFragment.findNavController(this);
 
+        // Checks if the previous page sent a bundle of arguments containing the offer
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
                     ".getSerializable() null");
@@ -59,6 +62,9 @@ public class OfferParticipantsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }

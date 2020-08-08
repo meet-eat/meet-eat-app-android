@@ -31,7 +31,6 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.Tag;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 import meet_eat.data.location.UnlocalizableException;
@@ -41,9 +40,11 @@ import static meet_eat.app.fragment.ListType.STANDARD;
 import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
+/**
+ * This is the offer editing page. Here the user can edit his own offer. This is also the page where the user can
+ * create a new offer.
+ */
 public class OfferEditFragment extends Fragment {
-
-    private static final int MONTH_CORRECTION = 1;
 
     private FragmentOfferEditBinding binding;
     private OfferViewModel offerVM;
@@ -70,6 +71,7 @@ public class OfferEditFragment extends Fragment {
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
+        // Checks if the previous page sent a bundle of arguments containing an offer
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             isNewOffer = true;
         } else {
@@ -83,6 +85,9 @@ public class OfferEditFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btOfferEditPublish.setOnClickListener(event -> saveOffer());
@@ -91,22 +96,36 @@ public class OfferEditFragment extends Fragment {
         binding.tvOfferEditDate.setOnClickListener(event -> showDateTimePicker());
     }
 
+    /**
+     * Shows a dialog where the user can pick the date for the offer. Calls showTimePickerDialog() with the selected
+     * date.
+     */
     private void showDateTimePicker() {
         Calendar cal = new GregorianCalendar();
         new DatePickerDialog(binding.getRoot().getContext(), this::showTimePickerDialog, cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    /**
+     * Shows a dialog where the user can pick a time for the offer, then updates the GUI.
+     *
+     * @param datePicker the dialog before
+     * @param year       the year of the date
+     * @param month      the month of the year
+     * @param dayOfMonth the day of the month
+     */
     private void showTimePickerDialog(DatePicker datePicker, int year, int month, int dayOfMonth) {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         new TimePickerDialog(binding.getRoot().getContext(), (view, hourOfDay, minute) -> {
-            dateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
+            dateTime = LocalDateTime.of(year, month + ContextFormatter.MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
             binding.tvOfferEditDate.setText(contextFormatter.formatDateTime(dateTime));
         }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
     }
 
+    /**
+     * Tries to delete the users offer and navigate back to the offer list page on success.
+     */
     private void deleteOffer() {
-
         try {
             offerVM.delete(offer);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
@@ -117,9 +136,13 @@ public class OfferEditFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + e.getMessage());
         }
-
     }
 
+    /**
+     * Gets the offer details from the GUI, checks them for correctness and saves the values in the global fields.
+     *
+     * @return true, if everything went fine
+     */
     private boolean setOfferDetails() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
@@ -182,17 +205,17 @@ public class OfferEditFragment extends Fragment {
             return false;
         }
 
-        // add offer image
-        // add tags
         return true;
     }
 
+    /**
+     * Gets the offer details and tries to creates a new offer with the details if the user wants to create a new offer
+     * or tries to update the offer with the details.
+     */
     private void saveOffer() {
-
         if (setOfferDetails()) {
-
             if (isNewOffer) {
-                offer = new Offer(offerVM.getCurrentUser(), new HashSet<Tag>(), title, description, price, participants,
+                offer = new Offer(offerVM.getCurrentUser(), new HashSet<>(), title, description, price, participants,
                         dateTime,
                         new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
 
@@ -200,14 +223,14 @@ public class OfferEditFragment extends Fragment {
                     offerVM.add(offer);
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     bundle.putSerializable(OFFER.name(), offer);
-                    // quick fix navController.navigate(R.id.offerDetailedFragment, bundle);
+                    // Prevent the user to navigate back to the offer creation page
                     navController.navigateUp();
+                    // navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
+                            Toast.LENGTH_LONG).show();
                     Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
-
             } else {
                 offer.setLocation(
                         new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
@@ -222,19 +245,19 @@ public class OfferEditFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     navController.navigateUp();
                 } catch (RequestHandlerException e) {
-                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
+                            Toast.LENGTH_LONG).show();
                     Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + e.getMessage());
                 }
-
             }
-
         }
-
     }
 
+    /**
+     * Initializes the GUI by filling the edit text views with the current offer details. If a new offer is to be
+     * created, the edit text views remain empty.
+     */
     private void initUI() {
-
         if (isNewOffer) {
             binding.btOfferEditSave.setVisibility(GONE);
             binding.btOfferEditDelete.setVisibility(GONE);
@@ -257,7 +280,6 @@ public class OfferEditFragment extends Fragment {
             participantsString = String.valueOf(offer.getMaxParticipants());
             description = offer.getDescription();
         }
-
     }
 
     public String getTitle() {

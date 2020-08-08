@@ -47,9 +47,10 @@ import meet_eat.data.predicate.numeric.RatingPredicate;
 import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
 import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
 
+/**
+ * This is the filter page where the user can set new filters and sort criteria.
+ */
 public class OfferFilterFragment extends Fragment {
-
-    private static final int MONTH_CORRECTION = 1;
 
     private FragmentOfferFilterBinding binding;
     private OfferViewModel offerVM;
@@ -76,6 +77,7 @@ public class OfferFilterFragment extends Fragment {
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
+        // Checks if the previous page sent a bundle of arguments containing an offer list type
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
             Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
                     ".getSerializable() null");
@@ -89,13 +91,22 @@ public class OfferFilterFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listener.
+     */
     private void setButtonOnClickListener() {
-        binding.btOfferFilterSave.setOnClickListener(event -> saveFilters());
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.tvOfferFilterDateMin.setOnClickListener(this::showDateTimePicker);
         binding.tvOfferFilterDateMax.setOnClickListener(this::showDateTimePicker);
-        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
+        binding.btOfferFilterSave.setOnClickListener(event -> saveFilters());
     }
 
+    /**
+     * Shows a dialog where the user can pick a date for the offer filters. Calls showTimePickerDialog() with the
+     * selected date. Calls either showTimePickerDialogMin() or showTimePickerDialogMax().
+     *
+     * @param view decide which date filter edit text view was clicked
+     */
     private void showDateTimePicker(View view) {
         Calendar cal = new GregorianCalendar();
 
@@ -106,35 +117,55 @@ public class OfferFilterFragment extends Fragment {
             new DatePickerDialog(binding.getRoot().getContext(), this::showTimePickerDialogMax, cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
         }
-
     }
 
+    /**
+     * Shows a dialog where the user can pick the earliest date and time for an offer to begin, then
+     * updates the GUI.
+     *
+     * @param datePicker the dialog before
+     * @param year       the year of the date
+     * @param month      the month of the year
+     * @param dayOfMonth the day of the month
+     */
     private void showTimePickerDialogMin(DatePicker datePicker, int year, int month, int dayOfMonth) {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         new TimePickerDialog(binding.getRoot().getContext(), (view, hourOfDay, minute) -> {
-            minDateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
+            minDateTime =
+                    LocalDateTime.of(year, month + ContextFormatter.MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
             binding.tvOfferFilterDateMin.setText(contextFormatter.formatDateTime(minDateTime));
         }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
     }
 
+    /**
+     * Shows a dialog where the user can pick the latest date and time for an offer to begin, then
+     * updates the GUI.
+     *
+     * @param datePicker the dialog before
+     * @param year       the year of the date
+     * @param month      the month of the year
+     * @param dayOfMonth the day of the month
+     */
     private void showTimePickerDialogMax(DatePicker datePicker, int year, int month, int dayOfMonth) {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         new TimePickerDialog(binding.getRoot().getContext(), (view, hourOfDay, minute) -> {
-            maxDateTime = LocalDateTime.of(year, month + MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
+            maxDateTime =
+                    LocalDateTime.of(year, month + ContextFormatter.MONTH_CORRECTION, dayOfMonth, hourOfDay, minute);
             binding.tvOfferFilterDateMax.setText(contextFormatter.formatDateTime(maxDateTime));
         }, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), false).show();
     }
 
+    /**
+     * Checks the filters for correctness and tries to update the user filters.
+     */
     private void saveFilters() {
         Collection<OfferPredicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(minDateTime) && Objects.nonNull(maxDateTime)) {
-
             if (maxDateTime.compareTo(minDateTime) < 0) {
                 Toast.makeText(getActivity(), R.string.invalid_date_time_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
 
         if (Objects.nonNull(minDateTime)) {
@@ -146,12 +177,10 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice) && !minPrice.isEmpty() && !maxPrice.isEmpty()) {
-
             if (Double.parseDouble(minPrice) > Double.parseDouble(maxPrice)) {
                 Toast.makeText(getActivity(), R.string.invalid_price_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
 
         if (Objects.nonNull(minPrice) && !minPrice.isEmpty()) {
@@ -164,16 +193,13 @@ public class OfferFilterFragment extends Fragment {
 
         if (Objects.nonNull(minDistance) && Objects.nonNull(maxDistance) && !minDistance.isEmpty() &&
                 !maxDistance.isEmpty()) {
-
             if (Double.parseDouble(minDistance) > Double.parseDouble(maxDistance)) {
                 Toast.makeText(getActivity(), R.string.invalid_distance_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
 
         if (Objects.nonNull(minDistance) && !minDistance.isEmpty()) {
-
             try {
                 predicates.add(new LocalizablePredicate(DoubleOperation.GREATER, Double.parseDouble(minDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
@@ -182,11 +208,9 @@ public class OfferFilterFragment extends Fragment {
                 Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + e.getMessage());
                 return;
             }
-
         }
 
         if (Objects.nonNull(maxDistance) && !maxDistance.isEmpty()) {
-
             try {
                 predicates.add(new LocalizablePredicate(DoubleOperation.LESS, Double.parseDouble(maxDistance) * 1000,
                         offerVM.getCurrentUser().getLocalizable()));
@@ -195,17 +219,14 @@ public class OfferFilterFragment extends Fragment {
                 Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + e.getMessage());
                 return;
             }
-
         }
 
         if (Objects.nonNull(minParticipants) && Objects.nonNull(maxParticipants) && !minParticipants.isEmpty() &&
                 !maxParticipants.isEmpty()) {
-
             if (Integer.parseInt(minParticipants) > Integer.parseInt(maxParticipants)) {
                 Toast.makeText(getActivity(), R.string.invalid_participants_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
 
         if (Objects.nonNull(minParticipants) && !minParticipants.isEmpty()) {
@@ -217,12 +238,10 @@ public class OfferFilterFragment extends Fragment {
         }
 
         if (Objects.nonNull(minRating) && Objects.nonNull(maxRating) && !minRating.isEmpty() && !maxRating.isEmpty()) {
-
             if (Double.parseDouble(minRating) > Double.parseDouble(maxRating)) {
                 Toast.makeText(getActivity(), R.string.invalid_rating_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
-
         }
 
         if (Objects.nonNull(minRating) && !minRating.isEmpty()) {
@@ -238,6 +257,7 @@ public class OfferFilterFragment extends Fragment {
             bundle.putSerializable(SORT_CRITERION.name(),
                     new OfferComparator(OfferComparableField.values()[spinner.getSelectedItemPosition()],
                             offerVM.getCurrentUser().getLocalizable()));
+            // Adds the last offer list type to the arguments bundle
             bundle.putSerializable(LIST_TYPE.name(), originListType);
             offerVM.updatePredicates(predicates);
             navController.navigate(R.id.offerListFragment, bundle);
@@ -248,15 +268,13 @@ public class OfferFilterFragment extends Fragment {
         }
     }
 
-    // add sorting criteria to view
+    /**
+     * Initializes the sort spinner by adding the sort criteria.
+     */
     private void initializeSortSpinner() {
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<>(binding.getRoot().getContext(), R.layout.color_spinner_layout,
                         getResources().getStringArray(R.array.items_offer_filter_spinner));
-
-        /*ArrayAdapter arrayAdapter = ArrayAdapter
-                .createFromResource(binding.getRoot().getContext(), R.array.items_offer_filter_spinner,
-                        R.layout.color_spinner_layout);*/
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.sOfferFilterSort.setAdapter(arrayAdapter);
         spinner = binding.sOfferFilterSort;

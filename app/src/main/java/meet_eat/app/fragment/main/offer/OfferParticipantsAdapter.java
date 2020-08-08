@@ -17,16 +17,28 @@ import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
+/**
+ * Contains the various participants displayed in the participants page.
+ */
 public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticipantsAdapter.ViewHolder> {
 
-    private OfferViewModel offerVM;
     private ArrayList<User> currentParticipants;
 
+    /**
+     * Initialize fields.
+     *
+     * @param offerVM      the offer view model
+     * @param participants the participants list
+     */
     public OfferParticipantsAdapter(OfferViewModel offerVM, ArrayList<User> participants) {
-        this.offerVM = offerVM;
         currentParticipants = participants;
     }
 
+    /**
+     * Updates the participants list.
+     *
+     * @param participants the updated participants list
+     */
     public void updateParticipants(ArrayList<User> participants) {
         currentParticipants = participants;
         notifyDataSetChanged();
@@ -50,24 +62,42 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
         return currentParticipants.size();
     }
 
+    /**
+     * Holds the individual participants.
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemOfferParticipantBinding binding;
 
+        /**
+         * Initializes the binding.
+         *
+         * @param binding the binding
+         */
         public ViewHolder(@NonNull ItemOfferParticipantBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
+        /**
+         * Initializes the GUI for an participant and set its click listeners.
+         *
+         * @param user the participant
+         */
         public void setData(User user) {
             binding.tvOfferParticipantUsername.setText(user.getName());
-            // add profile image
             binding.ivOfferParticipantProfile.setOnClickListener(event -> navigateToProfile(user));
             binding.tvOfferParticipantUsername.setOnClickListener(event -> navigateToProfile(user));
         }
 
+        /**
+         * Navigates to the profile of the participant.
+         *
+         * @param user the participant
+         */
         private void navigateToProfile(User user) {
             Bundle bundle = new Bundle();
+            // Adds the participant to the arguments bundle
             bundle.putSerializable(USER.name(), user);
             Navigation.findNavController(binding.getRoot()).navigate(R.id.profileFragment, bundle);
         }

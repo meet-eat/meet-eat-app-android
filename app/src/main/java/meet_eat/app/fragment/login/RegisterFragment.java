@@ -35,11 +35,11 @@ import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
 /**
- * Manages registration-related information.
+ * This is the registration page. Here the user can register with his personal data or go back to the login page.
+ *
+ * @see RegisterViewModel
  */
 public class RegisterFragment extends Fragment {
-
-    private static final int MONTH_CORRECTION = 1;
 
     private FragmentRegisterBinding binding;
     private RegisterViewModel registerVM;
@@ -64,23 +64,31 @@ public class RegisterFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Set various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.tvRegisterBirthdate.setOnClickListener(event -> showDatePicker());
         binding.btRegister.setOnClickListener(event -> register());
     }
 
+    /**
+     * Shows a dialog where the user can pick his birthday. Updates the GUI.
+     */
     private void showDatePicker() {
         Calendar cal = new GregorianCalendar();
         new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth) -> {
-            birthDay = LocalDate.of(year, month + MONTH_CORRECTION, dayOfMonth);
+            birthDay = LocalDate.of(year, month + ContextFormatter.MONTH_CORRECTION, dayOfMonth);
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             binding.tvRegisterBirthdate.setText(contextFormatter.formatDate(birthDay));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    /**
+     * Checks the given input for semantic correctness and tries to register a new user.
+     */
     private void register() {
-
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
         if (!Email.isLegalEmailAddress(email)) {
@@ -129,7 +137,6 @@ public class RegisterFragment extends Fragment {
             profileDescription = "";
         }
 
-        // add profile image
         Email emailParam = new Email(this.email);
         Password hashedPassword = Password.createHashedPassword(this.password);
         User user = new User(emailParam, hashedPassword, birthDay, username, phoneNumber, profileDescription, false,
@@ -137,18 +144,13 @@ public class RegisterFragment extends Fragment {
 
         try {
             registerVM.register(user);
-            navigateToLogin();
+            navController.navigate(R.id.loginFragment);
             Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException e) {
             Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
                     .show();
             Log.i("DEBUG", "In RegisterFragment.register: " + e.getMessage());
         }
-
-    }
-
-    private void navigateToLogin() {
-        navController.navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment());
     }
 
     public String getEmail() {

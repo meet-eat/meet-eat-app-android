@@ -32,13 +32,16 @@ import static meet_eat.app.fragment.ListType.SUBSCRIBED;
 import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
 import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
 
+/**
+ * This is an offer list page. Can display all offers, offer which are bookmarked by the user, offers which are
+ * created by the user and offers from users which have been subscribed by the user.
+ */
 public class OfferListFragment extends Fragment {
 
     private FragmentOfferListBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
     private OfferListAdapter offerListAdapter;
-    private OfferComparator comparator;
     private ListType type;
 
     @Nullable
@@ -54,12 +57,13 @@ public class OfferListFragment extends Fragment {
         binding.rvOfferList
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        if (Objects.isNull(getArguments())) {
+        // Checks if the previous page sent a bundle of arguments containing an offer list type
+        if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
             type = STANDARD;
         } else {
-            type = Objects.isNull(getArguments().getSerializable(LIST_TYPE.name())) ? STANDARD :
-                    (ListType) getArguments().getSerializable(LIST_TYPE.name());
-            offerVM.getCurrentUser().setOfferComparator(comparator =
+            type = (ListType) getArguments().getSerializable(LIST_TYPE.name());
+            // Updates the comparators for the current user
+            offerVM.getCurrentUser().setOfferComparator(
                     Objects.isNull(getArguments().getSerializable(SORT_CRITERION.name())) ?
                             new OfferComparator(OfferComparableField.TIME, offerVM.getCurrentUser().getLocalizable()) :
                             (OfferComparator) getArguments().getSerializable(SORT_CRITERION.name()));
@@ -70,39 +74,31 @@ public class OfferListFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void updateUI() {
-        updateOffers();
-
-        if (!type.equals(SUBSCRIBED)) {
-            binding.ibtOfferListSubscribed.setVisibility(GONE);
-        }
-
-    }
-
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtOfferListFilter.setOnClickListener(event -> navigateToOfferFilter());
-        binding.ibtOfferListCreate.setOnClickListener(event -> navigateToOfferEdit());
-        binding.ibtOfferListSubscribed.setOnClickListener(event -> navigateToProfileSubscribed());
+        binding.ibtOfferListCreate.setOnClickListener(event -> navController.navigate(R.id.offerEditFragment));
+        binding.ibtOfferListSubscribed
+                .setOnClickListener(event -> navController.navigate(R.id.profileSubscribedFragment));
     }
 
+    /**
+     * Navigates to the filter page.
+     */
     private void navigateToOfferFilter() {
         Bundle bundle = new Bundle();
+        // Adds the current offer list type to the arguments bundle
         bundle.putSerializable(LIST_TYPE.name(), type);
         navController.navigate(R.id.offerFilterFragment, bundle);
     }
 
-    private void navigateToProfileSubscribed() {
-        navController.navigate(R.id.profileSubscribedFragment);
-    }
-
-    private void navigateToOfferEdit() {
-        navController.navigate(R.id.offerEditFragment);
-    }
-
+    /**
+     * Tries to update the offers depending on which offer list type is selected.
+     */
     private void updateOffers() {
-
         try {
-
             switch (type) {
                 case OWN:
                     offerListAdapter.updateOffers(offerVM.fetchOffers(offerVM.getCurrentUser()));
@@ -122,6 +118,16 @@ public class OfferListFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In OfferListFragment.updateOffers: " + e.getMessage());
         }
+    }
 
+    /**
+     * Updates the GUI when changes are made. Is also used to initialize the GUI.
+     */
+    private void updateUI() {
+        updateOffers();
+
+        if (!type.equals(SUBSCRIBED)) {
+            binding.ibtOfferListSubscribed.setVisibility(GONE);
+        }
     }
 }

@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Objects;
-
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentLoginBinding;
@@ -44,6 +42,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // Databinding to synchronize view with fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -53,20 +52,18 @@ public class LoginFragment extends Fragment {
     }
 
     /**
-     * Sets an on click listener
+     * Set various click listeners.
      */
     private void setButtonOnClickListener() {
-        binding.btLoginRegister.setOnClickListener(event -> navigateToRegister());
         binding.btLogin.setOnClickListener(event -> login());
         binding.tvLoginReset.setOnClickListener(event -> reset());
+        binding.btLoginRegister.setOnClickListener(event -> navController.navigate(R.id.registerFragment));
     }
 
-    private void navigateToRegister() {
-        navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment());
-    }
-
+    /**
+     * Checks for semantic correctness of the email and password and tries to login with given credentials.
+     */
     private void login() {
-
         if (!Email.isLegalEmailAddress(email) || !Password.isLegalPassword(password)) {
             Toast.makeText(getActivity(), R.string.bad_login, Toast.LENGTH_SHORT).show();
             return;
@@ -80,11 +77,12 @@ public class LoginFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In LoginFragment.login: " + e.getMessage());
         }
-
     }
 
+    /**
+     * Checks for semantic correctness of the email and tries to send a password request.
+     */
     private void reset() {
-
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
             return;
@@ -98,7 +96,6 @@ public class LoginFragment extends Fragment {
                     .show();
             Log.i("DEBUG", "In LoginFragment.reset: " + e.getMessage());
         }
-
     }
 
     public String getEmail() {
