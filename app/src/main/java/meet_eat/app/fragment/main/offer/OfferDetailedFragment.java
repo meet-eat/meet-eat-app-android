@@ -238,9 +238,12 @@ public class OfferDetailedFragment extends Fragment {
         }
 
         if (offerVM.isParticipating(offer)) {
+            binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
             binding.btOfferDetailedParticipate.setText(R.string.cancel);
             binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
         } else {
+            binding.btOfferDetailedParticipate
+                    .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
             binding.btOfferDetailedParticipate.setText(R.string.participate);
             binding.tvOfferDetailedParticipating.setVisibility(GONE);
         }
