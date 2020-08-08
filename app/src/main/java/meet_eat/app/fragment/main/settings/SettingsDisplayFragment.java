@@ -13,17 +13,19 @@ import androidx.lifecycle.ViewModelProvider;
 import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
+/**
+ * Not yet implemented.
+ * This is the display settings fragment. The user can choose between light mode, dark mode and the system wide mode.
+ */
 public class SettingsDisplayFragment extends Fragment {
-
-    private FragmentSettingsDisplayBinding binding;
-    private SettingsViewModel settingsVM;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        binding = FragmentSettingsDisplayBinding.inflate(inflater, container, false);
-        settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
+                             @Nullable Bundle savedInstanceState) {
+        meet_eat.app.databinding.FragmentSettingsDisplayBinding binding =
+                FragmentSettingsDisplayBinding.inflate(inflater, container, false);
+        SettingsViewModel settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         return binding.getRoot();
     }
 }

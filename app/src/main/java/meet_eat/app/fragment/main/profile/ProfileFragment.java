@@ -1,6 +1,7 @@
 package meet_eat.app.fragment.main.profile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import meet_eat.data.entity.user.User;
 import static android.view.View.GONE;
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
+/**
+ * This is the profile page. Here the user can see either his own or another users profile.
+ */
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
@@ -41,10 +45,15 @@ public class ProfileFragment extends Fragment {
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
+        // Checks if the previous page sent a bundle of arguments containing the user whose profile is to be shown
         if (Objects.isNull(getArguments())) {
+            // If no user is given by the previous fragment, show the currently logged in user
             user = userVM.getCurrentUser();
         } else if (Objects.isNull(getArguments().getSerializable(USER.name()))) {
-            Toast.makeText(getActivity(), "DEBUG: User not given", Toast.LENGTH_SHORT).show();
+            // If a user was given, but is null
+            Toast.makeText(getActivity(), getString(R.string.request_handler_exception_toast_error_message),
+                    Toast.LENGTH_SHORT).show();
+            Log.i("DEBUG", "User is null");
             navController.navigateUp();
         } else {
             user = (User) getArguments().getSerializable(USER.name());
@@ -55,13 +64,21 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
-        binding.btProfileSubscribe.setOnClickListener(event -> subscribe());
+        binding.btProfileSubscribe.setOnClickListener(event -> changeSubscription());
+        binding.ibtProfileEdit.setOnClickListener(event -> navController.navigate(R.id.profileEditFragment));
+        // Currently disabled feature
         // binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
-        binding.ibtProfileEdit.setOnClickListener(event -> navigateToProfileEdit());
     }
 
+    /**
+     * Initializes the GUI when opening a profile by setting the text views, and showing/hiding buttons. Also updates
+     * the UI when a button has been clicked.
+     */
     private void updateUI() {
         binding.tvProfileUsername.setText(user.getName());
         binding.tvProfileDescription.setText(user.getDescription());
@@ -86,24 +103,32 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    /**
+     * Calculates the age of the user shown in the profile page.
+     *
+     * @return the age of the user in the profile page
+     */
     private String getAge() {
         return String.valueOf(Period.between(user.getBirthDay(), LocalDate.now()).getYears());
     }
 
-    private void navigateToProfileEdit() {
-        navController.navigate(R.id.profileEditFragment);
-    }
-
+    /**
+     * Currently disabled feature.
+     * Navigates to the profile report page, giving the shown user as an argument.
+     */
     private void navigateToProfileReport() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(USER.name(), user);
         navController.navigate(R.id.profileReportFragment, bundle);
     }
 
-    private void subscribe() {
-
+    /**
+     * Tries to subscribe the currently logged in user to the user shown in the page.
+     * If they are already subscribed, unsubscribe.
+     * After (un)subscribing, calls updateUI() to change the buttons text.
+     */
+    private void changeSubscription() {
         try {
-
             if (!userVM.isSubscribed(user)) {
                 userVM.subscribe(user);
             } else {
@@ -117,6 +142,5 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
-
     }
 }

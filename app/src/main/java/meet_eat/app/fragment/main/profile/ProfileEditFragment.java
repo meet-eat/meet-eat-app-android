@@ -30,6 +30,9 @@ import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 import meet_eat.data.location.UnlocalizableException;
 
+/**
+ * This is the profile edit page. Here the user can change his profile details.
+ */
 public class ProfileEditFragment extends Fragment {
 
     private FragmentProfileEditBinding binding;
@@ -54,6 +57,9 @@ public class ProfileEditFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Initializes the GUI by inserting the current profile information into the edit text views.
+     */
     private void initUI() {
         User currentUser = userVM.getCurrentUser();
         binding.tvProfileEditEmail.setText(currentUser.getEmail().toString());
@@ -62,6 +68,7 @@ public class ProfileEditFragment extends Fragment {
         binding.tvProfileEditBirthday.setText(contextFormatter.formatDate(currentUser.getBirthDay()));
         phone = currentUser.getPhoneNumber();
 
+        // Have to catch in case the location the user typed in is invalid
         try {
             home = contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable());
         } catch (IOException | UnlocalizableException e) {
@@ -71,19 +78,26 @@ public class ProfileEditFragment extends Fragment {
             navController.navigateUp();
         }
 
-        // add profile image
         description = currentUser.getDescription();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.btProfileEditChangePassword.setOnClickListener(event -> changePassword());
         binding.btProfileEditSave.setOnClickListener(event -> saveProfile());
-        // binding.ibtProfileEditAdd.setOnClickListener(event -> addImage());
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
+        // Disabled feature: adding an image
+        // binding.ibtProfileEditAdd.setOnClickListener(event -> addImage());
     }
 
+    /**
+     * Checks old and new password for semantic correctness, then tries to change the password.
+     * Changing password will not work twice in one session, because the user object inside the
+     * token is not changed until a new session is started.
+     */
     private void changePassword() {
-
         if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
             Toast.makeText(getActivity(), R.string.bad_passwords, Toast.LENGTH_SHORT).show();
             return;
@@ -91,6 +105,7 @@ public class ProfileEditFragment extends Fragment {
 
         Password oldPassword = Password.createHashedPassword(oldPasswordString);
         Password newPassword = Password.createHashedPassword(newPasswordString);
+
         try {
             if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
                 userVM.getCurrentUser().setPassword(newPassword);
@@ -105,20 +120,17 @@ public class ProfileEditFragment extends Fragment {
                             "DEBUG ProfileEditFragment.java -> changePassword(): " + e.getMessage(), Toast.LENGTH_LONG)
                             .show();
                 }
-
             } else {
                 Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
             }
         } catch (IllegalStateException exception) {
             Toast.makeText(getActivity(), "Bitte aus- und wieder einloggen", Toast.LENGTH_SHORT).show();
         }
-
     }
 
-    private void addImage() {
-        // add profile image
-    }
-
+    /**
+     * Checks the given input for semantic correctness, then tries to update the user.
+     */
     private void saveProfile() {
         User currentUser = userVM.getCurrentUser();
 
@@ -158,10 +170,8 @@ public class ProfileEditFragment extends Fragment {
         } catch (RequestHandlerException e) {
             Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
                     .show();
-            Toast.makeText(getActivity(), "DEBUG RegisterFragment.java -> saveProfile(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "RegisterFragment.saveProfile: " + e.getMessage());
         }
-
     }
 
     public String getPhone() {

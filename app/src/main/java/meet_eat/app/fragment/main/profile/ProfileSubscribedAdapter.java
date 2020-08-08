@@ -19,16 +19,31 @@ import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
+/**
+ * Contains the various subscribers displayed in the subscriber page.
+ */
 public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscribedAdapter.ViewHolder> {
 
     private UserViewModel userVM;
     private ArrayList<User> currentSubscriptions;
 
+
+    /**
+     * Initialize fields.
+     *
+     * @param userVM        the user view model
+     * @param subscriptions the subscriber list
+     */
     public ProfileSubscribedAdapter(UserViewModel userVM, ArrayList<User> subscriptions) {
         this.userVM = userVM;
         currentSubscriptions = subscriptions;
     }
 
+    /**
+     * Updates the subscriber list.
+     *
+     * @param subscriptions the updated subscriber list
+     */
     public void updateSubscriptions(ArrayList<User> subscriptions) {
         currentSubscriptions = subscriptions;
         notifyDataSetChanged();
@@ -52,15 +67,28 @@ public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscr
         return currentSubscriptions.size();
     }
 
+    /**
+     * Holds the individual subscribers.
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemProfileSubscriptionBinding binding;
 
+        /**
+         * Initializes the binding.
+         *
+         * @param binding the binding
+         */
         public ViewHolder(@NonNull ItemProfileSubscriptionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
+        /**
+         * Initializes the GUI for a subscriber and set its click listeners.
+         *
+         * @param user the subscriber
+         */
         public void setData(User user) {
             binding.tvOfferSubscriptionUsername.setText(user.getName());
             binding.tvOfferSubscriptionUsername.setOnClickListener(event -> navigateToProfile(user));
@@ -68,12 +96,22 @@ public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscr
             binding.ivOfferSubscriptionProfile.setOnClickListener(event -> navigateToProfile(user));
         }
 
+        /**
+         * Navigates to the profile of the subscriber.
+         *
+         * @param user the subscriber
+         */
         private void navigateToProfile(User user) {
             Bundle bundle = new Bundle();
             bundle.putSerializable(USER.name(), user);
             Navigation.findNavController(binding.getRoot()).navigate(R.id.profileFragment, bundle);
         }
 
+        /**
+         * Removes a user from the currently logged in users subscriptions.
+         *
+         * @param user the user to be removed
+         */
         private void unsubscribe(User user) {
             int position = currentSubscriptions.indexOf(user);
             currentSubscriptions.remove(user);
@@ -83,13 +121,11 @@ public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscr
                 userVM.unsubscribe(user);
             } catch (RequestHandlerException e) {
                 Toast.makeText(binding.getRoot().getContext(), R.string.request_handler_exception_toast_error_message,
-                        Toast.LENGTH_LONG)
-                        .show();
+                        Toast.LENGTH_LONG).show();
                 Toast.makeText(binding.getRoot().getContext(),
                         "DEBUG ProfileSubscribedAdapter.java -> unsubscribe(): " + e.getMessage(), Toast.LENGTH_LONG)
                         .show();
             }
-
         }
     }
 }

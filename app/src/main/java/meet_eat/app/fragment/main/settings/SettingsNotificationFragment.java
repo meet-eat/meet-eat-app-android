@@ -13,17 +13,19 @@ import androidx.lifecycle.ViewModelProvider;
 import meet_eat.app.databinding.FragmentSettingsNotificationBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
+/**
+ * Not yet implemented.
+ * This is the notification settings fragment. The user can choose (for example) the notification time before a meeting.
+ */
 public class SettingsNotificationFragment extends Fragment {
-
-    private FragmentSettingsNotificationBinding binding;
-    private SettingsViewModel settingsVM;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        binding = FragmentSettingsNotificationBinding.inflate(inflater, container, false);
-        settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
+                             @Nullable Bundle savedInstanceState) {
+        meet_eat.app.databinding.FragmentSettingsNotificationBinding binding =
+                FragmentSettingsNotificationBinding.inflate(inflater, container, false);
+        SettingsViewModel settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         return binding.getRoot();
     }
 }

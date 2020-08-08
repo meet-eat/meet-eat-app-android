@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,10 @@ import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.setting.NotificationSetting;
 import meet_eat.data.entity.user.setting.Setting;
 
+/**
+ * The settings page. Here the user can choose between different settings to change.
+ */
 public class SettingsFragment extends Fragment {
-
 
     private FragmentSettingsBinding binding;
     private SettingsViewModel settingsVM;
@@ -34,7 +37,7 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         navController = NavHostFragment.findNavController(this);
@@ -43,29 +46,40 @@ public class SettingsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
-        // binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
-        // binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navigateToSettingsDisplay());
-        // binding.tvSettingsNotificationMenu.setOnClickListener(event -> navigateToSettingsNotification());
-        binding.btSettingsDelete.setOnClickListener(event -> navigateToSettingsDeleteProfile());
-        binding.btSettingsLogout.setOnClickListener(event -> logout());
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
+        binding.btSettingsDelete
+                .setOnClickListener(event -> navController.navigate(R.id.settingsDeleteProfileFragment));
+        binding.btSettingsLogout.setOnClickListener(event -> logout());
+        // Currently disabled features
+        // binding.swSettingsNotification.setOnClickListener(event -> toggleNotification());
+        // binding.tvSettingsAppearanceMenu.setOnClickListener(event -> navController.navigate(R.id
+        // .settingsDisplayFragment));
+        // binding.tvSettingsNotificationMenu.setOnClickListener(event -> navController.navigate(R.id
+        // .settingsNotificationFragment));
     }
 
+    /**
+     * Sets the notification setting switch accordingly to the users given notification setting.
+     */
     private void updateUI() {
         Set<Setting> settings = settingsVM.getCurrentUser().getSettings();
-
-        for (Setting s : settings) {
-
-            if (s instanceof NotificationSetting) {
+        // Get the notification setting off the settings set, then updates the notification switch accordingly
+        settings.forEach(s -> {
+            if (s.getClass().equals(NotificationSetting.class)) {
                 binding.swSettingsNotification.setChecked(((NotificationSetting) s).isEnabled());
-                break;
             }
-
-        }
-
+        });
     }
 
+    /**
+     * Tries to log out the user, then goes back to the login page
+     *
+     * @see meet_eat.app.fragment.login.LoginFragment
+     */
     private void logout() {
 
         try {
@@ -80,18 +94,10 @@ public class SettingsFragment extends Fragment {
 
     }
 
-    private void navigateToSettingsDeleteProfile() {
-        navController.navigate(R.id.settingsDeleteProfileFragment);
-    }
-
-    private void navigateToSettingsNotification() {
-        navController.navigate(R.id.settingsNotificationFragment);
-    }
-
-    private void navigateToSettingsDisplay() {
-        navController.navigate(R.id.settingsDisplayFragment);
-    }
-
+    /**
+     * Currently disabled feature
+     * Toggles the notification setting
+     */
     private void toggleNotification() {
         NotificationSetting newNotificationSetting = new NotificationSetting();
         newNotificationSetting.setEnabled(binding.swSettingsNotification.isEnabled());
@@ -101,8 +107,7 @@ public class SettingsFragment extends Fragment {
         } catch (RequestHandlerException e) {
             Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message, Toast.LENGTH_LONG)
                     .show();
-            Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> toggleNotification(): " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Log.i("DEBUG", "SettingsFragment.toggleNotification: " + e.getMessage());
         }
 
     }

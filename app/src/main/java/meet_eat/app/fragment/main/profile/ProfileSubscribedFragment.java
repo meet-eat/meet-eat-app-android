@@ -19,6 +19,10 @@ import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 
+/**
+ * This is the subscriber list page. Here the user can see his subscriptions, click on their names for more
+ * information, or remove them from his subscriber list.
+ */
 public class ProfileSubscribedFragment extends Fragment {
 
     private FragmentProfileSubscribedBinding binding;
@@ -43,12 +47,17 @@ public class ProfileSubscribedFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Updates the subscriber list by giving the adapter the {@link java.util.Set Set} of subscribers.
+     */
     private void displaySubscriberList() {
         profileSubscribedAdapter.updateSubscriptions(new ArrayList<>(userVM.getCurrentUser().getSubscriptions()));
     }
 
+    /**
+     * Sets the click listener for the back button
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
     }
-
 }
