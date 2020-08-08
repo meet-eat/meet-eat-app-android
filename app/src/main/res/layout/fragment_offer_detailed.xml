@@ -185,10 +185,9 @@
                     android:shadowRadius="10"
                     android:text="@string/city"
                     android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedDistance"
                     app:layout_constraintEnd_toStartOf="@+id/tvOfferDetailedParticipants"
                     app:layout_constraintStart_toEndOf="@+id/tvOfferDetailedDistance"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedDistance" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDate" />
 
                 <TextView
                     android:id="@+id/tvOfferDetailedParticipants"
