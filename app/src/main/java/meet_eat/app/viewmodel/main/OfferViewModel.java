@@ -2,6 +2,8 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.common.collect.Sets;
+
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -57,7 +59,6 @@ public class OfferViewModel extends ViewModel {
      * Gets the user's bookmarked offers.
      *
      * @return the user's bookmarked offers
-     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Offer> fetchBookmarkedOffers() {
         return getCurrentUser().getBookmarks();
@@ -227,14 +228,33 @@ public class OfferViewModel extends ViewModel {
         return bookmarks.anyMatch(x -> x.getIdentifier().equals(offerIdentifier));
     }
 
+    /**
+     * Checks if the current user is participating in the given {@link Offer}.
+     *
+     * @param offer the offer to be checked
+     * @return true if the current user is participating
+     */
     public boolean isParticipating(Offer offer) {
         Set<User> participantsWithNull = offer.getParticipants();
-        participantsWithNull.removeIf(Objects::isNull);
-        Stream<User> participants = participantsWithNull.stream();
+        Set<User> participantsWithoutNull = Sets.newHashSet();
+
+        for (User participantOrNull : participantsWithNull) {
+            if (Objects.nonNull(participantOrNull)) {
+                participantsWithoutNull.add(participantOrNull);
+            }
+        }
+
+        Stream<User> participants = participantsWithoutNull.stream();
         String userIdentifier = getCurrentUser().getIdentifier();
         return participants.anyMatch(x -> x.getIdentifier().equals(userIdentifier));
     }
 
+    /**
+     * Checks if the current user is the creator of the given {@link Offer}.
+     *
+     * @param offer the offer to be checked
+     * @return true if the user is the creator
+     */
     public boolean isCreator(Offer offer) {
         return getCurrentUser().getIdentifier().equals(offer.getCreator().getIdentifier());
     }

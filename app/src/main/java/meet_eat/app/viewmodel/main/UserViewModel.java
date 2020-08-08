@@ -68,6 +68,12 @@ public class UserViewModel extends ViewModel {
         edit(getCurrentUser());
     }
 
+    /**
+     * Checks if the current user is subscribed to the given {@link User}.
+     *
+     * @param user the user which is to be compared
+     * @return true if the current user subscribed the user
+     */
     public boolean isSubscribed(User user) {
         Stream<User> subscriptions = getCurrentUser().getSubscriptions().stream();
         String userIdentifier = user.getIdentifier();
