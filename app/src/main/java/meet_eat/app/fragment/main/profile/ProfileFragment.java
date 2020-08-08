@@ -99,10 +99,11 @@ public class ProfileFragment extends Fragment {
                 } else {
                     binding.btProfileSubscribe.setText((getResources().getString(R.string.subscribe)));
                 }
-            } catch (RequestHandlerException exception) {
+            } catch (RequestHandlerException e) {
                 binding.btProfileSubscribe.setVisibility(GONE);
-                Log.e("DEBUG", exception.getMessage());
-                // TODO Toast und Log
+                Toast.makeText(getActivity(), R.string.request_handler_exception_toast_error_message,
+                        Toast.LENGTH_SHORT).show();
+                Log.i("DEBUG", "In ProfileFragment.updateUI: " + e.getMessage());
             }
         }
     }
