@@ -116,11 +116,7 @@ public class ContextFormatter {
      * @return the string representation of the addresses sub-admin area and if available, also the postal code
      */
     public String formatStringFromAddress(Address address) {
-        if (Objects.isNull(Objects.requireNonNull(address).getPostalCode())) {
-            return address.getSubAdminArea();
-        }
-
-        return address.getPostalCode() + ", " + address.getSubAdminArea();
+        return address.getAddressLine(0);
     }
 
     /**
@@ -134,8 +130,20 @@ public class ContextFormatter {
      * @throws UnlocalizableException if the {@link Localizable} object is invalid
      */
     public String formatStringFromLocalizable(Localizable localizable) throws IOException, UnlocalizableException {
-        return formatStringFromAddress(new Geocoder(context)
-                .getFromLocation(localizable.getSphericalPosition().getLatitude(),
-                        localizable.getSphericalPosition().getLongitude(), 1).get(0));
+        Geocoder geocoder = new Geocoder(context);
+        double lat = localizable.getSphericalPosition().getLatitude();
+        double lng = localizable.getSphericalPosition().getLongitude();
+        Address address = null;
+
+        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, 1)) &&
+                geocoder.getFromLocation(lat, lng, 1).size() > 0) {
+            address = geocoder.getFromLocation(lat, lng, 1).get(0);
+        }
+
+        if (Objects.isNull(address)) {
+            return context.getResources().getString(R.string.invalid_location);
+        }
+
+        return formatStringFromAddress(address);
     }
 }
