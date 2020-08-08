@@ -71,7 +71,6 @@ public class SettingsViewModelTest {
         settingsVM.updateNotificationSettings(notificationSetting);
     }
 
-    @Ignore("See issue on meet_eat.data")
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateNotificationSettingsNegativeTime() throws RequestHandlerException {
         NotificationSetting notificationSetting = new NotificationSetting(true, -1);
