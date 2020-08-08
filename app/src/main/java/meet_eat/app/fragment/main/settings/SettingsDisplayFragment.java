@@ -14,7 +14,6 @@ import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
 /**
- * Not yet implemented.
  * This is the display settings fragment. The user can choose between light mode, dark mode and the system wide mode.
  */
 public class SettingsDisplayFragment extends Fragment {

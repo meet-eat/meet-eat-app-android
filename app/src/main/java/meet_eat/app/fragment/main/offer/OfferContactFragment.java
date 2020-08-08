@@ -24,6 +24,9 @@ import meet_eat.data.entity.user.contact.ContactRequest;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
+/**
+ * This is the contact page. Here the user can send a request to the offers creator.
+ */
 public class OfferContactFragment extends Fragment {
 
     private FragmentOfferContactBinding binding;
@@ -54,11 +57,17 @@ public class OfferContactFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btOfferContact.setOnClickListener(event -> contact());
     }
 
+    /**
+     * Tries to send a contact request.
+     */
     private void contact() {
         ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(), offer.getCreator());
         offerVM.requestContact(contactRequest);
@@ -66,6 +75,9 @@ public class OfferContactFragment extends Fragment {
         navController.navigateUp();
     }
 
+    /**
+     * Initializes the GUI.
+     */
     private void initUI() {
         binding.tvOfferContactInfo.setText(offer.getCreator().getName());
     }

@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import meet_eat.app.R;
 
+/**
+ * This is the offer report page. Here the user can send a report of the previously displayed offer.
+ */
 public class OfferReportFragment extends Fragment {
 
     @Nullable

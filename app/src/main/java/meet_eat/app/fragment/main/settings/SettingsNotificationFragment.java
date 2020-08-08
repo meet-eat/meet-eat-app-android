@@ -14,7 +14,6 @@ import meet_eat.app.databinding.FragmentSettingsNotificationBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
 /**
- * Not yet implemented.
  * This is the notification settings fragment. The user can choose (for example) the notification time before a meeting.
  */
 public class SettingsNotificationFragment extends Fragment {

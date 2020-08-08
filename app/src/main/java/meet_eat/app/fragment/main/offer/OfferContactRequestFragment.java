@@ -15,6 +15,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import meet_eat.app.databinding.FragmentOfferContactRequestBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 
+/**
+ * This is the contact request page. Here the user can accept a contact request and choose which information he wants
+ * to share with the requester.
+ */
 public class OfferContactRequestFragment extends Fragment {
 
     private FragmentOfferContactRequestBinding binding;

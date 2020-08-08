@@ -26,6 +26,9 @@ import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
+/**
+ * This is the profile report page. Here the user can send a report to the previously displayed user.
+ */
 public class ProfileReportFragment extends Fragment {
 
     private static final String SPACE = " ";
@@ -56,6 +59,9 @@ public class ProfileReportFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.btProfileReport.setOnClickListener(event -> reportUser());
     }

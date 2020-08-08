@@ -22,6 +22,9 @@ import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.User;
 
+/**
+ * This is the guest rating page. Here the user can rate his guests and send his ratings.
+ */
 public class RateGuestsFragment extends Fragment {
 
     private FragmentRateGuestsBinding binding;
@@ -53,15 +56,24 @@ public class RateGuestsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Initializes the GUI.
+     */
     private void initUI() {
         binding.tvRateGuestsOfferTitle.setText(offer.getName());
         rateGuestsAdapter.updateGuests(offer.getParticipants());
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.btRateGuestsRate.setOnClickListener(event -> confirmRatings());
     }
 
+    /**
+     * Tries to send the guest ratings.
+     */
     private void confirmRatings() {
         rateGuestsAdapter.sendRatings();
         navController.navigate(R.id.offerListFragment);

@@ -25,6 +25,9 @@ import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.entity.user.rating.RatingBasis;
 import meet_eat.data.entity.user.rating.RatingValue;
 
+/**
+ * This is the host rating fragment. Here the user can rate the host of the offer he participated.
+ */
 public class RateHostFragment extends Fragment {
 
     private static final float RATING_STEP_SIZE = 1;
@@ -54,6 +57,9 @@ public class RateHostFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Initializes the GUI.
+     */
     private void initUI() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         binding.tvRateHostOfferTitle.setText(offer.getName());
@@ -70,10 +76,16 @@ public class RateHostFragment extends Fragment {
         binding.rbRateHost.setStepSize(RATING_STEP_SIZE);
     }
 
+    /**
+     * Sets various click listeners.
+     */
     private void setButtonOnClickListener() {
         binding.btRateHostRate.setOnClickListener(event -> rateGuests());
     }
 
+    /**
+     * Tries to rate the host.
+     */
     private void rateGuests() {
         int numStars = (int) binding.rbRateHost.getRating();
         Rating rating;

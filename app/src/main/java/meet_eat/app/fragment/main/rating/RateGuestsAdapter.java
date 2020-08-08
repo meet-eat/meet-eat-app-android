@@ -16,6 +16,9 @@ import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.entity.user.rating.RatingBasis;
 import meet_eat.data.entity.user.rating.RatingValue;
 
+/**
+ * Contains the various offer guests displayed in the guest rating page.
+ */
 public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.ViewHolder> {
 
     private static final float RATING_STEP_SIZE = 1;
@@ -24,16 +27,36 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     private RatingViewModel ratingVM;
     private ArrayList<User> currentGuests;
 
+    /**
+     * Initializing fields.
+     *
+     * @param ratingVM the rating view model
+     * @param guests   the guests to the offer
+     */
     public RateGuestsAdapter(RatingViewModel ratingVM, ArrayList<User> guests) {
         this.ratingVM = ratingVM;
         currentGuests = guests;
     }
 
+    /**
+     * Updates the offer list.
+     *
+     * @param offers the fetched offers list
+     */
+
+    /**
+     * Updates the guest list.
+     *
+     * @param participants the participants which are rated
+     */
     public void updateGuests(Collection<User> participants) {
         currentGuests = new ArrayList<>(participants);
         notifyDataSetChanged();
     }
 
+    /**
+     * Tries to send the guest ratings.
+     */
     public void sendRatings() {
         Rating[] ratings = new Rating[currentGuests.size()];
         // create ratings, then: ratingVM.send(ratings);
@@ -58,25 +81,49 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
         return currentGuests.size();
     }
 
+    /**
+     * Holds the individual guests.
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemRateGuestBinding binding;
 
+        /**
+         * Initializes the binding.
+         *
+         * @param binding the binding
+         */
         public ViewHolder(@NonNull ItemRateGuestBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
+        /**
+         * Initializes the GUI for a guest and sets various click listeners.
+         *
+         * @param user the guest
+         */
         public void setData(User user) {
             binding.tvRateGuestUsername.setText(user.getName());
             binding.rbRateGuest.setNumStars(DEFAULT_NUM_STARS);
             binding.rbRateGuest.setStepSize(RATING_STEP_SIZE);
         }
 
+        /**
+         * Gets the guest rating from the GUI by calling the createRating() method.
+         *
+         * @return a rating to a guest
+         */
         public Rating getRatingFromUI() {
             return createRating((int) binding.rbRateGuest.getRating());
         }
 
+        /**
+         * Creates the guest rating from the rating amount.
+         *
+         * @param ratingAmount number of stars the user selected
+         * @return a new guest rating
+         */
         private Rating createRating(int ratingAmount) {
             return new Rating(RatingBasis.GUEST, RatingValue.getRatingValueByInteger(ratingAmount),
                     ratingVM.getCurrentUser());
