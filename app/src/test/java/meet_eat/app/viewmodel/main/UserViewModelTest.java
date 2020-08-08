@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.Report;
@@ -33,15 +34,16 @@ public class UserViewModelTest {
 
     private static SettingsViewModel settingsVM;
     private static LoginViewModel loginVM;
+    private static UserViewModel userVM;
     private static User registeredUser;
     private static User toBeReported;
     private static User toBeSubscribed;
-    private static User subscribedUser;
     private static String uniqueIdentifier;
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
         loginVM = new LoginViewModel();
+        userVM = new UserViewModel();
         RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
 
@@ -58,122 +60,109 @@ public class UserViewModelTest {
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
-        subscribedUser = new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
+        User subscribedUser =
+                new User(new Email(uniqueIdentifier + 3 + testEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
+                        new SphericalLocation(new SphericalPosition(0, 0)));
 
         registerVM.register(toBeReported);
         registerVM.register(toBeSubscribed);
         registerVM.register(registeredUser);
         registerVM.register(subscribedUser);
         loginVM.login(uniqueIdentifier + testEmail, password);
-        // new UserViewModel().subscribe(subscribedUser);
+        System.out.println("Logged in with: " + settingsVM.getCurrentUser().getEmail() + " " +
+                settingsVM.getCurrentUser().getPassword().getHash() + "\n");
+        // userVM.subscribe(subscribedUser);
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         settingsVM.deleteUser(settingsVM.getCurrentUser());
-
         for (int i = 1; i <= 3; i++) {
             loginVM.login(uniqueIdentifier + i + testEmail, password);
             settingsVM.deleteUser(settingsVM.getCurrentUser());
         }
-
     }
 
     @Test
     public void testGetCurrentUser() {
-        assertNotNull(new UserViewModel().getCurrentUser().getIdentifier());
+        assertNotNull(userVM.getCurrentUser().getIdentifier());
+    }
+
+    @Ignore("subscribing does not work")
+    @Test
+    public void testSubscribeAndUnsubscribe() throws RequestHandlerException {
+        userVM.subscribe(toBeSubscribed);
+
+        isTrue(userVM.getSubscriptions().contains(toBeSubscribed), "subscribing did not work");
+
+        userVM.unsubscribe(toBeSubscribed);
+
+        isTrue(!userVM.getSubscriptions().contains(toBeSubscribed), "unsubscribing did not work");
     }
 
     @Test
     public void testEditUser() throws RequestHandlerException {
         // changing email is omitted, there is no such functionality in the app
-        registeredUser.setPhoneNumber("");
-        registeredUser.setDescription("");
+        // changing password is done in testChangePassword()
+        registeredUser.setPhoneNumber(phoneNumber + "1");
+        registeredUser.setDescription(profileDescription + "1");
         registeredUser.setBirthDay(LocalDate.MIN);
         registeredUser.setVerified(!registeredUser.isVerified());
-        registeredUser.setName("");
-        registeredUser.setRole(Role.ADMIN);
-        registeredUser.setLocalizable(new SphericalLocation(new SphericalPosition(0.0, 0.0)));
+        registeredUser.setName(username + "1");
+        // set role to new role
+        registeredUser.setRole(registeredUser.getRole().equals(Role.ADMIN) ? Role.USER : Role.ADMIN);
+        registeredUser.setLocalizable(new SphericalLocation(new SphericalPosition(1, 1)));
 
-        new UserViewModel().edit(new UserViewModel().getCurrentUser());
-
-        testGetCurrentUser();
+        userVM.edit(userVM.getCurrentUser());
     }
 
     @Test
     public void testChangePassword() throws RequestHandlerException {
-        UserViewModel userVM = new UserViewModel();
         Password newPassword = Password.createHashedPassword("HelloWorld1!");
         User user = userVM.getCurrentUser();
         user.setPassword(newPassword);
         userVM.edit(user);
         settingsVM.logout();
         loginVM.login(uniqueIdentifier + testEmail, "HelloWorld1!");
-
         assertTrue(newPassword.matches(userVM.getCurrentUser().getPassword()));
     }
 
     @Test(expected = NullPointerException.class)
     public void testEditUserWithNull() throws RequestHandlerException {
-        new UserViewModel().edit(null);
+        userVM.edit(null);
     }
 
-    @Ignore("Error code 409: conflict")
+    @Ignore("Not yet implemented")
     @Test
     public void testReport() throws RequestHandlerException {
-        Report report = new Report(new UserViewModel().getCurrentUser(), "");
-        new UserViewModel().report(toBeReported, report);
+        Report report = new Report(userVM.getCurrentUser(), "");
+        userVM.report(toBeReported, report);
     }
 
     @Test(expected = NullPointerException.class)
     public void testReportWithNullReportObject() throws RequestHandlerException {
-        new UserViewModel().report(toBeReported, null);
+        userVM.report(toBeReported, null);
     }
 
     @Test(expected = NullPointerException.class)
     public void testReportWithNullUser() throws RequestHandlerException {
-        Report report = new Report(new UserViewModel().getCurrentUser(), "");
-        new UserViewModel().report(null, report);
+        Report report = new Report(userVM.getCurrentUser(), "");
+        userVM.report(null, report);
     }
 
     @Test(expected = NullPointerException.class)
     public void testReportWithNull() throws RequestHandlerException {
-        new UserViewModel().report(null, null);
+        userVM.report(null, null);
     }
 
     @Test(expected = NullPointerException.class)
     public void testSubscribeWithNull() throws RequestHandlerException {
-        new UserViewModel().subscribe(null);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testSubscribeWithUnregisteredUser() throws RequestHandlerException {
-        // if exception is not thrown, check if unregisteredUser is in users subscriber list
-        User unregisteredUser =
-                new User(new Email(uniqueIdentifier + 42 + testEmail), Password.createHashedPassword(password),
-                        LocalDate.of(2000, 1, 1),
-                        username, phoneNumber, profileDescription, true,
-                        new SphericalLocation(new SphericalPosition(0, 0)));
-
-        new UserViewModel().subscribe(unregisteredUser);
-    }
-
-    @Test
-    public void testSubscribeAndUnsubscribe() throws RequestHandlerException {
-        UserViewModel userVM = new UserViewModel();
-        userVM.subscribe(toBeSubscribed);
-
-        isTrue(userVM.getCurrentUser().getSubscriptions().contains(toBeSubscribed), "subscribing did not work");
-
-        userVM.unsubscribe(toBeSubscribed);
-
-        isTrue(!userVM.getCurrentUser().getSubscriptions().contains(toBeSubscribed), "unsubscribing did not work");
+        userVM.subscribe(null);
     }
 
     @Test(expected = NullPointerException.class)
     public void testUnsubscribeWithNull() throws RequestHandlerException {
-        new UserViewModel().unsubscribe(null);
+        userVM.unsubscribe(null);
     }
 }

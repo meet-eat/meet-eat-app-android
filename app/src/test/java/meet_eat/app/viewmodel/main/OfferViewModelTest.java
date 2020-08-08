@@ -2,25 +2,34 @@ package meet_eat.app.viewmodel.main;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
+import meet_eat.data.Report;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.Tag;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.entity.user.contact.ContactData;
+import meet_eat.data.entity.user.contact.ContactRequest;
+import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
+import meet_eat.data.location.UnlocalizableException;
+import meet_eat.data.predicate.OfferPredicate;
+import meet_eat.data.predicate.string.NamePredicate;
+import meet_eat.data.predicate.string.StringOperation;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -29,205 +38,252 @@ public class OfferViewModelTest {
 
     private static final String testEmail = "@example.com";
     private static final String password = "ABcd12§$";
-    private static final String username = "Registered User";
-    private static final String phoneNumber = "0123456789";
-    private static final String profileDescription = "JUnit Test User";
-    private static final String title = "Offer";
-    private static final String offerDescription = "JUnit Test Offer";
+    private static final String username = "Greetings from OfferViewModelTest!";
+    private static final String phoneNumber = "0";
+    private static final String profileDescription = "JUnit Test User. Greetings from OfferViewModelTest!";
+    private static final SphericalPosition position = new SphericalPosition(48.9969871, 11.2092129);
+    private static final Localizable location = new SphericalLocation(position);
+    private static final String offerTitle = "Greetings from OfferViewModelTest!";
+    private static final String offerDescription = "JUnit Test Offer. Greetings from OfferViewModelTest!";
 
     private static LoginViewModel loginVM;
-    private static RegisterViewModel registerVM;
     private static SettingsViewModel settingsVM;
     private static OfferViewModel offerVM;
-    private static User registeredUser;
-    private static User userWithOffer;
-    private static Offer existingOffer;
-    private static Offer newOffer;
+    private static User secondUser;
+    private static String uniqueIdentifier;
+    private static Collection<OfferPredicate> predicates = new ArrayList<>();
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
         loginVM = new LoginViewModel();
-        registerVM = new RegisterViewModel();
+        RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
         offerVM = new OfferViewModel();
+        uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
 
-        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
-        registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
+        // Register contactRequestUser
+        secondUser = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
+                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
+        registerVM.register(secondUser);
+        System.out.println("Registered " + secondUser.getEmail());
+        // Register registeredUser:
+        User registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
+                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(registeredUser);
+        System.out.println("Registered " + registeredUser.getEmail());
+
         loginVM.login(uniqueIdentifier + testEmail, password);
-
-        userWithOffer = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        existingOffer = new Offer(offerVM.getCurrentUser(), new HashSet<Tag>(), title, offerDescription, 1.0, 2,
-                LocalDateTime.of(2100, 1, 1, 0, 0), new SphericalLocation(new SphericalPosition(0, 0)));
-        offerVM.add(existingOffer);
-
-        newOffer = new Offer(userWithOffer, new HashSet<Tag>(), title, offerDescription, 1.0, 2,
-                LocalDateTime.of(2100, 1, 1, 0, 0), new SphericalLocation(new SphericalPosition(0, 0)));
+        System.out.println("Logged in " + registeredUser.getEmail());
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         settingsVM.deleteUser(settingsVM.getCurrentUser());
+        System.out.println("Deleted " + settingsVM.getCurrentUser().getEmail());
     }
 
     @Test
     public void testGetCurrentUser() {
-        assertNotNull(offerVM.getCurrentUser().getIdentifier());
+        assertNotNull(offerVM.getCurrentUser());
     }
 
     @Test
-    public void testFetchOffersByCreatorWithValidUser() throws RequestHandlerException {
+    public void testFetchOffersWithCurrentUser() throws RequestHandlerException {
         offerVM.fetchOffers(offerVM.getCurrentUser());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testFetchOffersByCreatorWithNullUser() throws RequestHandlerException {
+    public void testFetchOffersWithNullUser() throws RequestHandlerException {
         offerVM.fetchOffers((User) null);
     }
 
     @Test
-    public void testFetchOffersWithValidPredicates() throws RequestHandlerException {
-        offerVM.fetchOffers(new ArrayList<>());
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testFetchOffersWithNullPredicates() throws RequestHandlerException {
-        offerVM.fetchOffers((ArrayList) null);
-    }
-
-    @Test
-    public void testFetchSubscribedOffers() throws RequestHandlerException {
-        offerVM.fetchOffersOfSubscriptions();
+    public void testFetchOffersWithPredicates() throws RequestHandlerException {
+        NamePredicate newPredicate = new NamePredicate(StringOperation.CONTAIN, username);
+        predicates.add(newPredicate);
+        offerVM.fetchOffers(predicates);
+        predicates.remove(newPredicate);
     }
 
     @Test
-    public void testFetchBookmarkedOffers() throws RequestHandlerException {
+    public void testFetchBookmarkedOffers() {
         offerVM.fetchBookmarkedOffers();
     }
 
     @Test
-    public void testUpdatePredicatesWithValidPredicates() throws RequestHandlerException {
-        offerVM.updatePredicates(new ArrayList<>());
+    public void testFetchOffersOfSubscriptions() throws RequestHandlerException {
+        offerVM.fetchOffersOfSubscriptions();
+    }
+
+    @Test
+    public void testUpdatePredicates() throws RequestHandlerException {
+        NamePredicate newPredicate = new NamePredicate(StringOperation.CONTAIN, username);
+        int amountPredicates = offerVM.getCurrentUser().getOfferPredicates().size();
+        predicates.add(newPredicate);
+        User user = offerVM.updatePredicates(predicates);
+        predicates.remove(newPredicate);
+        // logout and login to ensure the predicates have been updated
+        settingsVM.logout();
+        loginVM.login(uniqueIdentifier + testEmail, password);
+        assertEquals(++amountPredicates, user.getOfferPredicates().size());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testUpdatePredicatesWithNullPredicates() throws RequestHandlerException {
+    public void testUpdatePredicatesWithNull() throws RequestHandlerException {
         offerVM.updatePredicates(null);
     }
 
-    @Ignore("Add not working")
     @Test
-    public void testAddEditDeleteWithValidOffer() throws RequestHandlerException {
-        offerVM.add(newOffer);
-        offerVM.edit(newOffer);
-        offerVM.delete(newOffer);
-    }
+    public void testAddEditDeleteOffer() throws RequestHandlerException, UnlocalizableException {
+        // ~~~ ADDING ~~~
+        Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
+        assertEquals(0, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
+        offerVM.add(toBeAdded);
+        // logout and login to ensure the offer was added
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        // no other offer has been added, so total must be 1
+        offerVM.getCurrentUser().clearOfferPredicates();
+        assertEquals(1, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
 
-    @Test(expected = NullPointerException.class)
-    public void testAddWithNullOffer() throws RequestHandlerException {
-        offerVM.add(null);
-    }
+        // ~~~ EDITING ~~~
+        Localizable editedLocation = new SphericalLocation(
+                new SphericalPosition(location.getSphericalPosition().getLatitude() + 1,
+                        location.getSphericalPosition().getLongitude() + 1));
+        final String editedDescription = "Hello JUnit test!";
+        Offer editedOffer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        // Should not throw UnlocalizableException, have defined it before
+        editedOffer.setLocation(editedLocation);
+        editedOffer.setDescription(editedDescription);
 
-    @Test(expected = RequestHandlerException.class)
-    public void testDeleteWithInvalidOffer() throws RequestHandlerException {
-        offerVM.delete(newOffer);
-    }
+        offerVM.edit(editedOffer);
+        // logout and login to ensure the offer was removed
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer checkOffer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        assertEquals(checkOffer.getLocation(), editedLocation);
+        assertEquals(checkOffer.getDescription(), editedDescription);
 
-    @Test(expected = NullPointerException.class)
-    public void testDeleteWithNullOffer() throws RequestHandlerException {
-        offerVM.delete(null);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testEditWithInvalidOffer() throws RequestHandlerException {
-        offerVM.edit(newOffer);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testEditWithNullOffer() throws RequestHandlerException {
-        offerVM.edit(null);
-    }
-
-    @Ignore("Recursion error")
-    @Test
-    public void testParticipateAndCancelParticipationWithValidOffer() throws RequestHandlerException {
-        offerVM.participate(existingOffer);
-        offerVM.cancelParticipation(offerVM.getCurrentUser(), existingOffer);
-    }
-
-    @Ignore("Switching between exceptions?!")
-    @Test(expected = RequestHandlerException.class)
-    public void testParticipateWithInvalidOffer() throws RequestHandlerException {
-        offerVM.participate(newOffer);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testParticipateWithNullOffer() throws RequestHandlerException {
-        offerVM.participate(null);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testCancelParticipationWithInvalidParticipant() throws RequestHandlerException {
-        offerVM.cancelParticipation(offerVM.getCurrentUser(), existingOffer);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testCancelParticipationWithNullParticipant() throws RequestHandlerException {
-        offerVM.cancelParticipation(null, existingOffer);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testCancelParticipationWithInvalidOffer() throws RequestHandlerException {
-        offerVM.cancelParticipation(offerVM.getCurrentUser(), newOffer);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testCancelParticipationWithNullOffer() throws RequestHandlerException {
-        offerVM.cancelParticipation(offerVM.getCurrentUser(), null);
-    }
-
-    @Ignore("Can't bookmark own offer")
-    @Test
-    public void testAddAndRemoveBookmarkIsBookmarkedWithValidOffer() throws RequestHandlerException {
-        offerVM.addBookmark(existingOffer);
-        assertTrue(offerVM.isBookmarked(existingOffer));
-        offerVM.removeBookmark(existingOffer);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testAddBookmarkWithInvalidOffer() throws RequestHandlerException {
-        offerVM.addBookmark(newOffer);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testAddBookmarkWithNullOffer() throws RequestHandlerException {
-        offerVM.addBookmark(null);
-    }
-
-    @Ignore("Should throw exception")
-    @Test(expected = RequestHandlerException.class)
-    public void testRemoveBookmarkWithInvalidOffer() throws RequestHandlerException {
-        offerVM.removeBookmark(newOffer);
-    }
-
-    @Ignore("Should throw exception")
-    @Test(expected = NullPointerException.class)
-    public void testRemoveBookmarkWithNullOffer() throws RequestHandlerException {
-        offerVM.removeBookmark(null);
+        // ~~ DELETING ~~~
+        Offer offer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        offerVM.delete(offer);
+        // logout and login to ensure the offer was removed
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        assertEquals(0, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
     }
 
     @Test
-    public void testIsBookmarkedWithInvalidOffer() {
-        assertFalse(offerVM.isBookmarked(newOffer));
+    public void testParticipateThenCancelParticipation() throws RequestHandlerException {
+        // ~~~ ADDING AN OFFER (see testAddEditDeleteOffer) ~~~
+        Offer offerToAdd = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
+        offerVM.add(offerToAdd);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer toBeParticipating = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+        User participatingUser = offerVM.getCurrentUser();
+        offerVM.getCurrentUser().clearOfferPredicates();
+
+        // ~~~ PARTICIPATE ~~~
+        offerVM.participate(toBeParticipating);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer offerWithParticipant = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        assertTrue(offerWithParticipant.getParticipants().contains(participatingUser));
+
+        // ~~~ CANCELLING PARTICIPATION ~~~
+        logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+        offerVM.cancelParticipation(offerVM.getCurrentUser(), offerWithParticipant);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer offerWithCancelledParticipation = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        assertFalse(offerWithCancelledParticipation.getParticipants().contains(participatingUser));
+
+        // ~~~ DELETING ~~~
+        Offer offer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+        offerVM.delete(offer);
     }
 
-    @Ignore("Should throw exception")
-    @Test(expected = NullPointerException.class)
-    public void testIsBookmarkedWithNullOffer() {
-        offerVM.isBookmarked(null);
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRequestContact() {
+        ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(), secondUser);
+        offerVM.requestContact(contactRequest);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testSendContact() {
+        ContactRequest contactRequest = new ContactRequest(offerVM.getCurrentUser(), secondUser);
+        ContactData contactData = new ContactData(contactRequest);
+        offerVM.sendContact(contactData);
+    }
+
+    @Test(expected = RequestHandlerException.class)
+    public void testReport() throws RequestHandlerException {
+        // Not yet implemented
+        String reportMessage = "This is a report message";
+        Report report = new Report(offerVM.getCurrentUser(), reportMessage);
+        offerVM.report(secondUser, report);
+        // Logout and login to get current user's reports
+        settingsVM.logout();
+        loginVM.login(uniqueIdentifier + 1 + testEmail, password);
+        assertFalse(offerVM.getCurrentUser().getReports().isEmpty());
+        // log standard user in again
+        logoutThenLogin(uniqueIdentifier + testEmail);
+    }
+
+    @Test
+    public void testAddRemoveBookmarks() throws RequestHandlerException {
+        // ~~~ CREATE OFFER ~~~
+        Offer toBeBookmarked = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
+        offerVM.add(toBeBookmarked);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer addedOffer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+
+        // ~~~ ADD BOOKMARK ~~~
+        logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+        offerVM.addBookmark(addedOffer);
+        logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+        assertTrue(((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size() > 0);
+
+        // ~~~ REMOVE BOOKMARK ~~~
+        Offer bookmarkedOffer = ((Collection<Offer>) offerVM.fetchBookmarkedOffers()).iterator().next();
+        offerVM.removeBookmark(bookmarkedOffer);
+        logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+        assertEquals(0, ((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size());
+        logoutThenLogin(uniqueIdentifier + testEmail);
+    }
+
+    @Test
+    public void testIsParticipating() throws RequestHandlerException {
+        // ~~~ CREATE OFFER ~~~
+        Offer toBeBookmarked = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
+        offerVM.add(toBeBookmarked);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer addedOffer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+
+        // ~~~ CHECK IF BOOKMARKED ~~~
+        assertFalse(offerVM.isParticipating(addedOffer));
+    }
+
+    @Test
+    public void testIsCreator() throws RequestHandlerException {
+        // ~~~ CREATE OFFER ~~~
+        Offer toBeBookmarked = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
+        offerVM.add(toBeBookmarked);
+        logoutThenLogin(uniqueIdentifier + testEmail);
+        Offer addedOffer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
+
+        // ~~~ CHECK IF OWNER ~~~
+        assertTrue(offerVM.isCreator(addedOffer));
+    }
+
+    @Test
+    public void testGetAllTags() throws RequestHandlerException {
+        offerVM.getAllTags().forEach(tag -> System.out.println(tag.getName()));
+    }
+
+    private void logoutThenLogin(String email) throws RequestHandlerException {
+        settingsVM.logout();
+        loginVM.login(email, OfferViewModelTest.password);
     }
 }

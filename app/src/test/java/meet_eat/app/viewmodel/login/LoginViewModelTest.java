@@ -1,11 +1,13 @@
 package meet_eat.app.viewmodel.login;
 
-import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -23,27 +25,31 @@ public class LoginViewModelTest {
     private static final String phoneNumber = "0123456789";
     private static final String description = "JUnit Test User";
 
-    private static LoginViewModel loginVM;
-    private static RegisterViewModel registerVM;
-    private static SettingsViewModel settingsVM;
+    private static LoginViewModel loginVM = new LoginViewModel();
+    private static RegisterViewModel registerVM = new RegisterViewModel();
+    private static SettingsViewModel settingsVM = new SettingsViewModel();
+    private static String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
 
-    @BeforeClass
-    public static void initialize() {
-        loginVM = new LoginViewModel();
-        registerVM = new RegisterViewModel();
-        settingsVM = new SettingsViewModel();
+
+    @AfterClass
+    public static void cleanUp() throws RequestHandlerException {
+        // cleanup last test in case something went wrong
+        loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
+
+        if (Objects.nonNull(Session.getInstance().getToken()) && Objects.nonNull(Session.getInstance().getUser())) {
+            settingsVM.deleteUser(settingsVM.getCurrentUser());
+        }
     }
 
     @Test
-    public void testRegisterLoginDeleteUser() throws RequestHandlerException {
-        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
-        User registeredUser = new User(new Email(uniqueIdentifier + validRegisteredEmail),
-                Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), username, phoneNumber, description, true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
+    public void testRegisterLoginLogout() throws RequestHandlerException {
+        User registeredUser =
+                new User(new Email(uniqueIdentifier + validRegisteredEmail), Password.createHashedPassword(password),
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, description, true,
+                        new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
+        settingsVM.logout();
     }
 
     @Test(expected = RequestHandlerException.class)

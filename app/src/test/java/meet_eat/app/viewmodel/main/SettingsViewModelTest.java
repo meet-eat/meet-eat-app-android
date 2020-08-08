@@ -13,12 +13,18 @@ import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.entity.user.setting.ColorMode;
+import meet_eat.data.entity.user.setting.DisplaySetting;
+import meet_eat.data.entity.user.setting.NotificationSetting;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Logout is tested in {@link meet_eat.app.viewmodel.login.LoginViewModelTest}
+ */
 public class SettingsViewModelTest {
 
     private static final String registeredEmail = "@example.com";
@@ -28,7 +34,6 @@ public class SettingsViewModelTest {
     private static final String profileDescription = "JUnit Test User";
 
     private static SettingsViewModel settingsVM;
-    private static User registeredUser;
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
@@ -37,10 +42,9 @@ public class SettingsViewModelTest {
         settingsVM = new SettingsViewModel();
 
         String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
-        registeredUser =
+        User registeredUser =
                 new User(new Email(uniqueIdentifier + registeredEmail), Password.createHashedPassword(password),
-                        LocalDate.of(2000, 1, 1),
-                        username, phoneNumber, profileDescription, true,
+                        LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                         new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + registeredEmail, password);
@@ -52,31 +56,46 @@ public class SettingsViewModelTest {
     }
 
     @Test
-    public void testGetCurrentUser() {
+    public void testGetCurrentUserWhileLoggedIn() {
         assertNotNull(settingsVM.getCurrentUser().getIdentifier());
     }
 
-    @Ignore("Not yet implemented")
+
     @Test(expected = NullPointerException.class)
     public void testUpdateNotificationSettingsWithNull() throws RequestHandlerException {
         settingsVM.updateNotificationSettings(null);
     }
 
+    @Test
+    public void testUpdateNotificationSettings() throws RequestHandlerException {
+        NotificationSetting notificationSetting = new NotificationSetting(true, 59);
+        settingsVM.updateNotificationSettings(notificationSetting);
+    }
 
-    @Ignore("Not yet implemented")
+    @Ignore("See issue on meet_eat.data")
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateNotificationSettingsNegativeTime() throws RequestHandlerException {
+        NotificationSetting notificationSetting = new NotificationSetting(true, -1);
+        settingsVM.updateNotificationSettings(notificationSetting);
+    }
+
+    @Test
+    public void testUpdateNotificationSettingsWithMaxIntegerTime() throws RequestHandlerException {
+        NotificationSetting notificationSetting = new NotificationSetting(true, Integer.MAX_VALUE);
+        settingsVM.updateNotificationSettings(notificationSetting);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void testUpdateDisplaySettings() throws RequestHandlerException {
+    public void testUpdateDisplaySettingsWithNull() throws RequestHandlerException {
         settingsVM.updateDisplaySettings(null);
     }
 
-    @Ignore("Conflict with @AfterClass")
     @Test
-    public void testLogout() throws RequestHandlerException {
-        settingsVM.logout();
+    public void testUpdateDisplaySettings() throws RequestHandlerException {
+        DisplaySetting displaySetting = new DisplaySetting(ColorMode.SYSTEM);
+        settingsVM.updateDisplaySettings(displaySetting);
     }
 
-
-    @Ignore("Conflict with @AfterClass")
     @Test(expected = NullPointerException.class)
     public void testDeleteUserWithNull() throws RequestHandlerException {
         settingsVM.deleteUser(null);
