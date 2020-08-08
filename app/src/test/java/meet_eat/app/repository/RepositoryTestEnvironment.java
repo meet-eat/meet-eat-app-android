@@ -55,11 +55,11 @@ public class RepositoryTestEnvironment {
         registeredLoginCredential = null;
     }
 
-    protected User getRegisteredUser() {
+    protected static User getRegisteredUser() {
         return registeredUser;
     }
 
-    protected LoginCredential getRegisteredLoginCredential() {
+    protected static LoginCredential getRegisteredLoginCredential() {
         return registeredLoginCredential;
     }
 }
