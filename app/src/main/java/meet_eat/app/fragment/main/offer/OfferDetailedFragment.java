@@ -39,6 +39,8 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
  */
 public class OfferDetailedFragment extends Fragment {
 
+    private static final String PARTICIPANTS_SEPERATOR = "/";
+
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
@@ -103,10 +105,8 @@ public class OfferDetailedFragment extends Fragment {
         try {
             if (offerVM.isParticipating(offer)) {
                 offer = offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
-                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
             } else {
                 offer = offerVM.participate(offer);
-                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             }
 
             updateUI();
@@ -213,39 +213,43 @@ public class OfferDetailedFragment extends Fragment {
             binding.btOfferDetailedParticipants.setVisibility(GONE);
         }
 
-        if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
-            updateUI();
-        } else {
+        if (offerVM.isCreator(offer) || offerVM.isParticipating(offer)) {
             binding.ibtOfferDetailedBookmark.setVisibility(GONE);
         }
+
+        updateUI();
     }
 
     /**
      * Updates the GUI after the user has interacted with the offer.
      */
     private void updateUI() {
-        if (offerVM.isBookmarked(offer)) {
-            binding.ibtOfferDetailedBookmark
-                    .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
-                            PorterDuff.Mode.SRC_IN);
-        } else {
-            binding.ibtOfferDetailedBookmark
-                    .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
-                            PorterDuff.Mode.SRC_IN);
+        if (!offerVM.isCreator(offer)) {
+            if (offerVM.isBookmarked(offer)) {
+                binding.ibtOfferDetailedBookmark
+                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                                PorterDuff.Mode.SRC_IN);
+            } else {
+                binding.ibtOfferDetailedBookmark
+                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                                PorterDuff.Mode.SRC_IN);
+            }
+
+            if (offerVM.isParticipating(offer)) {
+                binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
+                binding.btOfferDetailedParticipate.setText(R.string.cancel);
+                binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
+                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
+            } else {
+                binding.btOfferDetailedParticipate
+                        .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
+                binding.btOfferDetailedParticipate.setText(R.string.participate);
+                binding.tvOfferDetailedParticipating.setVisibility(GONE);
+                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
+            }
         }
 
-        if (offerVM.isParticipating(offer)) {
-            binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
-            binding.btOfferDetailedParticipate.setText(R.string.cancel);
-            binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
-        } else {
-            binding.btOfferDetailedParticipate
-                    .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
-            binding.btOfferDetailedParticipate.setText(R.string.participate);
-            binding.tvOfferDetailedParticipating.setVisibility(GONE);
-        }
-
-        String participantsText = offer.getParticipants().size() + "/" + offer.getMaxParticipants();
+        String participantsText = offer.getParticipants().size() + PARTICIPANTS_SEPERATOR + offer.getMaxParticipants();
         binding.tvOfferDetailedParticipants.setText(participantsText);
     }
 }
