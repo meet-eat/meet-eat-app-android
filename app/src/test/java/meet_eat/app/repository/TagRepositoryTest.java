@@ -15,6 +15,8 @@ public class TagRepositoryTest extends EntityRepositoryTest<TagRepository, Tag, 
         super(new TagRepository(), TAG_WITH_ID, TAG_WITHOUT_ID);
     }
 
+    // Test getTags
+
     @Test(expected = IllegalStateException.class)
     public void testGetTagsNotLoggedIn() throws RequestHandlerException {
         // Assertions
