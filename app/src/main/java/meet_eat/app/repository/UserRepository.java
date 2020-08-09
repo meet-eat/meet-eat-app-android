@@ -88,40 +88,58 @@ public class UserRepository extends EntityRepository<User> {
         return updateEntity(user);
     }
 
+    /**
+     * Adds a subscription between two users in the repository.
+     *
+     * @param subscription the subscription to be added to the repository
+     * @return the subscription added to the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Subscription addSubscription(Subscription subscription) throws RequestHandlerException {
         String userIdentifier = subscription.getSourceUser().getIdentifier();
         String uriUserIdentifier = "/" + Objects.requireNonNull(userIdentifier);
 
         // Handle request
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<Subscription> requestEntity = new RequestEntity<Subscription>(
                 subscription,
-                headers,
+                getTokenHeaders(),
                 HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Subscription, Subscription>().handle(requestEntity, HttpStatus.CREATED);
     }
 
+    /**
+     * Removes a subscription between two users in the repository.
+     *
+     * @param subscriber the subscribing user
+     * @param subscribedUser the subscribed user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public void removeSubscriptionByUser(User subscriber, User subscribedUser) throws RequestHandlerException {
         String uriUserIdentifier = "/" + Objects.requireNonNull(subscriber.getIdentifier());
 
         // Handle request
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<User> requestEntity = new RequestEntity<User>(
                 Objects.requireNonNull(subscribedUser),
-                headers,
+                getTokenHeaders(),
                 HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         new RequestHandler<User, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Returns the subscriptions of a user from the repository.
+     *
+     * @param user the user whose subscriptions are to be returned from the repository
+     * @return the subscriptions of a user from the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
     public Iterable<Subscription> getSubscriptionsOfUser(User user) throws RequestHandlerException {
         String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
 
         // Handle request
-        LinkedMultiValueMap<String, String> headers = getTokenHeaders();
         RequestEntity<Void> requestEntity = new RequestEntity<Void>(
-                headers,
+                getTokenHeaders(),
                 HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Void, Subscription>().handleIterable(requestEntity, HttpStatus.OK);
