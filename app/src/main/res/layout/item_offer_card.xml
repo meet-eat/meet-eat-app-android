@@ -35,7 +35,7 @@
         <TextView
             android:id="@+id/tvOfferCardTitle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:layout_margin="16dp"
             android:elevation="5dp"
             android:shadowColor="@android:color/black"

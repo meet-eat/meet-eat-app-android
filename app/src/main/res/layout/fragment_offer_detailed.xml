@@ -151,13 +151,14 @@
 
                 <TextView
                     android:id="@+id/tvOfferDetailedPrice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:elevation="5dp"
                     android:shadowColor="@android:color/black"
                     android:shadowRadius="10"
                     android:text="@string/price"
+                    android:textAlignment="textEnd"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTitle" />
@@ -191,8 +192,9 @@
 
                 <TextView
                     android:id="@+id/tvOfferDetailedParticipants"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
                     android:layout_margin="16dp"
                     android:elevation="5dp"
                     android:shadowColor="@android:color/black"
@@ -218,7 +220,7 @@
                 <TextView
                     android:id="@+id/tvOfferDetailedUsername"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_margin="16dp"
                     android:clickable="true"
                     android:elevation="5dp"
