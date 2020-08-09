@@ -89,7 +89,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Adds a subscription between two users in the repository.
+     * Adds a {@link Subscription subscription} between two {@link User users} in the repository.
      *
      * @param subscription the subscription to be added to the repository
      * @return the subscription added to the repository
@@ -109,7 +109,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Removes a subscription between two users in the repository.
+     * Removes a {@link Subscription subscription} between two {@link User users} in the repository.
      *
      * @param subscriber the subscribing user
      * @param subscribedUser the subscribed user
@@ -128,7 +128,7 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Returns the subscriptions of a user from the repository.
+     * Returns the {@link Subscription subscriptions} of a {@link User user} from the repository.
      *
      * @param user the user whose subscriptions are to be returned from the repository
      * @return the subscriptions of a user from the repository
