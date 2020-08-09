@@ -21,6 +21,7 @@ import meet_eat.data.Report;
 import meet_eat.data.comparator.OfferComparableField;
 import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.Subscription;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.Role;
@@ -133,5 +134,100 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
 
         // Execution
         getEntityRepository().report(getRegisteredUser(), null);
+    }
+
+    // Test addSubscription
+
+    @Test(expected = IllegalStateException.class)
+    public void testAddSubscriptionNotLoggedIn() throws RequestHandlerException {
+        // Assertions
+        assertNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().addSubscription(new Subscription(getRegisteredUser(), getUserWithId()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAddSubscriptionWithNullSource() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().addSubscription(new Subscription(null, getUserWithId()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAddSubscriptionWithNullTarget() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().addSubscription(new Subscription(getRegisteredUser(),null));
+    }
+
+    // Test removeSubscriptionByUser
+
+    @Test(expected = IllegalStateException.class)
+    public void testRemoveSubscriptionByUserNotLoggedIn() throws RequestHandlerException {
+        // Assertions
+        assertNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().removeSubscriptionByUser(getRegisteredUser(), getUserWithId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testRemoveSubscriptionByUserWithNullSubscriber() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().removeSubscriptionByUser(null, getUserWithId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testRemoveSubscriptionByUserWithNullSubscribedUser() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().removeSubscriptionByUser(getRegisteredUser(), null);
+    }
+
+    // Test getSubscriptionsOfUser
+
+    @Test(expected = IllegalStateException.class)
+    public void testGetSubscriptionsOfUserNotLoggedIn() throws RequestHandlerException {
+        // Assertions
+        assertNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().getSubscriptionsOfUser(getRegisteredUser());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testGetSubscriptionsOfUserWithNullSubscriber() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().getSubscriptionsOfUser(null);
+    }
+
+    // Test resetPassword
+
+    @Test(expected = NullPointerException.class)
+    public void testResetPasswordWithNullEmail() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().resetPassword(null);
     }
 }

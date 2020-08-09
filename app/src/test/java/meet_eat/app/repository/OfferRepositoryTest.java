@@ -333,6 +333,4 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
         // Execution
         getEntityRepository().removeParticipant(getOfferWithId(), null);
     }
-    
-
 }
