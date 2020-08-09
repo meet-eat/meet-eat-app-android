@@ -1,6 +1,10 @@
 package meet_eat.app.repository;
 
+import org.junit.Test;
+
 import meet_eat.data.entity.Tag;
+
+import static org.junit.Assert.assertNull;
 
 public class TagRepositoryTest extends EntityRepositoryTest<TagRepository, Tag, String> {
 
@@ -11,26 +15,13 @@ public class TagRepositoryTest extends EntityRepositoryTest<TagRepository, Tag, 
         super(new TagRepository(), TAG_WITH_ID, TAG_WITHOUT_ID);
     }
 
-    // Test addEntity
-
-    /*@Ignore
-    @Test
-    public void testAddEntityValidWithId() throws RequestHandlerException {
-        Session.getInstance().login(loginCredential);
-        assertNotNull(Session.getInstance().getToken());
+    @Test(expected = IllegalStateException.class)
+    public void testGetTagsNotLoggedIn() throws RequestHandlerException {
+        // Assertions
+        assertNull(Session.getInstance().getToken());
 
         // Execution
-        tagRepository.addEntity(tagWitID);
-
-        // Assertions
-        assertEquals(tagWitID, tagRepository.getEntityById(tagWitID.getIdentifier()));
-        tagRepository.deleteEntity(tagWitID);
-    }*/
-
-    // Test updateEntity
-
-    // Test deleteEntity
-
-    // Test getEntityById
+        getEntityRepository().getTags();
+    }
 
 }
