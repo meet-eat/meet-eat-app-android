@@ -107,7 +107,7 @@ public class ContextFormatter {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocationName(location, ONE_LOCATION)) &&
+        if (Objects.nonNull(location) && Objects.nonNull(geocoder.getFromLocationName(location, ONE_LOCATION)) &&
                 geocoder.getFromLocationName(location, ONE_LOCATION).size() > ZERO) {
             address = geocoder.getFromLocationName(location, ONE_LOCATION).get(ZERO);
         }

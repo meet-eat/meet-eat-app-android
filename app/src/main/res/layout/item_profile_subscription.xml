@@ -27,6 +27,7 @@
             android:elevation="5dp"
             android:shadowColor="@android:color/black"
             android:shadowRadius="10"
+            android:singleLine="true"
             android:text="@string/username"
             android:textColor="@android:color/white"
             android:textSize="20sp"

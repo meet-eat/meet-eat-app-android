@@ -112,10 +112,11 @@
     <string name="invalid_distance_interval">Entfernungsintervall ungültig.</string>
     <string name="invalid_participants_interval">Teilnehmerintervall ungültig.</string>
     <string name="invalid_rating_interval">Bewertungsintervall ungültig.</string>
-    <string name="invalid_date_time">Zeitangabe liegt in der Vergangenheit.</string>
+    <string name="invalid_date_time_past">Zeitangabe liegt in der Vergangenheit.</string>
     <string name="on_back_pressed_message">Zum Verlassen noch einmal drücken</string>
     <string name="profile_user_age">Alter:</string>
     <string name="toast_error_message">Es ist ein Fehler aufgetreten.</string>
     <string name="reported_toast_text">gemeldet.</string>
     <string name="request_relog">Bitte aus- und wieder einloggen</string>
+    <string name="invalid_date_time_future">Zeitangabe liegt in der Zukunft.</string>
 </resources>

@@ -102,6 +102,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         public void setData(Offer offer) {
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferCardTitle.setText(offer.getName());
+            binding.tvOfferCardTitle.setSelected(true);
             binding.tvOfferCardDescription.setText(offer.getDescription());
             binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
             binding.tvOfferCardPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
@@ -143,11 +144,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
          */
         private void setColorOfOfferCard(Offer offer) {
             if (offerVM.isCreator(offer)) {
-                binding.ivOfferCardPicture
+                binding.ivOfferCardPictureBackground
                         .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.ownOffer),
                                 PorterDuff.Mode.SRC_IN);
             } else if (offerVM.isParticipating(offer)) {
-                binding.ivOfferCardPicture.setColorFilter(
+                binding.ivOfferCardPictureBackground.setColorFilter(
                         ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
                         PorterDuff.Mode.SRC_IN);
             }

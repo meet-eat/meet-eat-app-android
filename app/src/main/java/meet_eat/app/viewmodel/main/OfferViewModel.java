@@ -3,8 +3,10 @@ package meet_eat.app.viewmodel.main;
 import androidx.lifecycle.ViewModel;
 
 import com.google.common.collect.Sets;
+import com.google.common.collect.Streams;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -78,7 +80,9 @@ public class OfferViewModel extends ViewModel {
      * @return the user's bookmarked offers
      */
     public Iterable<Offer> fetchBookmarkedOffers() {
-        return getCurrentUser().getBookmarks();
+        Set<Offer> bookmarks = new HashSet<>(getCurrentUser().getBookmarks());
+        bookmarks.removeIf(Objects::isNull);
+        return bookmarks;
     }
 
     /**
@@ -226,7 +230,7 @@ public class OfferViewModel extends ViewModel {
      * @return true if the offer is already bookmarked
      */
     public boolean isBookmarked(Offer offer) {
-        Stream<Offer> bookmarks = getCurrentUser().getBookmarks().stream();
+        Stream<Offer> bookmarks = Streams.stream(fetchBookmarkedOffers());
         String offerIdentifier = offer.getIdentifier();
         return bookmarks.anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offerIdentifier));
     }

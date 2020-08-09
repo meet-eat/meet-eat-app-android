@@ -200,7 +200,7 @@ public class OfferEditFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.missing_date_time, Toast.LENGTH_SHORT).show();
             return false;
         } else if (dateTime.isBefore(LocalDateTime.now())) {
-            Toast.makeText(getActivity(), R.string.invalid_date_time, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.invalid_date_time_past, Toast.LENGTH_SHORT).show();
             return false;
         }
 

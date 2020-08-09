@@ -4,7 +4,7 @@
     <string name="invalid_date_time_interval">Time interval invalid.</string>
     <string name="missing_date_time">Time cannot be empty.</string>
     <string name="sort_spinner_item_time">Time until meeting</string>
-    <string name="invalid_date_time">Time specification lies is in the past.</string>
+    <string name="invalid_date_time_past">Time specification lies is in the past.</string>
     <string name="date_time">Time</string>
     <string name="report_message">Why do you want to report the user or the offer?</string>
     <string name="publish">Publish</string>

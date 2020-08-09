@@ -20,6 +20,7 @@ import com.google.common.base.Strings;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -110,6 +111,9 @@ public class RegisterFragment extends Fragment {
 
         if (Objects.isNull(birthDay)) {
             Toast.makeText(getActivity(), R.string.missing_date, Toast.LENGTH_SHORT).show();
+            return;
+        } else if (birthDay.isAfter(LocalDateTime.now().toLocalDate())) {
+            Toast.makeText(getActivity(), R.string.invalid_date_time_future, Toast.LENGTH_SHORT).show();
             return;
         }
 
