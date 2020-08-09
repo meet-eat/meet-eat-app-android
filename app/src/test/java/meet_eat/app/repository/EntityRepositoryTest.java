@@ -63,7 +63,7 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(entityWithoutId);
+        entityRepository.updateEntity(entityWithId);
     }
 
     @Test(expected = NullPointerException.class)
@@ -73,7 +73,7 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNotNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(null);
+        entityRepository.updateEntity(null);
     }
 
     // Test deleteEntity
@@ -84,7 +84,7 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(entityWithoutId);
+        entityRepository.deleteEntity(entityWithoutId);
     }
 
     @Test(expected = NullPointerException.class)
@@ -94,7 +94,7 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNotNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(null);
+        entityRepository.deleteEntity(null);
     }
 
     // Test getEntityById
@@ -105,7 +105,7 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(entityWithoutId);
+        entityRepository.getEntityById("identifier");
     }
 
     @Test(expected = NullPointerException.class)
@@ -115,6 +115,6 @@ public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S exte
         assertNotNull(Session.getInstance().getToken());
 
         // Execution
-        entityRepository.addEntity(null);
+        entityRepository.getEntityById(null);
     }
 }
