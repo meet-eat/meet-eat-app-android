@@ -2,7 +2,6 @@ package meet_eat.app.fragment.main.profile;
 
 import android.location.Address;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
