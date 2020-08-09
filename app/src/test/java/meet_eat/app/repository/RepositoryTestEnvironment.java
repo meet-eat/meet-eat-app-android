@@ -34,6 +34,9 @@ public class RepositoryTestEnvironment {
         User testUser = new User(email, password, birthDay, name, phoneNumber, description, isVerified, location);
         registeredLoginCredential = new LoginCredential(email, password);
         registeredUser = new UserRepository().addEntity(testUser);
+        // Delete token of deleted user from tests before
+        Session.getInstance().login(registeredLoginCredential);
+        Session.getInstance().logout();
     }
 
     @After
