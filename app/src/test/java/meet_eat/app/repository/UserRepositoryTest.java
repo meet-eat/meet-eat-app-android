@@ -79,6 +79,16 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         return new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable);
     }
 
+    @AfterClass
+    public static void tearDownClass() throws RequestHandlerException {
+        Session.getInstance().login(new LoginCredential(getUserWithoutId().getEmail(), getUserWithoutId().getPassword()));
+        new UserRepository().deleteEntity(Session.getInstance().getUser());
+        Session.getInstance().login(getRegisteredLoginCredential());
+        new UserRepository().deleteEntity(getRegisteredUser());
+    }
+
+    // Test addEntity
+
     @Test
     @Override
     public void testAddEntityNotLoggedIn() throws RequestHandlerException {
@@ -94,17 +104,34 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertEquals(registeredUser.getEmail(), getUserWithoutId().getEmail());
     }
 
+    // Test report
 
-    @BeforeClass
-    public static void setUpClass() throws RequestHandlerException {
-        // Not needed here
+    @Test(expected = IllegalStateException.class)
+    public void testReportNotLoggedIn() throws RequestHandlerException {
+        // Assertions
+        assertNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().report(getRegisteredUser(), new Report(getUserWithId(), "test"));
     }
 
-    @AfterClass
-    public static void tearDownClass() throws RequestHandlerException {
-        Session.getInstance().login(new LoginCredential(getUserWithoutId().getEmail(), getUserWithoutId().getPassword()));
-        new UserRepository().deleteEntity(Session.getInstance().getUser());
+    @Test(expected = NullPointerException.class)
+    public void testReportWithNullUser() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
+
+        // Execution
+        getEntityRepository().report(null, new Report(getUserWithId(), "test"));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testReportWithNullReport() throws RequestHandlerException {
+        // Assertions
+        Session.getInstance().login(getRegisteredLoginCredential());
+        assertNotNull(Session.getInstance().getToken());
 
+        // Execution
+        getEntityRepository().report(getRegisteredUser(), null);
+    }
 }
