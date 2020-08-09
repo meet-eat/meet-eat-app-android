@@ -107,7 +107,6 @@ public class RateHostFragment extends Fragment {
                 rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_5, ratingVM.getCurrentUser());
                 break;
             default:
-                Log.i("DEBUG", "RateHostFragment.rateGuests");
                 return;
         }
 

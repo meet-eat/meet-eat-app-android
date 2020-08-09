@@ -103,7 +103,6 @@ public class SettingsFragment extends Fragment {
             settingsVM.updateNotificationSettings(newNotificationSetting);
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "SettingsFragment.toggleNotification: " + exception.getMessage());
         }
     }
 }

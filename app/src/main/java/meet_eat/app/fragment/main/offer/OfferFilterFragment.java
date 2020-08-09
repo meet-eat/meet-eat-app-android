@@ -82,8 +82,6 @@ public class OfferFilterFragment extends Fragment {
 
         // Checks if the previous page sent a bundle of arguments containing an offer list type
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
-            Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
-                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             originListType = (ListType) getArguments().getSerializable(LIST_TYPE.name());
@@ -208,7 +206,6 @@ public class OfferFilterFragment extends Fragment {
                         Double.parseDouble(minDistance) * M_TO_KM_FACTOR, offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.182: " + exception.getMessage());
                 return;
             }
         }
@@ -219,7 +216,6 @@ public class OfferFilterFragment extends Fragment {
                         Double.parseDouble(maxDistance) * M_TO_KM_FACTOR, offerVM.getCurrentUser().getLocalizable()));
             } catch (UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferFilterFragment.saveFilters.195: " + exception.getMessage());
                 return;
             }
         }
@@ -266,7 +262,6 @@ public class OfferFilterFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "In OfferFilterFragment.saveFilters.243: " + exception.getMessage());
         }
     }
 

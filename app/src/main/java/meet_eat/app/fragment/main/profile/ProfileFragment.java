@@ -52,7 +52,6 @@ public class ProfileFragment extends Fragment {
         } else if (Objects.isNull(getArguments().getSerializable(USER.name()))) {
             // If a user was given, but is null
             Toast.makeText(getActivity(), getString(R.string.toast_error_message), Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "User is null");
             navController.navigateUp();
         } else {
             user = (User) getArguments().getSerializable(USER.name());

@@ -133,7 +133,6 @@ public class OfferEditFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "In OfferEditFragment.deleteOffer: " + exception.getMessage());
         }
     }
 
@@ -227,7 +226,6 @@ public class OfferEditFragment extends Fragment {
                     // navController.navigate(R.id.offerDetailedFragment, bundle);
                 } catch (RequestHandlerException exception) {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + exception.getMessage());
                 }
             } else {
                 offer.setLocation(
@@ -244,7 +242,6 @@ public class OfferEditFragment extends Fragment {
                     navController.navigateUp();
                 } catch (RequestHandlerException exception) {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-                    Log.i("DEBUG", "In OfferEditFragment.saveOffer: " + exception.getMessage());
                 }
             }
         }
@@ -269,7 +266,6 @@ public class OfferEditFragment extends Fragment {
                 city = contextFormatter.formatStringFromLocalizable(offer.getLocation());
             } catch (IOException | UnlocalizableException exception) {
                 Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In OfferEditFragment.initUI: " + exception.getMessage());
                 return;
             }
 

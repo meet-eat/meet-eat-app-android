@@ -73,7 +73,6 @@ public class SettingsDeleteProfileFragment extends Fragment {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             } catch (RequestHandlerException exception) {
                 Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-                Log.i("DEBUG", "SettingsDeleteProfileFragment.deleteProfile: " + exception.getMessage());
             }
 
         } else {

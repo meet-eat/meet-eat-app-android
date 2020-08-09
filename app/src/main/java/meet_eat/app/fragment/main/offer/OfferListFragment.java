@@ -115,7 +115,6 @@ public class OfferListFragment extends Fragment {
 
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "In OfferListFragment.updateOffers: " + exception.getMessage());
         }
     }
 

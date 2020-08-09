@@ -73,7 +73,6 @@ public class ProfileEditFragment extends Fragment {
             home = contextFormatter.formatStringFromLocalizable(currentUser.getLocalizable());
         } catch (IOException | UnlocalizableException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "ProfileEditFragment.java -> initUI(): " + exception.getMessage());
             navController.navigateUp();
         }
 
@@ -167,7 +166,6 @@ public class ProfileEditFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.profile_edit_success, Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "RegisterFragment.saveProfile: " + exception.getMessage());
         }
     }
 

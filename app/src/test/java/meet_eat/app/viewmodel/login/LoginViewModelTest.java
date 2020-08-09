@@ -64,13 +64,6 @@ public class LoginViewModelTest {
         settingsVM.logout();
     }
 
-    @Ignore("how to get sent email?")
-    @Test
-    public void testResetPasswordWithEmailThatHasAccount() throws RequestHandlerException, InterruptedException {
-        Thread.sleep(10000);
-        loginVM.resetPassword(uniqueIdentifier + validRegisteredEmail);
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testLoginWithInvalidEmail() throws RequestHandlerException {
         loginVM.login(invalidEmail, password);
@@ -84,20 +77,5 @@ public class LoginViewModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void testLoginWithNullPassword() throws RequestHandlerException {
         loginVM.login(validUnregisteredEmail, null);
-    }
-
-    @Test(expected = RequestHandlerException.class)
-    public void testResetPasswordWithValidEmail() throws RequestHandlerException {
-        loginVM.resetPassword(validUnregisteredEmail);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testResetPasswordWithInvalidEmail() throws RequestHandlerException {
-        loginVM.resetPassword(invalidEmail);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testResetPasswordWithNullEmail() throws RequestHandlerException {
-        loginVM.resetPassword(null);
     }
 }

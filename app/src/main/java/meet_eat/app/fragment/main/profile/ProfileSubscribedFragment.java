@@ -60,7 +60,6 @@ public class ProfileSubscribedFragment extends Fragment {
             subscribedUsers = new ArrayList<>(userVM.getSubscribedUsers());
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In ProfileSubscribedFragment.displaySubscriberList: " + exception.getMessage());
             return;
         }
         profileSubscribedAdapter.updateSubscriptions(subscribedUsers);

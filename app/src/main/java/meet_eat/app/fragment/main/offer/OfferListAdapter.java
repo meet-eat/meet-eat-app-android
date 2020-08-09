@@ -114,7 +114,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 Toast.makeText(binding.getRoot().getContext(),
                         binding.getRoot().getResources().getString(R.string.invalid_location), Toast.LENGTH_SHORT)
                         .show();
-                Log.i("DEBUG", "In OfferListAdapter.setData: " + exception.getMessage());
                 return;
             }
 
@@ -176,7 +175,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 notifyDataSetChanged();
             } catch (RequestHandlerException exception) {
                 Toast.makeText(binding.getRoot().getContext(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-                Log.i("DEBUG", "In OfferListAdapter.changeBookmark: " + exception.getMessage());
             }
         }
 

@@ -59,8 +59,6 @@ public class OfferDetailedFragment extends Fragment {
         // Checks if the previous page sent a bundle of arguments containing an offer
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG",
-                    "OfferDetailedFragment.getArguments: getArguments() null or getArguments().getSerializable() null");
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
@@ -112,7 +110,6 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.participateOffer: " + exception.getMessage());
         }
     }
 
@@ -148,7 +145,6 @@ public class OfferDetailedFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.bookmark: " + exception.getMessage());
         }
     }
 
@@ -184,7 +180,6 @@ public class OfferDetailedFragment extends Fragment {
                     contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
         } catch (UnlocalizableException exception) {
             Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + exception.getMessage());
             return;
         }
 
@@ -192,7 +187,6 @@ public class OfferDetailedFragment extends Fragment {
             binding.tvOfferDetailedCity.setText(contextFormatter.formatStringFromLocalizable(location));
         } catch (IOException | UnlocalizableException exception) {
             Toast.makeText(getActivity(), getString(R.string.invalid_location), Toast.LENGTH_SHORT).show();
-            Log.i("DEBUG", "In OfferDetailedFragment.initUI: " + exception.getMessage());
             return;
         }
 

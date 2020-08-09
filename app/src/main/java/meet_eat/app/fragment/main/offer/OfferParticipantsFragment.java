@@ -44,8 +44,6 @@ public class OfferParticipantsFragment extends Fragment {
 
         // Checks if the previous page sent a bundle of arguments containing the offer
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(OFFER.name()))) {
-            Log.i("DEBUG", "In OfferContactFragment.getArguments: " + "getArguments() null or getArguments()" +
-                    ".getSerializable() null");
             navController.navigateUp();
         } else {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
