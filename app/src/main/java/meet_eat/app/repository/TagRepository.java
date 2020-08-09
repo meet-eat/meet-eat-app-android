@@ -1,13 +1,13 @@
 package meet_eat.app.repository;
 
-import meet_eat.data.EndpointPath;
-import meet_eat.data.entity.Tag;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 
 import java.net.URI;
+
+import meet_eat.data.EndpointPath;
+import meet_eat.data.entity.Tag;
 
 /**
  * Represents the administrative unit that controls access and manipulation of {@link Tag tags} within a repository.

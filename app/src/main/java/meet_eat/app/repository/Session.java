@@ -1,16 +1,16 @@
 package meet_eat.app.repository;
 
-import meet_eat.data.EndpointPath;
-import meet_eat.data.LoginCredential;
-import meet_eat.data.entity.Token;
-import meet_eat.data.entity.user.User;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 
 import java.net.URI;
 import java.util.Objects;
+
+import meet_eat.data.EndpointPath;
+import meet_eat.data.LoginCredential;
+import meet_eat.data.entity.Token;
+import meet_eat.data.entity.user.User;
 
 /**
  * Represents and manages the singleton instance of a {@link User user}'s {@link Session session} in the application.

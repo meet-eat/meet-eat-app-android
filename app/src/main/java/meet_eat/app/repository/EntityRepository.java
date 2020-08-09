@@ -1,18 +1,17 @@
 package meet_eat.app.repository;
 
-import meet_eat.data.ObjectJsonParser;
-import meet_eat.data.RequestHeaderField;
-import meet_eat.data.entity.Token;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.util.LinkedMultiValueMap;
 
-import meet_eat.data.entity.Entity;
-
 import java.net.URI;
 import java.util.Objects;
+
+import meet_eat.data.ObjectJsonParser;
+import meet_eat.data.RequestHeaderField;
+import meet_eat.data.entity.Entity;
+import meet_eat.data.entity.Token;
 
 /**
  * Represents the administrative unit that controls access and manipulation of entities within a repository.

@@ -2,6 +2,11 @@ package meet_eat.app.repository;
 
 import com.google.common.collect.Lists;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.util.LinkedMultiValueMap;
+
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,11 +23,6 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.predicate.OfferPredicate;
 import meet_eat.data.predicate.chrono.LocalDateTimeOperation;
 import meet_eat.data.predicate.chrono.LocalDateTimePredicate;
-
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.util.LinkedMultiValueMap;
 
 /**
  * Represents the administrative unit that controls access and manipulation of {@link Offer offers} within a repository.
