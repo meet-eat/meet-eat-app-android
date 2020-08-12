@@ -30,8 +30,8 @@ import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static int ZERO = 0;
-    private static int MAX_WAIT_TIME = 1200;
+    private final int ZERO = 0;
+    private final int MAX_WAIT_TIME = 1200;
 
     private DrawerLayout drawerLayout;
     private NavController navController;

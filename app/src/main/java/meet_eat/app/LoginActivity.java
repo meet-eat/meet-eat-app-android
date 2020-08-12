@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private static int ZERO = 0;
-    private static int MAX_WAIT_TIME = 1200;
+    private final int ZERO = 0;
+    private final int MAX_WAIT_TIME = 1200;
 
     private long timeInMillis = ZERO;
 

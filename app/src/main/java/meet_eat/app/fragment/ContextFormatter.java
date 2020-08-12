@@ -25,11 +25,11 @@ public class ContextFormatter {
      */
     public static final int MONTH_CORRECTION = 1;
 
-    private static final String SPACE = " ";
-    private static final String COMMATA = ",";
-    private static final int M_TO_KM_FACTOR = 1000;
-    private static final int ONE_LOCATION = 1;
-    private static final int ZERO = 0;
+    private final String SPACE = " ";
+    private final String COMMA = ",";
+    private final int M_TO_KM_FACTOR = 1000;
+    private final int ONE_LOCATION = 1;
+    private final int ZERO = 0;
 
     private final Context context;
 
@@ -49,7 +49,7 @@ public class ContextFormatter {
      * @return the formatted {@link LocalDateTime} object
      */
     public String formatDateTime(LocalDateTime dateTime) {
-        return formatDate(dateTime.toLocalDate()) + COMMATA + SPACE + formatTime(dateTime.toLocalTime());
+        return formatDate(dateTime.toLocalDate()) + COMMA + SPACE + formatTime(dateTime.toLocalTime());
     }
 
     /**
