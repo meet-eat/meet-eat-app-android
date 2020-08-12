@@ -13,7 +13,7 @@
     <string name="bad_email">Invalid e-mail.</string>
     <string name="invalid_max_participants">Invalid number of participants.</string>
     <string name="bad_login">Invalid credentials.</string>
-    <string name="dateformat">DD.MM.YYYY</string>
+    <string name="date_format">DD.MM.YYYY</string>
     <string name="missing_title">Title must not be empty.</string>
     <string name="phone_number">Phone number</string>
     <string name="invalid_participants_interval">Invalid participant interval.</string>
@@ -106,7 +106,7 @@
     <string name="contact_decline">Reject</string>
     <string name="currency">€</string>
     <string name="european_time_calling">" o'clock"</string>
-    <string name="request_relog">Please log off and on again.</string>
+    <string name="request_new_login">Please log off and on again.</string>
     <string name="invalid_date_time_future">Time is in the future.</string>
     <string name="app_name" translatable="false">Meet &amp; Eat</string>
     <string name="e_mail" translatable="false">E-Mail</string>
@@ -116,7 +116,7 @@
     <string name="whitespace" translatable="false">&#160;</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="european_date_format" translatable="false">dd.MM.uuuu</string>
+    <string name="european_date_format" translatable="false">dd.MM.yyyy</string>
     <string name="european_time_format" translatable="false">HH:mm</string>
     <string name="decimal_format" translatable="false">%.2f</string>
 </resources>

@@ -5,7 +5,7 @@
     <string name="register">Registrieren</string>
     <string name="username">Benutzername</string>
     <string name="phone_number">Telefonnummer</string>
-    <string name="dateformat">TT.MM.JJJJ</string>
+    <string name="date_format">TT.MM.JJJJ</string>
     <string name="home">Heimatort</string>
     <string name="profile_description">Profilbeschreibung</string>
     <string name="subscribe">Abonnieren</string>
@@ -105,6 +105,6 @@
     <string name="profile_user_age">Alter:</string>
     <string name="toast_error_message">Es ist ein Fehler aufgetreten.</string>
     <string name="reported_toast_text">gemeldet.</string>
-    <string name="request_relog">Bitte aus- und wieder einloggen</string>
+    <string name="request_new_login">Bitte aus- und wieder einloggen</string>
     <string name="invalid_date_time_future">Zeitangabe liegt in der Zukunft.</string>
 </resources>

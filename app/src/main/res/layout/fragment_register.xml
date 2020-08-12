@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/bgmain"
+            android:src="@drawable/background_main"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -54,7 +54,7 @@
                 android:adjustViewBounds="true"
                 android:elevation="4dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profilestd" />
+                android:src="@drawable/profile_standard" />
 
             <ImageButton
                 android:id="@+id/ibtRegisterAdd"
@@ -161,14 +161,14 @@
                     tools:layout_editor_absoluteX="16dp" />
 
                 <TextView
-                    android:id="@+id/tvRegisterBirthdate"
+                    android:id="@+id/tvRegisterBirthday"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
-                    android:hint="@string/dateformat"
+                    android:hint="@string/date_format"
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
@@ -201,7 +201,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvRegisterBirthdate" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvRegisterBirthday" />
 
                 <EditText
                     android:id="@+id/etRegisterDescription"
