@@ -135,7 +135,6 @@
             android:elevation="50dp"
             android:shadowColor="@android:color/black"
             android:shadowRadius="10"
-            android:text="0"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivOfferCardRating" />

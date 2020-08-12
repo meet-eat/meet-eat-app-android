@@ -243,7 +243,6 @@
                     android:elevation="5dp"
                     android:shadowColor="@android:color/black"
                     android:shadowRadius="10"
-                    android:text="0"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedUsername"
