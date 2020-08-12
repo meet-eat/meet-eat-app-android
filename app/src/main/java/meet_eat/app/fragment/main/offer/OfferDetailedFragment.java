@@ -38,13 +38,14 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
  */
 public class OfferDetailedFragment extends Fragment {
 
-    private static final String PARTICIPANTS_SEPERATOR = "/";
+    private static final String PARTICIPANTS_SEPARATOR = "/";
 
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
     private NavController navController;
     private Bundle bundle;
     private Offer offer;
+    private int rating;
 
     @Nullable
     @Override
@@ -174,6 +175,8 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
 
+        binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
+
         try {
             binding.tvOfferDetailedDistance.setText(
                     contextFormatter.formatDistance(location.getDistance(offerVM.getCurrentUser().getLocalizable())));
@@ -242,7 +245,9 @@ public class OfferDetailedFragment extends Fragment {
             }
         }
 
-        String participantsText = offer.getParticipants().size() + PARTICIPANTS_SEPERATOR + offer.getMaxParticipants();
+        String participantsText = offer.getParticipants().size() + PARTICIPANTS_SEPARATOR + offer.getMaxParticipants();
         binding.tvOfferDetailedParticipants.setText(participantsText);
     }
+
+
 }
