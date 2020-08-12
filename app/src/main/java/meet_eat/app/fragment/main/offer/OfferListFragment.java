@@ -130,6 +130,8 @@ public class OfferListFragment extends Fragment {
      * Updates the GUI when changes are made. Is also used to initialize the GUI.
      */
     private void updateUI() {
+        // Set the color for the progress spinner disc of the refresher
+        binding.srlOfferListSwipe.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorPrimary, null));
         updateOffers();
 
         if (!type.equals(SUBSCRIBED)) {
