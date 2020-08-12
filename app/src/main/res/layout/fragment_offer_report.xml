@@ -63,7 +63,7 @@
             android:layout_height="120dp"
             android:layout_margin="16dp"
             android:autofillHints=""
-            android:background="@drawable/bg_edittext"
+            android:background="@drawable/bg_edit_text"
             android:elevation="5dp"
             android:gravity="top|start"
             android:hint="@string/report_message"
