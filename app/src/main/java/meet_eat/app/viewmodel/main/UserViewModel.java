@@ -53,7 +53,7 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
-     * Adds the given {@link User} to the current user's subcriptions, then
+     * Adds the given {@link User} to the current user's subscriptions, then
      * updates the current user in the {@link UserRepository}
      *
      * @param toBeSubscribed the user to be subscribed to

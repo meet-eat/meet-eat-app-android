@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Databinding to synchronize view with fragment
+        // Data binding to synchronize view with fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         loginVM = new ViewModelProvider(this).get(LoginViewModel.class);

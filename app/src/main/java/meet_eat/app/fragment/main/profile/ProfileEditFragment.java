@@ -120,7 +120,7 @@ public class ProfileEditFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
             }
         } catch (IllegalStateException exception) {
-            Toast.makeText(getActivity(), R.string.request_relog, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.request_new_login, Toast.LENGTH_SHORT).show();
         }
     }
 
