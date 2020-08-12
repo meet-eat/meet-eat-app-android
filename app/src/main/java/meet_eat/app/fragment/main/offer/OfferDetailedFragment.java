@@ -45,7 +45,6 @@ public class OfferDetailedFragment extends Fragment {
     private NavController navController;
     private Bundle bundle;
     private Offer offer;
-    private int rating;
 
     @Nullable
     @Override
