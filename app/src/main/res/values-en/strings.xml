@@ -103,7 +103,6 @@
     <string name="edit_subscriptions">Subscriptions</string>
     <string name="drawer_menu_subscriptions">Subscriptions</string>
     <string name="logout">Logout</string>
-    <string name="drawer_menu_logout">Logout</string>
     <string name="contact_decline">Reject</string>
     <string name="currency">€</string>
     <string name="european_time_calling">" o'clock"</string>
