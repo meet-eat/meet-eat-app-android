@@ -12,7 +12,11 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemOfferCardBinding;
@@ -20,6 +24,7 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.ReportableEntity;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
@@ -53,7 +58,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         if (Objects.isNull(offers)) {
             return;
         }
-
+        currentOffers.clear();
         offers.forEach(currentOffers::add);
         notifyDataSetChanged();
     }
