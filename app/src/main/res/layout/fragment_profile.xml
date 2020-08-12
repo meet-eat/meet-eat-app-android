@@ -74,7 +74,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/ivProfileProfile"
@@ -182,10 +182,10 @@
                     android:elevation="5dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/star"
-                    android:tint="@color/rating"
                     app:layout_constraintBottom_toBottomOf="@+id/tvProfileHostRating"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileHostRating" />
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileHostRating"
+                    app:tint="@color/rating" />
 
                 <TextView
                     android:id="@+id/tvProfileGuestRatingTitle"
@@ -225,10 +225,10 @@
                     android:elevation="5dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/star"
-                    android:tint="@color/rating"
                     app:layout_constraintBottom_toBottomOf="@+id/tvProfileGuestRating"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating" />
+                    app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating"
+                    app:tint="@color/rating" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

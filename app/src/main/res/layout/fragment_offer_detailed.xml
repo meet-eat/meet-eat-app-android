@@ -48,7 +48,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/ivOfferDetailedPicture"
@@ -259,10 +259,10 @@
                     android:elevation="5dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/star"
-                    android:tint="@color/rating"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedRating"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedRating" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedRating"
+                    app:tint="@color/rating" />
 
                 <TextView
                     android:id="@+id/tvOfferDetailedDescription"

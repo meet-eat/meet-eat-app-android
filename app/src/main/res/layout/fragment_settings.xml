@@ -59,12 +59,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSettings" />
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/swSettingsNotification"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:checked="false"
+            android:checked="true"
             android:clickable="false"
             android:drawableTint="@color/symbol"
             app:layout_constraintBottom_toBottomOf="@+id/tvSettingsNotificationMenu"
@@ -110,10 +110,10 @@
             android:elevation="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/info"
-            android:tint="@color/symbol"
             app:layout_constraintBottom_toTopOf="@+id/tvSettingsAbout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvSettingsAbout" />
+            app:layout_constraintTop_toTopOf="@+id/tvSettingsAbout"
+            app:tint="@color/symbol" />
 
         <Button
             android:id="@+id/btSettingsDelete"

@@ -149,9 +149,9 @@
             android:elevation="50dp"
             android:scaleType="fitCenter"
             android:src="@drawable/star"
-            android:tint="@color/rating"
             app:layout_constraintBottom_toBottomOf="@+id/tvOfferCardRating"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvOfferCardRating" />
+            app:layout_constraintTop_toTopOf="@+id/tvOfferCardRating"
+            app:tint="@color/rating" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
