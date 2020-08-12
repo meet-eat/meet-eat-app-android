@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="100dp"
-            app:layout_constraintBottom_toBottomOf="@id/rvOfferList">
+            app:layout_constraintBottom_toBottomOf="@id/srlOfferListSwipe">
 
             <ImageButton
                 android:id="@+id/ibtOfferListCreate"
@@ -70,13 +70,22 @@
                 app:layout_constraintEnd_toStartOf="@+id/ibtOfferListFilter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ibtOfferListFilter" />
+
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srlOfferListSwipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvOfferList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="3dp" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOfferList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

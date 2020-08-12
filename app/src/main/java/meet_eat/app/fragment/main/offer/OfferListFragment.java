@@ -77,10 +77,19 @@ public class OfferListFragment extends Fragment {
      * Sets various click listeners.
      */
     private void setButtonOnClickListener() {
+        binding.srlOfferListSwipe.setOnRefreshListener(this::reloadAfterSwipe);
         binding.ibtOfferListFilter.setOnClickListener(event -> navigateToOfferFilter());
         binding.ibtOfferListCreate.setOnClickListener(event -> navController.navigate(R.id.offerEditFragment));
         binding.ibtOfferListSubscribed
                 .setOnClickListener(event -> navController.navigate(R.id.profileSubscribedFragment));
+    }
+
+    /**
+     * After pulling down in the offer list, a reload of the offers is happening here.
+     */
+    private void reloadAfterSwipe() {
+        updateOffers();
+        binding.srlOfferListSwipe.setRefreshing(false);
     }
 
     /**
