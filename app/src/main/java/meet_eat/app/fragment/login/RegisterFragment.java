@@ -71,7 +71,7 @@ public class RegisterFragment extends Fragment {
      */
     private void setButtonOnClickListener() {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
-        binding.tvRegisterBirthdate.setOnClickListener(event -> showDatePicker());
+        binding.tvRegisterBirthday.setOnClickListener(event -> showDatePicker());
         binding.btRegister.setOnClickListener(event -> register());
     }
 
@@ -83,7 +83,7 @@ public class RegisterFragment extends Fragment {
         new DatePickerDialog(binding.getRoot().getContext(), (datePicker, year, month, dayOfMonth) -> {
             birthDay = LocalDate.of(year, month + ContextFormatter.MONTH_CORRECTION, dayOfMonth);
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
-            binding.tvRegisterBirthdate.setText(contextFormatter.formatDate(birthDay));
+            binding.tvRegisterBirthday.setText(contextFormatter.formatDate(birthDay));
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
