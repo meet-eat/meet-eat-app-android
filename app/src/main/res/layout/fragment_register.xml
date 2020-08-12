@@ -60,7 +60,7 @@
                 android:id="@+id/ibtRegisterAdd"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="bottom|right"
+                android:layout_gravity="bottom|end"
                 android:adjustViewBounds="true"
                 android:background="@drawable/bg_button"
                 android:backgroundTint="@color/symbol"
