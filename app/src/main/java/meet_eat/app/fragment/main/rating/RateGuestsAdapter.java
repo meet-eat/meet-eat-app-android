@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
 import meet_eat.app.viewmodel.main.RatingViewModel;
@@ -24,8 +25,8 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     private static final float RATING_STEP_SIZE = 1;
     private static final int DEFAULT_NUM_STARS = 3;
 
-    private RatingViewModel ratingVM;
-    private ArrayList<User> currentGuests;
+    private final RatingViewModel ratingVM;
+    private List<User> currentGuests;
 
     /**
      * Initializing fields.
@@ -37,12 +38,6 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
         this.ratingVM = ratingVM;
         currentGuests = guests;
     }
-
-    /**
-     * Updates the offer list.
-     *
-     * @param offers the fetched offers list
-     */
 
     /**
      * Updates the guest list.

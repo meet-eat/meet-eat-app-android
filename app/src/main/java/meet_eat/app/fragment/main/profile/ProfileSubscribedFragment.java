@@ -54,7 +54,7 @@ public class ProfileSubscribedFragment extends Fragment {
      * Updates the subscriber list by giving the adapter the {@link java.util.Set Set} of subscribers.
      */
     private void displaySubscriberList() {
-        ArrayList<User> subscribedUsers = new ArrayList<>();
+        ArrayList<User> subscribedUsers;
         try {
             subscribedUsers = new ArrayList<>(userVM.getSubscribedUsers());
         } catch (RequestHandlerException exception) {

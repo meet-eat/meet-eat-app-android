@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.drawer_menu_settings:
                 navController.navigate(R.id.settingsFragment);
                 break;
+            default:
+                return false;
         }
 
         drawerLayout.close();

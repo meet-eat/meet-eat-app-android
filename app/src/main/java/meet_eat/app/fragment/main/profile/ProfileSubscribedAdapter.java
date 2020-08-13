@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.ItemProfileSubscriptionBinding;
@@ -24,8 +25,8 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
  */
 public class ProfileSubscribedAdapter extends RecyclerView.Adapter<ProfileSubscribedAdapter.ViewHolder> {
 
-    private UserViewModel userVM;
-    private ArrayList<User> currentSubscriptions;
+    private final UserViewModel userVM;
+    private List<User> currentSubscriptions;
 
 
     /**
