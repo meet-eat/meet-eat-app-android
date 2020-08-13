@@ -40,7 +40,7 @@ public class ProfileSubscribedFragment extends Fragment {
         binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
-        profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<User>());
+        profileSubscribedAdapter = new ProfileSubscribedAdapter(userVM, new ArrayList<>());
         binding.rvProfileSubscriptions.setAdapter(profileSubscribedAdapter);
         binding.rvProfileSubscriptions
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

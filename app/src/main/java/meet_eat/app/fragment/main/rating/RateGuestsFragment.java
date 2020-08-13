@@ -20,7 +20,6 @@ import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRateGuestsBinding;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.user.User;
 
 /**
  * This is the guest rating page. Here the user can rate his guests and send his ratings.
@@ -40,7 +39,7 @@ public class RateGuestsFragment extends Fragment {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
-        rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<User>());
+        rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<>());
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
         binding.rvRateGuests
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
