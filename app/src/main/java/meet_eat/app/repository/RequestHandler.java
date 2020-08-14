@@ -25,7 +25,7 @@ public class RequestHandler<T, S> {
     /**
      * The URL for the server path.
      */
-    public static final String SERVER_PATH = "http://karlsruhe.gstuer.com:8443";
+    public static final String SERVER_PATH = "http://localhost:8080";
 
     private static final String ERROR_MESSAGE_REQUEST = "Request failed. ";
     private static final String ERROR_MESSAGE_STATUS_CODE = "Error code: ";
