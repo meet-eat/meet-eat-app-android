@@ -25,11 +25,11 @@ public class ContextFormatter {
      */
     public static final int MONTH_CORRECTION = 1;
 
-    private final String SPACE = " ";
-    private final String COMMA = ",";
-    private final int M_TO_KM_FACTOR = 1000;
-    private final int ONE_LOCATION = 1;
-    private final int ZERO = 0;
+    private static final String SPACE = " ";
+    private static final String COMMA = ",";
+    private static final int M_TO_KM_FACTOR = 1000;
+    private static final int ONE_LOCATION = 1;
+    private static final int ZERO = 0;
 
     private final Context context;
 

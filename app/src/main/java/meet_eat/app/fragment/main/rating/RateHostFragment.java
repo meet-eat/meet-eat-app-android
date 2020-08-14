@@ -29,8 +29,8 @@ import meet_eat.data.entity.user.rating.RatingValue;
  */
 public class RateHostFragment extends Fragment {
 
-    private final float RATING_STEP_SIZE = 1;
-    private final int DEFAULT_NUM_STARS = 3;
+    private static final float RATING_STEP_SIZE = 1;
+    private static final int DEFAULT_NUM_STARS = 3;
 
     private FragmentRateHostBinding binding;
     private NavController navController;
