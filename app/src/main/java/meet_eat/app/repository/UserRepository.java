@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import meet_eat.data.EndpointPath;
 import meet_eat.data.Report;
+import meet_eat.data.entity.Bookmark;
 import meet_eat.data.entity.Subscription;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -141,5 +142,40 @@ public class UserRepository extends EntityRepository<User> {
                 HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Void, Subscription>().handleIterable(requestEntity, HttpStatus.OK);
+    }
+
+    public Iterable<Bookmark> getBookmarksByUser(User user) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
+
+        // Handle request
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(
+                getTokenHeaders(),
+                HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        return new RequestHandler<Void, Bookmark>().handleIterable(requestEntity, HttpStatus.OK);
+    }
+
+    public void removeBookmark(Bookmark bookmark) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+
+        // Handle request
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
+                bookmark,
+                getTokenHeaders(),
+                HttpMethod.DELETE,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        new RequestHandler<Bookmark, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
+    }
+
+    public Bookmark addBookmark(Bookmark bookmark) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+
+        // Handle request
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
+                bookmark,
+                getTokenHeaders(),
+                HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        return new RequestHandler<Bookmark, Bookmark>().handle(requestEntity, HttpStatus.CREATED);
     }
 }
