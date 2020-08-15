@@ -220,14 +220,20 @@ public class OfferDetailedFragment extends Fragment {
      */
     private void updateUI() {
         if (!offerVM.isCreator(offer)) {
-            if (offerVM.isBookmarked(offer)) {
-                binding.ibtOfferDetailedBookmark
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
-                                PorterDuff.Mode.SRC_IN);
-            } else {
-                binding.ibtOfferDetailedBookmark
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
-                                PorterDuff.Mode.SRC_IN);
+            // Handle exception while fetching bookmarks by removing the bookmark button from UI.
+            try {
+                if (offerVM.isBookmarked(offer)) {
+                    binding.ibtOfferDetailedBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                                    PorterDuff.Mode.SRC_IN);
+                } else {
+                    binding.ibtOfferDetailedBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                                    PorterDuff.Mode.SRC_IN);
+                }
+                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
+            } catch (RequestHandlerException exception) {
+                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             }
 
             if (offerVM.isParticipating(offer)) {
