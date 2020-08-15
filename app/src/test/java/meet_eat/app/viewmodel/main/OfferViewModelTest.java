@@ -110,7 +110,7 @@ public class OfferViewModelTest {
     }
 
     @Test
-    public void testFetchBookmarkedOffers() {
+    public void testFetchBookmarkedOffers() throws RequestHandlerException {
         offerVM.fetchBookmarkedOffers();
     }
 
