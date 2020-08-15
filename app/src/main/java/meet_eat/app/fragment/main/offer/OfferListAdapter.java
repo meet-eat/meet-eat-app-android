@@ -28,6 +28,7 @@ import meet_eat.data.entity.ReportableEntity;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 /**
@@ -125,9 +126,14 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
             if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
-                if (offerVM.isBookmarked(offer)) {
-                    binding.ibtOfferCardBookmark
-                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                try {
+                    if (offerVM.isBookmarked(offer)) {
+                        binding.ibtOfferCardBookmark
+                                .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                    }
+                    binding.ibtOfferCardBookmark.setVisibility(VISIBLE);
+                } catch (RequestHandlerException exception) {
+                    binding.ibtOfferCardBookmark.setVisibility(GONE);
                 }
 
                 binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
