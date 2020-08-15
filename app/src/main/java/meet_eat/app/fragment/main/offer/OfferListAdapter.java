@@ -125,7 +125,10 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
-            if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
+            if (offerVM.isCreator(offer)) {
+                binding.ibtOfferCardBookmark.setVisibility(GONE);
+            } else {
+                // Try to fetch the bookmark state of an offer. Let the button disappear on failure.
                 try {
                     if (offerVM.isBookmarked(offer)) {
                         binding.ibtOfferCardBookmark
@@ -137,8 +140,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 }
 
                 binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
-            } else {
-                binding.ibtOfferCardBookmark.setVisibility(GONE);
             }
 
             setColorOfOfferCard(offer);
