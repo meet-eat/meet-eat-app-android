@@ -199,6 +199,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
 
         if (offerVM.isCreator(offer)) {
+            binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             binding.ibtOfferDetailedReport.setVisibility(GONE);
             binding.btOfferDetailedParticipate.setVisibility(GONE);
             binding.btOfferDetailedContact.setVisibility(GONE);
@@ -206,10 +207,6 @@ public class OfferDetailedFragment extends Fragment {
         } else {
             binding.ibtOfferDetailedEdit.setVisibility(GONE);
             binding.btOfferDetailedParticipants.setVisibility(GONE);
-        }
-
-        if (offerVM.isCreator(offer) || offerVM.isParticipating(offer)) {
-            binding.ibtOfferDetailedBookmark.setVisibility(GONE);
         }
 
         updateUI();
@@ -240,13 +237,11 @@ public class OfferDetailedFragment extends Fragment {
                 binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
                 binding.btOfferDetailedParticipate.setText(R.string.cancel);
                 binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
-                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             } else {
                 binding.btOfferDetailedParticipate
                         .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
                 binding.btOfferDetailedParticipate.setText(R.string.participate);
                 binding.tvOfferDetailedParticipating.setVisibility(GONE);
-                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
             }
         }
 
