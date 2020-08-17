@@ -30,8 +30,10 @@ import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private final int ZERO = 0;
-    private final int MAX_WAIT_TIME = 1200;
+    /**
+     * The maximum time to wait in between two clicks of the back button to quit the application
+     */
+    private static final int MAX_WAIT_TIME = 1200;
 
     private DrawerLayout drawerLayout;
     private NavController navController;
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
     }
 
+    /**
+     * When an item of the navDrawer is clicked, navigates to the specified destination
+     *
+     * @param menuItem The item that was clicked in the navDrawer
+     * @return true, if the item that was clicked was valid
+     */
     private boolean onItemClicked(MenuItem menuItem) {
         Bundle bundle = new Bundle();
 
@@ -85,38 +93,36 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return false;
         }
-
         drawerLayout.close();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (Objects.nonNull(navController.getCurrentBackStackEntry()) &&
-                (navController.getCurrentBackStackEntry().getDestination().getId() == R.id.offerEditFragment ||
-                        navController.getCurrentBackStackEntry().getDestination().getId() ==
-                                R.id.profileEditFragment)) {
-            return;
-        }
-
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            if (navController.getCurrentBackStackEntry() == null) {
-                if (timeInMillis == ZERO) {
+        }
+        // if there is nothing to go back to
+        if (Objects.isNull(navController.getPreviousBackStackEntry()) ||
+                (navController.getPreviousBackStackEntry().getDestination().getId() == R.id.offerEditFragment ||
+                        navController.getPreviousBackStackEntry().getDestination().getId() == R.id.offerEditFragment)) {
+            if (timeInMillis == 0) {
+                timeInMillis = System.currentTimeMillis();
+                Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
+            } else {
+                // make the user double click the back button within MAX_WAIT_TIME millis to quit
+                if (System.currentTimeMillis() - timeInMillis < MAX_WAIT_TIME) {
+                    super.onPause();
+                    timeInMillis = 0;
+                } else {
                     timeInMillis = System.currentTimeMillis();
                     Toast.makeText(this, R.string.on_back_pressed_message, Toast.LENGTH_SHORT).show();
-                } else {
-                    if (System.currentTimeMillis() - timeInMillis < MAX_WAIT_TIME) {
-                        super.onBackPressed();
-                        timeInMillis = ZERO;
-                    } else {
-                        timeInMillis = System.currentTimeMillis();
-                    }
                 }
-            } else {
-                super.onBackPressed();
             }
+            // if previous fragments should not be visited again i.e. after editing profile/offer
+        } else {
+            // pop the back stack: go back to the last fragment
+            super.onBackPressed();
         }
     }
 }
