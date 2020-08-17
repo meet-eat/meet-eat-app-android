@@ -245,7 +245,7 @@ public class OfferViewModel extends ViewModel {
      */
     public boolean isBookmarked(Offer offer) throws RequestHandlerException {
         Stream<Offer> bookmarkedOffers = Streams.stream(fetchBookmarkedOffers());
-        return bookmarkedOffers.anyMatch(bookmarkedOffer -> bookmarkedOffer.equals(offer));
+        return bookmarkedOffers.anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offer.getIdentifier()));
     }
 
     /**

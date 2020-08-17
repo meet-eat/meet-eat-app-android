@@ -103,7 +103,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         public void setData(Offer offer) {
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
             binding.tvOfferCardTitle.setText(offer.getName());
-            binding.tvOfferCardTitle.setSelected(true);
             binding.tvOfferCardDescription.setText(offer.getDescription());
             binding.tvOfferCardDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
             binding.tvOfferCardPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
@@ -129,7 +128,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     if (offerVM.isBookmarked(offer)) {
                         binding.ibtOfferCardBookmark
                                 .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                    } else {
+                        binding.ibtOfferCardBookmark
+                                .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol));
                     }
+
                     binding.ibtOfferCardBookmark.setVisibility(VISIBLE);
                 } catch (RequestHandlerException exception) {
                     binding.ibtOfferCardBookmark.setVisibility(GONE);
@@ -157,6 +160,10 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 binding.ivOfferCardPictureBackground.setColorFilter(
                         ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
                         PorterDuff.Mode.SRC_IN);
+            } else {
+                binding.ivOfferCardPictureBackground.setColorFilter(
+                        ContextCompat.getColor(binding.getRoot().getContext(), R.color.foreignOffer),
+                        PorterDuff.Mode.SRC_IN);
             }
         }
 
@@ -179,7 +186,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                                     PorterDuff.Mode.SRC_IN);
                 }
 
-                notifyDataSetChanged();
+                notifyItemChanged(currentOffers.indexOf(offer));
             } catch (RequestHandlerException exception) {
                 Toast.makeText(binding.getRoot().getContext(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
             }
