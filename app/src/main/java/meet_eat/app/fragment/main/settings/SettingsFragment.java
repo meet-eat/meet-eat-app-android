@@ -85,8 +85,6 @@ public class SettingsFragment extends Fragment {
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Toast.makeText(getActivity(), "DEBUG SettingsFragment.java -> logout(): " + exception.getMessage(),
-                    Toast.LENGTH_LONG).show();
         }
     }
 

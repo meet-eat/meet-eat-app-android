@@ -140,8 +140,6 @@ public class ProfileFragment extends Fragment {
             updateUI();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Toast.makeText(getActivity(), "DEBUG ProfileFragment.java -> subscribe(): " + exception.getMessage(),
-                    Toast.LENGTH_LONG).show();
         }
     }
 }
