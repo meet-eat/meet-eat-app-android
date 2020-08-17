@@ -67,7 +67,7 @@
             android:elevation="5dp"
             android:gravity="top|start"
             android:hint="@string/report_message"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:maxLength="300"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"

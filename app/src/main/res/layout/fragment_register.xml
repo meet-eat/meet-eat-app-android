@@ -213,7 +213,7 @@
                     android:elevation="5dp"
                     android:gravity="top|start"
                     android:hint="@string/profile_description"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:maxLength="300"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
