@@ -24,6 +24,7 @@ import meet_eat.data.entity.Offer;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
 /**
@@ -120,15 +121,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
-            if (!offerVM.isCreator(offer) && !offerVM.isParticipating(offer)) {
-                if (offerVM.isBookmarked(offer)) {
-                    binding.ibtOfferCardBookmark
-                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+            if (offerVM.isCreator(offer)) {
+                binding.ibtOfferCardBookmark.setVisibility(GONE);
+            } else {
+                // Try to fetch the bookmark state of an offer. Let the button disappear on failure.
+                try {
+                    if (offerVM.isBookmarked(offer)) {
+                        binding.ibtOfferCardBookmark
+                                .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked));
+                    }
+                    binding.ibtOfferCardBookmark.setVisibility(VISIBLE);
+                } catch (RequestHandlerException exception) {
+                    binding.ibtOfferCardBookmark.setVisibility(GONE);
                 }
 
                 binding.ibtOfferCardBookmark.setOnClickListener(event -> changeBookmark(offer));
-            } else {
-                binding.ibtOfferCardBookmark.setVisibility(GONE);
             }
 
             setColorOfOfferCard(offer);

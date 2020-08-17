@@ -52,7 +52,6 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         Set<Setting> settings = new HashSet<>();
         settings.add(new NotificationSetting(true, 60));
         settings.add(new DisplaySetting(ColorMode.DARK));
-        Set<Offer> bookmarks = new HashSet<>();
         Role role = Role.USER;
         Email email = new Email("wergviuhgvt349tz@example.com");
         Password password = Password.createHashedPassword("Str0ngPassw0rd!");
@@ -64,7 +63,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         Collection<OfferPredicate> offerPredicates = new LinkedList<>();
         Localizable localizable = new CityLocation("Karlsruhe");
         OfferComparator offerComparator = new OfferComparator(OfferComparableField.TIME, localizable);
-        return new User(identifier, reports, ratings, settings, bookmarks, role, email, password,
+        return new User(identifier, reports, ratings, settings, role, email, password,
                 birthDay, name, phoneNumber, description, isVerified, offerPredicates, offerComparator, localizable);
     }
 

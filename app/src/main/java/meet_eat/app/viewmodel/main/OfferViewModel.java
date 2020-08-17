@@ -6,9 +6,10 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Streams;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import meet_eat.app.repository.OfferRepository;
@@ -18,6 +19,7 @@ import meet_eat.app.repository.TagRepository;
 import meet_eat.app.repository.UserRepository;
 import meet_eat.data.Page;
 import meet_eat.data.Report;
+import meet_eat.data.entity.Bookmark;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
 import meet_eat.data.entity.user.User;
@@ -79,10 +81,19 @@ public class OfferViewModel extends ViewModel {
      *
      * @return the user's bookmarked offers
      */
-    public Iterable<Offer> fetchBookmarkedOffers() {
-        Set<Offer> bookmarks = new HashSet<>(getCurrentUser().getBookmarks());
-        bookmarks.removeIf(Objects::isNull);
-        return bookmarks;
+    public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
+        return Streams.stream(fetchBookmarks())
+                .map(Bookmark::getOffer)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the {@link User user's} {@link Bookmark bookmarks}.
+     *
+     * @return the user's bookmarks
+     */
+    public Iterable<Bookmark> fetchBookmarks() throws RequestHandlerException {
+        return userRepository.getBookmarksByUser(getCurrentUser());
     }
 
     /**
@@ -147,7 +158,6 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Offer participate(Offer offer) throws RequestHandlerException {
-        removeBookmark(offer);
         return offerRepository.addParticipant(offer, getCurrentUser());
     }
 
@@ -204,8 +214,8 @@ public class OfferViewModel extends ViewModel {
      */
     public void addBookmark(Offer offer) throws RequestHandlerException {
         if (!isBookmarked(offer)) {
-            getCurrentUser().addBookmark(offer);
-            userRepository.updateEntity(getCurrentUser());
+            Bookmark bookmark = new Bookmark(getCurrentUser(), Objects.requireNonNull(offer));
+            userRepository.addBookmark(bookmark);
         }
     }
 
@@ -217,9 +227,12 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
-        if (isBookmarked(offer)) {
-            getCurrentUser().removeBookmark(offer);
-            userRepository.updateEntity(getCurrentUser());
+        Optional<Bookmark> optionalBookmark = Streams.stream(fetchBookmarks())
+                .filter(x -> x.getOffer().equals(offer))
+                .findFirst();
+
+        if (optionalBookmark.isPresent()) {
+            userRepository.removeBookmark(optionalBookmark.get());
         }
     }
 
@@ -228,11 +241,11 @@ public class OfferViewModel extends ViewModel {
      *
      * @param offer the offer to be checked
      * @return true if the offer is already bookmarked
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public boolean isBookmarked(Offer offer) {
-        Stream<Offer> bookmarks = Streams.stream(fetchBookmarkedOffers());
-        String offerIdentifier = offer.getIdentifier();
-        return bookmarks.anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offerIdentifier));
+    public boolean isBookmarked(Offer offer) throws RequestHandlerException {
+        Stream<Offer> bookmarkedOffers = Streams.stream(fetchBookmarkedOffers());
+        return bookmarkedOffers.anyMatch(bookmarkedOffer -> bookmarkedOffer.equals(offer));
     }
 
     /**

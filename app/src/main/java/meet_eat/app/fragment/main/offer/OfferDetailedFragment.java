@@ -199,6 +199,7 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
 
         if (offerVM.isCreator(offer)) {
+            binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             binding.ibtOfferDetailedReport.setVisibility(GONE);
             binding.btOfferDetailedParticipate.setVisibility(GONE);
             binding.btOfferDetailedContact.setVisibility(GONE);
@@ -206,10 +207,6 @@ public class OfferDetailedFragment extends Fragment {
         } else {
             binding.ibtOfferDetailedEdit.setVisibility(GONE);
             binding.btOfferDetailedParticipants.setVisibility(GONE);
-        }
-
-        if (offerVM.isCreator(offer) || offerVM.isParticipating(offer)) {
-            binding.ibtOfferDetailedBookmark.setVisibility(GONE);
         }
 
         updateUI();
@@ -220,27 +217,31 @@ public class OfferDetailedFragment extends Fragment {
      */
     private void updateUI() {
         if (!offerVM.isCreator(offer)) {
-            if (offerVM.isBookmarked(offer)) {
-                binding.ibtOfferDetailedBookmark
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
-                                PorterDuff.Mode.SRC_IN);
-            } else {
-                binding.ibtOfferDetailedBookmark
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
-                                PorterDuff.Mode.SRC_IN);
+            // Handle exception while fetching bookmarks by removing the bookmark button from UI.
+            try {
+                if (offerVM.isBookmarked(offer)) {
+                    binding.ibtOfferDetailedBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.bookmarked),
+                                    PorterDuff.Mode.SRC_IN);
+                } else {
+                    binding.ibtOfferDetailedBookmark
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.symbol),
+                                    PorterDuff.Mode.SRC_IN);
+                }
+                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
+            } catch (RequestHandlerException exception) {
+                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             }
 
             if (offerVM.isParticipating(offer)) {
                 binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
                 binding.btOfferDetailedParticipate.setText(R.string.cancel);
                 binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
-                binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             } else {
                 binding.btOfferDetailedParticipate
                         .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
                 binding.btOfferDetailedParticipate.setText(R.string.participate);
                 binding.tvOfferDetailedParticipating.setVisibility(GONE);
-                binding.ibtOfferDetailedBookmark.setVisibility(VISIBLE);
             }
         }
 

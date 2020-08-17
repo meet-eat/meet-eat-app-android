@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import meet_eat.data.EndpointPath;
 import meet_eat.data.Report;
+import meet_eat.data.entity.Bookmark;
 import meet_eat.data.entity.Subscription;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
@@ -141,5 +142,60 @@ public class UserRepository extends EntityRepository<User> {
                 HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Void, Subscription>().handleIterable(requestEntity, HttpStatus.OK);
+    }
+
+    /**
+     * Returns the {@link Bookmark bookmarks} of a {@link User user} from the repository.
+     *
+     * @param user the user whose bookmarks are to be returned from the repository
+     * @return the bookmarks of a user from the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Iterable<Bookmark> getBookmarksByUser(User user) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
+
+        // Handle request
+        RequestEntity<Void> requestEntity = new RequestEntity<Void>(
+                getTokenHeaders(),
+                HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        return new RequestHandler<Void, Bookmark>().handleIterable(requestEntity, HttpStatus.OK);
+    }
+
+    /**
+     * Removes a {@link Bookmark bookmark} from the repository.
+     *
+     * @param bookmark the bookmark to be deleted from the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public void removeBookmark(Bookmark bookmark) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+
+        // Handle request
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
+                bookmark,
+                getTokenHeaders(),
+                HttpMethod.DELETE,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        new RequestHandler<Bookmark, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Adds a {@link Bookmark bookmark} to the repository.
+     *
+     * @param bookmark the bookmark to be added to the repository
+     * @return the bookmark added to the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Bookmark addBookmark(Bookmark bookmark) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+
+        // Handle request
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
+                bookmark,
+                getTokenHeaders(),
+                HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
+        return new RequestHandler<Bookmark, Bookmark>().handle(requestEntity, HttpStatus.CREATED);
     }
 }
