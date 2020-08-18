@@ -31,9 +31,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@id/pBarrier1"
-            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -97,7 +96,7 @@
                     android:textSize="28sp"
                     app:layout_constraintEnd_toStartOf="@+id/ibtProfileEdit"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivProfileProfile" />
+                    app:layout_constraintTop_toBottomOf="@+id/ibtProfileEdit" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -224,35 +223,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating"
                     app:tint="@color/rating" />
+
+                <Button
+                    android:id="@+id/btProfileSubscribe"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_button"
+                    android:elevation="5dp"
+                    android:text="@string/subscribe"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileGuestRatingTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/btProfileSubscribe"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_button"
-            android:elevation="5dp"
-            android:text="@string/subscribe"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/pBarrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierAllowsGoneWidgets="false"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="btProfileSubscribe,pGuide1" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/pGuide1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
