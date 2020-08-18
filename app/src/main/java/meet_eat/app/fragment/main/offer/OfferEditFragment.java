@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferEditBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -65,6 +66,7 @@ public class OfferEditFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(1);
         binding = FragmentOfferEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);

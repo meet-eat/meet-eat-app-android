@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentOfferContactRequestBinding;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 
@@ -29,6 +30,7 @@ public class OfferContactRequestFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(1);
         binding = FragmentOfferContactRequestBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);

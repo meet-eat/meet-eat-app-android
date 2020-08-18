@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavController navController;
     private long timeInMillis;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onItemClicked);
         navigationView.getMenu().getItem(1).setChecked(true);
         ActionBarDrawerToggle toggle =
@@ -57,6 +58,32 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    public void selectMenuItem(int item) {
+        navigationView.getMenu().getItem(item).setChecked(true);
+        String title = getResources().getString(R.string.app_name);
+        switch (item) {
+            case 0:
+                title = getResources().getString(R.string.drawer_menu_profile);
+                break;
+            case 1:
+                title = getResources().getString(R.string.drawer_menu_main_offers);
+                break;
+            case 2:
+                title = getResources().getString(R.string.drawer_menu_my_offers);
+                break;
+            case 3:
+                title = getResources().getString(R.string.drawer_menu_bookmarked);
+                break;
+            case 4:
+                title = getResources().getString(R.string.drawer_menu_subscriptions);
+                break;
+            case 5:
+                title = getResources().getString(R.string.drawer_menu_settings);
+                break;
+        }
+        getSupportActionBar().setTitle(title);
     }
 
     /**

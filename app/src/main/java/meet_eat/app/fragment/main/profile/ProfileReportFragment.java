@@ -17,6 +17,7 @@ import com.google.common.base.Strings;
 
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
@@ -43,6 +44,7 @@ public class ProfileReportFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(0);
         binding = FragmentProfileReportBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);

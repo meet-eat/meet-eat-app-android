@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.util.Set;
 
 import meet_eat.app.LoginActivity;
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsBinding;
 import meet_eat.app.repository.RequestHandlerException;
@@ -37,6 +38,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(5);
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         navController = NavHostFragment.findNavController(this);

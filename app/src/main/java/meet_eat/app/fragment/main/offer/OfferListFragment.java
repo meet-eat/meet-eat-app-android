@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferListBinding;
 import meet_eat.app.fragment.ListType;
@@ -59,8 +60,10 @@ public class OfferListFragment extends Fragment {
         // Checks if the previous page sent a bundle of arguments containing an offer list type
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
             type = STANDARD;
+            ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
         } else {
             type = (ListType) getArguments().getSerializable(LIST_TYPE.name());
+            ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
             // Updates the comparators for the current user
             offerVM.getCurrentUser().setOfferComparator(
                     Objects.isNull(getArguments().getSerializable(SORT_CRITERION.name())) ?

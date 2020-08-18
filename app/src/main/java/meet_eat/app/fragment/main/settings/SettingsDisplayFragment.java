@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
@@ -22,6 +23,7 @@ public class SettingsDisplayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(5);
         meet_eat.app.databinding.FragmentSettingsDisplayBinding binding =
                 FragmentSettingsDisplayBinding.inflate(inflater, container, false);
         SettingsViewModel settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

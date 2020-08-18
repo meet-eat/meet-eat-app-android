@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import meet_eat.app.LoginActivity;
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsDeleteProfileBinding;
 import meet_eat.app.repository.RequestHandlerException;
@@ -39,6 +40,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(5);
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

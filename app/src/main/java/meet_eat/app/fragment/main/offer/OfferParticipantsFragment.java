@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
 import meet_eat.data.entity.Offer;
 
@@ -33,6 +34,7 @@ public class OfferParticipantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(1);
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         OfferParticipantsAdapter offerParticipantsAdapter = new OfferParticipantsAdapter(new ArrayList<>());

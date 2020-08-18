@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 
 /**
@@ -20,6 +21,7 @@ public class OfferReportFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(1);
         return inflater.inflate(R.layout.fragment_offer_report, container, false);
     }
 }

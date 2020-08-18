@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.io.IOException;
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferDetailedBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -50,6 +51,7 @@ public class OfferDetailedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(1);
         binding = FragmentOfferDetailedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);

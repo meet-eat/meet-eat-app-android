@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.io.IOException;
 import java.util.Objects;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileEditBinding;
 import meet_eat.app.fragment.ContextFormatter;
@@ -48,6 +49,7 @@ public class ProfileEditFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(0);
         binding = FragmentProfileEditBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);

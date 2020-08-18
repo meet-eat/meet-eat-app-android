@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
+import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileSubscribedBinding;
 import meet_eat.app.repository.RequestHandlerException;
@@ -37,6 +38,7 @@ public class ProfileSubscribedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).selectMenuItem(0);
         binding = FragmentProfileSubscribedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
