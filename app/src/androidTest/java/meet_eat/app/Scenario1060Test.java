@@ -16,6 +16,7 @@ import androidx.test.rule.ActivityTestRule;
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.DrawerMatchers.isClosed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+@Ignore("can't run on emulator")
 @RunWith(AndroidJUnit4.class)
 public class Scenario1060Test {
 
@@ -86,7 +88,10 @@ public class Scenario1060Test {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
+        // Remove bookmarks
+        offerVM.delete(offerVM.fetchBookmarkedOffers().iterator().next());
         new LoginViewModel().login(timestamp + 1 + "@example.com", password);
+        // Remove offers
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
@@ -114,8 +119,6 @@ public class Scenario1060Test {
         // Chooses first offer
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btOfferDetailedParticipate)).perform(click());
-
-
     }
 
     /**

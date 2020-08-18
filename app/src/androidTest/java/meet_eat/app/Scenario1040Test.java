@@ -11,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.DrawerMatchers.isClosed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+@Ignore("can't run with emulator")
 @RunWith(AndroidJUnit4.class)
 public class Scenario1040Test {
     private static final String password = "123##Tester";
