@@ -13,15 +13,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bgFragment">
+        android:background="@drawable/bg_fragment">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:paddingStart="65dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="50dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/bg_login"
+            android:src="@drawable/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -31,7 +36,10 @@
             android:layout_margin="16dp"
             android:autofillHints="emailAddress"
             android:background="@drawable/bg_edit_text"
-            android:elevation="5dp"
+            android:drawableEnd="@drawable/mail"
+            android:drawablePadding="16dp"
+            android:drawableTint="@color/colorPrimary"
+            android:elevation="50dp"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -40,8 +48,11 @@
             android:text="@={fragment.email}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            tools:layout_editor_absoluteX="16dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.65" />
 
         <EditText
             android:id="@+id/etLoginPassword"
@@ -50,12 +61,15 @@
             android:layout_margin="16dp"
             android:autofillHints="password"
             android:background="@drawable/bg_edit_text"
-            android:elevation="5dp"
+            android:drawableEnd="@drawable/lock"
+            android:drawablePadding="16dp"
+            android:drawableTint="@color/colorPrimary"
+            android:elevation="50dp"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="23dp"
             android:text="@={fragment.password}"
             android:textColor="@android:color/white"
             android:textColorHint="@color/textHint"

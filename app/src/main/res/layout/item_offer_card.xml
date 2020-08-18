@@ -21,22 +21,24 @@
         <ImageView
             android:id="@+id/ivOfferCardPicture"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:elevation="20dp"
             android:padding="3dp"
             android:backgroundTint="@color/foreignOffer"
             android:scaleType="fitCenter"
-            android:src="@drawable/bg_offer_card"
+            android:adjustViewBounds="true"
+            android:src="@drawable/offer_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
         <ImageView
             android:id="@+id/ivOfferCardPictureBackground"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/foreignOffer"
             android:scaleType="fitCenter"
             android:src="@drawable/bg_offer_card"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 

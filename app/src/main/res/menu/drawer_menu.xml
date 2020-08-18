@@ -6,21 +6,34 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_menu_profile"
-            android:title="@string/drawer_menu_profile" />
+            android:title="@string/drawer_menu_profile"
+            android:icon="@drawable/ic_profile"
+            android:iconTint="@color/colorPrimary"
+            android:iconTintMode="src_in"/>
         <item
             android:id="@+id/drawer_menu_main_offers"
-            android:title="@string/drawer_menu_main_offers" />
+            android:title="@string/drawer_menu_main_offers"
+            android:icon="@drawable/ic_home"
+            android:iconTint="@color/colorPrimary"/>
         <item
             android:id="@+id/drawer_menu_my_offers"
-            android:title="@string/drawer_menu_my_offers" />
+            android:title="@string/drawer_menu_my_offers"
+            android:icon="@drawable/ic_own"
+            android:iconTint="@color/colorPrimary"/>
         <item
             android:id="@+id/drawer_menu_bookmarked"
-            android:title="@string/drawer_menu_bookmarked" />
+            android:title="@string/drawer_menu_bookmarked"
+            android:icon="@drawable/ic_bookmarks"
+            android:iconTint="@color/colorPrimary"/>
         <item
             android:id="@+id/drawer_menu_subscriptions"
-            android:title="@string/drawer_menu_subscriptions" />
+            android:title="@string/drawer_menu_subscriptions"
+            android:icon="@drawable/ic_subscriptions"
+            android:iconTint="@color/colorPrimary"/>
         <item
             android:id="@+id/drawer_menu_settings"
-            android:title="@string/drawer_menu_settings" />
+            android:title="@string/drawer_menu_settings"
+            android:icon="@drawable/ic_settings"
+            android:iconTint="@color/colorPrimary"/>
     </group>
 </menu>

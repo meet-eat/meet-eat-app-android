@@ -9,9 +9,14 @@
     <color name="ownOffer">#FB8C00</color>
     <color name="participatingOffer">#039BE5</color>
     <color name="textHint">#40FFFFFF</color>
-    <color name="bgFragment">#303030</color>
+    <color name="bgFragment">#263238</color>
+    <color name="bgButtonStart">#FFE430</color>
     <color name="bgButton">#FFCF30</color>
+    <color name="bgButtonEnd">#FFCC14</color>
     <color name="symbol">#7A7A7A</color>
     <color name="bookmarked">#FF0000</color>
     <color name="rating">#FFFF00</color>
+    <color name="bgNavHeaderStart">#000000</color>
+    <color name="bgNavHeader">#101010</color>
+    <color name="bgNavHeaderEnd">#1C1C1C</color>
 </resources>
