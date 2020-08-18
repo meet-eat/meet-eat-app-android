@@ -15,16 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/background_main"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageButton
             android:id="@+id/ibtBack"
             android:layout_width="40dp"
@@ -39,203 +29,197 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <!-- OFFER IMAGE -->
+        <ImageView
+            android:id="@+id/ivOfferEditPicture"
             android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:adjustViewBounds="true"
+            android:elevation="4dp"
+            android:scaleType="fitCenter"
+            android:src="@android:color/black"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- OFFER IMAGE -->
+        <TextView
+            android:id="@+id/tvOfferEditPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tag"
+            android:elevation="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/picture"
+            android:textAlignment="center"
+            android:textColor="@color/textHint"
+            android:textSize="30sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
+            app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
+            app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
+            app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
+
+        <!-- OFFER IMAGE -->
+        <ImageButton
+            android:id="@+id/ibtOfferEditEditPicture"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/oeBarrier1"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit"
+            android:tint="@color/symbol"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
+            app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
+            app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
+            app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etOfferEditTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_text"
+            android:elevation="5dp"
+            android:hint="@string/title"
+            android:inputType="text"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@={fragment.title}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintTop_toBottomOf="@+id/ibtBack"
+            tools:layout_editor_absoluteX="16dp" />
 
-                <ImageView
-                    android:id="@+id/ivOfferEditPicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="4dp"
-                    android:scaleType="fitCenter"
-                    android:src="@android:color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvOfferEditDate"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edit_text"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:hint="@string/date_time"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/etOfferEditPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
 
-                <TextView
-                    android:id="@+id/tvOfferEditPicture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_tag"
-                    android:elevation="5dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/picture"
-                    android:textAlignment="center"
-                    android:textColor="@color/textHint"
-                    android:textSize="30sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
+        <EditText
+            android:id="@+id/etOfferEditCity"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/bg_edit_text"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:hint="@string/city"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@={fragment.city}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/etOfferEditParticipants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOfferEditDate" />
 
-                <ImageButton
-                    android:id="@+id/ibtOfferEditEditPicture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/edit"
-                    android:tint="@color/symbol"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
+        <EditText
+            android:id="@+id/etOfferEditPrice"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_text"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:hint="@{@string/price.concat(@string/whitespace).concat(@string/currency)}"
+            android:inputType="numberDecimal"
+            android:maxLength="9"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@={fragment.priceString}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
 
-                <EditText
-                    android:id="@+id/etOfferEditTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
-                    android:elevation="5dp"
-                    android:hint="@string/title"
-                    android:inputType="text"
-                    android:maxLength="50"
-                    android:maxLines="1"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@={fragment.title}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toBottomOf="@+id/ivOfferEditPicture"
-                    tools:layout_editor_absoluteX="16dp" />
+        <EditText
+            android:id="@+id/etOfferEditParticipants"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_text"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:hint="@string/participants"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@={fragment.participantsString}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etOfferEditPrice" />
 
-                <TextView
-                    android:id="@+id/tvOfferEditDate"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_edit_text"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:hint="@string/date_time"
-                    android:maxLines="1"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/etOfferEditPrice"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
+        <EditText
+            android:id="@+id/etOfferEditDescription"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="16dp"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_text"
+            android:elevation="5dp"
+            android:gravity="top|start"
+            android:hint="@string/offer_description"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:text="@={fragment.description}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/textHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etOfferEditCity" />
 
-                <EditText
-                    android:id="@+id/etOfferEditCity"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:autofillHints="postalAddress"
-                    android:background="@drawable/bg_edit_text"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:hint="@string/city"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@={fragment.city}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/etOfferEditParticipants"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferEditDate" />
-
-                <EditText
-                    android:id="@+id/etOfferEditPrice"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:hint="@{@string/price.concat(@string/whitespace).concat(@string/currency)}"
-                    android:inputType="numberDecimal"
-                    android:maxLength="9"
-                    android:maxLines="1"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@={fragment.priceString}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditTitle" />
-
-                <EditText
-                    android:id="@+id/etOfferEditParticipants"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:hint="@string/participants"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:maxLines="1"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@={fragment.participantsString}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditPrice" />
-
-                <EditText
-                    android:id="@+id/etOfferEditDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_margin="16dp"
-                    android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
-                    android:elevation="5dp"
-                    android:gravity="top|start"
-                    android:hint="@string/offer_description"
-                    android:inputType="textMultiLine"
-                    android:maxLength="300"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:text="@={fragment.description}"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/textHint"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditCity" />
-
-                <Button
-                    android:id="@+id/btOfferEditAddTag"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_tag"
-                    android:elevation="5dp"
-                    android:text="@string/add_tag"
-                    android:textColor="@color/textHint"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etOfferEditDescription" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        <!-- TAG -->
+        <Button
+            android:id="@+id/btOfferEditAddTag"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_tag"
+            android:elevation="5dp"
+            android:text="@string/add_tag"
+            android:textColor="@color/textHint"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etOfferEditDescription" />
 
         <Button
             android:id="@+id/btOfferEditPublish"
@@ -277,13 +261,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btOfferEditSave" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/oeBarrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierAllowsGoneWidgets="false"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="btOfferEditPublish,btOfferEditSave,btOfferEditDelete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
