@@ -68,6 +68,7 @@ public class Scenario1030Test {
         onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
         // Navigate to settings
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.drawer_menu_settings));
+        // wait, so espresso doesn't cause an error
         SystemClock.sleep(500);
         onView(withId(R.id.btSettingsDelete)).perform(click());
         onView(withId(R.id.etSettingsDeleteProfilePassword)).perform(typeText(password));
