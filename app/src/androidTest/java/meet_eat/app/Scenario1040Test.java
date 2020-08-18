@@ -59,8 +59,8 @@ public class Scenario1040Test {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
         Intents.release();
+        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
     }
 
     @Test

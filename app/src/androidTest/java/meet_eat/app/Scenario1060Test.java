@@ -53,7 +53,7 @@ public class Scenario1060Test {
 
     private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
-
+    // U: 10 O: 0 B: 8
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
@@ -85,13 +85,13 @@ public class Scenario1060Test {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
+        Intents.release();
         new LoginViewModel().login(timestamp + 1 + "@example.com", password);
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
         new LoginViewModel().login(timestamp + "@example.com", password);
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
-        Intents.release();
     }
 
     @Test

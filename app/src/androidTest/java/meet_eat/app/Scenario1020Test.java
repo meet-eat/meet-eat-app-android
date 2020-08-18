@@ -59,10 +59,10 @@ public class Scenario1020Test {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
+        Intents.release();
         OfferViewModel offerVM = new OfferViewModel();
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
-        Intents.release();
     }
 
     @Test

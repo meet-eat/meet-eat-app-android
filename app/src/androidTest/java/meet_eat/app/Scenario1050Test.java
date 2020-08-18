@@ -73,12 +73,12 @@ public class Scenario1050Test {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
+        Intents.release();
         new LoginViewModel().login(timestamp + 1 + "@example.com", password);
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
         new LoginViewModel().login(timestamp + "@example.com", password);
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
-        Intents.release();
     }
 
     @Test

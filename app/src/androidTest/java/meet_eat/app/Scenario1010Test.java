@@ -66,9 +66,9 @@ public class Scenario1010Test {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
+        Intents.release();
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
-        Intents.release();
     }
 
     @Test
@@ -79,7 +79,8 @@ public class Scenario1010Test {
         // Tags are not yet implemented, leaving [TA 3020] out of this test
         // [TA 3000], [TA 3030]
         onView(withId(R.id.sOfferFilterSort)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Distance"))).perform(click());
+        // For other language, change magic number (english: Distance)
+        onData(allOf(is(instanceOf(String.class)), is("Entfernung"))).perform(click());
         onView(withId(R.id.btOfferFilterSave)).perform(click());
         // [TA 1010] omitted, as it is tested in UnitTests
     }
