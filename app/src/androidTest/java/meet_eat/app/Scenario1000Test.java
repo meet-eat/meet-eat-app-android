@@ -1,6 +1,7 @@
 package meet_eat.app;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -29,11 +30,13 @@ public class Scenario1000Test {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        Intents.release();
     }
 
     @Test
     public void testScenario1000() {
         // [TA 2000], [TA 1000], [TA 3000], [TA 2030]
+        Intents.init();
         scenarioTestHelper.register();
         scenarioTestHelper.login();
         // [TA 3010]

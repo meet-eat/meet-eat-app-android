@@ -3,7 +3,6 @@ package meet_eat.app;
 import android.widget.DatePicker;
 
 import androidx.test.espresso.contrib.PickerActions;
-import androidx.test.espresso.intent.Intents;
 
 import org.hamcrest.Matchers;
 

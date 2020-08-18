@@ -62,6 +62,7 @@ public class Scenario1020Test {
         OfferViewModel offerVM = new OfferViewModel();
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
         new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        Intents.release();
     }
 
     @Test
@@ -85,8 +86,7 @@ public class Scenario1020Test {
                         offerDate.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
 
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions
-                .setTime(20,0));
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(20, 0));
         onView(withText("OK")).perform(click());
 
         closeSoftKeyboard();
