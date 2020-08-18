@@ -14,15 +14,6 @@
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/background_main"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageButton
             android:id="@+id/ibtBack"
             android:layout_width="40dp"
@@ -37,93 +28,95 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/ibtBack"
-            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
-
-            <ImageView
-                android:id="@+id/ivProfileEditProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                android:elevation="4dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/profile_standard" />
-
-            <ImageButton
-                android:id="@+id/ibtProfileEditAdd"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom|end"
-                android:adjustViewBounds="true"
-                android:background="@drawable/bg_button"
-                android:backgroundTint="@color/symbol"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:tint="@android:color/black" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/tvProfileEditEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="10"
-            android:singleLine="true"
-            android:text="@string/e_mail"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/frameLayout"
-            app:layout_constraintTop_toBottomOf="@+id/ibtBack" />
-
-        <TextView
-            android:id="@+id/tvProfileEditUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="10"
-            android:text="@string/username"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/frameLayout"
-            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail" />
-
-        <TextView
-            android:id="@+id/tvProfileEditBirthday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="5dp"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="10"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditUsername" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btProfileEditSave"
-            app:layout_constraintTop_toBottomOf="@+id/tvProfileEditBirthday">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <!-- PROFILE IMAGE -->
+                <FrameLayout
+                    android:id="@+id/peFrameLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivProfileEditProfile"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:adjustViewBounds="true"
+                        android:elevation="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/profile_standard" />
+
+                    <ImageButton
+                        android:id="@+id/ibtProfileEditAdd"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|end"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/bg_button"
+                        android:backgroundTint="@color/symbol"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/add"
+                        android:tint="@android:color/black" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvProfileEditEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="10"
+                    android:singleLine="true"
+                    android:text="@string/e_mail"
+                    android:textAlignment="textEnd"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/peFrameLayout1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvProfileEditUsername"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="10"
+                    android:text="@string/username"
+                    android:textAlignment="textEnd"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/peFrameLayout1"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileEditEmail" />
+
+                <TextView
+                    android:id="@+id/tvProfileEditBirthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:elevation="5dp"
+                    android:shadowColor="@android:color/black"
+                    android:shadowRadius="10"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileEditUsername" />
 
                 <EditText
                     android:id="@+id/etProfileEditOldPassword"
@@ -143,7 +136,7 @@
                     android:textColorHint="@color/textHint"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/peBarrier1" />
 
                 <EditText
                     android:id="@+id/etProfileEditNewPassword"
@@ -165,6 +158,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etProfileEditOldPassword" />
 
+                <EditText
+                    android:id="@+id/etProfileEditPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:autofillHints="newPassword"
+                    android:background="@drawable/bg_edit_text"
+                    android:elevation="5dp"
+                    android:hint="@string/password_confirm"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@={fragment.passwordConfirm}"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/textHint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etProfileEditNewPassword" />
+
                 <Button
                     android:id="@+id/btProfileEditChangePassword"
                     android:layout_width="150dp"
@@ -176,7 +189,7 @@
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etProfileEditNewPassword" />
+                    app:layout_constraintTop_toBottomOf="@+id/etProfileEditPasswordConfirm" />
 
                 <EditText
                     android:id="@+id/etProfileEditPhone"
@@ -242,20 +255,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etProfileEditHome" />
 
+                <Button
+                    android:id="@+id/btProfileEditSave"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_button"
+                    android:elevation="5dp"
+                    android:text="@string/save"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etProfileEditDescription" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/peBarrier1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierAllowsGoneWidgets="false"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="peFrameLayout1,tvProfileEditEmail,tvProfileEditUsername,tvProfileEditBirthday" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/btProfileEditSave"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_button"
-            android:elevation="5dp"
-            android:text="@string/save"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

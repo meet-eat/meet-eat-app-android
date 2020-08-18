@@ -91,7 +91,7 @@
                     android:textColorHint="@color/textHint"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rFrameLayout1" />
+                    app:layout_constraintTop_toBottomOf="@+id/rBarrier1" />
 
                 <EditText
                     android:id="@+id/etRegisterPassword"
@@ -121,7 +121,7 @@
                     android:autofillHints="newPassword"
                     android:background="@drawable/bg_edit_text"
                     android:elevation="5dp"
-                    android:hint="@string/passwordConfirm"
+                    android:hint="@string/password_confirm"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:paddingLeft="20dp"

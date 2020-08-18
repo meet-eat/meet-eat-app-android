@@ -40,6 +40,7 @@ public class ProfileEditFragment extends Fragment {
     private String phone;
     private String oldPasswordString;
     private String newPasswordString;
+    private String passwordConfirm;
     private String home;
     private String description;
 
@@ -95,6 +96,11 @@ public class ProfileEditFragment extends Fragment {
      * token is not changed until a new session is started.
      */
     private void changePassword() {
+        if (!newPasswordString.equals(passwordConfirm)) {
+            Toast.makeText(getActivity(), R.string.passwords_not_matching, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
             Toast.makeText(getActivity(), R.string.bad_passwords, Toast.LENGTH_SHORT).show();
             return;
@@ -206,5 +212,13 @@ public class ProfileEditFragment extends Fragment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

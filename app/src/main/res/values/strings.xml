@@ -119,6 +119,6 @@
     <string name="european_date_format" translatable="false">dd.MM.yyyy</string>
     <string name="european_time_format" translatable="false">HH:mm</string>
     <string name="decimal_format" translatable="false">%.2f</string>
-    <string name="passwordConfirm">Password confirmation</string>
+    <string name="password_confirm">Password confirmation</string>
     <string name="passwords_not_matching">Passwords are not matching.</string>
 </resources>
