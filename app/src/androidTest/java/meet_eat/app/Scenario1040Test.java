@@ -47,7 +47,6 @@ public class Scenario1040Test {
 
     private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
-
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
@@ -55,7 +54,7 @@ public class Scenario1040Test {
     public static void initialize() throws RequestHandlerException {
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(49.0128172,8.3951616)));
+                new SphericalLocation(new SphericalPosition(49.0128172, 8.3951616)));
         new RegisterViewModel().register(newUser);
     }
 

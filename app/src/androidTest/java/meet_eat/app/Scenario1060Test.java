@@ -120,7 +120,7 @@ public class Scenario1060Test {
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btOfferDetailedParticipate)).perform(click());
     }
-
+    
     /**
      * Returns viewAction, meaning an action to click a button within an item within our recycler view.
      *

@@ -84,6 +84,4 @@ public class Scenario1010Test {
         onView(withId(R.id.btOfferFilterSave)).perform(click());
         // [TA 1010] omitted, as it is tested in UnitTests
     }
-
-
 }
