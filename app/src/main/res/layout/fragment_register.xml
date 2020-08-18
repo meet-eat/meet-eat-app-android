@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,14 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgFragment">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/background_main"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/ibtBack"
@@ -37,50 +28,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
-
-            <ImageView
-                android:id="@+id/ivRegisterProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                android:elevation="4dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/profile_standard" />
-
-            <ImageButton
-                android:id="@+id/ibtRegisterAdd"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom|end"
-                android:adjustViewBounds="true"
-                android:background="@drawable/bg_button"
-                android:backgroundTint="@color/symbol"
-                android:elevation="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:tint="@android:color/black" />
-        </FrameLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btRegister"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibtBack">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <!-- PROFILE IMAGE -->
+                <FrameLayout
+                    android:id="@+id/rFrameLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivRegisterProfile"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:adjustViewBounds="true"
+                        android:elevation="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/profile_standard" />
+
+                    <ImageButton
+                        android:id="@+id/ibtRegisterAdd"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|end"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/bg_button"
+                        android:backgroundTint="@color/symbol"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/add"
+                        android:tint="@android:color/black" />
+                </FrameLayout>
 
                 <EditText
                     android:id="@+id/etRegisterEmail"
@@ -98,8 +89,9 @@
                     android:text="@={fragment.email}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rFrameLayout1" />
 
                 <EditText
                     android:id="@+id/etRegisterPassword"
@@ -117,8 +109,29 @@
                     android:text="@={fragment.password}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
+
+                <EditText
+                    android:id="@+id/etRegisterPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:autofillHints="newPassword"
+                    android:background="@drawable/bg_edit_text"
+                    android:elevation="5dp"
+                    android:hint="@string/passwordConfirm"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@={fragment.passwordConfirm}"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/textHint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword" />
 
                 <EditText
                     android:id="@+id/etRegisterUsername"
@@ -137,8 +150,9 @@
                     android:text="@={fragment.username}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etRegisterPasswordConfirm" />
 
                 <EditText
                     android:id="@+id/etRegisterPhone"
@@ -157,8 +171,9 @@
                     android:text="@={fragment.phoneNumber}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
-                    app:layout_constraintTop_toBottomOf="@+id/etRegisterUsername"
-                    tools:layout_editor_absoluteX="16dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etRegisterUsername" />
 
                 <TextView
                     android:id="@+id/tvRegisterBirthday"
@@ -221,21 +236,32 @@
                     android:text="@={fragment.profileDescription}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/textHint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etRegisterHome" />
+
+                <Button
+                    android:id="@+id/btRegister"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_button"
+                    android:elevation="5dp"
+                    android:text="@string/register"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etRegisterDescription" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/rBarrier1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierAllowsGoneWidgets="false"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="rFrameLayout1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/btRegister"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_button"
-            android:elevation="5dp"
-            android:text="@string/register"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

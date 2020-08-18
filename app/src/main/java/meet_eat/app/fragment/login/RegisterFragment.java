@@ -50,6 +50,7 @@ public class RegisterFragment extends Fragment {
     private String email;
     private String home;
     private String password;
+    private String passwordConfirm;
     private String username;
     private String phoneNumber;
     private String profileDescription;
@@ -95,6 +96,11 @@ public class RegisterFragment extends Fragment {
 
         if (!Email.isLegalEmailAddress(email)) {
             Toast.makeText(getActivity(), R.string.bad_email, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!password.equals(passwordConfirm)) {
+            Toast.makeText(getActivity(), R.string.passwords_not_matching, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -164,6 +170,14 @@ public class RegisterFragment extends Fragment {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public String getUsername() {
