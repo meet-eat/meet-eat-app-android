@@ -26,7 +26,8 @@
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_back_button" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -50,7 +51,8 @@
                     android:src="@drawable/edit"
                     android:tint="@color/symbol"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/content_description_edit_profile_button" />
 
                 <!-- REPORT -->
                 <ImageButton
@@ -66,7 +68,8 @@
                     android:tint="@color/symbol"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="TODO" />
 
                 <!-- PROFILE IMAGE -->
                 <ImageView
@@ -81,7 +84,8 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/content_description_profile_image" />
 
                 <TextView
                     android:id="@+id/tvProfileUsername"
@@ -183,7 +187,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tvProfileHostRating"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvProfileHostRating"
-                    app:tint="@color/rating" />
+                    app:tint="@color/rating"
+                    android:contentDescription="@string/content_description_profile_host_rating_star" />
 
                 <TextView
                     android:id="@+id/tvProfileGuestRatingTitle"
@@ -225,7 +230,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/tvProfileGuestRating"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating"
-                    app:tint="@color/rating" />
+                    app:tint="@color/rating"
+                    android:contentDescription="TODO" />
 
                 <Button
                     android:id="@+id/btProfileSubscribe"

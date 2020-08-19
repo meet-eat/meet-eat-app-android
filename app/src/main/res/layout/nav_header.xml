@@ -19,7 +19,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/content_description_app_logo" />
 
     <ImageView
         android:id="@+id/imageViewTitle"
@@ -30,7 +31,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:srcCompat="@drawable/title" />
+        app:srcCompat="@drawable/title"
+        android:contentDescription="@string/content_description_app_title" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -38,6 +40,7 @@
         android:src="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/content_description_spacer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

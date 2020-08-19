@@ -32,7 +32,8 @@
                 android:src="@drawable/add"
                 android:tint="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/content_description_add_offer_button" />
 
             <ImageButton
                 android:id="@+id/ibtOfferListFilter"
@@ -47,7 +48,8 @@
                 android:src="@drawable/filter"
                 android:tint="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ibtOfferListCreate" />
+                app:layout_constraintEnd_toStartOf="@+id/ibtOfferListCreate"
+                android:contentDescription="@string/content_description_filter_offer_button" />
 
             <Button
                 android:id="@+id/ibtOfferListSubscribed"

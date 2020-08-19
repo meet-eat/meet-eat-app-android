@@ -121,4 +121,28 @@
     <string name="decimal_format" translatable="false">%.2f</string>
     <string name="password_confirm">Password confirmation</string>
     <string name="passwords_not_matching">Passwords are not matching.</string>
+    <string name="content_description_app_title">App title</string>
+    <string name="content_description_back_button">Back button</string>
+    <string name="content_description_background_image">Background image</string>
+    <string name="content_description_offer_image">Offer image</string>
+    <string name="content_description_spacer">Spacer</string>
+    <string name="report_button">Report button</string>
+    <string name="bookmark_button">Bookmark button</string>
+    <string name="creator_image">Creator image</string>
+    <string name="creator_rating_star">Creator rating star</string>
+    <string name="content_description_offer_image_edit_button">Offer image edit button</string>
+    <string name="content_description_add_offer_button">Add offer button</string>
+    <string name="content_description_filter_offer_button">Filter offer button</string>
+    <string name="content_description_edit_profile_button">Edit profile button</string>
+    <string name="content_description_profile_report_button">Profile report button</string>
+    <string name="content_description_profile_image">Profile image</string>
+    <string name="content_description_profile_host_rating_star">Profile host rating star</string>
+    <string name="content_description_profile_edit_image">Profile edit image</string>
+    <string name="content_description_profile_edit_image_button">Profile edit image button</string>
+    <string name="content_description_add_profile_image_button">Add profile image button</string>
+    <string name="content_description_settings_info_image">Settings info image</string>
+    <string name="content_description_offer_card_frame">Offer card frame</string>
+    <string name="content_description_bookmark_button">Bookmark button</string>
+    <string name="content_description_remove_subscription_button">Remove subscription button</string>
+    <string name="content_description_app_logo">App logo</string>
 </resources>

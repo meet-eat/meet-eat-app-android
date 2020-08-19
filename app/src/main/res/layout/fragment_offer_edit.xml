@@ -27,7 +27,8 @@
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_back_button" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -50,7 +51,8 @@
                     android:src="@drawable/offer_card"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/content_description_offer_image" />
 
                 <!-- OFFER IMAGE -->
                 <ImageView
@@ -60,7 +62,8 @@
                     android:elevation="2dp"
                     android:src="@color/colorPrimary"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/ivOfferEditPicture" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivOfferEditPicture"
+                    android:contentDescription="@string/content_description_spacer" />
 
                 <!-- OFFER IMAGE -->
                 <TextView
@@ -97,7 +100,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/ivOfferEditPicture"
                     app:layout_constraintEnd_toEndOf="@+id/ivOfferEditPicture"
                     app:layout_constraintStart_toStartOf="@+id/ivOfferEditPicture"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture" />
+                    app:layout_constraintTop_toTopOf="@+id/ivOfferEditPicture"
+                    android:contentDescription="@string/content_description_offer_image_edit_button" />
 
                 <EditText
                     android:id="@+id/etOfferEditTitle"

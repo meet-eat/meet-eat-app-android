@@ -16,7 +16,8 @@
             android:layout_height="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_spacer" />
 
         <ImageView
             android:id="@+id/ivOfferCardPicture"
@@ -29,7 +30,8 @@
             android:adjustViewBounds="true"
             android:src="@drawable/offer_card"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            android:contentDescription="@string/content_description_offer_image" />
 
         <ImageView
             android:id="@+id/ivOfferCardPictureBackground"
@@ -40,7 +42,8 @@
             android:src="@drawable/bg_offer_card"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            android:contentDescription="@string/content_description_offer_card_frame" />
 
         <ImageButton
             android:id="@+id/ibtOfferCardBookmark"
@@ -53,7 +56,8 @@
             android:src="@drawable/bookmark"
             android:tint="@color/symbol"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_bookmark_button" />
 
         <TextView
             android:id="@+id/tvOfferCardTitle"
@@ -155,6 +159,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvOfferCardRating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvOfferCardRating"
-            app:tint="@color/rating" />
+            app:tint="@color/rating"
+            android:contentDescription="TODO" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

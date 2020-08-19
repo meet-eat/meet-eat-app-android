@@ -26,7 +26,8 @@
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_back_button" />
 
         <TextView
             android:id="@+id/tvSettings"
@@ -113,7 +114,8 @@
             app:layout_constraintBottom_toTopOf="@+id/tvSettingsAbout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSettingsAbout"
-            app:tint="@color/symbol" />
+            app:tint="@color/symbol"
+            android:contentDescription="@string/content_description_settings_info_image" />
 
         <Button
             android:id="@+id/btSettingsDelete"
