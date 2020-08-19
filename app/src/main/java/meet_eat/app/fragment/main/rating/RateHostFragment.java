@@ -33,7 +33,6 @@ public class RateHostFragment extends Fragment {
     private static final int DEFAULT_NUM_STARS = 3;
 
     private FragmentRateHostBinding binding;
-    private NavController navController;
     private RatingViewModel ratingVM;
     private Offer offer;
 
@@ -44,7 +43,7 @@ public class RateHostFragment extends Fragment {
         binding = FragmentRateHostBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
-        navController = NavHostFragment.findNavController(this);
+        NavController navController = NavHostFragment.findNavController(this);
 
         if (Objects.isNull(getArguments())) {
             navController.navigate(R.id.offerListFragment);

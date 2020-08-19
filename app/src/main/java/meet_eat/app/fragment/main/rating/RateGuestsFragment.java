@@ -27,7 +27,6 @@ import meet_eat.data.entity.Offer;
 public class RateGuestsFragment extends Fragment {
 
     private FragmentRateGuestsBinding binding;
-    private RatingViewModel ratingVM;
     private NavController navController;
     private RateGuestsAdapter rateGuestsAdapter;
     private Offer offer;
@@ -38,7 +37,7 @@ public class RateGuestsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
-        ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
+        RatingViewModel ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
         rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<>());
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
         binding.rvRateGuests
