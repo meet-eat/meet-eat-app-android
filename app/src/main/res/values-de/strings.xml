@@ -107,4 +107,6 @@
     <string name="reported_toast_text">gemeldet.</string>
     <string name="request_new_login">Bitte aus- und wieder einloggen</string>
     <string name="invalid_date_time_future">Zeitangabe liegt in der Zukunft.</string>
+    <string name="password_confirm">Passwortbestätigung</string>
+    <string name="passwords_not_matching">Passwörter stimmen nicht überein.</string>
 </resources>
