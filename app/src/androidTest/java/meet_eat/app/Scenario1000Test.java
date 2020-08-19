@@ -35,7 +35,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 
-@Ignore("Cant test on an emulator")
 @RunWith(AndroidJUnit4.class)
 public class Scenario1000Test {
 
@@ -50,11 +49,6 @@ public class Scenario1000Test {
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
-        User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
-
         addForeignOffer();
     }
 

@@ -80,7 +80,7 @@ public class Scenario1010Test {
         // [TA 3000], [TA 3030]
         onView(withId(R.id.sOfferFilterSort)).perform(click());
         // For other language, change magic number (english: Distance)
-        onData(allOf(is(instanceOf(String.class)), is("Entfernung"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Distance"))).perform(click());
         onView(withId(R.id.btOfferFilterSave)).perform(click());
         // [TA 1010] omitted, as it is tested in UnitTests
     }

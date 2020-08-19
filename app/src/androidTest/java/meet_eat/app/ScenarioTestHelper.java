@@ -35,7 +35,7 @@ public class ScenarioTestHelper {
         onView(withId(R.id.btLoginRegister)).perform(click());
         onView(withId(R.id.etRegisterEmail)).perform(typeText(timestamp + "@example.com"));
         onView(withId(R.id.etRegisterPassword)).perform(typeText(password));
-        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText("123##Tester"));
+        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText(password));
         onView(withId(R.id.etRegisterUsername)).perform(typeText("Tester"));
         onView(withId(R.id.etRegisterPhone)).perform(typeText("123456789"));
         closeSoftKeyboard();

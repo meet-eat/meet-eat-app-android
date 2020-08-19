@@ -40,7 +40,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-@Ignore("can't run with emulator")
 @RunWith(AndroidJUnit4.class)
 public class Scenario1020Test {
 
