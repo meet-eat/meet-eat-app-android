@@ -2,11 +2,9 @@ package meet_eat.app.viewmodel.login;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;

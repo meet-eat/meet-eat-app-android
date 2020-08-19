@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.data.Report;
@@ -20,7 +19,6 @@ import meet_eat.data.entity.user.User;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.util.Assert.isTrue;
@@ -48,7 +46,7 @@ public class UserViewModelTest {
         RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
 
-        uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
+        uniqueIdentifier = String.valueOf(System.currentTimeMillis());
         toBeReported = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
@@ -77,7 +75,7 @@ public class UserViewModelTest {
         for (int i = 1; i <= 2; i++) {
             loginVM.login(uniqueIdentifier + i + testEmail, password);
             settingsVM.deleteUser(settingsVM.getCurrentUser());
-            System.out.println("Deleted user " + settingsVM.getCurrentUser()+ "\n");
+            System.out.println("Deleted user " + settingsVM.getCurrentUser() + "\n");
 
         }
     }

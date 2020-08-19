@@ -16,7 +16,6 @@ import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -32,7 +31,6 @@ public class RatingViewModelTest {
 
     private static SettingsViewModel settingsVM;
     private static RatingViewModel ratingVM;
-    private static User registeredUser;
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
@@ -41,8 +39,8 @@ public class RatingViewModelTest {
         settingsVM = new SettingsViewModel();
         ratingVM = new RatingViewModel();
 
-        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
-        registeredUser =
+        String uniqueIdentifier = String.valueOf(System.currentTimeMillis());
+        User registeredUser =
                 new User(new Email(uniqueIdentifier + registeredEmail), Password.createHashedPassword(password),
                         LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,
                         new SphericalLocation(new SphericalPosition(0, 0)));

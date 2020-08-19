@@ -2,7 +2,6 @@ package meet_eat.app.viewmodel.main;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -19,7 +18,6 @@ import meet_eat.data.entity.user.setting.NotificationSetting;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -41,7 +39,7 @@ public class SettingsViewModelTest {
         LoginViewModel loginVM = new LoginViewModel();
         settingsVM = new SettingsViewModel();
 
-        String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
+        String uniqueIdentifier = String.valueOf(System.currentTimeMillis());
         User registeredUser =
                 new User(new Email(uniqueIdentifier + registeredEmail), Password.createHashedPassword(password),
                         LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true,

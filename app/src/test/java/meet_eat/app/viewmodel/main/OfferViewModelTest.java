@@ -59,7 +59,7 @@ public class OfferViewModelTest {
         RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
         offerVM = new OfferViewModel();
-        uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
+        uniqueIdentifier = String.valueOf(System.currentTimeMillis());
 
         // Register contactRequestUser
         secondUser = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
