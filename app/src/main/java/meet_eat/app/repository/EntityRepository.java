@@ -18,7 +18,7 @@ import meet_eat.data.entity.Token;
  *
  * @param <T> the type of entities to be managed
  */
-public abstract class EntityRepository<T extends Entity> {
+public abstract class EntityRepository<T extends Entity<?>> {
 
     private static final String ERROR_MESSAGE_NOT_LOGGED_IN = "Request failed due to wrong login state (null token).";
     private final String entityPath;
