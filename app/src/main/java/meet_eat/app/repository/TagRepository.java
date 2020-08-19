@@ -28,7 +28,7 @@ public class TagRepository extends EntityRepository<Tag> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Tag> getTags() throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath()));
         return new RequestHandler<Void, Tag>().handleIterable(requestEntity, HttpStatus.OK);
     }

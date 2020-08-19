@@ -35,7 +35,7 @@ public class UserRepository extends EntityRepository<User> {
     @Override
     public User addEntity(User entity) throws RequestHandlerException {
         // No token for registration
-        RequestEntity<User> requestEntity = new RequestEntity<User>(Objects.requireNonNull(entity), HttpMethod.POST,
+        RequestEntity<User> requestEntity = new RequestEntity<>(Objects.requireNonNull(entity), HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath()));
         return new RequestHandler<User, User>().handle(requestEntity, HttpStatus.CREATED);
     }
@@ -48,8 +48,9 @@ public class UserRepository extends EntityRepository<User> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void resetPassword(Email email) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH
-                + getEntityPath() + String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
+        RequestEntity<Void> requestEntity = new RequestEntity<>(HttpMethod.POST, URI.create(
+                RequestHandler.SERVER_PATH + getEntityPath() +
+                        String.format(URL_RESET_PASSWORD, Objects.requireNonNull(email).toString())));
         new RequestHandler<Void, Void>().handle(requestEntity, HttpStatus.ACCEPTED);
     }
 
@@ -99,10 +100,7 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(userIdentifier);
 
         // Handle request
-        RequestEntity<Subscription> requestEntity = new RequestEntity<Subscription>(
-                subscription,
-                getTokenHeaders(),
-                HttpMethod.POST,
+        RequestEntity<Subscription> requestEntity = new RequestEntity<>(subscription, getTokenHeaders(), HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Subscription, Subscription>().handle(requestEntity, HttpStatus.CREATED);
     }
@@ -118,11 +116,9 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(subscriber.getIdentifier());
 
         // Handle request
-        RequestEntity<User> requestEntity = new RequestEntity<User>(
-                Objects.requireNonNull(subscribedUser),
-                getTokenHeaders(),
-                HttpMethod.DELETE,
-                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
+        RequestEntity<User> requestEntity =
+                new RequestEntity<>(Objects.requireNonNull(subscribedUser), getTokenHeaders(), HttpMethod.DELETE,
+                        URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         new RequestHandler<User, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
     }
 
@@ -137,9 +133,7 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
 
         // Handle request
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(
-                getTokenHeaders(),
-                HttpMethod.GET,
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.SUBSCRIPTIONS));
         return new RequestHandler<Void, Subscription>().handleIterable(requestEntity, HttpStatus.OK);
     }
@@ -155,9 +149,7 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
 
         // Handle request
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(
-                getTokenHeaders(),
-                HttpMethod.GET,
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
         return new RequestHandler<Void, Bookmark>().handleIterable(requestEntity, HttpStatus.OK);
     }
@@ -172,10 +164,7 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
 
         // Handle request
-        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
-                bookmark,
-                getTokenHeaders(),
-                HttpMethod.DELETE,
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<>(bookmark, getTokenHeaders(), HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
         new RequestHandler<Bookmark, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
     }
@@ -191,10 +180,7 @@ public class UserRepository extends EntityRepository<User> {
         String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
 
         // Handle request
-        RequestEntity<Bookmark> requestEntity = new RequestEntity<Bookmark>(
-                bookmark,
-                getTokenHeaders(),
-                HttpMethod.POST,
+        RequestEntity<Bookmark> requestEntity = new RequestEntity<>(bookmark, getTokenHeaders(), HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
         return new RequestHandler<Bookmark, Bookmark>().handle(requestEntity, HttpStatus.CREATED);
     }

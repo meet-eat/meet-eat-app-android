@@ -65,8 +65,8 @@ public class Session {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void login(LoginCredential loginCredential) throws RequestHandlerException {
-        RequestEntity<LoginCredential> requestEntity = new RequestEntity<LoginCredential>(Objects.requireNonNull(loginCredential),
-                HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGIN));
+        RequestEntity<LoginCredential> requestEntity = new RequestEntity<>(Objects.requireNonNull(loginCredential), HttpMethod.POST,
+                        URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
     }
 
@@ -79,7 +79,7 @@ public class Session {
         if (Objects.isNull(token)) {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
-        RequestEntity<Token> requestEntity = new RequestEntity<Token>(token, HttpMethod.DELETE,
+        RequestEntity<Token> requestEntity = new RequestEntity<>(token, HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGOUT));
         new RequestHandler<Token, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
         token = null;

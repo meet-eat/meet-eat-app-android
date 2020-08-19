@@ -49,8 +49,9 @@ public abstract class EntityRepository<T extends Entity> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T addEntity(T entity) throws RequestHandlerException {
-        RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
-                HttpMethod.POST, URI.create(RequestHandler.SERVER_PATH + entityPath));
+        RequestEntity<T> requestEntity =
+                new RequestEntity<>(Objects.requireNonNull(entity), getTokenHeaders(), HttpMethod.POST,
+                        URI.create(RequestHandler.SERVER_PATH + entityPath));
         return new RequestHandler<T, T>().handle(requestEntity, HttpStatus.CREATED);
     }
 
@@ -62,8 +63,9 @@ public abstract class EntityRepository<T extends Entity> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T updateEntity(T entity) throws RequestHandlerException {
-        RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
-                HttpMethod.PUT, URI.create(RequestHandler.SERVER_PATH + entityPath));
+        RequestEntity<T> requestEntity =
+                new RequestEntity<>(Objects.requireNonNull(entity), getTokenHeaders(), HttpMethod.PUT,
+                        URI.create(RequestHandler.SERVER_PATH + entityPath));
         return new RequestHandler<T, T>().handle(requestEntity, HttpStatus.OK);
     }
 
@@ -74,8 +76,9 @@ public abstract class EntityRepository<T extends Entity> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void deleteEntity(T entity) throws RequestHandlerException {
-        RequestEntity<T> requestEntity = new RequestEntity<T>(Objects.requireNonNull(entity), getTokenHeaders(),
-                HttpMethod.DELETE, URI.create(RequestHandler.SERVER_PATH + entityPath));
+        RequestEntity<T> requestEntity = new RequestEntity<>(Objects.requireNonNull(entity), getTokenHeaders(),
+                HttpMethod.DELETE,
+                        URI.create(RequestHandler.SERVER_PATH + entityPath));
         new RequestHandler<T, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
     }
 
@@ -87,7 +90,7 @@ public abstract class EntityRepository<T extends Entity> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T getEntityById(String identifier) throws RequestHandlerException {
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(getTokenHeaders(), HttpMethod.GET,
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + entityPath + Objects.requireNonNull(identifier)));
         return new RequestHandler<Void, T>().handle(requestEntity, HttpStatus.OK);
     }
@@ -103,7 +106,7 @@ public abstract class EntityRepository<T extends Entity> {
         if (Objects.isNull(token)) {
             throw new IllegalStateException(ERROR_MESSAGE_NOT_LOGGED_IN);
         }
-        LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add(RequestHeaderField.TOKEN, new ObjectJsonParser().parseObjectToJsonString(token));
         return headers;
     }

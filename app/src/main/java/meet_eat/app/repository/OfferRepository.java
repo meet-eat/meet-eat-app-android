@@ -123,11 +123,9 @@ public class OfferRepository extends EntityRepository<Offer> {
         String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
 
         // Handle request
-        RequestEntity<User> requestEntity = new RequestEntity<User>(
-                Objects.requireNonNull(participant),
-                getTokenHeaders(),
-                HttpMethod.POST,
-                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
+        RequestEntity<User> requestEntity =
+                new RequestEntity<>(Objects.requireNonNull(participant), getTokenHeaders(), HttpMethod.POST, URI.create(
+                        RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
         return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.CREATED);
     }
 
@@ -144,11 +142,10 @@ public class OfferRepository extends EntityRepository<Offer> {
         String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
 
         // Handle request
-        RequestEntity<User> requestEntity = new RequestEntity<User>(
-                Objects.requireNonNull(participant),
-                getTokenHeaders(),
-                HttpMethod.DELETE,
-                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
+        RequestEntity<User> requestEntity =
+                new RequestEntity<>(Objects.requireNonNull(participant), getTokenHeaders(), HttpMethod.DELETE,
+                        URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier +
+                                URI_PATH_PARTICIPANTS));
         return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.OK);
     }
 
@@ -180,7 +177,7 @@ public class OfferRepository extends EntityRepository<Offer> {
                 new ObjectJsonParser().parseObjectToJsonString(Objects.requireNonNull(page)));
 
         // Handle request
-        RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.GET,
+        RequestEntity<Void> requestEntity = new RequestEntity<>(headers, HttpMethod.GET,
                 URI.create(RequestHandler.SERVER_PATH + Objects.requireNonNull(uriPathSegment)));
         return new RequestHandler<Void, Offer>().handleIterable(requestEntity, HttpStatus.OK);
     }
