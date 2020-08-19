@@ -181,7 +181,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterPrice"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterPriceMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterPrice" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterPrice"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/etOfferFilterPriceMax"
@@ -203,7 +204,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterPriceMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterPriceMin" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterPriceMin"
+                    android:autofillHints="" />
 
                 <TextView
                     android:id="@+id/tvOfferFilterDistance"
@@ -238,7 +240,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterDistance"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterDistanceMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterDistance" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterDistance"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/etOfferFilterDistanceMax"
@@ -260,7 +263,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterDistanceMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterDistanceMin" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterDistanceMin"
+                    android:autofillHints="" />
 
                 <!--<TextView
                     android:id="@+id/tvOfferFilterCity"
@@ -326,7 +330,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterParticipants"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterParticipantsMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterParticipants" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterParticipants"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/etOfferFilterParticipantsMax"
@@ -348,7 +353,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterParticipantsMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterParticipantsMin" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterParticipantsMin"
+                    android:autofillHints="" />
 
                 <TextView
                     android:id="@+id/tvOfferFilterRating"
