@@ -26,7 +26,7 @@ public class ContextFormatter {
     public static final int MONTH_CORRECTION = 1;
 
     private static final int M_TO_KM_FACTOR = 1000;
-    private static final int ONE_LOCATION = 1;
+    private static final int MAX_RESULTS = 1;
 
     private final Context context;
 
@@ -104,9 +104,9 @@ public class ContextFormatter {
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(location) && Objects.nonNull(geocoder.getFromLocationName(location, ONE_LOCATION)) &&
-                geocoder.getFromLocationName(location, ONE_LOCATION).size() > 0) {
-            address = geocoder.getFromLocationName(location, ONE_LOCATION).get(0);
+        if (Objects.nonNull(location) && Objects.nonNull(geocoder.getFromLocationName(location, MAX_RESULTS)) &&
+                geocoder.getFromLocationName(location, MAX_RESULTS).size() > 0) {
+            address = geocoder.getFromLocationName(location, MAX_RESULTS).get(0);
         }
 
         return address;
@@ -138,9 +138,9 @@ public class ContextFormatter {
         double lng = localizable.getSphericalPosition().getLongitude();
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, ONE_LOCATION)) &&
-                geocoder.getFromLocation(lat, lng, ONE_LOCATION).size() > 0) {
-            address = geocoder.getFromLocation(lat, lng, ONE_LOCATION).get(0);
+        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, MAX_RESULTS)) &&
+                geocoder.getFromLocation(lat, lng, MAX_RESULTS).size() > 0) {
+            address = geocoder.getFromLocation(lat, lng, MAX_RESULTS).get(0);
         }
 
         if (Objects.isNull(address)) {
