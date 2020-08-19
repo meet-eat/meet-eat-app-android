@@ -70,7 +70,7 @@
     <string name="sort_spinner_item_distance">Distance</string>
     <string name="settings">Settings</string>
     <string name="drawer_menu_settings">Settings</string>
-    <string name="about">Some buttons have been disabled and thus been grayed out. They are for presentation purposes only and represent functionalities that are not yet implemented.</string>
+    <string name="about">Some buttons have been disabled and thus been grayed out. They are for presentation purposes only and represent functions that are not yet implemented.</string>
     <string name="dark">Dark</string>
     <string name="participating">You\'re already participating.</string>
     <string name="contact_text">A user asks for your contact details. Choose if you want to send him your contact details and if so, which ones.</string>
