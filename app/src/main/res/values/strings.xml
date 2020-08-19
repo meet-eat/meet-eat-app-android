@@ -134,7 +134,6 @@
     <string name="content_description_add_offer_button">Add offer button</string>
     <string name="content_description_filter_offer_button">Filter offer button</string>
     <string name="content_description_edit_profile_button">Edit profile button</string>
-    <string name="content_description_profile_report_button">Profile report button</string>
     <string name="content_description_profile_image">Profile image</string>
     <string name="content_description_profile_host_rating_star">Profile host rating star</string>
     <string name="content_description_profile_edit_image">Profile edit image</string>
@@ -145,4 +144,8 @@
     <string name="content_description_bookmark_button">Bookmark button</string>
     <string name="content_description_remove_subscription_button">Remove subscription button</string>
     <string name="content_description_app_logo">App logo</string>
+    <string name="content_description_offer_edit_button">Offer edit button</string>
+    <string name="content_description_profile_guest_rating_star">Profile guest rating star</string>
+    <string name="content_description_offer_card_rating">Offer card rating</string>
+    <string name="content_description_report_button">Report button</string>
 </resources>

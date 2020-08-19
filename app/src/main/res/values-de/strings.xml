@@ -121,7 +121,6 @@
     <string name="content_description_add_offer_button">Knopf um ein Angebot hinzuzufügen</string>
     <string name="content_description_filter_offer_button">Knopf um Angebote zu Filtern</string>
     <string name="content_description_edit_profile_button">Knopf um das Profil zu ändern</string>
-    <string name="content_description_profile_report_button">Knopf um das Profil zu melden</string>
     <string name="content_description_profile_image">Profilbild</string>
     <string name="content_description_profile_host_rating_star">Bild eines Sterns auf einem Profil</string>
     <string name="content_description_profile_edit_image">Profilbild</string>
@@ -133,4 +132,8 @@
     <string name="content_description_bookmark_button">Knopf zum Merken</string>
     <string name="content_description_remove_subscription_button">Knopf zum Entfernen eines Abonnements</string>
     <string name="content_description_app_logo">App Logo</string>
+    <string name="content_description_offer_edit_button">Knopf zum Bearbeiten des Angebots</string>
+    <string name="content_description_profile_guest_rating_star">Bild eines Sterns auf einem Profil</string>
+    <string name="content_description_offer_card_rating">Bewertung des Angebotserstellers</string>
+    <string name="content_description_report_button">Knopf zum Melden</string>
 </resources>

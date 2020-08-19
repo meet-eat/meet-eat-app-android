@@ -100,7 +100,8 @@
                     android:src="@drawable/edit"
                     android:tint="@color/symbol"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/content_description_offer_edit_button" />
 
                 <!-- REPORT -->
                 <ImageButton

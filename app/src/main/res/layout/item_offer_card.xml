@@ -160,6 +160,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvOfferCardRating"
             app:tint="@color/rating"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/content_description_offer_card_rating" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -26,7 +26,8 @@
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_description_back_button" />
 
         <TextView
             android:id="@+id/tvOfferFilterFilterAndSort"

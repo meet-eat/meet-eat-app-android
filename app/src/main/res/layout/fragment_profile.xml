@@ -69,7 +69,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/content_description_report_button" />
 
                 <!-- PROFILE IMAGE -->
                 <ImageView
@@ -231,7 +231,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvProfileGuestRating"
                     app:tint="@color/rating"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/content_description_profile_guest_rating_star" />
 
                 <Button
                     android:id="@+id/btProfileSubscribe"
