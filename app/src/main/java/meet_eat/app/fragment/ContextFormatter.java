@@ -16,7 +16,7 @@ import meet_eat.data.location.Localizable;
 import meet_eat.data.location.UnlocalizableException;
 
 /**
- * This is a helper class. It Contains various methods to format values and objects.
+ * This is a helper class. It contains various methods to format values and objects.
  */
 public class ContextFormatter {
 
@@ -25,11 +25,8 @@ public class ContextFormatter {
      */
     public static final int MONTH_CORRECTION = 1;
 
-    private static final String SPACE = " ";
-    private static final String COMMA = ",";
     private static final int M_TO_KM_FACTOR = 1000;
     private static final int ONE_LOCATION = 1;
-    private static final int ZERO = 0;
 
     private final Context context;
 
@@ -49,7 +46,7 @@ public class ContextFormatter {
      * @return the formatted {@link LocalDateTime} object
      */
     public String formatDateTime(LocalDateTime dateTime) {
-        return formatDate(dateTime.toLocalDate()) + COMMA + SPACE + formatTime(dateTime.toLocalTime());
+        return formatDate(dateTime.toLocalDate()) + ", " + formatTime(dateTime.toLocalTime());
     }
 
     /**
@@ -72,7 +69,7 @@ public class ContextFormatter {
     public String formatTime(LocalTime localTime) {
         return localTime
                 .format(DateTimeFormatter.ofPattern(context.getResources().getString(R.string.european_time_format))) +
-                SPACE + context.getResources().getString(R.string.european_time_calling);
+                " " + context.getResources().getString(R.string.european_time_calling);
     }
 
     /**
@@ -108,8 +105,8 @@ public class ContextFormatter {
         Address address = null;
 
         if (Objects.nonNull(location) && Objects.nonNull(geocoder.getFromLocationName(location, ONE_LOCATION)) &&
-                geocoder.getFromLocationName(location, ONE_LOCATION).size() > ZERO) {
-            address = geocoder.getFromLocationName(location, ONE_LOCATION).get(ZERO);
+                geocoder.getFromLocationName(location, ONE_LOCATION).size() > 0) {
+            address = geocoder.getFromLocationName(location, ONE_LOCATION).get(0);
         }
 
         return address;
@@ -122,7 +119,7 @@ public class ContextFormatter {
      * @return the string representation of the addresses sub-admin area and if available, also the postal code
      */
     public String formatStringFromAddress(Address address) {
-        return address.getAddressLine(ZERO);
+        return address.getAddressLine(0);
     }
 
     /**
@@ -142,8 +139,8 @@ public class ContextFormatter {
         Address address = null;
 
         if (Objects.nonNull(geocoder.getFromLocation(lat, lng, ONE_LOCATION)) &&
-                geocoder.getFromLocation(lat, lng, ONE_LOCATION).size() > ZERO) {
-            address = geocoder.getFromLocation(lat, lng, ONE_LOCATION).get(ZERO);
+                geocoder.getFromLocation(lat, lng, ONE_LOCATION).size() > 0) {
+            address = geocoder.getFromLocation(lat, lng, ONE_LOCATION).get(0);
         }
 
         if (Objects.isNull(address)) {

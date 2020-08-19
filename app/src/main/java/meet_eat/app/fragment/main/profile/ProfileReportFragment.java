@@ -32,7 +32,6 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
  */
 public class ProfileReportFragment extends Fragment {
 
-    private static final String SPACE = " ";
 
     private FragmentProfileReportBinding binding;
     private NavController navController;
@@ -74,7 +73,7 @@ public class ProfileReportFragment extends Fragment {
         try {
             userVM.report(user, report);
             navController.navigateUp();
-            Toast.makeText(getActivity(), user.getName() + SPACE + getString(R.string.reported_toast_text),
+            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text),
                     Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();

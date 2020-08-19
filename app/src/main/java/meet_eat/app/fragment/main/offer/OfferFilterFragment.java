@@ -52,7 +52,6 @@ import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
  */
 public class OfferFilterFragment extends Fragment {
 
-    private static final int ZERO = 0;
     private static final int M_TO_KM_FACTOR = 1000;
 
     private FragmentOfferFilterBinding binding;
@@ -164,7 +163,7 @@ public class OfferFilterFragment extends Fragment {
         Collection<OfferPredicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(minDateTime) && Objects.nonNull(maxDateTime)) {
-            if (maxDateTime.compareTo(minDateTime) < ZERO) {
+            if (maxDateTime.compareTo(minDateTime) < 0) {
                 Toast.makeText(getActivity(), R.string.invalid_date_time_interval, Toast.LENGTH_SHORT).show();
                 return;
             }
