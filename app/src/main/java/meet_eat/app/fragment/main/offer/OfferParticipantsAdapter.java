@@ -63,7 +63,7 @@ public class OfferParticipantsAdapter extends RecyclerView.Adapter<OfferParticip
     /**
      * Holds the individual participants.
      */
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemOfferParticipantBinding binding;
 
