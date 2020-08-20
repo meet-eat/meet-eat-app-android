@@ -83,6 +83,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
     public static void tearDownClass() throws RequestHandlerException {
         Session.getInstance().login(new LoginCredential(getUserWithoutId().getEmail(), getUserWithoutId().getPassword()));
         new UserRepository().deleteEntity(Session.getInstance().getUser());
+        Session.getInstance().logout();
         Session.getInstance().login(getRegisteredLoginCredential());
         new UserRepository().deleteEntity(getRegisteredUser());
     }

@@ -81,7 +81,14 @@ public class Session {
         }
         RequestEntity<Token> requestEntity = new RequestEntity<>(token, HttpMethod.DELETE,
                 URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGOUT));
-        new RequestHandler<Token, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
+        try {
+            new RequestHandler<Token, Void>().handle(requestEntity, HttpStatus.NO_CONTENT);
+        } catch (RequestHandlerException exception) {
+            // Check if the token is not existing on the server
+            if (!exception.getMessage().contains(HttpStatus.NOT_FOUND.toString().replaceAll("[^0-9]", ""))) {
+                throw exception;
+            }
+        }
         token = null;
     }
 }

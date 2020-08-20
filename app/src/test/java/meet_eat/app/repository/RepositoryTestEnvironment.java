@@ -23,7 +23,7 @@ public class RepositoryTestEnvironment {
     @BeforeClass
     public static void setUpClass() throws RequestHandlerException {
         // Register
-        Email email = new Email("test@example.com");
+        Email email = new Email("asoinasidnsiadn@example.com");
         Password password = Password.createHashedPassword("Str0ngPassw0rd!");
         LocalDate birthDay = LocalDate.of(1998, Month.FEBRUARY, 6);
         String name = "JUnit Test User";
@@ -35,8 +35,10 @@ public class RepositoryTestEnvironment {
         registeredLoginCredential = new LoginCredential(email, password);
         registeredUser = new UserRepository().addEntity(testUser);
         // Delete token of deleted user from tests before
-        Session.getInstance().login(registeredLoginCredential);
-        Session.getInstance().logout();
+        Session session = Session.getInstance();
+        if (Objects.nonNull(session.getToken())) {
+            session.logout();
+        }
     }
 
     @After
@@ -54,6 +56,7 @@ public class RepositoryTestEnvironment {
             session.login(registeredLoginCredential);
         }
         new UserRepository().deleteEntity(registeredUser);
+        session.logout();
         registeredUser = null;
         registeredLoginCredential = null;
     }
