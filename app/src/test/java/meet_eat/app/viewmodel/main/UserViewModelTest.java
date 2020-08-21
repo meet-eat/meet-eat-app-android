@@ -70,13 +70,11 @@ public class UserViewModelTest {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         if (Objects.nonNull(settingsVM.getCurrentUser())) {
-            settingsVM.deleteUser(settingsVM.getCurrentUser());
+            settingsVM.deleteUser();
         }
         for (int i = 1; i <= 2; i++) {
             loginVM.login(uniqueIdentifier + i + testEmail, password);
-            settingsVM.deleteUser(settingsVM.getCurrentUser());
-            System.out.println("Deleted user " + settingsVM.getCurrentUser() + "\n");
-
+            settingsVM.deleteUser();
         }
     }
 

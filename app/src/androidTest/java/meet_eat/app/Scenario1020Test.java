@@ -63,7 +63,7 @@ public class Scenario1020Test {
         Intents.release();
         OfferViewModel offerVM = new OfferViewModel();
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        new SettingsViewModel().deleteUser();
     }
 
     @Test

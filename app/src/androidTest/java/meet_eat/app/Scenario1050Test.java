@@ -76,9 +76,9 @@ public class Scenario1050Test {
         Intents.release();
         new LoginViewModel().login(timestamp + 1 + "@example.com", password);
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        new SettingsViewModel().deleteUser();
         new LoginViewModel().login(timestamp + "@example.com", password);
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        new SettingsViewModel().deleteUser();
     }
 
     @Test

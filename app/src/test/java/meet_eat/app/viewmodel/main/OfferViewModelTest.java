@@ -78,11 +78,9 @@ public class OfferViewModelTest {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
-        System.out.println("Deleted " + settingsVM.getCurrentUser().getEmail());
+        settingsVM.deleteUser();
         loginVM.login(uniqueIdentifier + 1 + testEmail, password);
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
-        System.out.println("Deleted " + settingsVM.getCurrentUser().getEmail());
+        settingsVM.deleteUser();
         uniqueIdentifier = "";
     }
 

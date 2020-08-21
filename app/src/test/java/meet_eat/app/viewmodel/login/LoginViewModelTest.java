@@ -50,8 +50,7 @@ public class LoginViewModelTest {
         if (Session.getInstance().getToken() == null) {
             loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
         }
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
-        System.out.println("Deleted user " + settingsVM.getCurrentUser().getEmail());
+        settingsVM.deleteUser();
         uniqueIdentifier = "";
     }
 

@@ -70,7 +70,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
         if (Password.createHashedPassword(password).matches(settingsVM.getCurrentUser().getPassword())) {
 
             try {
-                settingsVM.deleteUser(settingsVM.getCurrentUser());
+                settingsVM.deleteUser();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             } catch (RequestHandlerException exception) {
                 Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();

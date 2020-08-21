@@ -60,7 +60,7 @@ public class Scenario1040Test {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        new SettingsViewModel().deleteUser();
     }
 
     @Test

@@ -68,7 +68,7 @@ public class Scenario1010Test {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
         offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        new SettingsViewModel().deleteUser();
     }
 
     @Test

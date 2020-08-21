@@ -50,6 +50,8 @@ public class Scenario1060Test {
 
     private static final long timestamp = System.currentTimeMillis();
     private static final OfferViewModel offerVM = new OfferViewModel();
+    private static SettingsViewModel settingsVM = new SettingsViewModel();
+
 
     private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
@@ -80,13 +82,12 @@ public class Scenario1060Test {
                 LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), new SphericalLocation(new SphericalPosition(6, 6)));
         offerVM.add(toBeAdded);
         offerVM.add(toBeAdded2);
-        new SettingsViewModel().logout();
+        settingsVM.logout();
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-
         // Remove bookmarks
         for (Offer bookmarkedOffer : offerVM.fetchBookmarkedOffers()) {
             offerVM.removeBookmark(bookmarkedOffer);
@@ -99,9 +100,9 @@ public class Scenario1060Test {
             offerVM.delete(offer);
         }
 
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        settingsVM.deleteUser();
         new LoginViewModel().login(timestamp + "@example.com", password);
-        new SettingsViewModel().deleteUser(new SettingsViewModel().getCurrentUser());
+        settingsVM.deleteUser();
     }
 
     @Test
@@ -125,7 +126,7 @@ public class Scenario1060Test {
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.btOfferDetailedParticipate)).perform(click());
     }
-    
+
     /**
      * Returns viewAction, meaning an action to click a button within an item within our recycler view.
      *

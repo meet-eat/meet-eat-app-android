@@ -50,7 +50,7 @@ public class RatingViewModelTest {
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
-        settingsVM.deleteUser(settingsVM.getCurrentUser());
+        settingsVM.deleteUser();
     }
 
     @Test
