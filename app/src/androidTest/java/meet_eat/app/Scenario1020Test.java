@@ -8,25 +8,30 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.common.collect.Lists;
+
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
+import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
@@ -39,35 +44,45 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class Scenario1020Test {
 
-    static long timestamp = System.currentTimeMillis();
+    private static final OfferViewModel offerVM = new OfferViewModel();
+    private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final RegisterViewModel registerVM = new RegisterViewModel();
+    private static final long timestamp = System.currentTimeMillis();
     private static final String password = "123##Tester";
-    private ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
+
+    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
+        Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
+                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
+        registerVM.register(newUser);
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        OfferViewModel offerVM = new OfferViewModel();
-        offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
-        new SettingsViewModel().deleteUser();
+
+        // Remove offers
+        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
+        if (!toBeRemoved.isEmpty()) {
+            offerVM.delete(toBeRemoved.remove(0));
+        }
+
+        settingsVM.deleteUser();
     }
 
     @Test
-    public void testScenario1020() throws InterruptedException {
+    public void testScenario1020() {
         Intents.init();
         scenarioTestHelper.login();
         onView(withId(R.id.ibtOfferListCreate)).perform(click());
@@ -77,6 +92,7 @@ public class Scenario1020Test {
         onView(withId(R.id.etOfferEditPrice)).perform(typeText("10"));
         onView(withId(R.id.etOfferEditDescription)).perform(typeText("Offer Description"));
         onView(withId(R.id.etOfferEditParticipants)).perform(typeText("42"));
+        closeSoftKeyboard();
 
         onView(withId(R.id.tvOfferEditDate)).perform(click());
         Calendar offerDate = GregorianCalendar.getInstance();

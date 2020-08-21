@@ -13,6 +13,8 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.common.collect.Lists;
+
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -22,8 +24,10 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
@@ -34,6 +38,7 @@ import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
@@ -46,16 +51,15 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class Scenario1060Test {
 
-    private static final String password = "123##Tester";
-
-    private static final long timestamp = System.currentTimeMillis();
     private static final OfferViewModel offerVM = new OfferViewModel();
-    private static SettingsViewModel settingsVM = new SettingsViewModel();
-
+    private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final LoginViewModel loginVM = new LoginViewModel();
+    private static final RegisterViewModel registerVM = new RegisterViewModel();
+    private static final String password = "123##Tester";
+    private static final long timestamp = System.currentTimeMillis();
 
     private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
-    // U: 10 O: 0 B: 8
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
@@ -64,22 +68,24 @@ public class Scenario1060Test {
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
                 new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
+        registerVM.register(newUser);
         addForeignOffer();
     }
 
     private static void addForeignOffer() throws RequestHandlerException {
+        Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
         User newUser = new User(new Email(timestamp + 1 + "@example.com"), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
+                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
+        registerVM.register(newUser);
 
         // Create an offer for this test
-        new LoginViewModel().login(timestamp + 1 + "@example.com", password);
-        Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "Offer 1", "offerDescription", 0, 1,
-                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), new SphericalLocation(new SphericalPosition(6, 6)));
-        Offer toBeAdded2 = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "Offer 2", "offerDescription", 0, 1,
-                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), new SphericalLocation(new SphericalPosition(6, 6)));
+        loginVM.login(timestamp + 1 + "@example.com", password);
+        Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "1Offer", "offerDescription", 0, 2,
+                LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(),
+                        LocalTime.now().getHour(), (LocalTime.now().getMinute() + 2) % 60), home);
+        Offer toBeAdded2 = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "1Offer", "offerDescription", 0, 2,
+                LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(),
+                        LocalTime.now().getHour(), (LocalTime.now().getMinute() + 2) % 60), home);
         offerVM.add(toBeAdded);
         offerVM.add(toBeAdded2);
         settingsVM.logout();
@@ -88,20 +94,24 @@ public class Scenario1060Test {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        // Remove bookmarks
-        for (Offer bookmarkedOffer : offerVM.fetchBookmarkedOffers()) {
-            offerVM.removeBookmark(bookmarkedOffer);
-        }
-
-        new LoginViewModel().login(timestamp + 1 + "@example.com", password);
-
-        // Remove offers
-        for (Offer offer : offerVM.fetchOffers(offerVM.getCurrentUser())) {
-            offerVM.delete(offer);
-        }
 
         settingsVM.deleteUser();
-        new LoginViewModel().login(timestamp + "@example.com", password);
+
+        // Remove bookmarks
+        Iterator<Offer> toBeRemovedFromBookmarks = offerVM.fetchBookmarkedOffers().iterator();
+        while (toBeRemovedFromBookmarks.hasNext()) {
+            offerVM.removeBookmark(toBeRemovedFromBookmarks.next());
+            toBeRemovedFromBookmarks.remove();
+        }
+
+        loginVM.login(timestamp + 1 + "@example.com", password);
+
+        // Remove offers
+        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
+        if (!toBeRemoved.isEmpty()) {
+            offerVM.delete(toBeRemoved.remove(0));
+        }
+
         settingsVM.deleteUser();
     }
 
@@ -110,10 +120,8 @@ public class Scenario1060Test {
         Intents.init();
         scenarioTestHelper.login();
         // Bookmark first 2 offers the user sees
-        onView(withId(R.id.rvOfferList)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.ibtOfferCardBookmark)));
-        onView(withId(R.id.rvOfferList)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.ibtOfferCardBookmark)));
+        onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId()));
+        onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId()));
 
         // Open navigation drawer
         onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
@@ -130,10 +138,9 @@ public class Scenario1060Test {
     /**
      * Returns viewAction, meaning an action to click a button within an item within our recycler view.
      *
-     * @param id The button to be clicked
      * @return The viewAction to be performed
      */
-    private ViewAction clickChildViewWithId(final int id) {
+    private ViewAction clickChildViewWithId() {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {
@@ -147,7 +154,7 @@ public class Scenario1060Test {
 
             @Override
             public void perform(UiController uiController, View view) {
-                View v = view.findViewById(id);
+                View v = view.findViewById(R.id.ibtOfferCardBookmark);
                 v.performClick();
             }
         };

@@ -4,6 +4,8 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.google.common.collect.Lists;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -13,7 +15,7 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;
@@ -25,6 +27,7 @@ import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
@@ -35,40 +38,48 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class Scenario1010Test {
-    private static OfferViewModel offerVM = new OfferViewModel();
 
-    static long timestamp = System.currentTimeMillis();
+    private static final OfferViewModel offerVM = new OfferViewModel();
+    private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final LoginViewModel loginVM = new LoginViewModel();
+    private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final String password = "123##Tester";
-    private ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
+    private static final long timestamp = System.currentTimeMillis();
+
+    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
+        Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
+                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
+        registerVM.register(newUser);
 
         // Create an offer for this test
-        new LoginViewModel().login(timestamp + "@example.com", password);
-        Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "Offer", "offerDescription", 0, 1,
-                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), new SphericalLocation(new SphericalPosition(6, 6)));
-        assertEquals(0, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
+        loginVM.login(timestamp + "@example.com", password);
+        Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "Offer", "offerDescription", 1, 2,
+                LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), home);
         offerVM.add(toBeAdded);
-        new SettingsViewModel().logout();
+        settingsVM.logout();
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        offerVM.delete(offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next());
-        new SettingsViewModel().deleteUser();
+
+        // Remove offers
+        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
+        if (!toBeRemoved.isEmpty()) {
+            offerVM.delete(toBeRemoved.remove(0));
+        }
+
+        settingsVM.deleteUser();
     }
 
     @Test

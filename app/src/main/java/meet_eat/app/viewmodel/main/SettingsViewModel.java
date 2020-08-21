@@ -34,7 +34,6 @@ public class SettingsViewModel extends ViewModel {
      */
     public void deleteUser(User user) throws RequestHandlerException {
         userRepository.deleteEntity(user);
-
     }
 
     public void deleteUser() throws RequestHandlerException {

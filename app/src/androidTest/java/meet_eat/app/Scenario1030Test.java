@@ -23,6 +23,7 @@ import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
+import meet_eat.data.location.Localizable;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
@@ -38,25 +39,29 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 public class Scenario1030Test {
-    static long timestamp = System.currentTimeMillis();
+
+    private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final String password = "123##Tester";
-    private ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
+    private static final long timestamp = System.currentTimeMillis();
+
+    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
+        Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
-                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true,
-                new SphericalLocation(new SphericalPosition(0, 0)));
-        new RegisterViewModel().register(newUser);
+                LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
+        registerVM.register(newUser);
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        new SettingsViewModel().deleteUser();
+        settingsVM.deleteUser();
     }
 
     @Test

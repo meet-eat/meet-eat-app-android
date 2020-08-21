@@ -23,8 +23,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class ScenarioTestHelper {
 
-    long timestamp;
-    String password;
+    private final long timestamp;
+    private final String password;
 
     public ScenarioTestHelper(long timestamp, String password) {
         this.timestamp = timestamp;
@@ -64,7 +64,6 @@ public class ScenarioTestHelper {
         closeSoftKeyboard();
         onView(withId(R.id.etLoginPassword)).perform(typeText(password));
         closeSoftKeyboard();
-        // Start recording intents
         onView(withId(R.id.btLogin)).perform(click());
 
         // Check if mainActivity was reached (user is logged in)
