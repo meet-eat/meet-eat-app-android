@@ -23,7 +23,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
@@ -44,7 +43,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class Scenario1020Test {

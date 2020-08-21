@@ -1,7 +1,5 @@
 package meet_eat.app;
 
-import android.util.Log;
-
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.repository.Session;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.OfferViewModel;
