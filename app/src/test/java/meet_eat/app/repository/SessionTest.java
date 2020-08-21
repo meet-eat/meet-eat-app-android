@@ -100,6 +100,33 @@ public class SessionTest extends RepositoryTestEnvironment{
         session.logout();
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testLoginWhenLoggedIn() throws RequestHandlerException {
+        // Execution
+        Session session = Session.getInstance();
+        assertNull(session.getToken());
+        session.login(getRegisteredLoginCredential());
+
+        // Assertions
+        assertNotNull(session.getToken());
+        session.login(getRegisteredLoginCredential());
+    }
+
+    @Test
+    public void testLogoutAfterDeleteUser() throws RequestHandlerException {
+        // Execution
+        Session session = Session.getInstance();
+        session.login(getRegisteredLoginCredential());
+        new UserRepository().deleteEntity(session.getUser());
+
+        // Assertions
+        assertNotNull(session.getToken());
+        session.logout();
+        assertNull(session.getToken());
+
+        setUpClass();
+    }
+
     @Test
     public void testLoginAndLogoutMultipleTimes() throws RequestHandlerException {
         // Execution
