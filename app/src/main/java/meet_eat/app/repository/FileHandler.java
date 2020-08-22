@@ -3,6 +3,7 @@ package meet_eat.app.repository;
 import android.content.Context;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -79,6 +80,18 @@ public final class FileHandler {
         if (!getContext().deleteFile(Objects.requireNonNull(fileName))) {
             throw new IOException(ERROR_MESSAGE_NOT_DELETED);
         }
+    }
+
+    /**
+     * Tests whether the file with the given name exists.
+     *
+     * @param fileName the name of the file to check if it exists
+     * @return {@code true} if and only if the file with the given name exists; {@code false} otherwise
+     * @throws IOException
+     */
+    public static boolean fileExists(String fileName) throws IOException {
+        File file = new File(getContext().getFilesDir(), Objects.requireNonNull(fileName));
+        return file.exists();
     }
 
     /**
