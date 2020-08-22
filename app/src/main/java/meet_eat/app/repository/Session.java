@@ -4,11 +4,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;
 
 import meet_eat.data.EndpointPath;
 import meet_eat.data.LoginCredential;
+import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.entity.Token;
 import meet_eat.data.entity.user.User;
 
@@ -17,9 +20,11 @@ import meet_eat.data.entity.user.User;
  */
 public class Session {
 
-    private static Session session;
     private static final String ERROR_MESSAGE_NOT_LOGGED_IN = "Cannot logout session with null token.";
     private static final String ERROR_MESSAGE_ALREADY_LOGGED_IN = "Already logged in.";
+    private static final String TOKEN_FILE_NAME = "token";
+
+    private static Session session;
 
     private Token token;
 
@@ -37,6 +42,16 @@ public class Session {
     public static Session getInstance() {
         if (Objects.isNull(session)) {
             session = new Session();
+            try {
+                if (FileHandler.fileExists(TOKEN_FILE_NAME)) {
+                    String tokenRepresentation = FileHandler.readFileToString(TOKEN_FILE_NAME);
+                    //session.token = new ObjectJsonParser().parseJsonStringToObject(tokenRepresentation, Token.class);
+                    // TODO delete comment after fix login screen
+                    //TODO check if token is valid
+                }
+            } catch (IOException e) {
+                // The session must not be interrupted. It should always continue even if the file cannot be read.
+            }
         }
         return session;
     }
@@ -72,6 +87,11 @@ public class Session {
         RequestEntity<LoginCredential> requestEntity = new RequestEntity<>(Objects.requireNonNull(loginCredential), HttpMethod.POST,
                         URI.create(RequestHandler.SERVER_PATH + EndpointPath.LOGIN));
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
+        try {
+            FileHandler.saveStringToFile(new ObjectJsonParser().parseObjectToJsonString(token), TOKEN_FILE_NAME);
+        } catch (IOException e) {
+            // The session must not be interrupted. It should always continue even if the file cannot be saved.
+        }
     }
 
     /**
@@ -92,6 +112,11 @@ public class Session {
             if (!exception.getMessage().contains(Integer.toString(HttpStatus.NOT_FOUND.value()))) {
                 throw exception;
             }
+        }
+        try {
+            FileHandler.deleteFile(TOKEN_FILE_NAME);
+        } catch (IOException exception) {
+            // The session must not be interrupted. It should always continue even if the file cannot be deleted.
         }
         token = null;
     }
