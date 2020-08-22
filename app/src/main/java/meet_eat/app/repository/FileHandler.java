@@ -55,8 +55,7 @@ public final class FileHandler {
      * @throws IOException if an I/O error occurs
      */
     public static String readFileToString(String fileName) throws IOException {
-        Context context = MeetEatApplication.getAppContext();
-        FileInputStream fileInputStream = context.openFileInput(fileName);
+        FileInputStream fileInputStream = getContext().openFileInput(Objects.requireNonNull(fileName));
         InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, CHARSET);
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -77,8 +76,22 @@ public final class FileHandler {
      * @throws IOException if an I/O error occurs
      */
     public static void deleteFile(String fileName) throws IOException {
-        if (!MeetEatApplication.getAppContext().deleteFile(fileName)) {
+        if (!getContext().deleteFile(Objects.requireNonNull(fileName))) {
             throw new IOException(ERROR_MESSAGE_NOT_DELETED);
         }
+    }
+
+    /**
+     * Returns the {@link Context context} of the application.
+     *
+     * @return the context of the application
+     * @throws IOException if an I/O error occurs
+     */
+    private static Context getContext() throws IOException{
+        Context context = MeetEatApplication.getAppContext();
+        if (Objects.isNull(context)) {
+            throw new IOException(ERROR_MESSAGE_NULL_CONTEXT);
+        }
+        return context;
     }
 }
