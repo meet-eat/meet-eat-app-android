@@ -2,7 +2,6 @@ package meet_eat.app.viewmodel.main;
 
 import androidx.lifecycle.ViewModel;
 
-import com.google.common.collect.Sets;
 import com.google.common.collect.Streams;
 
 import java.util.Collection;
@@ -13,15 +12,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import meet_eat.app.repository.OfferRepository;
+import meet_eat.app.repository.ReportRepository;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
 import meet_eat.app.repository.TagRepository;
 import meet_eat.app.repository.UserRepository;
 import meet_eat.data.Page;
-import meet_eat.data.Report;
-import meet_eat.data.entity.Bookmark;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
+import meet_eat.data.entity.relation.Bookmark;
+import meet_eat.data.entity.relation.EntityRelation;
+import meet_eat.data.entity.relation.Participation;
+import meet_eat.data.entity.relation.Report;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.entity.user.contact.ContactData;
 import meet_eat.data.entity.user.contact.ContactRequest;
@@ -39,6 +41,7 @@ public class OfferViewModel extends ViewModel {
     private final OfferRepository offerRepository = new OfferRepository();
     private final UserRepository userRepository = new UserRepository();
     private final TagRepository tagRepository = new TagRepository();
+    private final ReportRepository reportRepository = new ReportRepository();
     private final Session session = Session.getInstance();
 
     /**
@@ -83,7 +86,7 @@ public class OfferViewModel extends ViewModel {
      */
     public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
         return Streams.stream(fetchBookmarks())
-                .map(Bookmark::getOffer)
+                .map(Bookmark::getTarget)
                 .collect(Collectors.toList());
     }
 
@@ -150,6 +153,7 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
+     * TODO
      * Adds the current user to an offers participant list,
      * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
@@ -157,11 +161,13 @@ public class OfferViewModel extends ViewModel {
      * @return the updated offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Offer participate(Offer offer) throws RequestHandlerException {
-        return offerRepository.addParticipant(offer, getCurrentUser());
+    public Participation participate(Offer offer) throws RequestHandlerException {
+        Participation participation = new Participation(getCurrentUser(), offer);
+        return offerRepository.addParticipation(participation);
     }
 
     /**
+     * TODO
      * Removes the current user from an offers participant list,
      * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
@@ -170,8 +176,12 @@ public class OfferViewModel extends ViewModel {
      * @return the updated offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Offer cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
-        return offerRepository.removeParticipant(offer, participant);
+    public void cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
+        Stream<Participation> participations = Streams.stream(offerRepository.getParticipationsByOffer(offer));
+        Optional<Participation> optionalParticipation = participations.filter(x -> x.getSource().equals(participant)).findFirst();
+        if (optionalParticipation.isPresent()) {
+            offerRepository.removeParticipation(optionalParticipation.get());
+        }
     }
 
     /**
@@ -194,15 +204,13 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * Sends a report request to the
-     * {@link UserRepository}.
+     * Sends a report request to the {@link ReportRepository}.
      *
-     * @param user   the user who is to be reported
      * @param report the report sent to the {@link UserRepository}
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void report(User user, Report report) throws RequestHandlerException {
-        userRepository.report(user, report);
+    public Report report(Report report) throws RequestHandlerException {
+        return reportRepository.addEntity(report);
     }
 
     /**
@@ -228,7 +236,7 @@ public class OfferViewModel extends ViewModel {
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
         Optional<Bookmark> optionalBookmark = Streams.stream(fetchBookmarks())
-                .filter(x -> x.getOffer().equals(offer))
+                .filter(x -> x.getTarget().equals(offer))
                 .findFirst();
 
         if (optionalBookmark.isPresent()) {
@@ -254,17 +262,8 @@ public class OfferViewModel extends ViewModel {
      * @param offer the offer to be checked
      * @return true if the current user is participating
      */
-    public boolean isParticipating(Offer offer) {
-        Set<User> participantsWithNull = offer.getParticipants();
-        Set<User> participantsWithoutNull = Sets.newHashSet();
-
-        for (User participantOrNull : participantsWithNull) {
-            if (Objects.nonNull(participantOrNull)) {
-                participantsWithoutNull.add(participantOrNull);
-            }
-        }
-
-        Stream<User> participants = participantsWithoutNull.stream();
+    public boolean isParticipating(Offer offer) throws RequestHandlerException {
+        Stream<User> participants = getParticipants(offer).stream();
         String userIdentifier = getCurrentUser().getIdentifier();
         return participants.anyMatch(participant -> participant.getIdentifier().equals(userIdentifier));
     }
@@ -287,5 +286,17 @@ public class OfferViewModel extends ViewModel {
      */
     public Iterable<Tag> getAllTags() throws RequestHandlerException {
         return tagRepository.getTags();
+    }
+
+    /**
+     * TODO
+     * @param offer
+     * @return
+     * @throws RequestHandlerException
+     */
+    public Set<User> getParticipants(Offer offer) throws RequestHandlerException {
+        return Streams.stream(offerRepository.getParticipationsByOffer(offer))
+                .map(EntityRelation::getSource)
+                .collect(Collectors.toSet());
     }
 }
