@@ -12,10 +12,9 @@ import java.util.List;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
 import meet_eat.app.viewmodel.main.RatingViewModel;
+import meet_eat.data.entity.relation.rating.Rating;
+import meet_eat.data.entity.relation.rating.RatingValue;
 import meet_eat.data.entity.user.User;
-import meet_eat.data.entity.user.rating.Rating;
-import meet_eat.data.entity.user.rating.RatingBasis;
-import meet_eat.data.entity.user.rating.RatingValue;
 
 /**
  * Contains the various offer guests displayed in the guest rating page.
@@ -120,8 +119,8 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
          * @return a new guest rating
          */
         private Rating createRating(int ratingAmount) {
-            return new Rating(RatingBasis.GUEST, RatingValue.getRatingValueByInteger(ratingAmount),
-                    ratingVM.getCurrentUser());
+            // TODO Add offer to factory method
+            return Rating.createGuestRating(ratingVM.getCurrentUser(), null, RatingValue.getRatingValueByInteger(ratingAmount));
         }
     }
 }

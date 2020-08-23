@@ -14,10 +14,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentRateGuestsBinding;
+import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
 
@@ -26,6 +29,7 @@ import meet_eat.data.entity.Offer;
  */
 public class RateGuestsFragment extends Fragment {
 
+    private OfferViewModel offerVM;
     private FragmentRateGuestsBinding binding;
     private NavController navController;
     private RateGuestsAdapter rateGuestsAdapter;
@@ -37,6 +41,7 @@ public class RateGuestsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentRateGuestsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
+        offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         RatingViewModel ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
         rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<>());
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
@@ -59,7 +64,11 @@ public class RateGuestsFragment extends Fragment {
      */
     private void initUI() {
         binding.tvRateGuestsOfferTitle.setText(offer.getName());
-        rateGuestsAdapter.updateGuests(offer.getParticipants());
+        try {
+            rateGuestsAdapter.updateGuests(offerVM.getParticipants(offer));
+        } catch (RequestHandlerException exception) {
+            rateGuestsAdapter.updateGuests(new LinkedList<>());
+        }
     }
 
     /**
@@ -70,6 +79,7 @@ public class RateGuestsFragment extends Fragment {
     }
 
     /**
+     * TODO
      * Tries to send the guest ratings.
      */
     private void confirmRatings() {

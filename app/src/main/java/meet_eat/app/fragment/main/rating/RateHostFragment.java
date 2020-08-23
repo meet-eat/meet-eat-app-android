@@ -21,9 +21,8 @@ import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.RatingViewModel;
 import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.user.rating.Rating;
-import meet_eat.data.entity.user.rating.RatingBasis;
-import meet_eat.data.entity.user.rating.RatingValue;
+import meet_eat.data.entity.relation.rating.Rating;
+import meet_eat.data.entity.relation.rating.RatingValue;
 
 /**
  * This is the host rating fragment. Here the user can rate the host of the offer he participated.
@@ -83,31 +82,14 @@ public class RateHostFragment extends Fragment {
     }
 
     /**
+     * TODO
      * Tries to rate the host.
      */
     private void rateGuests() {
         int numStars = (int) binding.rbRateHost.getRating();
-        Rating rating;
-
-        switch (numStars) {
-            case 1:
-                rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_1, ratingVM.getCurrentUser());
-                break;
-            case 2:
-                rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_2, ratingVM.getCurrentUser());
-                break;
-            case 3:
-                rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_3, ratingVM.getCurrentUser());
-                break;
-            case 4:
-                rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_4, ratingVM.getCurrentUser());
-                break;
-            case 5:
-                rating = new Rating(RatingBasis.HOST, RatingValue.POINTS_5, ratingVM.getCurrentUser());
-                break;
-            default:
-                return;
-        }
+        RatingValue ratingValue = RatingValue.getRatingValueByInteger(numStars);
+        // TODO Add offer to factory method
+        Rating rating = Rating.createHostRating(ratingVM.getCurrentUser(), null, ratingValue);
 
         try {
             ratingVM.send(rating);
