@@ -8,9 +8,10 @@ import java.net.URI;
 import java.util.Objects;
 
 import meet_eat.data.EndpointPath;
-import meet_eat.data.Report;
-import meet_eat.data.entity.Bookmark;
-import meet_eat.data.entity.Subscription;
+import meet_eat.data.entity.relation.Bookmark;
+import meet_eat.data.entity.relation.Subscription;
+import meet_eat.data.entity.relation.rating.Rating;
+import meet_eat.data.entity.relation.rating.RatingBasis;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -75,20 +76,6 @@ public class UserRepository extends EntityRepository<User> {
     }
 
     /**
-     * Reports a {@link User user} in the repository by submitting a {@link Report report}.
-     *
-     * @param user   the user to be reported
-     * @param report the report to be submitted
-     * @return the user that was reported within the repository
-     * @throws RequestHandlerException if an error occurs when requesting the repository
-     */
-    public User report(User user, Report report) throws RequestHandlerException {
-        Objects.requireNonNull(user);
-        user.addReport(Objects.requireNonNull(report));
-        return updateEntity(user);
-    }
-
-    /**
      * Adds a {@link Subscription subscription} between two {@link User users} in the repository.
      *
      * @param subscription the subscription to be added to the repository
@@ -96,7 +83,7 @@ public class UserRepository extends EntityRepository<User> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Subscription addSubscription(Subscription subscription) throws RequestHandlerException {
-        String userIdentifier = subscription.getSourceUser().getIdentifier();
+        String userIdentifier = subscription.getSource().getIdentifier();
         String uriUserIdentifier = "/" + Objects.requireNonNull(userIdentifier);
 
         // Handle request
@@ -108,7 +95,7 @@ public class UserRepository extends EntityRepository<User> {
     /**
      * Removes a {@link Subscription subscription} between two {@link User users} in the repository.
      *
-     * @param subscriber the subscribing user
+     * @param subscriber     the subscribing user
      * @param subscribedUser the subscribed user
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
@@ -161,7 +148,7 @@ public class UserRepository extends EntityRepository<User> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Bookmark bookmark) throws RequestHandlerException {
-        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getSource().getIdentifier());
 
         // Handle request
         RequestEntity<Bookmark> requestEntity = new RequestEntity<>(bookmark, getTokenHeaders(), HttpMethod.DELETE,
@@ -177,11 +164,59 @@ public class UserRepository extends EntityRepository<User> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Bookmark addBookmark(Bookmark bookmark) throws RequestHandlerException {
-        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getUser().getIdentifier());
+        String uriUserIdentifier = "/" + Objects.requireNonNull(bookmark.getSource().getIdentifier());
 
         // Handle request
         RequestEntity<Bookmark> requestEntity = new RequestEntity<>(bookmark, getTokenHeaders(), HttpMethod.POST,
                 URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.BOOKMARKS));
         return new RequestHandler<Bookmark, Bookmark>().handle(requestEntity, HttpStatus.CREATED);
+    }
+
+    /**
+     * Adds a {@link Rating rating} to the repository.
+     *
+     * @param rating the rating to be added to the repository
+     * @return the rating added to the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Rating addRating(Rating rating) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(rating.getTarget().getIdentifier());
+
+        // Handle request
+        RequestEntity<Rating> requestEntity = new RequestEntity<>(rating, getTokenHeaders(), HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.RATINGS));
+        return new RequestHandler<Rating, Rating>().handle(requestEntity, HttpStatus.CREATED);
+    }
+
+    /**
+     * Gets the numeric {@link RatingBasis#HOST host} {@link Rating rating} value of a user.
+     *
+     * @param user to get the numeric rating value from
+     * @return the numeric host rating value of a user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Double getNumericHostRating(User user) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
+
+        // Handle request
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.RATINGS + EndpointPath.HOST));
+        return new RequestHandler<Void, Double>().handle(requestEntity, HttpStatus.OK);
+    }
+
+    /**
+     * Gets the numeric {@link RatingBasis#GUEST guest} {@link Rating rating} value of a user.
+     *
+     * @param user to get the numeric rating value from
+     * @return the numeric guest rating value of a user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Double getNumericGuestRating(User user) throws RequestHandlerException {
+        String uriUserIdentifier = "/" + Objects.requireNonNull(user.getIdentifier());
+
+        // Handle request
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriUserIdentifier + EndpointPath.RATINGS + EndpointPath.GUEST));
+        return new RequestHandler<Void, Double>().handle(requestEntity, HttpStatus.OK);
     }
 }
