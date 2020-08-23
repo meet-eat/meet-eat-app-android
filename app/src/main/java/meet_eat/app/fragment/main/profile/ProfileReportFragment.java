@@ -22,7 +22,7 @@ import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileReportBinding;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
-import meet_eat.data.Report;
+import meet_eat.data.entity.relation.Report;
 import meet_eat.data.entity.user.User;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
@@ -68,10 +68,10 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void reportUser() {
-        Report report = new Report(userVM.getCurrentUser(), Strings.nullToEmpty(reportMessage));
+        Report report = new Report(userVM.getCurrentUser(), user, Strings.nullToEmpty(reportMessage));
 
         try {
-            userVM.report(user, report);
+            userVM.report(report);
             navController.navigateUp();
             Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text),
                     Toast.LENGTH_SHORT).show();

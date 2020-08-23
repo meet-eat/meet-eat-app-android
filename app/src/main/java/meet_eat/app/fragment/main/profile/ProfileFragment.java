@@ -26,6 +26,7 @@ import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
 
 /**
@@ -71,8 +72,7 @@ public class ProfileFragment extends Fragment {
         binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btProfileSubscribe.setOnClickListener(event -> changeSubscription());
         binding.ibtProfileEdit.setOnClickListener(event -> navController.navigate(R.id.profileEditFragment));
-        // Currently disabled feature
-        // binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
+        binding.ibtProfileReport.setOnClickListener(event -> navigateToProfileReport());
     }
 
     /**
@@ -83,8 +83,21 @@ public class ProfileFragment extends Fragment {
         binding.tvProfileUsername.setText(user.getName());
         binding.tvProfileDescription.setText(user.getDescription());
         binding.tvProfileBirthday.setText(getAge());
-        binding.tvProfileHostRating.setText(String.valueOf(user.getHostRating()));
-        binding.tvProfileGuestRating.setText(String.valueOf(user.getGuestRating()));
+
+        // Get the host rating of the user and show it in the UI
+        try {
+            binding.tvProfileHostRating.setText(String.valueOf(userVM.getNumericHostRating(user)));
+        } catch (RequestHandlerException exception) {
+            binding.tvProfileHostRating.setVisibility(INVISIBLE);
+        }
+
+        // Get the guest rating of the user and show it in the UI
+        try {
+            binding.tvProfileGuestRating.setText(String.valueOf(userVM.getNumericGuestRating(user)));
+        } catch (RequestHandlerException exception) {
+            binding.tvProfileGuestRating.setVisibility(INVISIBLE);
+        }
+
         // add profile image
 
         if (user.getIdentifier().equals(userVM.getCurrentUser().getIdentifier())) {
