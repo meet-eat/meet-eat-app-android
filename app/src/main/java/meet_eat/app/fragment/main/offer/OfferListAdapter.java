@@ -20,10 +20,12 @@ import meet_eat.app.databinding.ItemOfferCardBinding;
 import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
+import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 
@@ -33,16 +35,19 @@ import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
     private final OfferViewModel offerVM;
+    private final UserViewModel userVM;
     private final List<Offer> currentOffers;
 
     /**
      * Initializing fields.
      *
      * @param offerVM the offer view model
+     * @param userVM  the user view model
      * @param offers  the fetched offers list
      */
-    public OfferListAdapter(OfferViewModel offerVM, ArrayList<Offer> offers) {
+    public OfferListAdapter(OfferViewModel offerVM, UserViewModel userVM, ArrayList<Offer> offers) {
         this.offerVM = offerVM;
+        this.userVM = userVM;
         currentOffers = offers;
     }
 
@@ -117,7 +122,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 return;
             }
 
-            binding.tvOfferCardRating.setText(String.valueOf(offer.getCreator().getHostRating()));
+            // Get the host rating of the offer creator and show it in the UI
+            try {
+                binding.tvOfferCardRating.setText(String.valueOf(userVM.getNumericHostRating(offer.getCreator())));
+            } catch (RequestHandlerException exception) {
+                binding.tvOfferCardRating.setVisibility(INVISIBLE);
+            }
+
             binding.ivOfferCardPicture.setOnClickListener(event -> navigateToOfferDetailed(offer));
 
             if (offerVM.isCreator(offer)) {
@@ -152,15 +163,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
          * @param offer the offer to be shown in this offer summary card
          */
         private void setColorOfOfferCard(Offer offer) {
-            if (offerVM.isCreator(offer)) {
-                binding.ivOfferCardPictureBackground
-                        .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.ownOffer),
-                                PorterDuff.Mode.SRC_IN);
-            } else if (offerVM.isParticipating(offer)) {
-                binding.ivOfferCardPictureBackground.setColorFilter(
-                        ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
-                        PorterDuff.Mode.SRC_IN);
-            } else {
+            try {
+                if (offerVM.isCreator(offer)) {
+                    binding.ivOfferCardPictureBackground
+                            .setColorFilter(ContextCompat.getColor(binding.getRoot().getContext(), R.color.ownOffer),
+                                    PorterDuff.Mode.SRC_IN);
+                } else if (offerVM.isParticipating(offer)) {
+                    binding.ivOfferCardPictureBackground.setColorFilter(
+                            ContextCompat.getColor(binding.getRoot().getContext(), R.color.participatingOffer),
+                            PorterDuff.Mode.SRC_IN);
+                } else {
+                    binding.ivOfferCardPictureBackground.setColorFilter(
+                            ContextCompat.getColor(binding.getRoot().getContext(), R.color.foreignOffer),
+                            PorterDuff.Mode.SRC_IN);
+                }
+            } catch (RequestHandlerException exception) {
                 binding.ivOfferCardPictureBackground.setColorFilter(
                         ContextCompat.getColor(binding.getRoot().getContext(), R.color.foreignOffer),
                         PorterDuff.Mode.SRC_IN);

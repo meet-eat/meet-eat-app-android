@@ -23,6 +23,7 @@ import meet_eat.app.databinding.FragmentOfferListBinding;
 import meet_eat.app.fragment.ListType;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
+import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.comparator.OfferComparableField;
 import meet_eat.data.comparator.OfferComparator;
 
@@ -51,8 +52,9 @@ public class OfferListFragment extends Fragment {
         binding = FragmentOfferListBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
+        UserViewModel userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
-        offerListAdapter = new OfferListAdapter(offerVM, new ArrayList<>());
+        offerListAdapter = new OfferListAdapter(offerVM, userVM, new ArrayList<>());
         binding.rvOfferList.setAdapter(offerListAdapter);
         binding.rvOfferList
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

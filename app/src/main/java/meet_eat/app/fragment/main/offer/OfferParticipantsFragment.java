@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import java.util.Objects;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
+import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
@@ -37,6 +40,7 @@ public class OfferParticipantsFragment extends Fragment {
         ((MainActivity) getActivity()).selectMenuItem(1);
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
+        OfferViewModel offerVM = new ViewModelProvider(this).get(OfferViewModel.class);
         OfferParticipantsAdapter offerParticipantsAdapter = new OfferParticipantsAdapter(new ArrayList<>());
         binding.rvOfferParticipants.setAdapter(offerParticipantsAdapter);
         binding.rvOfferParticipants
@@ -50,7 +54,14 @@ public class OfferParticipantsFragment extends Fragment {
             offer = (Offer) getArguments().getSerializable(OFFER.name());
         }
 
-        offerParticipantsAdapter.updateParticipants(new ArrayList<>(offer.getParticipants()));
+        // Get the participants of the offer
+        try {
+            offerParticipantsAdapter.updateParticipants(new ArrayList<>(offerVM.getParticipants(offer)));
+        } catch (RequestHandlerException exception) {
+            // TODO Evaluate
+            offerParticipantsAdapter.updateParticipants(new ArrayList<>());
+        }
+
         setButtonOnClickListener();
         return binding.getRoot();
     }

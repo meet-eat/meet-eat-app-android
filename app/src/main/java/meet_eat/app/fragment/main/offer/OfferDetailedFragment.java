@@ -24,6 +24,7 @@ import meet_eat.app.databinding.FragmentOfferDetailedBinding;
 import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
+import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.location.Localizable;
 import meet_eat.data.location.UnlocalizableException;
@@ -43,6 +44,7 @@ public class OfferDetailedFragment extends Fragment {
 
     private FragmentOfferDetailedBinding binding;
     private OfferViewModel offerVM;
+    private UserViewModel userVM;
     private NavController navController;
     private Bundle bundle;
     private Offer offer;
@@ -55,6 +57,7 @@ public class OfferDetailedFragment extends Fragment {
         binding = FragmentOfferDetailedBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
+        userVM = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
         // Checks if the previous page sent a bundle of arguments containing an offer
@@ -103,11 +106,10 @@ public class OfferDetailedFragment extends Fragment {
     private void participateOffer() {
         try {
             if (offerVM.isParticipating(offer)) {
-                offer = offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
+                offerVM.cancelParticipation(offerVM.getCurrentUser(), offer);
             } else {
-                offer = offerVM.participate(offer);
+                offerVM.participate(offer);
             }
-
             updateUI();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
@@ -176,7 +178,12 @@ public class OfferDetailedFragment extends Fragment {
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
         Localizable location = offer.getLocation();
 
-        binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
+        // Get the host rating of the offer creator and show it in the UI
+        try {
+            binding.tvOfferDetailedRating.setText(String.valueOf(userVM.getNumericHostRating(offer.getCreator())));
+        } catch (RequestHandlerException exception) {
+            binding.tvOfferDetailedRating.setVisibility(View.INVISIBLE);
+        }
 
         try {
             binding.tvOfferDetailedDistance.setText(
@@ -194,10 +201,16 @@ public class OfferDetailedFragment extends Fragment {
         }
 
         binding.tvOfferDetailedPrice.setText(contextFormatter.formatPrice(offer.getPrice()));
-        String participantsText = offer.getParticipants().size() + "/" + offer.getMaxParticipants();
-        binding.tvOfferDetailedParticipants.setText(participantsText);
+
+        try {
+            int participantsCount = offerVM.getParticipants(offer).size();
+            String participantsText = participantsCount + PARTICIPANTS_SEPARATOR + offer.getMaxParticipants();
+            binding.tvOfferDetailedParticipants.setText(participantsText);
+        } catch (RequestHandlerException exception) {
+            binding.tvOfferDetailedParticipants.setVisibility(GONE);
+        }
+
         binding.tvOfferDetailedUsername.setText(offer.getCreator().getName());
-        binding.tvOfferDetailedRating.setText(String.valueOf(offer.getCreator().getHostRating()));
         binding.tvOfferDetailedDescription.setText(offer.getDescription());
 
         if (offerVM.isCreator(offer)) {
@@ -235,21 +248,27 @@ public class OfferDetailedFragment extends Fragment {
                 binding.ibtOfferDetailedBookmark.setVisibility(GONE);
             }
 
-            if (offerVM.isParticipating(offer)) {
-                binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
-                binding.btOfferDetailedParticipate.setText(R.string.cancel);
-                binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
-            } else {
-                binding.btOfferDetailedParticipate
-                        .setVisibility(offer.getParticipants().size() == offer.getMaxParticipants() ? GONE : VISIBLE);
-                binding.btOfferDetailedParticipate.setText(R.string.participate);
+            try {
+                int participantsCount = offerVM.getParticipants(offer).size();
+                String participantsText = participantsCount + PARTICIPANTS_SEPARATOR + offer.getMaxParticipants();
+                binding.tvOfferDetailedParticipants.setText(participantsText);
+
+                if (offerVM.isParticipating(offer)) {
+                    binding.btOfferDetailedParticipate.setVisibility(VISIBLE);
+                    binding.btOfferDetailedParticipate.setText(R.string.cancel);
+                    binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
+                } else {
+                    binding.btOfferDetailedParticipate.setVisibility(participantsCount >= offer.getMaxParticipants() ? GONE : VISIBLE);
+                    binding.btOfferDetailedParticipate.setText(R.string.participate);
+                    binding.tvOfferDetailedParticipating.setVisibility(GONE);
+                }
+            } catch (RequestHandlerException exception) {
+                Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
+                // TODO Handle error correctly
+                binding.tvOfferDetailedParticipants.setVisibility(GONE);
                 binding.tvOfferDetailedParticipating.setVisibility(GONE);
+                binding.btOfferDetailedParticipate.setVisibility(GONE);
             }
         }
-
-        String participantsText = offer.getParticipants().size() + PARTICIPANTS_SEPARATOR + offer.getMaxParticipants();
-        binding.tvOfferDetailedParticipants.setText(participantsText);
     }
-
-
 }
