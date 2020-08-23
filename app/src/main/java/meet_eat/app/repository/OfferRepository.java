@@ -15,10 +15,10 @@ import java.util.Objects;
 import meet_eat.data.EndpointPath;
 import meet_eat.data.ObjectJsonParser;
 import meet_eat.data.Page;
-import meet_eat.data.Report;
 import meet_eat.data.RequestHeaderField;
 import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.relation.Participation;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.predicate.OfferPredicate;
 import meet_eat.data.predicate.chrono.LocalDateTimeOperation;
@@ -31,7 +31,6 @@ public class OfferRepository extends EntityRepository<Offer> {
 
     private static final String OWNER_ID_URL = "?owner=";
     private static final String SUBSCRIBER_ID_URL = "?subscriber=";
-    private static final String URI_PATH_PARTICIPANTS = "/participants";
 
     /**
      * Creates an {@link Offer offer} repository.
@@ -97,56 +96,50 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * Reports an {@link Offer offers} in the repository by submitting a {@link Report report}.
-     *
-     * @param offer  the offer to be reported
-     * @param report the report to be submitted
-     * @return the offer that was reported within the repository
-     * @throws RequestHandlerException if an error occurs when requesting the repository
-     */
-    public Offer report(Offer offer, Report report) throws RequestHandlerException {
-        Objects.requireNonNull(offer);
-        offer.addReport(Objects.requireNonNull(report));
-        return updateEntity(offer);
-    }
-
-    /**
+     * TODO
      * Adds a {@link User participant} to an {@link Offer offer} in the repository.
      *
-     * @param offer the offer where the participant is to be added
-     * @param participant the participant to be added to the offer
+     * @param participation
      * @return the latest version of the offer from the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Offer addParticipant(Offer offer, User participant) throws RequestHandlerException {
-        Objects.requireNonNull(offer);
-        String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
+    public Participation addParticipation(Participation participation) throws RequestHandlerException {
+        String uriOfferIdentifier = "/" + Objects.requireNonNull(participation.getTarget().getIdentifier());
 
         // Handle request
-        RequestEntity<User> requestEntity =
-                new RequestEntity<>(Objects.requireNonNull(participant), getTokenHeaders(), HttpMethod.POST, URI.create(
-                        RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + URI_PATH_PARTICIPANTS));
-        return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.CREATED);
+        RequestEntity<Participation> requestEntity = new RequestEntity<>(participation, getTokenHeaders(), HttpMethod.POST,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + EndpointPath.PARTICIPATIONS));
+        return new RequestHandler<Participation, Participation>().handle(requestEntity, HttpStatus.CREATED);
     }
 
     /**
+     * TODO
      * Removes a {@link User participant} from an {@link Offer offer} in the repository.
      *
-     * @param offer the offer where the participant is to be removed
-     * @param participant the participant to be removed from the offer
-     * @return the latest version of the offer from the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public Offer removeParticipant(Offer offer, User participant) throws RequestHandlerException {
-        Objects.requireNonNull(offer);
+    public void removeParticipation(Participation participation) throws RequestHandlerException {
+        String uriOfferIdentifier = "/" + Objects.requireNonNull(participation.getTarget().getIdentifier());
+
+        // Handle request
+        RequestEntity<Participation> requestEntity = new RequestEntity<>(participation, getTokenHeaders(), HttpMethod.DELETE,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + EndpointPath.PARTICIPATIONS));
+        new RequestHandler<Participation, Participation>().handle(requestEntity, HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * TODO
+     * @param offer
+     * @return
+     * @throws RequestHandlerException
+     */
+    public Iterable<Participation> getParticipationsByOffer(Offer offer) throws RequestHandlerException {
         String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
 
         // Handle request
-        RequestEntity<User> requestEntity =
-                new RequestEntity<>(Objects.requireNonNull(participant), getTokenHeaders(), HttpMethod.DELETE,
-                        URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier +
-                                URI_PATH_PARTICIPANTS));
-        return new RequestHandler<User, Offer>().handle(requestEntity, HttpStatus.OK);
+        RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
+                URI.create(RequestHandler.SERVER_PATH + getEntityPath() + uriOfferIdentifier + EndpointPath.PARTICIPATIONS));
+        return new RequestHandler<Void, Participation>().handleIterable(requestEntity, HttpStatus.OK);
     }
 
     /**
