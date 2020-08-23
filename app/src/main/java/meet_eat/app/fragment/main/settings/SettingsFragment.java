@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Set;
+import java.util.Collection;
 
 import meet_eat.app.LoginActivity;
 import meet_eat.app.MainActivity;
@@ -67,7 +67,7 @@ public class SettingsFragment extends Fragment {
      * Sets the notification setting switch accordingly to the users given notification setting.
      */
     private void updateUI() {
-        Set<Setting> settings = settingsVM.getCurrentUser().getSettings();
+        Collection<Setting> settings = settingsVM.getCurrentUser().getSettings();
         // Get the notification setting off the settings set, then updates the notification switch accordingly
         settings.forEach(s -> {
             if (s.getClass().equals(NotificationSetting.class)) {
