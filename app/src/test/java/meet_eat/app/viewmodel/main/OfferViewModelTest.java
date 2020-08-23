@@ -2,6 +2,7 @@ package meet_eat.app.viewmodel.main;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -14,8 +15,8 @@ import java.util.HashSet;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
-import meet_eat.data.Report;
 import meet_eat.data.entity.Offer;
+import meet_eat.data.entity.relation.Report;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -189,14 +190,14 @@ public class OfferViewModelTest {
         offerVM.participate(toBeParticipating);
         logoutThenLogin(uniqueIdentifier + testEmail);
         Offer offerWithParticipant = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
-        assertTrue(offerWithParticipant.getParticipants().contains(participatingUser));
+        assertTrue(offerVM.getParticipants(offerWithParticipant).contains(participatingUser));
 
         // ~~~ CANCELLING PARTICIPATION ~~~
         logoutThenLogin(uniqueIdentifier + 1 + testEmail);
         offerVM.cancelParticipation(offerVM.getCurrentUser(), offerWithParticipant);
         logoutThenLogin(uniqueIdentifier + testEmail);
         Offer offerWithCancelledParticipation = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
-        assertFalse(offerWithCancelledParticipation.getParticipants().contains(participatingUser));
+        assertFalse(offerVM.getParticipants(offerWithCancelledParticipation).contains(participatingUser));
 
         // ~~~ DELETING ~~~
         Offer offer = offerVM.fetchOffers(offerVM.getCurrentUser()).iterator().next();
@@ -216,16 +217,16 @@ public class OfferViewModelTest {
         offerVM.sendContact(contactData);
     }
 
+    @Ignore("Asserting that the report was sent is not possible anymore.")
     @Test(expected = RequestHandlerException.class)
     public void testReport() throws RequestHandlerException {
         // Not yet implemented
         String reportMessage = "This is a report message";
-        Report report = new Report(offerVM.getCurrentUser(), reportMessage);
-        offerVM.report(secondUser, report);
+        Report report = new Report(offerVM.getCurrentUser(), secondUser, reportMessage);
+        offerVM.report(report);
         // Logout and login to get current user's reports
         settingsVM.logout();
         loginVM.login(uniqueIdentifier + 1 + testEmail, password);
-        assertFalse(offerVM.getCurrentUser().getReports().isEmpty());
         // log standard user in again
         logoutThenLogin(uniqueIdentifier + testEmail);
     }
@@ -246,9 +247,11 @@ public class OfferViewModelTest {
         assertTrue(((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size() > 0);
 
         // ~~~ REMOVE BOOKMARK ~~~
-        Offer bookmarkedOffer = ((Collection<Offer>) offerVM.fetchBookmarkedOffers()).iterator().next();
+        Offer bookmarkedOffer = (offerVM.fetchBookmarkedOffers()).iterator().next();
         offerVM.removeBookmark(bookmarkedOffer);
         logoutThenLogin(uniqueIdentifier + 1 + testEmail);
+
+        // TODO Delete all collection casts due to very unsafe and bad style
         assertEquals(0, ((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size());
         logoutThenLogin(uniqueIdentifier + testEmail);
     }
