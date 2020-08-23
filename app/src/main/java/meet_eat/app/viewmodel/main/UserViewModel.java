@@ -7,11 +7,14 @@ import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import meet_eat.app.repository.ReportRepository;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.repository.Session;
 import meet_eat.app.repository.UserRepository;
-import meet_eat.data.Report;
-import meet_eat.data.entity.Subscription;
+import meet_eat.data.entity.relation.Report;
+import meet_eat.data.entity.relation.Subscription;
+import meet_eat.data.entity.relation.rating.Rating;
+import meet_eat.data.entity.relation.rating.RatingBasis;
 import meet_eat.data.entity.user.User;
 
 /**
@@ -20,6 +23,7 @@ import meet_eat.data.entity.user.User;
 public class UserViewModel extends ViewModel {
 
     private final UserRepository userRepository = new UserRepository();
+    private final ReportRepository reportRepository = new ReportRepository();
     private final Session session = Session.getInstance();
 
     /**
@@ -42,14 +46,13 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
-     * Reports a user in the {@link UserRepository}.
+     * Reports a user in the {@link ReportRepository}.
      *
-     * @param toBeReported the user that is to be reported
      * @param report       the report
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void report(User toBeReported, Report report) throws RequestHandlerException {
-        userRepository.report(toBeReported, report);
+    public Report report(Report report) throws RequestHandlerException {
+        return reportRepository.addEntity(report);
     }
 
     /**
@@ -100,9 +103,31 @@ public class UserViewModel extends ViewModel {
      * Gets the users subscribed by the current user.
      *
      * @return all subscriptions of the current user
-     * @throws RequestHandlerException if an error occurs when requesting the
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Collection<User> getSubscribedUsers() throws RequestHandlerException {
-        return getSubscriptions().stream().map(Subscription::getTargetUser).collect(Collectors.toList());
+        return getSubscriptions().stream().map(Subscription::getTarget).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the numeric {@link RatingBasis#HOST host} {@link Rating rating} value of a user.
+     *
+     * @param user to get the numeric rating value from
+     * @return the numeric host rating value of a user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Double getNumericHostRating(User user) throws RequestHandlerException {
+        return userRepository.getNumericHostRating(user);
+    }
+
+    /**
+     * Gets the numeric {@link RatingBasis#GUEST guest} {@link Rating rating} value of a user.
+     *
+     * @param user to get the numeric rating value from
+     * @return the numeric guest rating value of a user
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Double getNumericGuestRating(User user) throws RequestHandlerException {
+        return userRepository.getNumericGuestRating(user);
     }
 }
