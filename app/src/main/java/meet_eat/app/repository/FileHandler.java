@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +34,7 @@ public final class FileHandler {
      * Saves a {@link String} to a file.
      *
      * @param fileContent The {@link String} to be saved
-     * @param fileName the name of the file to save the content to
+     * @param fileName    the name of the file to save the content to
      * @throws IOException if an I/O error occurs
      */
     public static void saveStringToFile(String fileContent, String fileName) throws IOException {
@@ -52,22 +53,39 @@ public final class FileHandler {
      * Returns a {@link String} read from a file.
      *
      * @param fileName The name of the file the {@link String} is read from.
-     * @return  a {@link String} read from the file
+     * @return a {@link String} read from the file
      * @throws IOException if an I/O error occurs
      */
     public static String readFileToString(String fileName) throws IOException {
         FileInputStream fileInputStream = getContext().openFileInput(Objects.requireNonNull(fileName));
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, CHARSET);
         StringBuilder stringBuilder = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, CHARSET))) {
             String line;
-            while (Objects.nonNull(line = reader.readLine())) {
+            while (Objects.nonNull(line = bufferedReader.readLine())) {
                 stringBuilder.append(line);
                 stringBuilder.append(System.lineSeparator());
             }
-            return stringBuilder.toString();
         }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Returns a {@link String} read from an {@link InputStream}.
+     *
+     * @param inputStream the stream the {@link String} is read from
+     * @return the {@link String} read from the {@link InputStream}
+     * @throws IOException if an I/O error occurs
+     */
+    public static String readInputStreamToString(InputStream inputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, CHARSET))) {
+            String line;
+            while (Objects.nonNull(line = bufferedReader.readLine())) {
+                stringBuilder.append(line);
+                stringBuilder.append(System.lineSeparator());
+            }
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -100,7 +118,7 @@ public final class FileHandler {
      * @return the context of the application
      * @throws IOException if an I/O error occurs
      */
-    private static Context getContext() throws IOException{
+    private static Context getContext() throws IOException {
         Context context = MeetEatApplication.getAppContext();
         if (Objects.isNull(context)) {
             throw new IOException(ERROR_MESSAGE_NULL_CONTEXT);
