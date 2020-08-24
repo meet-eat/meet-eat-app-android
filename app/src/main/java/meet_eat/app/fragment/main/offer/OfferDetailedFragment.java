@@ -85,8 +85,8 @@ public class OfferDetailedFragment extends Fragment {
         binding.btOfferDetailedParticipate.setOnClickListener(event -> participateOffer());
         binding.ivOfferDetailedProfile.setOnClickListener(event -> navigateToProfile());
         binding.tvOfferDetailedUsername.setOnClickListener(event -> navigateToProfile());
+        binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
         // Currently disabled features
-        // binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
         // binding.btOfferDetailedContact.setOnClickListener(event -> navigateToOfferContact());
     }
 

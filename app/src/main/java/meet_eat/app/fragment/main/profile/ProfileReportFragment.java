@@ -32,7 +32,6 @@ import static meet_eat.app.fragment.NavigationArgumentKey.USER;
  */
 public class ProfileReportFragment extends Fragment {
 
-
     private FragmentProfileReportBinding binding;
     private NavController navController;
     private UserViewModel userVM;
@@ -56,6 +55,7 @@ public class ProfileReportFragment extends Fragment {
             user = (User) getArguments().getSerializable(USER.name());
         }
 
+        initUI();
         setButtonOnClickListener();
         return binding.getRoot();
     }
@@ -67,13 +67,17 @@ public class ProfileReportFragment extends Fragment {
         binding.btProfileReport.setOnClickListener(event -> reportUser());
     }
 
+    private void initUI() {
+        binding.tvProfileReportInfo.setText(getResources().getString(R.string.report_info_user) + " " + user.getName());
+    }
+
     private void reportUser() {
         Report report = new Report(userVM.getCurrentUser(), user, Strings.nullToEmpty(reportMessage));
 
         try {
             userVM.report(report);
             navController.navigateUp();
-            Toast.makeText(getActivity(), user.getName() + " " + getString(R.string.reported_toast_text),
+            Toast.makeText(getActivity(), user.getName() + " " + getResources().getString(R.string.reported_toast_text),
                     Toast.LENGTH_SHORT).show();
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();

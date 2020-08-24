@@ -81,7 +81,6 @@
     <string name="rating">Rating</string>
     <string name="rate">Rate</string>
     <string name="missing_description">Description must not be empty.</string>
-    <string name="report_info">User or offer</string>
     <string name="missing_username">Username must not be empty.</string>
     <string name="username">Username</string>
     <string name="contact_info">User</string>
@@ -148,4 +147,6 @@
     <string name="content_description_profile_guest_rating_star">Profile guest rating star</string>
     <string name="content_description_offer_card_rating">Offer card rating</string>
     <string name="content_description_report_button">Report button</string>
+    <string name="report_info_offer">Offer:</string>
+    <string name="report_info_user">User:</string>
 </resources>

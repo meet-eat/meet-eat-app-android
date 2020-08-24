@@ -46,7 +46,6 @@
     <string name="dark">Dunkel</string>
     <string name="report">Melden</string>
     <string name="filter_and_sort">Filtern und Sortieren</string>
-    <string name="report_info">Benutzer oder Angebot</string>
     <string name="report_message">Warum möchtest du den Benutzer oder das Angebot melden?</string>
     <string name="sort">Sortieren nach</string>
     <string name="filter">Filter</string>
@@ -136,4 +135,6 @@
     <string name="content_description_profile_guest_rating_star">Bild eines Sterns auf einem Profil</string>
     <string name="content_description_offer_card_rating">Bewertung des Angebotserstellers</string>
     <string name="content_description_report_button">Knopf zum Melden</string>
+    <string name="report_info_offer">Angebot:</string>
+    <string name="report_info_user">Benutzer:</string>
 </resources>
