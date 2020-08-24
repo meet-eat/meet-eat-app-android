@@ -146,13 +146,8 @@ public class UserViewModelTest {
 
     @Test(expected = NullPointerException.class)
     public void testReportWithNullUser() throws RequestHandlerException {
-        Report report = new Report(userVM.getCurrentUser(), "");
-        userVM.report(null, report);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testReportWithNull() throws RequestHandlerException {
-        userVM.report(null, null);
+        Report report = new Report(userVM.getCurrentUser(), null, "");
+        userVM.report(report);
     }
 
     @Test(expected = NullPointerException.class)
