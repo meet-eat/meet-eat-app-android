@@ -97,7 +97,7 @@ public class UserViewModelTest {
 
         userVM.unsubscribe(toBeSubscribedReally);
 
-        isTrue(!userVM.isSubscribed(toBeSubscribedReally), "unsubscribing did not work");
+        isTrue(!userVM.isSubscribed(toBeSubscribedReally), "removing subscription did not work");
     }
 
     @Test
