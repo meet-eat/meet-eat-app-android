@@ -11,7 +11,7 @@ import java.util.Objects;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
-import meet_eat.data.Report;
+import meet_eat.data.entity.relation.Report;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.Role;

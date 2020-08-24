@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
+import meet_eat.data.entity.relation.rating.Rating;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
-import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.location.SphericalLocation;
 import meet_eat.data.location.SphericalPosition;
 
@@ -59,12 +59,12 @@ public class RatingViewModelTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSendWithNull() throws RequestHandlerException {
+    public void testSendWithNull() {
         ratingVM.send((Rating) null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSendMultipleWithNull() throws RequestHandlerException {
+    public void testSendMultipleWithNull() {
         ratingVM.send(new Rating[2]);
     }
 }

@@ -12,9 +12,9 @@ import static org.junit.Assert.assertNull;
 public abstract class EntityRepositoryTest<T extends EntityRepository<S>, S extends Entity<U>, U extends Serializable>
         extends RepositoryTestEnvironment{
 
-    private T entityRepository;
-    private S entityWithId;
-    private S entityWithoutId;
+    private final T entityRepository;
+    private final S entityWithId;
+    private final S entityWithoutId;
 
     protected EntityRepositoryTest(T entityRepository, S entityWithId, S entityWithoutId) {
         this.entityRepository = entityRepository;

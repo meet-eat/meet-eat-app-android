@@ -52,7 +52,7 @@ public class OfferViewModelTest {
     private static OfferViewModel offerVM;
     private static User secondUser;
     private static String uniqueIdentifier;
-    private static Collection<OfferPredicate> predicates = new ArrayList<>();
+    private static final Collection<OfferPredicate> predicates = new ArrayList<>();
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {

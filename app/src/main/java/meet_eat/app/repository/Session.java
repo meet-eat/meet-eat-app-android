@@ -4,7 +4,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;

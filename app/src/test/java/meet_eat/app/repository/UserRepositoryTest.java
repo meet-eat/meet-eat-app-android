@@ -1,11 +1,6 @@
 package meet_eat.app.repository;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -13,20 +8,18 @@ import java.time.Month;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Set;
 
 import meet_eat.data.LoginCredential;
-import meet_eat.data.Report;
 import meet_eat.data.comparator.OfferComparableField;
 import meet_eat.data.comparator.OfferComparator;
-import meet_eat.data.entity.Offer;
-import meet_eat.data.entity.Subscription;
+import meet_eat.data.entity.relation.Report;
+import meet_eat.data.entity.relation.Subscription;
+import meet_eat.data.entity.relation.rating.Rating;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.Role;
 import meet_eat.data.entity.user.User;
-import meet_eat.data.entity.user.rating.Rating;
 import meet_eat.data.entity.user.setting.ColorMode;
 import meet_eat.data.entity.user.setting.DisplaySetting;
 import meet_eat.data.entity.user.setting.NotificationSetting;
@@ -108,7 +101,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
     // Test report
 
     @Test(expected = IllegalStateException.class)
-    public void testReportNotLoggedIn() throws RequestHandlerException {
+    public void testReportNotLoggedIn() {
         // Assertions
         assertNull(Session.getInstance().getToken());
 

@@ -27,9 +27,9 @@ public class LoginViewModelTest {
     private static final String phoneNumber = "0123456789";
     private static final String description = "JUnit Test User";
 
-    private static LoginViewModel loginVM = new LoginViewModel();
-    private static RegisterViewModel registerVM = new RegisterViewModel();
-    private static SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final LoginViewModel loginVM = new LoginViewModel();
+    private static final RegisterViewModel registerVM = new RegisterViewModel();
+    private static final SettingsViewModel settingsVM = new SettingsViewModel();
     private static String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
 
     @BeforeClass

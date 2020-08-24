@@ -11,11 +11,11 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import meet_eat.data.Page;
-import meet_eat.data.Report;
 import meet_eat.data.comparator.OfferComparableField;
 import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.Tag;
+import meet_eat.data.entity.relation.Report;
 import meet_eat.data.entity.user.User;
 import meet_eat.data.location.CityLocation;
 import meet_eat.data.location.Localizable;
@@ -64,7 +64,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersNotLoggedIn() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -78,7 +78,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     @Test(expected = NullPointerException.class)
     public void testGetOffersWithNullPage() throws RequestHandlerException {
         // Test data
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -109,7 +109,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersWithNullComparator() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
 
         // Assertions
         Session.getInstance().login(getRegisteredLoginCredential());
@@ -125,7 +125,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersByCreatorNotLoggedIn() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -139,7 +139,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     @Test(expected = NullPointerException.class)
     public void testGetOffersByCreatorWithNullPage() throws RequestHandlerException {
         // Test data
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -170,7 +170,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersByCreatorWithNullComparator() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
 
         // Assertions
         Session.getInstance().login(getRegisteredLoginCredential());
@@ -186,7 +186,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersBySubscriptionsNotLoggedIn() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -200,7 +200,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     @Test(expected = NullPointerException.class)
     public void testGetOffersBySubscriptionsWithNullPage() throws RequestHandlerException {
         // Test data
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
         CityLocation cityLocation = new CityLocation("Karlsruhe");
         OfferComparator comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
@@ -231,7 +231,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public void testGetOffersBySubscriptionsWithNullComparator() throws RequestHandlerException {
         // Test data
         Page page = new Page(0, 10);
-        ArrayList<OfferPredicate> predicates = new ArrayList<OfferPredicate>();
+        ArrayList<OfferPredicate> predicates = new ArrayList<>();
 
         // Assertions
         Session.getInstance().login(getRegisteredLoginCredential());
@@ -244,7 +244,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     // Test report
 
     @Test(expected = IllegalStateException.class)
-    public void testReportNotLoggedIn() throws RequestHandlerException {
+    public void testReportNotLoggedIn() {
         // Assertions
         assertNull(Session.getInstance().getToken());
 
@@ -275,7 +275,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     // Test addParticipant
 
     @Test(expected = IllegalStateException.class)
-    public void testAddParticipantNotLoggedIn() throws RequestHandlerException {
+    public void testAddParticipantNotLoggedIn() {
         // Assertions
         assertNull(Session.getInstance().getToken());
 
@@ -306,7 +306,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     // Test removeParticipant
 
     @Test(expected = IllegalStateException.class)
-    public void testRemoveParticipantNotLoggedIn() throws RequestHandlerException {
+    public void testRemoveParticipantNotLoggedIn() {
         // Assertions
         assertNull(Session.getInstance().getToken());
 
