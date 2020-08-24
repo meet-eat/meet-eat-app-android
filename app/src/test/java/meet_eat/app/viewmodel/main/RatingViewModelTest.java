@@ -59,12 +59,12 @@ public class RatingViewModelTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSendWithNull() {
+    public void testSendWithNull() throws RequestHandlerException {
         ratingVM.send((Rating) null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSendMultipleWithNull() {
+    public void testSendMultipleWithNull() throws RequestHandlerException {
         ratingVM.send(new Rating[2]);
     }
 }

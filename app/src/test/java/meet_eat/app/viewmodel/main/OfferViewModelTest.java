@@ -1,5 +1,7 @@
 package meet_eat.app.viewmodel.main;
 
+import com.google.common.collect.Iterables;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -141,13 +143,13 @@ public class OfferViewModelTest {
         // ~~~ ADDING ~~~
         Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), offerTitle, offerDescription, 0, 1,
                 LocalDateTime.of(2030, Month.DECEMBER, 31, 23, 59), location);
-        assertEquals(0, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
+        assertEquals(0, (Iterables.size(offerVM.fetchOffers(offerVM.getCurrentUser()))));
         offerVM.add(toBeAdded);
         // logout and login to ensure the offer was added
         logoutThenLogin(uniqueIdentifier + testEmail);
         // no other offer has been added, so total must be 1
         offerVM.getCurrentUser().clearOfferPredicates();
-        assertEquals(1, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
+        assertEquals(1, (Iterables.size(offerVM.fetchOffers(offerVM.getCurrentUser()))));
 
         // ~~~ EDITING ~~~
         Localizable editedLocation = new SphericalLocation(
@@ -171,7 +173,7 @@ public class OfferViewModelTest {
         offerVM.delete(offer);
         // logout and login to ensure the offer was removed
         logoutThenLogin(uniqueIdentifier + testEmail);
-        assertEquals(0, ((Collection<Offer>) offerVM.fetchOffers(offerVM.getCurrentUser())).size());
+        assertEquals(0, (Iterables.size(offerVM.fetchOffers(offerVM.getCurrentUser()))));
     }
 
     @Test
@@ -244,15 +246,14 @@ public class OfferViewModelTest {
         logoutThenLogin(uniqueIdentifier + 1 + testEmail);
         offerVM.addBookmark(addedOffer);
         logoutThenLogin(uniqueIdentifier + 1 + testEmail);
-        assertTrue(((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size() > 0);
+        assertTrue((Iterables.size(offerVM.fetchBookmarkedOffers())) > 0);
 
         // ~~~ REMOVE BOOKMARK ~~~
         Offer bookmarkedOffer = (offerVM.fetchBookmarkedOffers()).iterator().next();
         offerVM.removeBookmark(bookmarkedOffer);
         logoutThenLogin(uniqueIdentifier + 1 + testEmail);
 
-        // TODO Delete all collection casts due to very unsafe and bad style
-        assertEquals(0, ((Collection<Offer>) offerVM.fetchBookmarkedOffers()).size());
+        assertEquals(0, (Iterables.size(offerVM.fetchBookmarkedOffers())));
         logoutThenLogin(uniqueIdentifier + testEmail);
     }
 
@@ -289,6 +290,6 @@ public class OfferViewModelTest {
 
     private void logoutThenLogin(String email) throws RequestHandlerException {
         settingsVM.logout();
-        loginVM.login(email, OfferViewModelTest.password);
+        loginVM.login(email, password);
     }
 }

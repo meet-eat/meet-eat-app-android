@@ -135,13 +135,13 @@ public class UserViewModelTest {
     @Ignore("Not yet implemented")
     @Test
     public void testReport() throws RequestHandlerException {
-        Report report = new Report(userVM.getCurrentUser(), "");
-        userVM.report(toBeReported, report);
+        Report report = new Report(userVM.getCurrentUser(), toBeReported, "");
+        userVM.report(report);
     }
 
     @Test(expected = NullPointerException.class)
     public void testReportWithNullReportObject() throws RequestHandlerException {
-        userVM.report(toBeReported, null);
+        userVM.report(null);
     }
 
     @Test(expected = NullPointerException.class)
