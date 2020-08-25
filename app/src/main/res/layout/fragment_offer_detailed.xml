@@ -21,351 +21,361 @@
             android:layout_margin="16dp"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:elevation="10dp"
+            android:contentDescription="@string/content_description_back_button"
+            android:elevation="110dp"
             android:scaleType="fitCenter"
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/content_description_back_button" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srlOfferDetailedSwipe"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:elevation="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:elevation="100dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivOfferDetailedPicture"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/offer_card"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/content_description_background_image" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="2dp"
-                    android:src="@color/colorPrimary"
-                    app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture"
-                    android:contentDescription="@string/content_description_offer_image" />
+                    <ImageView
+                        android:id="@+id/ivOfferDetailedPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="72dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_background_image"
+                        android:elevation="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/offer_card"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3"
-                    android:contentDescription="@string/content_description_spacer" />
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_offer_image"
+                        android:elevation="2dp"
+                        android:src="@color/colorPrimary"
+                        app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
 
-                <!-- OFFER IMAGE -->
-                <TextView
-                    android:id="@+id/tvOfferDetailedPicture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_tag"
-                    android:elevation="5dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/picture"
-                    android:textAlignment="center"
-                    android:textColor="@color/textHint"
-                    android:textSize="30sp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
-                    app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
-                    app:layout_constraintStart_toStartOf="@+id/ivOfferDetailedPicture"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedPicture" />
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/content_description_spacer"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-                <ImageButton
-                    android:id="@+id/ibtOfferDetailedEdit"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/edit"
-                    android:tint="@color/symbol"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/content_description_offer_edit_button" />
+                    <!-- OFFER IMAGE -->
+                    <TextView
+                        android:id="@+id/tvOfferDetailedPicture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_tag"
+                        android:elevation="5dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="@string/picture"
+                        android:textAlignment="center"
+                        android:textColor="@color/textHint"
+                        android:textSize="30sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedPicture"
+                        app:layout_constraintEnd_toEndOf="@+id/ivOfferDetailedPicture"
+                        app:layout_constraintStart_toStartOf="@+id/ivOfferDetailedPicture"
+                        app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedPicture" />
 
-                <!-- REPORT -->
-                <ImageButton
-                    android:id="@+id/ibtOfferDetailedReport"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/report"
-                    android:tint="@color/symbol"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/report_button" />
+                    <ImageButton
+                        android:id="@+id/ibtOfferDetailedEdit"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:contentDescription="@string/content_description_offer_edit_button"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/edit"
+                        android:tint="@color/symbol"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/ibtOfferDetailedBookmark"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/bookmark"
-                    android:tint="@color/symbol"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView7"
-                    android:contentDescription="@string/bookmark_button" />
+                    <!-- REPORT -->
+                    <ImageButton
+                        android:id="@+id/ibtOfferDetailedReport"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:contentDescription="@string/report_button"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/report"
+                        android:tint="@color/symbol"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/title"
-                    android:textColor="@android:color/white"
-                    android:textSize="32sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
+                    <ImageButton
+                        android:id="@+id/ibtOfferDetailedBookmark"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:background="@null"
+                        android:contentDescription="@string/bookmark_button"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/bookmark"
+                        android:tint="@color/symbol"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/date_time"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTitle" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/title"
+                        android:textColor="@android:color/white"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedPicture" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/price"
-                    android:textAlignment="textEnd"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTitle" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/date_time"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTitle" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedDistance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/distance"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDate" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/price"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTitle" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedCity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/city"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/tvOfferDetailedParticipants"
-                    app:layout_constraintStart_toEndOf="@+id/tvOfferDetailedDistance"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDate" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/distance"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDate" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedParticipants"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/participants"
-                    android:textAlignment="textEnd"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedPrice" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedCity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/city"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toStartOf="@+id/tvOfferDetailedParticipants"
+                        app:layout_constraintStart_toEndOf="@+id/tvOfferDetailedDistance"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDate" />
 
-                <ImageView
-                    android:id="@+id/ivOfferDetailedProfile"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/profile_standard"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedCity"
-                    android:contentDescription="@string/creator_image" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedParticipants"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/participants"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedPrice" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="28dp"
-                    android:layout_margin="16dp"
-                    android:clickable="true"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:singleLine="true"
-                    android:text="@string/username"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedProfile"
-                    app:layout_constraintEnd_toStartOf="@+id/tvOfferDetailedRating"
-                    app:layout_constraintStart_toEndOf="@+id/ivOfferDetailedProfile"
-                    app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedProfile" />
+                    <ImageView
+                        android:id="@+id/ivOfferDetailedProfile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/creator_image"
+                        android:elevation="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/profile_standard"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedCity" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedUsername"
-                    app:layout_constraintEnd_toStartOf="@+id/ivOfferDetailedRating"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedUsername" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedUsername"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_margin="16dp"
+                        android:clickable="true"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:singleLine="true"
+                        android:text="@string/username"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivOfferDetailedProfile"
+                        app:layout_constraintEnd_toStartOf="@+id/tvOfferDetailedRating"
+                        app:layout_constraintStart_toEndOf="@+id/ivOfferDetailedProfile"
+                        app:layout_constraintTop_toTopOf="@+id/ivOfferDetailedProfile" />
 
-                <ImageView
-                    android:id="@+id/ivOfferDetailedRating"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="16dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/star"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedRating"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedRating"
-                    app:tint="@color/rating"
-                    android:contentDescription="@string/creator_rating_star" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedUsername"
+                        app:layout_constraintEnd_toStartOf="@+id/ivOfferDetailedRating"
+                        app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedUsername" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/offer_description"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedProfile" />
+                    <ImageView
+                        android:id="@+id/ivOfferDetailedRating"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="16dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/creator_rating_star"
+                        android:elevation="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/star"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvOfferDetailedRating"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvOfferDetailedRating"
+                        app:tint="@color/rating" />
 
-                <!-- TAG -->
-                <TextView
-                    android:id="@+id/tvOfferDetailedTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_tag"
-                    android:elevation="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="@string/tag"
-                    android:textColor="@color/textHint"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDescription" />
+                    <TextView
+                        android:id="@+id/tvOfferDetailedDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/offer_description"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivOfferDetailedProfile" />
 
-                <Button
-                    android:id="@+id/btOfferDetailedParticipate"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_button"
-                    android:elevation="5dp"
-                    android:text="@string/participate"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTag" />
+                    <!-- TAG -->
+                    <TextView
+                        android:id="@+id/tvOfferDetailedTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/bg_tag"
+                        android:elevation="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/tag"
+                        android:textColor="@color/textHint"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedDescription" />
 
-                <Button
-                    android:id="@+id/btOfferDetailedParticipants"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_button"
-                    android:elevation="5dp"
-                    android:text="@string/participants"
-                    android:textColor="@android:color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTag" />
+                    <Button
+                        android:id="@+id/btOfferDetailedParticipate"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/bg_button"
+                        android:elevation="5dp"
+                        android:text="@string/participate"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTag" />
 
-                <!-- CONTACT -->
-                <Button
-                    android:id="@+id/btOfferDetailedContact"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/bg_button"
-                    android:backgroundTint="@color/symbol"
-                    android:elevation="5dp"
-                    android:text="@string/contact"
-                    android:textColor="@android:color/black"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btOfferDetailedParticipate" />
+                    <Button
+                        android:id="@+id/btOfferDetailedParticipants"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/bg_button"
+                        android:elevation="5dp"
+                        android:text="@string/participants"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOfferDetailedTag" />
 
-                <TextView
-                    android:id="@+id/tvOfferDetailedParticipating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:elevation="5dp"
-                    android:shadowColor="@android:color/black"
-                    android:shadowRadius="10"
-                    android:text="@string/participating"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btOfferDetailedContact" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+                    <!-- CONTACT -->
+                    <Button
+                        android:id="@+id/btOfferDetailedContact"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/bg_button"
+                        android:backgroundTint="@color/symbol"
+                        android:elevation="5dp"
+                        android:text="@string/contact"
+                        android:textColor="@android:color/black"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btOfferDetailedParticipate" />
+
+                    <TextView
+                        android:id="@+id/tvOfferDetailedParticipating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:elevation="5dp"
+                        android:shadowColor="@android:color/black"
+                        android:shadowRadius="10"
+                        android:text="@string/participating"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btOfferDetailedContact" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

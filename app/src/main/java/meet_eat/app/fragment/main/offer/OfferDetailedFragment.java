@@ -2,6 +2,7 @@ package meet_eat.app.fragment.main.offer;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import meet_eat.data.location.Localizable;
 import meet_eat.data.location.UnlocalizableException;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static meet_eat.app.fragment.NavigationArgumentKey.OFFER;
 import static meet_eat.app.fragment.NavigationArgumentKey.USER;
@@ -86,8 +88,20 @@ public class OfferDetailedFragment extends Fragment {
         binding.ivOfferDetailedProfile.setOnClickListener(event -> navigateToProfile());
         binding.tvOfferDetailedUsername.setOnClickListener(event -> navigateToProfile());
         binding.ibtOfferDetailedReport.setOnClickListener(event -> navigateToOfferReport());
+        binding.srlOfferDetailedSwipe.setOnRefreshListener(this::reloadAfterSwipe);
         // Currently disabled features
         // binding.btOfferDetailedContact.setOnClickListener(event -> navigateToOfferContact());
+    }
+
+    private void reloadAfterSwipe() {
+        try {
+            offer = offerVM.fetchOfferById(offer.getIdentifier());
+        } catch (RequestHandlerException e) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+            Log.e("HILFE", e.getMessage());
+        }
+        initUI();
+        binding.srlOfferDetailedSwipe.setRefreshing(false);
     }
 
     /**
@@ -173,6 +187,9 @@ public class OfferDetailedFragment extends Fragment {
      * Initializes the GUI depending on the relations between the current user and the offer.
      */
     private void initUI() {
+        binding.srlOfferDetailedSwipe
+                .setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.colorPrimary, null));
+
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
         binding.tvOfferDetailedTitle.setText(offer.getName());
         binding.tvOfferDetailedDate.setText(contextFormatter.formatDateTime(offer.getDateTime()));
@@ -182,7 +199,7 @@ public class OfferDetailedFragment extends Fragment {
         try {
             binding.tvOfferDetailedRating.setText(String.valueOf(userVM.getNumericHostRating(offer.getCreator())));
         } catch (RequestHandlerException exception) {
-            binding.tvOfferDetailedRating.setVisibility(View.INVISIBLE);
+            binding.tvOfferDetailedRating.setVisibility(INVISIBLE);
         }
 
         try {
@@ -218,7 +235,7 @@ public class OfferDetailedFragment extends Fragment {
             binding.ibtOfferDetailedReport.setVisibility(GONE);
             binding.btOfferDetailedParticipate.setVisibility(GONE);
             binding.btOfferDetailedContact.setVisibility(GONE);
-            binding.tvOfferDetailedParticipating.setVisibility(GONE);
+            binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
         } else {
             binding.ibtOfferDetailedEdit.setVisibility(GONE);
             binding.btOfferDetailedParticipants.setVisibility(GONE);
@@ -231,6 +248,7 @@ public class OfferDetailedFragment extends Fragment {
      * Updates the GUI after the user has interacted with the offer.
      */
     private void updateUI() {
+
         if (!offerVM.isCreator(offer)) {
             // Handle exception while fetching bookmarks by removing the bookmark button from UI.
             try {
@@ -258,9 +276,10 @@ public class OfferDetailedFragment extends Fragment {
                     binding.btOfferDetailedParticipate.setText(R.string.cancel);
                     binding.tvOfferDetailedParticipating.setVisibility(VISIBLE);
                 } else {
-                    binding.btOfferDetailedParticipate.setVisibility(participantsCount >= offer.getMaxParticipants() ? GONE : VISIBLE);
+                    binding.btOfferDetailedParticipate
+                            .setVisibility(participantsCount >= offer.getMaxParticipants() ? GONE : VISIBLE);
                     binding.btOfferDetailedParticipate.setText(R.string.participate);
-                    binding.tvOfferDetailedParticipating.setVisibility(GONE);
+                    binding.tvOfferDetailedParticipating.setVisibility(INVISIBLE);
                 }
             } catch (RequestHandlerException exception) {
                 Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
