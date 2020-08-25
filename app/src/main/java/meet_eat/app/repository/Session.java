@@ -119,4 +119,32 @@ public class Session {
         }
         token = null;
     }
+
+    /**
+     * Checks if the user is logged in with a valid token.
+     *
+     * @return {@code true} if the user is logged in with a valid token; {@code false} otherwise
+     */
+    public boolean isLoggedIn() {
+        // Could not be logged in with null token
+        if (Objects.isNull(token)) {
+            return false;
+        }
+        RequestEntity<Token> requestEntity = new RequestEntity<>(token, HttpMethod.POST,
+                URI.create(EndpointPath.TOKENS + EndpointPath.VALIDITY));
+        boolean isValidToken;
+
+        // Request server to fetch if token is valid
+        try {
+            isValidToken = new RequestHandler<Token, Boolean>().handle(requestEntity, HttpStatus.OK);
+        } catch (RequestHandlerException exception) {
+            token = null;
+            return false;
+        }
+        if (isValidToken) {
+            return true;
+        }
+        token = null;
+        return false;
+    }
 }
