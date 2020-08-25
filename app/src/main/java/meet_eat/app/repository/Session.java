@@ -44,9 +44,7 @@ public class Session {
             try {
                 if (FileHandler.fileExists(TOKEN_FILE_NAME)) {
                     String tokenRepresentation = FileHandler.readFileToString(TOKEN_FILE_NAME);
-                    //session.token = new ObjectJsonParser().parseJsonStringToObject(tokenRepresentation, Token.class);
-                    // TODO delete comment after fix login screen
-                    //TODO check if token is valid
+                    session.token = new ObjectJsonParser().parseJsonStringToObject(tokenRepresentation, Token.class);
                 }
             } catch (IOException e) {
                 // The session must not be interrupted. It should always continue even if the file cannot be read.

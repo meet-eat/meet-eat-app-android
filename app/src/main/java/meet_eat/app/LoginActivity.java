@@ -1,5 +1,6 @@
 package meet_eat.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Toast;
@@ -7,6 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import meet_eat.app.repository.Session;
 
 /**
  * Holds the fragments {@link meet_eat.app.fragment.login.RegisterFragment RegisterFragment} and
@@ -27,10 +30,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Checks if ... TODO
-        /*if(Session.getInstance().isLoggedIn()) {
+        // Checks if user was logged in previously
+        if(Session.getInstance().isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
-        }*/
+        }
 
         setContentView(R.layout.activity_login);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_login);
