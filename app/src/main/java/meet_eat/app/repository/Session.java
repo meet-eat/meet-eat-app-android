@@ -129,7 +129,7 @@ public class Session {
             return false;
         }
         RequestEntity<Token> requestEntity = new RequestEntity<>(token, HttpMethod.POST,
-                URI.create(EndpointPath.TOKENS + EndpointPath.VALIDITY));
+                URI.create(RequestHandler.SERVER_PATH + EndpointPath.TOKENS + EndpointPath.VALIDITY));
         boolean isValidToken;
 
         // Request server to fetch if token is valid
