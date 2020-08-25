@@ -65,7 +65,8 @@ public class OfferReportFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.tvOfferReportInfo.setText(getResources().getString(R.string.report_info_offer) + " " + offer.getName());
+        String tvOfferReportInfoText = getResources().getString(R.string.report_info_offer) + " " + offer.getName();
+        binding.tvOfferReportInfo.setText(tvOfferReportInfoText);
     }
 
     private void reportOffer() {

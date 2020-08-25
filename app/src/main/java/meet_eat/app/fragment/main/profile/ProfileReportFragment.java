@@ -68,7 +68,8 @@ public class ProfileReportFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.tvProfileReportInfo.setText(getResources().getString(R.string.report_info_user) + " " + user.getName());
+        String tvProfileReportInfoText = getResources().getString(R.string.report_info_user) + " " + user.getName();
+        binding.tvProfileReportInfo.setText(tvProfileReportInfoText);
     }
 
     private void reportUser() {
