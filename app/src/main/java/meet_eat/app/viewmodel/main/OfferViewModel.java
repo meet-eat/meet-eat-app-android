@@ -53,6 +53,18 @@ public class OfferViewModel extends ViewModel {
         return session.getUser();
     }
 
+
+    /**
+     * Gets the offer specified by its identifier.
+     *
+     * @param identifier the identifier of the offer that is to be fetched
+     * @return The offer with the specified Identifier
+     * @throws RequestHandlerException if an error occurs when requesting the repository
+     */
+    public Offer fetchOfferById(String identifier) throws RequestHandlerException {
+        return offerRepository.getEntityById(identifier);
+    }
+
     /**
      * Gets the specified user's offers.
      *
@@ -297,4 +309,5 @@ public class OfferViewModel extends ViewModel {
         return Streams.stream(offerRepository.getParticipationsByOffer(offer)).map(EntityRelation::getSource)
                 .collect(Collectors.toSet());
     }
+
 }

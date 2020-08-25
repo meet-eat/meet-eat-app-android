@@ -90,8 +90,10 @@ public abstract class EntityRepository<T extends Entity<?>> {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public T getEntityById(String identifier) throws RequestHandlerException {
+        String uriOfferIdentifier = "/" + Objects.requireNonNull(identifier);
+
         RequestEntity<Void> requestEntity = new RequestEntity<>(getTokenHeaders(), HttpMethod.GET,
-                URI.create(RequestHandler.SERVER_PATH + entityPath + Objects.requireNonNull(identifier)));
+                URI.create(RequestHandler.SERVER_PATH + entityPath + uriOfferIdentifier));
         return new RequestHandler<Void, T>().handle(requestEntity, HttpStatus.OK);
     }
 
