@@ -64,6 +64,7 @@ public class ProfileReportFragment extends Fragment {
      * Sets various click listeners.
      */
     private void setButtonOnClickListener() {
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btProfileReport.setOnClickListener(event -> reportUser());
     }
 

@@ -61,6 +61,7 @@ public class OfferReportFragment extends Fragment {
     }
 
     private void setButtonOnClickListener() {
+        binding.ibtBack.setOnClickListener(event -> navController.navigateUp());
         binding.btOfferReport.setOnClickListener(event -> reportOffer());
     }
 
