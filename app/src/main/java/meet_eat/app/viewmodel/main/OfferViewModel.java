@@ -85,9 +85,7 @@ public class OfferViewModel extends ViewModel {
      * @return the user's bookmarked offers
      */
     public Iterable<Offer> fetchBookmarkedOffers() throws RequestHandlerException {
-        return Streams.stream(fetchBookmarks())
-                .map(Bookmark::getTarget)
-                .collect(Collectors.toList());
+        return Streams.stream(fetchBookmarks()).map(Bookmark::getTarget).collect(Collectors.toList());
     }
 
     /**
@@ -173,12 +171,12 @@ public class OfferViewModel extends ViewModel {
      *
      * @param participant the participant that is to be removed
      * @param offer       the offer whereof the participant is to be removed
-     * @return the updated offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void cancelParticipation(User participant, Offer offer) throws RequestHandlerException {
         Stream<Participation> participations = Streams.stream(offerRepository.getParticipationsByOffer(offer));
-        Optional<Participation> optionalParticipation = participations.filter(x -> x.getSource().equals(participant)).findFirst();
+        Optional<Participation> optionalParticipation =
+                participations.filter(x -> x.getSource().equals(participant)).findFirst();
         if (optionalParticipation.isPresent()) {
             offerRepository.removeParticipation(optionalParticipation.get());
         }
@@ -235,9 +233,8 @@ public class OfferViewModel extends ViewModel {
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeBookmark(Offer offer) throws RequestHandlerException {
-        Optional<Bookmark> optionalBookmark = Streams.stream(fetchBookmarks())
-                .filter(x -> x.getTarget().equals(offer))
-                .findFirst();
+        Optional<Bookmark> optionalBookmark =
+                Streams.stream(fetchBookmarks()).filter(x -> x.getTarget().equals(offer)).findFirst();
 
         if (optionalBookmark.isPresent()) {
             userRepository.removeBookmark(optionalBookmark.get());
@@ -253,7 +250,8 @@ public class OfferViewModel extends ViewModel {
      */
     public boolean isBookmarked(Offer offer) throws RequestHandlerException {
         Stream<Offer> bookmarkedOffers = Streams.stream(fetchBookmarkedOffers());
-        return bookmarkedOffers.anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offer.getIdentifier()));
+        return bookmarkedOffers
+                .anyMatch(bookmarkedOffer -> bookmarkedOffer.getIdentifier().equals(offer.getIdentifier()));
     }
 
     /**
@@ -289,14 +287,14 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * TODO
-     * @param offer
-     * @return
-     * @throws RequestHandlerException
+     * Returns the participants for the given offer.
+     *
+     * @param offer the offer whose participants are to be returned
+     * @return The participants of the given offerr
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Set<User> getParticipants(Offer offer) throws RequestHandlerException {
-        return Streams.stream(offerRepository.getParticipationsByOffer(offer))
-                .map(EntityRelation::getSource)
+        return Streams.stream(offerRepository.getParticipationsByOffer(offer)).map(EntityRelation::getSource)
                 .collect(Collectors.toSet());
     }
 }
