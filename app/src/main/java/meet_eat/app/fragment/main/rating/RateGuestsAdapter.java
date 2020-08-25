@@ -52,7 +52,6 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
      * Tries to send the guest ratings.
      */
     public void sendRatings() {
-        Rating[] ratings = new Rating[currentGuests.size()];
         // create ratings, then: ratingVM.send(ratings);
     }
 
