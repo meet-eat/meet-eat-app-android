@@ -46,7 +46,7 @@ public class Session {
                     String tokenRepresentation = FileHandler.readFileToString(TOKEN_FILE_NAME);
                     session.token = new ObjectJsonParser().parseJsonStringToObject(tokenRepresentation, Token.class);
                 }
-            } catch (IOException e) {
+            } catch (IOException exception) {
                 // The session must not be interrupted. It should always continue even if the file cannot be read.
             }
         }
