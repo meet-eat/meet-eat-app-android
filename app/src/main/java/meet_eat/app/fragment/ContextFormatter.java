@@ -133,17 +133,15 @@ public class ContextFormatter {
      * @throws UnlocalizableException if the {@link Localizable} object is invalid
      */
     public String formatStringFromLocalizable(Localizable localizable) throws IOException, UnlocalizableException {
+        Address address;
         Geocoder geocoder = new Geocoder(context);
         double lat = localizable.getSphericalPosition().getLatitude();
         double lng = localizable.getSphericalPosition().getLongitude();
-        Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, MAX_RESULTS)) &&
-                geocoder.getFromLocation(lat, lng, MAX_RESULTS).size() > 0) {
+        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, MAX_RESULTS))
+                && geocoder.getFromLocation(lat, lng, MAX_RESULTS).size() > 0) {
             address = geocoder.getFromLocation(lat, lng, MAX_RESULTS).get(0);
-        }
-
-        if (Objects.isNull(address)) {
+        } else {
             return context.getResources().getString(R.string.invalid_location);
         }
 
