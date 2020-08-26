@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
 
         if (user.getIdentifier().equals(userVM.getCurrentUser().getIdentifier())) {
             binding.ibtProfileReport.setVisibility(GONE);
-            binding.btProfileSubscribe.setVisibility(GONE);
+            binding.btProfileSubscribe.setVisibility(INVISIBLE);
         } else {
             binding.ibtProfileEdit.setVisibility(GONE);
 
