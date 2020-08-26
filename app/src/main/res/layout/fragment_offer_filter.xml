@@ -167,6 +167,7 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -182,14 +183,14 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterPrice"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterPriceMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterPrice"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterPrice" />
 
                 <EditText
                     android:id="@+id/etOfferFilterPriceMax"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -205,8 +206,7 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterPriceMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterPriceMin"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterPriceMin" />
 
                 <TextView
                     android:id="@+id/tvOfferFilterDistance"
@@ -226,6 +226,7 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -241,14 +242,14 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterDistance"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterDistanceMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterDistance"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterDistance" />
 
                 <EditText
                     android:id="@+id/etOfferFilterDistanceMax"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -264,8 +265,7 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterDistanceMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterDistanceMin"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterDistanceMin" />
 
                 <!--<TextView
                     android:id="@+id/tvOfferFilterCity"
@@ -316,6 +316,7 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -331,14 +332,14 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOfferFilterParticipants"
                     app:layout_constraintEnd_toStartOf="@+id/etOfferFilterParticipantsMax"
-                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterParticipants"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/tvOfferFilterParticipants" />
 
                 <EditText
                     android:id="@+id/etOfferFilterParticipantsMax"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:clickable="true"
                     android:elevation="5dp"
@@ -354,8 +355,7 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/etOfferFilterParticipantsMin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterParticipantsMin"
-                    android:autofillHints="" />
+                    app:layout_constraintTop_toTopOf="@+id/etOfferFilterParticipantsMin" />
 
                 <TextView
                     android:id="@+id/tvOfferFilterRating"
@@ -440,8 +440,24 @@
                     android:text="@string/save"
                     android:textColor="@android:color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btOfferFilterReset"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btOfferFilterAddTag" />
+
+                <Button
+                    android:id="@+id/btOfferFilterReset"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/bg_button"
+                    android:elevation="5dp"
+                    android:text="@string/reset"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btOfferFilterSave"
                     app:layout_constraintTop_toBottomOf="@+id/btOfferFilterAddTag" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

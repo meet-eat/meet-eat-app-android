@@ -100,6 +100,7 @@ public class OfferFilterFragment extends Fragment {
         binding.tvOfferFilterDateMin.setOnClickListener(this::showDateTimePicker);
         binding.tvOfferFilterDateMax.setOnClickListener(this::showDateTimePicker);
         binding.btOfferFilterSave.setOnClickListener(event -> saveFilters());
+        binding.btOfferFilterReset.setOnClickListener(event -> resetFilters());
     }
 
     /**
@@ -265,6 +266,24 @@ public class OfferFilterFragment extends Fragment {
     }
 
     /**
+     * Resets the filters for the user.
+     */
+    private void resetFilters() {
+        offerVM.getCurrentUser().setOfferComparator(
+                new OfferComparator(OfferComparableField.TIME, offerVM.getCurrentUser().getLocalizable()));
+
+        try {
+            offerVM.updatePredicates(new ArrayList<>());
+            Bundle bundle = new Bundle();
+            // Adds the last offer list type to the arguments bundle
+            bundle.putSerializable(LIST_TYPE.name(), originListType);
+            navController.navigate(R.id.offerListFragment, bundle);
+        } catch (RequestHandlerException e) {
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
      * Initializes the views with their values.
      */
     private void initUI() {
@@ -294,7 +313,8 @@ public class OfferFilterFragment extends Fragment {
                     maxPrice = price;
                 }
             } else if (predicateClass.equals(LocalizablePredicate.class)) {
-                String distance = String.valueOf(((LocalizablePredicate) offerPredicate).getReferenceValue());
+                String distance =
+                        String.valueOf(((LocalizablePredicate) offerPredicate).getReferenceValue() / M_TO_KM_FACTOR);
 
                 if (((LocalizablePredicate) offerPredicate).getOperation().equals(DoubleOperation.GREATER)) {
                     minDistance = distance;
