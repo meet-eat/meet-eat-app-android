@@ -65,6 +65,7 @@
     <string name="edit_subscriptions">Abonnements</string>
     <string name="unsubscribe">Deabonnieren</string>
     <string name="invalid_location">Ort nicht gefunden.</string>
+    <string name="passwords_matching">Neues Passwort darf nicht das alte Passwort sein.</string>
     <string name="bad_passwords">Altes oder neues Passwort ungültig.</string>
     <string name="password_changed">Passwort erfolgreich geändert.</string>
     <string name="invalid_old_password">Altes Passwort falsch.</string>

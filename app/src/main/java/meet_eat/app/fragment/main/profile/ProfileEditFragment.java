@@ -94,18 +94,17 @@ public class ProfileEditFragment extends Fragment {
     }
 
     /**
-     * Checks old and new password for semantic correctness, then tries to change the password.
-     * Changing password will not work twice in one session, because the user object inside the
-     * token is not changed until a new session is started.
+     * Checks old and new {@link Password password} for semantic correctness and thus changes the
+     * {@link Password password} if and only if the input is valid.
      */
     private void changePassword() {
-        if (!newPasswordString.equals(passwordConfirm)) {
-            Toast.makeText(getActivity(), R.string.passwords_not_matching, Toast.LENGTH_SHORT).show();
+        if (Objects.isNull(oldPasswordString) && Objects.isNull(newPasswordString) && Objects.isNull(passwordConfirm)) {
             return;
-        }
-
-        if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
+        } else if (!Password.isLegalPassword(oldPasswordString) || !Password.isLegalPassword(newPasswordString)) {
             Toast.makeText(getActivity(), R.string.bad_passwords, Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!newPasswordString.equals(passwordConfirm)) {
+            Toast.makeText(getActivity(), R.string.passwords_not_matching, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -114,8 +113,11 @@ public class ProfileEditFragment extends Fragment {
 
         try {
             if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
+                if (oldPassword.matches(newPassword)) {
+                    Toast.makeText(getActivity(), R.string.passwords_matching, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 userVM.getCurrentUser().setPassword(newPassword);
-
                 try {
                     userVM.edit(userVM.getCurrentUser());
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
