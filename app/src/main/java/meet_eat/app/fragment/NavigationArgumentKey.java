@@ -18,11 +18,5 @@ public enum NavigationArgumentKey {
     /**
      * The list type key means, that the argument is a {@link ListType} enum.
      */
-    LIST_TYPE,
-
-    /**
-     * The sort criterion key means, that the argument is an comparator of a
-     * {@link meet_eat.data.comparator.OfferComparator} object.
-     */
-    SORT_CRITERION
+    LIST_TYPE
 }

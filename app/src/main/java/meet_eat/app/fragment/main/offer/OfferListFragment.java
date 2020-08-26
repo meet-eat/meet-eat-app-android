@@ -24,14 +24,11 @@ import meet_eat.app.fragment.ListType;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.UserViewModel;
-import meet_eat.data.comparator.OfferComparableField;
-import meet_eat.data.comparator.OfferComparator;
 
 import static android.view.View.GONE;
 import static meet_eat.app.fragment.ListType.STANDARD;
 import static meet_eat.app.fragment.ListType.SUBSCRIBED;
 import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
-import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
 
 /**
  * This is an offer list page. Can display all offers, offer which are bookmarked by the user, offers which are
@@ -62,16 +59,11 @@ public class OfferListFragment extends Fragment {
         // Checks if the previous page sent a bundle of arguments containing an offer list type
         if (Objects.isNull(getArguments()) || Objects.isNull(getArguments().getSerializable(LIST_TYPE.name()))) {
             type = STANDARD;
-            ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
         } else {
             type = (ListType) getArguments().getSerializable(LIST_TYPE.name());
-            ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
-            // Updates the comparators for the current user
-            offerVM.getCurrentUser().setOfferComparator(
-                    Objects.isNull(getArguments().getSerializable(SORT_CRITERION.name())) ?
-                            new OfferComparator(OfferComparableField.TIME, offerVM.getCurrentUser().getLocalizable()) :
-                            (OfferComparator) getArguments().getSerializable(SORT_CRITERION.name()));
         }
+
+        ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
 
         updateUI();
         setButtonOnClickListener();

@@ -45,7 +45,6 @@ import meet_eat.data.predicate.numeric.PricePredicate;
 import meet_eat.data.predicate.numeric.RatingPredicate;
 
 import static meet_eat.app.fragment.NavigationArgumentKey.LIST_TYPE;
-import static meet_eat.app.fragment.NavigationArgumentKey.SORT_CRITERION;
 
 /**
  * This is the filter page where the user can set new filters and sort criteria.
@@ -253,10 +252,9 @@ public class OfferFilterFragment extends Fragment {
         }
 
         try {
+            offerVM.getCurrentUser().setOfferComparator(new OfferComparator(OfferComparableField.values()[spinner.getSelectedItemPosition()],
+                    offerVM.getCurrentUser().getLocalizable()));
             Bundle bundle = new Bundle();
-            bundle.putSerializable(SORT_CRITERION.name(),
-                    new OfferComparator(OfferComparableField.values()[spinner.getSelectedItemPosition()],
-                            offerVM.getCurrentUser().getLocalizable()));
             // Adds the last offer list type to the arguments bundle
             bundle.putSerializable(LIST_TYPE.name(), originListType);
             offerVM.updatePredicates(predicates);
@@ -271,6 +269,7 @@ public class OfferFilterFragment extends Fragment {
      */
     private void initUI() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+        spinner.setSelection(offerVM.getCurrentUser().getOfferComparator().getField().ordinal());
 
         for (OfferPredicate offerPredicate : offerVM.getCurrentUser().getOfferPredicates()) {
             Class<? extends OfferPredicate> predicateClass = offerPredicate.getClass();
