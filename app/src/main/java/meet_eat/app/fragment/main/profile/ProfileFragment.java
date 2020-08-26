@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).selectMenuItem(0);
+        ((MainActivity) requireActivity()).selectMenuItem(0);
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);

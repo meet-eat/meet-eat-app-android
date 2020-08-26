@@ -40,7 +40,7 @@ public class SettingsDeleteProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).selectMenuItem(5);
+        ((MainActivity) requireActivity()).selectMenuItem(5);
         binding = FragmentSettingsDeleteProfileBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

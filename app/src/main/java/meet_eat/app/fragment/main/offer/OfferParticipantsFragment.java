@@ -37,7 +37,7 @@ public class OfferParticipantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).selectMenuItem(1);
+        ((MainActivity) requireActivity()).selectMenuItem(1);
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         OfferViewModel offerVM = new ViewModelProvider(this).get(OfferViewModel.class);

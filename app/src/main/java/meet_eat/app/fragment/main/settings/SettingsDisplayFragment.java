@@ -23,7 +23,7 @@ public class SettingsDisplayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).selectMenuItem(5);
+        ((MainActivity) requireActivity()).selectMenuItem(5);
         meet_eat.app.databinding.FragmentSettingsDisplayBinding binding =
                 FragmentSettingsDisplayBinding.inflate(inflater, container, false);
         SettingsViewModel settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

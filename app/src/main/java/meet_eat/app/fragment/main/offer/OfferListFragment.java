@@ -63,7 +63,7 @@ public class OfferListFragment extends Fragment {
             type = (ListType) getArguments().getSerializable(LIST_TYPE.name());
         }
 
-        ((MainActivity) getActivity()).selectMenuItem(type.ordinal() + 1);
+        ((MainActivity) requireActivity()).selectMenuItem(type.ordinal() + 1);
 
         updateUI();
         setButtonOnClickListener();

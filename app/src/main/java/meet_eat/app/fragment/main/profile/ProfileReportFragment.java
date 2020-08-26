@@ -42,7 +42,7 @@ public class ProfileReportFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).selectMenuItem(0);
+        ((MainActivity) requireActivity()).selectMenuItem(0);
         binding = FragmentProfileReportBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
