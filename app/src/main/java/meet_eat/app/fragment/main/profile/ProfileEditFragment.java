@@ -110,16 +110,16 @@ public class ProfileEditFragment extends Fragment {
 
         Password oldPassword = Password.createHashedPassword(oldPasswordString);
         Password newPassword = Password.createHashedPassword(newPasswordString);
+        User user = userVM.getCurrentUser();
 
-        try {
-            if (oldPassword.matches(userVM.getCurrentUser().getPassword())) {
-                if (oldPassword.matches(newPassword)) {
-                    Toast.makeText(getActivity(), R.string.passwords_matching, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                userVM.getCurrentUser().setPassword(newPassword);
+        if (oldPassword.matches(user.getPassword())) {
+            // New password should be different to the old password
+            if (!oldPassword.equals(newPassword)) {
+                user.setPassword(newPassword);
                 try {
-                    userVM.edit(userVM.getCurrentUser());
+                    User editedUser = userVM.edit(user);
+                    // Sets the current user's password to the updated derived password
+                    user.setPassword(editedUser.getPassword());
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
                 } catch (RequestHandlerException exception) {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
@@ -128,10 +128,10 @@ public class ProfileEditFragment extends Fragment {
                             Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.passwords_matching, Toast.LENGTH_SHORT).show();
             }
-        } catch (IllegalStateException exception) {
-            Toast.makeText(getActivity(), R.string.request_new_login, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), R.string.invalid_old_password, Toast.LENGTH_SHORT).show();
         }
     }
 

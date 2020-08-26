@@ -36,19 +36,21 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
-     * Updates the user in the {@link UserRepository}.
+     * Edits the user in the {@link UserRepository}.
      *
      * @param editedUser the user to be updated
+     * @return the edited user
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
-    public void edit(User editedUser) throws RequestHandlerException {
-        userRepository.updateEntity(editedUser);
+    public User edit(User editedUser) throws RequestHandlerException {
+        return userRepository.updateEntity(editedUser);
     }
 
     /**
      * Reports a user in the {@link ReportRepository}.
      *
-     * @param report       the report
+     * @param report the report
+     * @return the report
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Report report(Report report) throws RequestHandlerException {
