@@ -89,6 +89,7 @@ public class OfferFilterFragment extends Fragment {
 
         initializeSortSpinner();
         setButtonOnClickListener();
+        initUI();
         return binding.getRoot();
     }
 
@@ -262,6 +263,63 @@ public class OfferFilterFragment extends Fragment {
             navController.navigate(R.id.offerListFragment, bundle);
         } catch (RequestHandlerException exception) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Initializes the views with their values.
+     */
+    private void initUI() {
+        ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
+
+        for (OfferPredicate offerPredicate : offerVM.getCurrentUser().getOfferPredicates()) {
+            Class<? extends OfferPredicate> predicateClass = offerPredicate.getClass();
+
+            if (predicateClass.equals(LocalDateTimePredicate.class)) {
+                LocalDateTime localDateTime = ((LocalDateTimePredicate) offerPredicate).getReferenceValue();
+                String localDateTimePredicateString = contextFormatter.formatDateTime(localDateTime);
+
+                if (((LocalDateTimePredicate) offerPredicate).getOperation().equals(LocalDateTimeOperation.AFTER)) {
+                    minDateTime = localDateTime;
+                    binding.tvOfferFilterDateMin.setText(localDateTimePredicateString);
+                } else {
+                    maxDateTime = localDateTime;
+                    binding.tvOfferFilterDateMax.setText(localDateTimePredicateString);
+                }
+            } else if (predicateClass.equals(PricePredicate.class)) {
+                String price = String.valueOf(((PricePredicate) offerPredicate).getReferenceValue());
+
+                if (((PricePredicate) offerPredicate).getOperation().equals(DoubleOperation.GREATER)) {
+                    minPrice = price;
+                } else {
+                    maxPrice = price;
+                }
+            } else if (predicateClass.equals(LocalizablePredicate.class)) {
+                String distance = String.valueOf(((LocalizablePredicate) offerPredicate).getReferenceValue());
+
+                if (((LocalizablePredicate) offerPredicate).getOperation().equals(DoubleOperation.GREATER)) {
+                    minDistance = distance;
+                } else {
+                    maxDistance = distance;
+                }
+            } else if (predicateClass.equals(ParticipantsPredicate.class)) {
+                String participants =
+                        String.valueOf(((ParticipantsPredicate) offerPredicate).getReferenceValue().intValue());
+
+                if (((ParticipantsPredicate) offerPredicate).getOperation().equals(DoubleOperation.GREATER)) {
+                    minParticipants = participants;
+                } else {
+                    maxParticipants = participants;
+                }
+            } else if (predicateClass.equals(RatingPredicate.class)) {
+                String rating = String.valueOf(((RatingPredicate) offerPredicate).getReferenceValue());
+
+                if (((RatingPredicate) offerPredicate).getOperation().equals(DoubleOperation.GREATER)) {
+                    minRating = rating;
+                } else {
+                    maxRating = rating;
+                }
+            }
         }
     }
 
