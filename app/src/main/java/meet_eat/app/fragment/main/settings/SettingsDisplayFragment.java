@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentSettingsDisplayBinding;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 
 /**
@@ -23,7 +24,7 @@ public class SettingsDisplayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(5);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.SETTINGS.ordinal());
         meet_eat.app.databinding.FragmentSettingsDisplayBinding binding =
                 FragmentSettingsDisplayBinding.inflate(inflater, container, false);
         SettingsViewModel settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);

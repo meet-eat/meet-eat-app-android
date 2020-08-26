@@ -20,6 +20,7 @@ import meet_eat.app.LoginActivity;
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentSettingsBinding;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.setting.NotificationSetting;
@@ -38,7 +39,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(5);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.SETTINGS.ordinal());
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         settingsVM = new ViewModelProvider(this).get(SettingsViewModel.class);
         navController = NavHostFragment.findNavController(this);

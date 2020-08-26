@@ -30,6 +30,7 @@ import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferFilterBinding;
 import meet_eat.app.fragment.ContextFormatter;
 import meet_eat.app.fragment.ListType;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.comparator.OfferComparableField;
@@ -73,7 +74,7 @@ public class OfferFilterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(1);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.MAIN_OFFERS.ordinal());
         binding = FragmentOfferFilterBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);

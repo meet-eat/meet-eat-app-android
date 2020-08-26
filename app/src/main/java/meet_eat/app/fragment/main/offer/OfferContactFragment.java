@@ -18,6 +18,7 @@ import java.util.Objects;
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferContactBinding;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.contact.ContactRequest;
@@ -38,7 +39,7 @@ public class OfferContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(1);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.MAIN_OFFERS.ordinal());
         binding = FragmentOfferContactBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         offerVM = new ViewModelProvider(this).get(OfferViewModel.class);

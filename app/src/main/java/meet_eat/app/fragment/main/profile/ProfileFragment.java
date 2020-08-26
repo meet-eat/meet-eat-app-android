@@ -21,6 +21,7 @@ import java.util.Objects;
 import meet_eat.app.MainActivity;
 import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentProfileBinding;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.UserViewModel;
 import meet_eat.data.entity.user.User;
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(0);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.PROFILE.ordinal());
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         userVM = new ViewModelProvider(this).get(UserViewModel.class);
         navController = NavHostFragment.findNavController(this);

@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
+import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.data.entity.Offer;
@@ -37,7 +38,7 @@ public class OfferParticipantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(1);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.MAIN_OFFERS.ordinal());
         binding = FragmentOfferParticipantsBinding.inflate(inflater, container, false);
         binding.setFragment(this);
         OfferViewModel offerVM = new ViewModelProvider(this).get(OfferViewModel.class);

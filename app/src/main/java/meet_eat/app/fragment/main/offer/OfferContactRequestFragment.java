@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import meet_eat.app.MainActivity;
 import meet_eat.app.databinding.FragmentOfferContactRequestBinding;
+import meet_eat.app.fragment.MenuSection;
 
 /**
  * This is the contact request page. Here the user can accept a contact request and choose which information he wants
@@ -22,7 +23,7 @@ public class OfferContactRequestFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) requireActivity()).selectMenuItem(1);
+        ((MainActivity) requireActivity()).selectMenuItem(MenuSection.MAIN_OFFERS.ordinal());
         meet_eat.app.databinding.FragmentOfferContactRequestBinding binding =
                 FragmentOfferContactRequestBinding.inflate(inflater, container, false);
         binding.setFragment(this);
