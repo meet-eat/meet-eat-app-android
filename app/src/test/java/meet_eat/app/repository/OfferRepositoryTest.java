@@ -23,12 +23,11 @@ import static org.junit.Assert.assertNull;
 
 public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, Offer, String> {
 
-    public OfferRepositoryTest() {
-        super(new OfferRepository(), getOfferWithId(), getOfferWithoutId());
+    public OfferRepositoryTest() throws RequestHandlerException {
+        super(new OfferRepository(), getPersistentOffer(), getNewOffer());
     }
 
-    private static Offer getOfferWithId() {
-        String identifier = "gh30sifj02";
+    private static Offer getPersistentOffer() throws RequestHandlerException {
         User creator = getRegisteredUser();
         Set<Tag> tags = new HashSet<>();
         String name = "JUnit Test Offer";
@@ -37,11 +36,14 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
         int maxParticipants = 5;
         LocalDateTime dateTime = LocalDateTime.of(2020, Month.SEPTEMBER, 30, 18, 0);
         Localizable location = new CityLocation("Karlsruhe");
-        return new Offer(identifier, creator, tags, name, description, price, maxParticipants,
-                dateTime, location);
+        Session.getInstance().login(getRegisteredLoginCredential());
+        Offer fetchedOffer = new OfferRepository().addEntity(
+                new Offer(creator, tags, name, description, price, maxParticipants, dateTime, location));
+        Session.getInstance().logout();
+        return fetchedOffer;
     }
 
-    private static Offer getOfferWithoutId() {
+    private static Offer getNewOffer() {
         User creator = getRegisteredUser();
         Set<Tag> tags = new HashSet<>();
         String name = "JUnit Test Offer";
@@ -240,34 +242,6 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
 
     // TODO Rework tests
     /*
-    @Test(expected = IllegalStateException.class)
-    public void testReportNotLoggedIn() {
-        // Assertions
-        assertNull(Session.getInstance().getToken());
-
-        // Execution
-        getEntityRepository().report(getOfferWithId(), new Report(getRegisteredUser(), "test"));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testReportWithNullOffer() throws RequestHandlerException {
-        // Assertions
-        Session.getInstance().login(getRegisteredLoginCredential());
-        assertNotNull(Session.getInstance().getToken());
-
-        // Execution
-        getEntityRepository().report(null, new Report(getRegisteredUser(), "test"));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testReportWithNullReport() throws RequestHandlerException {
-        // Assertions
-        Session.getInstance().login(getRegisteredLoginCredential());
-        assertNotNull(Session.getInstance().getToken());
-
-        // Execution
-        getEntityRepository().report(getOfferWithId(), null);
-    }
 
     // Test addParticipant
 
