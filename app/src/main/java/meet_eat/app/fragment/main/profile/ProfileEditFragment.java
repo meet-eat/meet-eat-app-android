@@ -123,9 +123,6 @@ public class ProfileEditFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.password_changed, Toast.LENGTH_SHORT).show();
                 } catch (RequestHandlerException exception) {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getActivity(),
-                            "DEBUG ProfileEditFragment.java -> changePassword(): " + exception.getMessage(),
-                            Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(getActivity(), R.string.passwords_matching, Toast.LENGTH_SHORT).show();
