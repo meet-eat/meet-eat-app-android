@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import meet_eat.app.MainActivity;
+import meet_eat.app.R;
 import meet_eat.app.databinding.FragmentOfferParticipantsBinding;
 import meet_eat.app.fragment.MenuSection;
 import meet_eat.app.repository.RequestHandlerException;
@@ -59,7 +61,7 @@ public class OfferParticipantsFragment extends Fragment {
         try {
             offerParticipantsAdapter.updateParticipants(new ArrayList<>(offerVM.getParticipants(offer)));
         } catch (RequestHandlerException exception) {
-            // TODO Evaluate
+            Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
             offerParticipantsAdapter.updateParticipants(new ArrayList<>());
         }
 

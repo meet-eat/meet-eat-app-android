@@ -284,7 +284,6 @@ public class OfferDetailedFragment extends Fragment {
                 }
             } catch (RequestHandlerException exception) {
                 Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
-                // TODO Handle error correctly
                 binding.tvOfferDetailedParticipants.setVisibility(GONE);
                 binding.tvOfferDetailedParticipating.setVisibility(GONE);
                 binding.btOfferDetailedParticipate.setVisibility(GONE);

@@ -163,7 +163,6 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * TODO
      * Adds the current user to an offers participant list,
      * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *
@@ -177,7 +176,6 @@ public class OfferViewModel extends ViewModel {
     }
 
     /**
-     * TODO
      * Removes the current user from an offers participant list,
      * then updates the {@link Offer} entity in the {@link OfferRepository}.
      *

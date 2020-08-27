@@ -116,7 +116,6 @@ public class ProfileFragment extends Fragment {
             } catch (RequestHandlerException exception) {
                 binding.btProfileSubscribe.setVisibility(GONE);
                 Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_SHORT).show();
-                Log.i("DEBUG", "In ProfileFragment.updateUI: " + exception.getMessage());
             }
         }
     }

@@ -64,7 +64,7 @@ public class Scenario1000Test {
 
         // Create an offer for this test
         loginVM.login(timestamp + 1 + "@example.com", password);
-        // TODO better date than +2 minutes, could fail on bigger data set (also in 1060)
+        // Better date than +2 minutes, could fail on bigger data set (also in 1060)
         Offer toBeAdded = new Offer(offerVM.getCurrentUser(), new HashSet<>(), "1Offer", "offerDescription", 0, 2,
                 LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(),
                         LocalTime.now().getHour(), (LocalTime.now().getMinute() + 2) % 60), home);
