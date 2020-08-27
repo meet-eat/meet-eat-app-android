@@ -2,41 +2,25 @@ package meet_eat.app;
 
 import android.os.SystemClock;
 import android.view.Gravity;
-import android.view.View;
 
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.contrib.NavigationViewActions;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.common.collect.Lists;
-
-import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.core.annotation.Order;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
-import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
-import meet_eat.app.viewmodel.main.UserViewModel;
-import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -46,12 +30,13 @@ import meet_eat.data.location.SphericalPosition;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.DrawerMatchers.isClosed;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsDeleteProfileFragmentTest {
@@ -103,6 +88,7 @@ public class SettingsDeleteProfileFragmentTest {
         onView(withId(R.id.etSettingsDeleteProfilePassword)).perform(typeText("a"));
         closeSoftKeyboard();
         onView(withId(R.id.btSettingsDeleteProfile)).perform(click());
+        onView(withText(R.string.bad_password)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
     }
 
     @Test
@@ -119,5 +105,20 @@ public class SettingsDeleteProfileFragmentTest {
         onView(withId(R.id.etSettingsDeleteProfilePassword)).perform(typeText("123##TesterWrong"));
         closeSoftKeyboard();
         onView(withId(R.id.btSettingsDeleteProfile)).perform(click());
+        onView(withText(R.string.invalid_password)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void navigateBackTest() {
+        // Navigate to settings
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.drawer_menu_settings));
+
+        // Wait, so espresso doesn't cause an error
+        SystemClock.sleep(500);
+
+        onView(withId(R.id.btSettingsDelete)).perform(click());
+        // Navigate back
+        onView(withId(R.id.ibtBack)).perform(click());
     }
 }

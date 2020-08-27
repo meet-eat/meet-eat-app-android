@@ -105,4 +105,17 @@ public class SettingsFragmentTest {
         // Log back in
         loginVM.login(timestamp + "@example.com", password);
     }
+
+    @Test
+    public void navigateBackTest() {
+        // Navigate to settings
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.drawer_menu_settings));
+
+        // Wait, so espresso doesn't cause an error
+        SystemClock.sleep(500);
+
+        // Navigate back
+        onView(withId(R.id.ibtBack)).perform(click());
+    }
 }

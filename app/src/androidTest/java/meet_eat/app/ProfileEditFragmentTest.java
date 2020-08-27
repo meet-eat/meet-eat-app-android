@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 
 import meet_eat.app.repository.RequestHandlerException;
-import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
@@ -36,7 +35,9 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.DrawerMatchers.isClosed;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileEditFragmentTest {
@@ -92,6 +93,7 @@ public class ProfileEditFragmentTest {
         onView(withId(R.id.etProfileEditPasswordConfirm)).perform(typeText("123##Test1"));
         closeSoftKeyboard();
         onView(withId(R.id.btProfileEditChangePassword)).perform(click());
+        onView(withText(R.string.bad_passwords)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
 
         // Since old password is an invalid password, the client now sets it to a valid password and checks the new
         // password
@@ -105,6 +107,7 @@ public class ProfileEditFragmentTest {
         onView(withId(R.id.etProfileEditPasswordConfirm)).perform(typeText("b"));
         closeSoftKeyboard();
         onView(withId(R.id.btProfileEditChangePassword)).perform(click());
+        onView(withText(R.string.bad_passwords)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
     }
 
     @Test
@@ -125,6 +128,7 @@ public class ProfileEditFragmentTest {
         onView(withId(R.id.etProfileEditPasswordConfirm)).perform(typeText("123##Test2"));
         closeSoftKeyboard();
         onView(withId(R.id.btProfileEditChangePassword)).perform(click());
+        onView(withText(R.string.passwords_not_matching)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
     }
 
     @Test
@@ -145,6 +149,7 @@ public class ProfileEditFragmentTest {
         onView(withId(R.id.etProfileEditPasswordConfirm)).perform(typeText("123##Test2"));
         closeSoftKeyboard();
         onView(withId(R.id.btProfileEditChangePassword)).perform(click());
+        onView(withText(R.string.invalid_old_password)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
     }
 
     @Test
@@ -165,5 +170,19 @@ public class ProfileEditFragmentTest {
         onView(withId(R.id.etProfileEditPasswordConfirm)).perform(typeText(password));
         closeSoftKeyboard();
         onView(withId(R.id.btProfileEditChangePassword)).perform(click());
+        onView(withText(R.string.passwords_matching)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void navigateBackTest() {
+        // Navigate to profile
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.drawer_menu_profile));
+
+        // Wait, so espresso doesn't cause an error
+        SystemClock.sleep(500);
+
+        // Navigate back
+        onView(withId(R.id.ibtBack)).perform(click());
     }
 }

@@ -158,6 +158,20 @@ public class ProfileSubscribedFragmentTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewRemove()));
     }
 
+    @Test
+    public void navigateBackTest() {
+        // Navigate to subscribed offers list
+        onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.drawer_menu_subscriptions));
+
+        // wait, so espresso doesn't cause an error
+        SystemClock.sleep(500);
+
+        onView(withId(R.id.btOfferListSubscribed)).perform(click());
+        // Navigatge back
+        onView(withId(R.id.ibtBack)).perform(click());
+    }
+
     private ViewAction clickChildViewUsername() {
         return new ViewAction() {
             @Override
