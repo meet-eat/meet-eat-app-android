@@ -77,7 +77,7 @@ public class OfferListFragment extends Fragment {
         binding.srlOfferListSwipe.setOnRefreshListener(this::reloadAfterSwipe);
         binding.ibtOfferListFilter.setOnClickListener(event -> navigateToOfferFilter());
         binding.ibtOfferListCreate.setOnClickListener(event -> navController.navigate(R.id.offerEditFragment));
-        binding.ibtOfferListSubscribed
+        binding.btOfferListSubscribed
                 .setOnClickListener(event -> navController.navigate(R.id.profileSubscribedFragment));
     }
 
@@ -132,7 +132,7 @@ public class OfferListFragment extends Fragment {
         updateOffers();
 
         if (!type.equals(SUBSCRIBED)) {
-            binding.ibtOfferListSubscribed.setVisibility(GONE);
+            binding.btOfferListSubscribed.setVisibility(GONE);
         }
     }
 }
