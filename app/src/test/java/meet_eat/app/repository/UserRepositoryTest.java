@@ -1,30 +1,19 @@
 package meet_eat.app.repository;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
 
 import meet_eat.data.LoginCredential;
-import meet_eat.data.comparator.OfferComparableField;
-import meet_eat.data.comparator.OfferComparator;
 import meet_eat.data.entity.relation.Subscription;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
-import meet_eat.data.entity.user.Role;
 import meet_eat.data.entity.user.User;
-import meet_eat.data.entity.user.setting.ColorMode;
-import meet_eat.data.entity.user.setting.DisplaySetting;
-import meet_eat.data.entity.user.setting.NotificationSetting;
-import meet_eat.data.entity.user.setting.Setting;
 import meet_eat.data.location.CityLocation;
 import meet_eat.data.location.Localizable;
-import meet_eat.data.predicate.OfferPredicate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,16 +21,15 @@ import static org.junit.Assert.assertNull;
 
 public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, User, String> {
 
-    public UserRepositoryTest() {
-        super(new UserRepository(), getUserWithId(), getUserWithoutId());
+    private static User persistentUser;
+    private static LoginCredential persistentLoginCredential;
+
+    public UserRepositoryTest() throws RequestHandlerException {
+        super(new UserRepository(), getRegisteredUser(), getNewUser());
     }
 
-    private static User getUserWithId() {
-        String identifier = "oreub43gh43g";
-        Set<Setting> settings = new HashSet<>();
-        settings.add(new NotificationSetting(true, 60));
-        settings.add(new DisplaySetting(ColorMode.DARK));
-        Role role = Role.USER;
+    @BeforeClass
+    public static void initializePersistentUser() throws RequestHandlerException {
         Email email = new Email("wergviuhgvt349tz@example.com");
         Password password = Password.createHashedPassword("Str0ngPassw0rd!");
         LocalDate birthDay = LocalDate.of(1998, Month.OCTOBER, 16);
@@ -49,14 +37,20 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         String phoneNumber = "0123456789";
         String description = "This is a test description";
         boolean isVerified = false;
-        Collection<OfferPredicate> offerPredicates = new LinkedList<>();
         Localizable localizable = new CityLocation("Karlsruhe");
-        OfferComparator offerComparator = new OfferComparator(OfferComparableField.TIME, localizable);
-        return new User(identifier, settings, role, email, password,
-                birthDay, name, phoneNumber, description, isVerified, offerPredicates, offerComparator, localizable);
+        persistentLoginCredential = new LoginCredential(email, password);
+        persistentUser = new UserRepository().addEntity(
+                new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable));
     }
 
-    private static User getUserWithoutId() {
+    @AfterClass
+    public static void deletePersistentUser() throws RequestHandlerException {
+        Session.getInstance().login(persistentLoginCredential);
+        new UserRepository().deleteEntity(persistentUser);
+        Session.getInstance().logout();
+    }
+
+    private static User getNewUser() {
         Email email = new Email("423v8hg9fjg@example.com");
         Password password = Password.createHashedPassword("Str0ngPassw0rd!");
         LocalDate birthDay = LocalDate.of(1998, Month.OCTOBER, 16);
@@ -68,15 +62,6 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         return new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable);
     }
 
-    @AfterClass
-    public static void tearDownClass() throws RequestHandlerException {
-        Session.getInstance().login(new LoginCredential(getUserWithoutId().getEmail(), getUserWithoutId().getPassword()));
-        new UserRepository().deleteEntity(Session.getInstance().getUser());
-        Session.getInstance().logout();
-        Session.getInstance().login(getRegisteredLoginCredential());
-        new UserRepository().deleteEntity(getRegisteredUser());
-    }
-
     // Test addEntity
 
     @Test
@@ -85,48 +70,38 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        User registeredUser = getEntityRepository().addEntity(getEntityWithoutId());
+        User fetchedUser = getEntityRepository().addEntity(getNewEntity());
 
         // Assertions
-        assertNull(getUserWithoutId().getIdentifier());
-        assertNotNull(registeredUser);
-        assertNotNull(registeredUser.getIdentifier());
-        assertEquals(registeredUser.getEmail(), getUserWithoutId().getEmail());
+        assertNull(getNewEntity().getIdentifier());
+        assertNotNull(fetchedUser);
+        assertNotNull(fetchedUser.getIdentifier());
+        assertEquals(fetchedUser.getEmail(), getNewEntity().getEmail());
+
+        Session.getInstance().login(new LoginCredential(getNewUser().getEmail(), getNewUser().getPassword()));
+        new UserRepository().deleteEntity(Session.getInstance().getUser());
+        Session.getInstance().logout();
     }
 
-    // Test report
-
-    // TODO Rework tests
-    /*
-    @Test(expected = IllegalStateException.class)
-    public void testReportNotLoggedIn() {
-        // Assertions
-        assertNull(Session.getInstance().getToken());
-
-        // Execution
-        getEntityRepository().report(getRegisteredUser(), new Report(getUserWithId(), "test"));
+    @Test
+    @Override
+    public void testAddEntityValid() throws RequestHandlerException {
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testReportWithNullUser() throws RequestHandlerException {
+    // Test deleteEntity
+
+    @Test
+    @Override
+    public void testDeleteEntityValid() throws RequestHandlerException {
         // Assertions
-        Session.getInstance().login(getRegisteredLoginCredential());
+        User fetchedUser = getEntityRepository().addEntity(getNewUser());
+        Session.getInstance().login(new LoginCredential(getNewUser().getEmail(), getNewUser().getPassword()));
         assertNotNull(Session.getInstance().getToken());
+        assertNotNull(fetchedUser.getIdentifier());
 
         // Execution
-        getEntityRepository().report(null, new Report(getUserWithId(), "test"));
+        getEntityRepository().deleteEntity(fetchedUser);
     }
-
-    @Test(expected = NullPointerException.class)
-    public void testReportWithNullReport() throws RequestHandlerException {
-        // Assertions
-        Session.getInstance().login(getRegisteredLoginCredential());
-        assertNotNull(Session.getInstance().getToken());
-
-        // Execution
-        getEntityRepository().report(getRegisteredUser(), null);
-    }
-    */
 
     // Test addSubscription
 
@@ -136,7 +111,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        getEntityRepository().addSubscription(new Subscription(getRegisteredUser(), getUserWithId()));
+        getEntityRepository().addSubscription(new Subscription(getRegisteredUser(), persistentUser));
     }
 
     @Test(expected = NullPointerException.class)
@@ -146,7 +121,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertNotNull(Session.getInstance().getToken());
 
         // Execution
-        getEntityRepository().addSubscription(new Subscription(null, getUserWithId()));
+        getEntityRepository().addSubscription(new Subscription(null, persistentUser));
     }
 
     @Test(expected = NullPointerException.class)
@@ -167,7 +142,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertNull(Session.getInstance().getToken());
 
         // Execution
-        getEntityRepository().removeSubscriptionByUser(getRegisteredUser(), getUserWithId());
+        getEntityRepository().removeSubscriptionByUser(getRegisteredUser(), persistentUser);
     }
 
     @Test(expected = NullPointerException.class)
@@ -177,7 +152,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         assertNotNull(Session.getInstance().getToken());
 
         // Execution
-        getEntityRepository().removeSubscriptionByUser(null, getUserWithId());
+        getEntityRepository().removeSubscriptionByUser(null, persistentUser);
     }
 
     @Test(expected = NullPointerException.class)
