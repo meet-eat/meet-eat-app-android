@@ -8,8 +8,10 @@ import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class SessionTest extends RepositoryTestEnvironment{
 
@@ -140,5 +142,37 @@ public class SessionTest extends RepositoryTestEnvironment{
             session.logout();
             assertNull(session.getToken());
         }
+    }
+
+    @Test
+    public void testIsLoggedInFalse() throws RequestHandlerException {
+        // Execution
+        Session session = Session.getInstance();
+
+        // Assertions
+        assertFalse(session.isLoggedIn());
+    }
+
+    @Test
+    public void testIsLoggedInTrue() throws RequestHandlerException {
+        // Execution
+        Session session = Session.getInstance();
+        session.login(getRegisteredLoginCredential());
+
+        // Assertions
+        assertTrue(session.isLoggedIn());
+    }
+
+    @Test
+    public void testIsLoggedInAfterDeleteUser() throws RequestHandlerException {
+        // Execution
+        Session session = Session.getInstance();
+        session.login(getRegisteredLoginCredential());
+        new UserRepository().deleteEntity(session.getUser());
+
+        // Assertions
+        assertFalse(session.isLoggedIn());
+
+        setUpClass();
     }
 }
