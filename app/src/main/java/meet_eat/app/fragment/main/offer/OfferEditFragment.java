@@ -215,10 +215,8 @@ public class OfferEditFragment extends Fragment {
     private void saveOffer() {
         if (setOfferDetails()) {
             if (isNewOffer) {
-                offer = new Offer(offerVM.getCurrentUser(), new HashSet<>(), title, description, price, participants,
-                        dateTime,
+                offer = new Offer(offerVM.getCurrentUser(), new HashSet<>(), title, description, price, participants, dateTime,
                         new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
-
                 try {
                     offerVM.add(offer);
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
@@ -230,15 +228,19 @@ public class OfferEditFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
                 }
             } else {
-                offer.setLocation(
-                        new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
+                offer.setLocation(new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
                 offer.setPrice(price);
-                offer.setMaxParticipants(participants);
-                offer.setName(title);
-                offer.setDescription(description);
-                offer.setDateTime(LocalDateTime.from(dateTime));
-
-                try {
+                try  {
+                    int currentAmountParticipants = offerVM.getParticipants(offer).size();
+                    // Do not set new max. participant value less than the actual amount of participating users
+                    if (participants < currentAmountParticipants) {
+                        Toast.makeText(getActivity(), R.string.max_participants_to_low, Toast.LENGTH_SHORT).show();
+                    } else {
+                        offer.setMaxParticipants(participants);
+                    }
+                    offer.setName(title);
+                    offer.setDescription(description);
+                    offer.setDateTime(LocalDateTime.from(dateTime));
                     offerVM.edit(offer);
                     Toast.makeText(getActivity(), R.string.request_sent, Toast.LENGTH_SHORT).show();
                     navController.navigateUp();

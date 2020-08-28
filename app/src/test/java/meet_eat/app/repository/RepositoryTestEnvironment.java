@@ -17,23 +17,28 @@ import meet_eat.data.location.Localizable;
 
 public class RepositoryTestEnvironment {
 
+    private static final String UNIQUE_IDENTIFIER = String.valueOf(System.currentTimeMillis() % 100000);
+    private static final String UNREGISTERED_EMAIL = "test@example.com";
+    private static final String PASSWORD = "Str0ngPassw0rd!";
+    private static final LocalDate BIRTH_DAY = LocalDate.of(1998, Month.FEBRUARY, 6);
+    private static final String USER_NAME = "JUnit Test User";
+    private static final String PHONE_NUMBER = "0123456789";
+    private static final String DESCRIPTION = "JUnit description";
+    private static final boolean IS_VERIFIED = false;
+    private static final Localizable LOCATION = new CityLocation("Karlsruhe");
+
     private static User registeredUser;
     private static LoginCredential registeredLoginCredential;
 
     @BeforeClass
     public static void setUpClass() throws RequestHandlerException {
         // Register
-        Email email = new Email("asoinasidnsiadn@example.com");
-        Password password = Password.createHashedPassword("Str0ngPassw0rd!");
-        LocalDate birthDay = LocalDate.of(1998, Month.FEBRUARY, 6);
-        String name = "JUnit Test User";
-        String phoneNumber = "0123456789";
-        String description = "This is my test description";
-        boolean isVerified = false;
-        Localizable location = new CityLocation("Karlsruhe");
-        User testUser = new User(email, password, birthDay, name, phoneNumber, description, isVerified, location);
+        Email email = new Email(UNIQUE_IDENTIFIER + UNREGISTERED_EMAIL);
+        Password password = Password.createHashedPassword(PASSWORD);
+        User testUser = new User(email, password, BIRTH_DAY, USER_NAME, PHONE_NUMBER, DESCRIPTION, IS_VERIFIED, LOCATION);
         registeredLoginCredential = new LoginCredential(email, password);
         registeredUser = new UserRepository().addEntity(testUser);
+
         // Delete token of deleted user from tests before
         Session session = Session.getInstance();
         if (Objects.nonNull(session.getToken())) {
