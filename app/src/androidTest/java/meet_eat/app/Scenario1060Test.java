@@ -94,24 +94,8 @@ public class Scenario1060Test {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-
         settingsVM.deleteUser();
-
-        // Remove bookmarks
-        Iterator<Offer> toBeRemovedFromBookmarks = offerVM.fetchBookmarkedOffers().iterator();
-        while (toBeRemovedFromBookmarks.hasNext()) {
-            offerVM.removeBookmark(toBeRemovedFromBookmarks.next());
-            toBeRemovedFromBookmarks.remove();
-        }
-
         loginVM.login(timestamp + 1 + "@example.com", password);
-
-        // Remove offers
-        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
-        if (!toBeRemoved.isEmpty()) {
-            offerVM.delete(toBeRemoved.remove(0));
-        }
-
         settingsVM.deleteUser();
     }
 
