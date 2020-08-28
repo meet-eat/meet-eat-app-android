@@ -66,6 +66,7 @@ public class RegisterFragmentTest {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
         loginVM.login(timestamp + "@example.com", password);
+        
         settingsVM.deleteUser();
     }
 

@@ -78,10 +78,7 @@ public class OfferEditFragmentTest {
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
-        if (!toBeRemoved.isEmpty()) {
-            offerVM.delete(toBeRemoved.remove(0));
-        }
+
         settingsVM.deleteUser();
     }
 

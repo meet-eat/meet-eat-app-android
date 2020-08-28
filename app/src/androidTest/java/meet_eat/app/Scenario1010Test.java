@@ -73,12 +73,6 @@ public class Scenario1010Test {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
 
-        // Remove offers
-        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
-        if (!toBeRemoved.isEmpty()) {
-            offerVM.delete(toBeRemoved.remove(0));
-        }
-
         settingsVM.deleteUser();
     }
 

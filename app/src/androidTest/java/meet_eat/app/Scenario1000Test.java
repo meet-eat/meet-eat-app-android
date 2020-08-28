@@ -79,11 +79,7 @@ public class Scenario1000Test {
         settingsVM.deleteUser();
 
         loginVM.login(timestamp + 1 + "@example.com", password);
-        // Remove offers
-        ArrayList<Offer> toBeRemoved = Lists.newArrayList(offerVM.fetchOffers(offerVM.getCurrentUser()));
-        if (!toBeRemoved.isEmpty()) {
-            offerVM.delete(toBeRemoved.remove(0));
-        }
+
         settingsVM.deleteUser();
     }
 
