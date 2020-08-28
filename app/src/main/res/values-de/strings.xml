@@ -83,6 +83,7 @@
     <string name="missing_location">Ort darf nicht leer sein.</string>
     <string name="missing_price">Preis darf nicht leer sein.</string>
     <string name="missing_participants">Teilnehmerfeld darf nicht leer sein.</string>
+    <string name="max_participants_to_low">Aktuell schon mehr Teilnehmer als der neue Maximalwert.</string>
     <string name="missing_title">Titel darf nicht leer sein.</string>
     <string name="missing_description">Beschreibung darf nicht leer sein.</string>
     <string name="missing_date_time">Zeit darf nicht leer sein.</string>
