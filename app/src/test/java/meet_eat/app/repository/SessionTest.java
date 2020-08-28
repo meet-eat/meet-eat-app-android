@@ -168,6 +168,7 @@ public class SessionTest extends RepositoryTestEnvironment{
         // Execution
         Session session = Session.getInstance();
         session.login(getRegisteredLoginCredential());
+        assertTrue(session.isLoggedIn());
         new UserRepository().deleteEntity(session.getUser());
 
         // Assertions
