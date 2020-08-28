@@ -101,10 +101,11 @@ public class ContextFormatter {
      * @throws IOException when the address couldn't be found
      */
     public Address formatAddressFromString(String location) throws IOException {
+        location = Objects.toString(location, "");
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(location) && Objects.nonNull(geocoder.getFromLocationName(location, MAX_RESULTS)) &&
+        if (Objects.nonNull(geocoder.getFromLocationName(location, MAX_RESULTS)) &&
                 geocoder.getFromLocationName(location, MAX_RESULTS).size() > 0) {
             address = geocoder.getFromLocationName(location, MAX_RESULTS).get(0);
         }
