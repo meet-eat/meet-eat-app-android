@@ -262,7 +262,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAddParticipationWithNullOffer() throws RequestHandlerException {
+    public void testAddParticipationWithNullParticipation() throws RequestHandlerException {
         // Assertions
         Session.getInstance().login(getRegisteredLoginCredential());
         assertNotNull(Session.getInstance().getToken());
@@ -298,7 +298,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     }
 
     @Test(expected = NullPointerException.class)
-    public void testRemoveParticipationWithNullOffer() throws RequestHandlerException {
+    public void testRemoveParticipationWithNullParticipation() throws RequestHandlerException {
         // Assertions
         Session.getInstance().login(getRegisteredLoginCredential());
         assertNotNull(Session.getInstance().getToken());
