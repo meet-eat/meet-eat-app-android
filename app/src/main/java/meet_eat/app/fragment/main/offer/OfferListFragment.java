@@ -53,6 +53,8 @@ public class OfferListFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         offerListAdapter = new OfferListAdapter(offerVM, userVM, new ArrayList<>());
         binding.rvOfferList.setAdapter(offerListAdapter);
+        binding.rvOfferList.setHasFixedSize(true);
+        binding.rvOfferList.setItemViewCacheSize(100);
         binding.rvOfferList
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
