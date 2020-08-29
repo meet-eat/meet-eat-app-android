@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        new Handler().postDelayed(() -> {
+        new Handler().post(() -> {
             Intent intent;
             // Checks if user was logged in previously
             if (Session.getInstance().isLoggedIn()) {
@@ -28,6 +28,6 @@ public class SplashActivity extends AppCompatActivity {
             }
             startActivity(intent);
             finish();
-        }, 250);
+        });
     }
 }
