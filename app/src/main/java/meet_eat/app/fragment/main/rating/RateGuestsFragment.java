@@ -79,8 +79,7 @@ public class RateGuestsFragment extends Fragment {
     }
 
     /**
-     * TODO
-     * Tries to send the guest ratings.
+     * Send the guest ratings.
      */
     private void confirmRatings() {
         rateGuestsAdapter.sendRatings();

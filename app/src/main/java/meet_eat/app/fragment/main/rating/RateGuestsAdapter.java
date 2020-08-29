@@ -121,7 +121,6 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
          * @return a new guest rating
          */
         private Rating createRating(int ratingAmount) {
-            // TODO Add offer to factory method
             return Rating.createGuestRating(ratingVM.getCurrentUser(), offer,
                     RatingValue.getRatingValueByInteger(ratingAmount));
         }

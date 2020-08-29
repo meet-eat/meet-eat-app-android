@@ -82,13 +82,11 @@ public class RateHostFragment extends Fragment {
     }
 
     /**
-     * TODO
-     * Tries to rate the host.
+     * Rate the host.
      */
     private void rateGuests() {
         int numStars = (int) binding.rbRateHost.getRating();
         RatingValue ratingValue = RatingValue.getRatingValueByInteger(numStars);
-        // TODO Add offer to factory method
         Rating rating = Rating.createHostRating(ratingVM.getCurrentUser(), offer, ratingValue);
 
         try {

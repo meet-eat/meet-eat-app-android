@@ -26,8 +26,7 @@ public class RatingViewModel extends ViewModel {
     }
 
     /**
-     * TODO
-     * Adds a new {@link Rating} to the current user, then updates the current user in the {@link UserRepository}.
+     * Adds a new {@link Rating} to the UserRepository.
      *
      * @param rating the new rating
      */
@@ -36,8 +35,7 @@ public class RatingViewModel extends ViewModel {
     }
 
     /**
-     * TODO
-     * Adds each {@link Rating} to the current user, then updates the current user in the {@link UserRepository}.
+     * Adds each {@link Rating} to the UserRepository.
      *
      * @param ratings the new ratings
      */
