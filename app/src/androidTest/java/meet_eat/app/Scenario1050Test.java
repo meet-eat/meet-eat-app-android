@@ -50,7 +50,7 @@ public class Scenario1050Test {
     private static final Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
 
     @Rule
-    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {

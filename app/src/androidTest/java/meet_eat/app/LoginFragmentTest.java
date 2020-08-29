@@ -23,7 +23,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class LoginFragmentTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
 
     @BeforeClass
     public static void initialize() {

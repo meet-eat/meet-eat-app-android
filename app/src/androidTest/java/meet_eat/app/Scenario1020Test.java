@@ -56,7 +56,7 @@ public class Scenario1020Test {
     private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
 
     @Rule
-    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
