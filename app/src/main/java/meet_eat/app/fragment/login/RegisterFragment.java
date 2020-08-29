@@ -17,7 +17,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.common.base.Strings;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -124,12 +123,12 @@ public class RegisterFragment extends Fragment {
 
         Address address;
 
-        try {
-            address = contextFormatter.formatAddressFromString(home);
-        } catch (IOException exception) {
+        if (Objects.isNull(home) || home.isEmpty()) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return;
         }
+
+        address = contextFormatter.formatAddressFromString(home);
 
         if (Objects.isNull(address)) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();

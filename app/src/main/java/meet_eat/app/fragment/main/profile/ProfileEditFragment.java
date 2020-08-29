@@ -146,12 +146,7 @@ public class ProfileEditFragment extends Fragment {
             Address address;
             ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
-            try {
-                address = contextFormatter.formatAddressFromString(home);
-            } catch (IOException exception) {
-                Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
-                return;
-            }
+            address = contextFormatter.formatAddressFromString(home);
 
             if (Objects.isNull(address)) {
                 Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();

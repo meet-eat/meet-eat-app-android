@@ -146,12 +146,12 @@ public class OfferEditFragment extends Fragment {
     private boolean setOfferDetails() {
         ContextFormatter contextFormatter = new ContextFormatter(binding.getRoot().getContext());
 
-        try {
-            address = contextFormatter.formatAddressFromString(city);
-        } catch (IOException exception) {
+        if (Objects.isNull(city) || city.isEmpty()) {
             Toast.makeText(getActivity(), R.string.missing_location, Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        address = contextFormatter.formatAddressFromString(city);
 
         if (Objects.isNull(address)) {
             Toast.makeText(getActivity(), R.string.invalid_location, Toast.LENGTH_SHORT).show();
@@ -215,7 +215,8 @@ public class OfferEditFragment extends Fragment {
     private void saveOffer() {
         if (setOfferDetails()) {
             if (isNewOffer) {
-                offer = new Offer(offerVM.getCurrentUser(), new HashSet<>(), title, description, price, participants, dateTime,
+                offer = new Offer(offerVM.getCurrentUser(), new HashSet<>(), title, description, price, participants,
+                        dateTime,
                         new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
                 try {
                     offerVM.add(offer);
@@ -228,9 +229,10 @@ public class OfferEditFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
                 }
             } else {
-                offer.setLocation(new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
+                offer.setLocation(
+                        new SphericalLocation(new SphericalPosition(address.getLatitude(), address.getLongitude())));
                 offer.setPrice(price);
-                try  {
+                try {
                     int currentAmountParticipants = offerVM.getParticipants(offer).size();
                     // Do not set new max. participant value less than the actual amount of participating users
                     if (participants < currentAmountParticipants) {

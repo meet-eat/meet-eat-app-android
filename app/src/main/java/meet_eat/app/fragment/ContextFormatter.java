@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 import meet_eat.app.R;
@@ -97,17 +98,21 @@ public class ContextFormatter {
      * Formats a string to an {@link Address} object by using a {@link Geocoder} object.
      *
      * @param location the string which contains the location
-     * @return the {@link Address} object of the location name
-     * @throws IOException when the address couldn't be found
+     * @return the {@link Address} object of the location name, or null on error
      */
-    public Address formatAddressFromString(String location) throws IOException {
+    public Address formatAddressFromString(String location) {
         location = Objects.toString(location, "");
         Geocoder geocoder = new Geocoder(context);
         Address address = null;
 
-        if (Objects.nonNull(geocoder.getFromLocationName(location, MAX_RESULTS)) &&
-                geocoder.getFromLocationName(location, MAX_RESULTS).size() > 0) {
-            address = geocoder.getFromLocationName(location, MAX_RESULTS).get(0);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(location, MAX_RESULTS);
+        } catch (IOException e) {
+            return null;
+        }
+        if (Objects.nonNull(addressList) && addressList.size() > 0) {
+            return addressList.get(0);
         }
 
         return address;
@@ -139,8 +144,8 @@ public class ContextFormatter {
         double lat = localizable.getSphericalPosition().getLatitude();
         double lng = localizable.getSphericalPosition().getLongitude();
 
-        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, MAX_RESULTS))
-                && geocoder.getFromLocation(lat, lng, MAX_RESULTS).size() > 0) {
+        if (Objects.nonNull(geocoder.getFromLocation(lat, lng, MAX_RESULTS)) &&
+                geocoder.getFromLocation(lat, lng, MAX_RESULTS).size() > 0) {
             address = geocoder.getFromLocation(lat, lng, MAX_RESULTS).get(0);
         } else {
             return context.getResources().getString(R.string.invalid_location);
