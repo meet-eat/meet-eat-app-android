@@ -86,7 +86,7 @@ public class Session {
         token = new RequestHandler<LoginCredential, Token>().handle(requestEntity, HttpStatus.CREATED);
         try {
             FileHandler.saveStringToFile(new ObjectJsonParser().parseObjectToJsonString(token), TOKEN_FILE_NAME);
-        } catch (IOException e) {
+        } catch (IOException exception) {
             // The session must not be interrupted. It should always continue even if the file cannot be saved.
         }
     }

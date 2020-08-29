@@ -96,11 +96,10 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * TODO
-     * Adds a {@link User participant} to an {@link Offer offer} in the repository.
+     * Creates a persistent {@link Participation participation} by adding it to the repository.
      *
-     * @param participation
-     * @return the latest version of the offer from the repository
+     * @param participation the participation to be added to the repository
+     * @return the participation added to the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Participation addParticipation(Participation participation) throws RequestHandlerException {
@@ -113,9 +112,9 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * TODO
-     * Removes a {@link User participant} from an {@link Offer offer} in the repository.
+     * Removes a {@link Participation participation} from the repository.
      *
+     * @param participation the participation to be removed from the repository
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public void removeParticipation(Participation participation) throws RequestHandlerException {
@@ -128,10 +127,11 @@ public class OfferRepository extends EntityRepository<Offer> {
     }
 
     /**
-     * TODO
-     * @param offer
-     * @return
-     * @throws RequestHandlerException
+     * Returns the {@link Participation participations} of an {@link Offer offer} from the repository.
+     *
+     * @param offer the offer of which participations are to be returned from the repository
+     * @return the participations of an offer in the repository
+     * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Iterable<Participation> getParticipationsByOffer(Offer offer) throws RequestHandlerException {
         String uriOfferIdentifier = "/" + Objects.requireNonNull(offer.getIdentifier());
