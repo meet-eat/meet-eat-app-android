@@ -21,13 +21,13 @@
             android:layout_margin="16dp"
             android:adjustViewBounds="true"
             android:background="@null"
+            android:contentDescription="@string/content_description_back_button"
             android:elevation="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/arrow_back"
             android:tint="@color/bgButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/content_description_back_button" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvSettings"
@@ -57,6 +57,7 @@
             android:text="@string/notification"
             android:textColor="@color/symbol"
             android:textSize="28sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSettings" />
 
@@ -68,6 +69,7 @@
             android:checked="true"
             android:clickable="false"
             android:drawableTint="@color/symbol"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tvSettingsNotificationMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSettingsNotificationMenu" />
@@ -85,6 +87,7 @@
             android:text="@string/appearance"
             android:textColor="@color/symbol"
             android:textSize="28sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSettingsNotificationMenu" />
 
@@ -108,14 +111,14 @@
             android:layout_height="20dp"
             android:layout_margin="16dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/content_description_settings_info_image"
             android:elevation="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/info"
             app:layout_constraintBottom_toTopOf="@+id/tvSettingsAbout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvSettingsAbout"
-            app:tint="@color/symbol"
-            android:contentDescription="@string/content_description_settings_info_image" />
+            app:tint="@color/symbol" />
 
         <Button
             android:id="@+id/btSettingsDelete"
