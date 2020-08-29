@@ -74,8 +74,7 @@ public class OfferEditFragmentTest {
         Intents.release();
         settingsVM.deleteUser();
     }
-
-
+    
     @Test
     public void navigateBackTest() {
         onView(withId(R.id.ibtOfferListCreate)).perform(click());
