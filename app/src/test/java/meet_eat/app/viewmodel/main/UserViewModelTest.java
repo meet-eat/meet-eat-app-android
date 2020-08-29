@@ -2,7 +2,6 @@ package meet_eat.app.viewmodel.main;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -64,7 +63,6 @@ public class UserViewModelTest {
         registerVM.register(toBeSubscribed);
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + testEmail, password);
-        System.out.println("Logged in with: " + settingsVM.getCurrentUser().getEmail() + "\n");
     }
 
     @AfterClass
@@ -132,7 +130,6 @@ public class UserViewModelTest {
         userVM.edit(null);
     }
 
-    @Ignore("Not yet implemented")
     @Test
     public void testReport() throws RequestHandlerException {
         Report report = new Report(userVM.getCurrentUser(), toBeReported, "");
