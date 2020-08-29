@@ -42,7 +42,11 @@
         <activity
             android:name=".MainActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
