@@ -106,6 +106,9 @@ public class Scenario1060Test {
         // Bookmark first 2 offers the user sees
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId()));
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId()));
+        // Remove and add bookmark for extra coverage
+        onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId()));
+        onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId()));
 
         // Open navigation drawer
         onView(withId(R.id.drawer_layout)).check(matches(isClosed(Gravity.LEFT))).perform(DrawerActions.open());
