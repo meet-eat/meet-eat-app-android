@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
-import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
