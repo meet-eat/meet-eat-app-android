@@ -90,7 +90,7 @@ public class OfferDetailedFragmentTest {
     }
 
     @Test
-    public void OfferDetailedFragmentTest() {
+    public void offerDetailedFragmentTest() {
         scenarioTestHelper.login();
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 import meet_eat.app.databinding.ItemRateGuestBinding;
 import meet_eat.app.viewmodel.main.RatingViewModel;
+import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.relation.rating.Rating;
 import meet_eat.data.entity.relation.rating.RatingValue;
 import meet_eat.data.entity.user.User;
@@ -24,6 +25,7 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
     private static final float RATING_STEP_SIZE = 1;
     private static final int DEFAULT_NUM_STARS = 3;
 
+    private final Offer offer;
     private final RatingViewModel ratingVM;
     private List<User> currentGuests;
 
@@ -33,9 +35,10 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
      * @param ratingVM the rating view model
      * @param guests   the guests to the offer
      */
-    public RateGuestsAdapter(RatingViewModel ratingVM, ArrayList<User> guests) {
+    public RateGuestsAdapter(RatingViewModel ratingVM, ArrayList<User> guests, Offer offer) {
         this.ratingVM = ratingVM;
         currentGuests = guests;
+        this.offer = offer;
     }
 
     /**
@@ -119,7 +122,8 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
          */
         private Rating createRating(int ratingAmount) {
             // TODO Add offer to factory method
-            return Rating.createGuestRating(ratingVM.getCurrentUser(), null, RatingValue.getRatingValueByInteger(ratingAmount));
+            return Rating.createGuestRating(ratingVM.getCurrentUser(), offer,
+                    RatingValue.getRatingValueByInteger(ratingAmount));
         }
     }
 }

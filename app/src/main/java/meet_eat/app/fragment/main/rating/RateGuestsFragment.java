@@ -43,7 +43,7 @@ public class RateGuestsFragment extends Fragment {
         binding.setFragment(this);
         offerVM = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
         RatingViewModel ratingVM = new ViewModelProvider(this).get(RatingViewModel.class);
-        rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<>());
+        rateGuestsAdapter = new RateGuestsAdapter(ratingVM, new ArrayList<>(), offer);
         binding.rvRateGuests.setAdapter(rateGuestsAdapter);
         binding.rvRateGuests
                 .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

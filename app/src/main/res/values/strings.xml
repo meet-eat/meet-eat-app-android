@@ -107,7 +107,6 @@
     <string name="contact_decline">Reject</string>
     <string name="currency">€</string>
     <string name="european_time_calling">" o'clock"</string>
-    <string name="request_new_login">Please log off and on again.</string>
     <string name="invalid_date_time_future">Time is in the future.</string>
     <string name="app_name" translatable="false">Meet &amp; Eat</string>
     <string name="e_mail" translatable="false">E-Mail</string>

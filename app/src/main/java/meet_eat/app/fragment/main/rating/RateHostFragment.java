@@ -89,7 +89,7 @@ public class RateHostFragment extends Fragment {
         int numStars = (int) binding.rbRateHost.getRating();
         RatingValue ratingValue = RatingValue.getRatingValueByInteger(numStars);
         // TODO Add offer to factory method
-        Rating rating = Rating.createHostRating(ratingVM.getCurrentUser(), null, ratingValue);
+        Rating rating = Rating.createHostRating(ratingVM.getCurrentUser(), offer, ratingValue);
 
         try {
             ratingVM.send(rating);
