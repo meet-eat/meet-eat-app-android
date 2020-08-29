@@ -14,7 +14,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,6 +24,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
@@ -50,12 +50,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class OfferFilterFragmentTest {
     private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final LoginViewModel loginVM = new LoginViewModel();
     private static final String password = "123##Test";
     private static final long timestamp = System.currentTimeMillis();
 
-    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
     private static final Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
-    private static boolean isLoggedIn = false;
 
     @Rule
     public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
@@ -65,6 +64,7 @@ public class OfferFilterFragmentTest {
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
         registerVM.register(newUser);
+        loginVM.login(timestamp + "@example.com", password);
         Intents.init();
     }
 
@@ -74,13 +74,6 @@ public class OfferFilterFragmentTest {
         settingsVM.deleteUser();
     }
 
-    @Before
-    public void login() {
-        if (!isLoggedIn) {
-            scenarioTestHelper.login();
-            isLoggedIn = true;
-        }
-    }
 
     @Test
     public void saveRatingFiltersTest() {
@@ -116,7 +109,8 @@ public class OfferFilterFragmentTest {
         onView(withId(R.id.etOfferFilterParticipantsMax)).perform(typeText("1"));
         closeSoftKeyboard();
         onView(withId(R.id.btOfferFilterSave)).perform(click());
-        onView(withText(R.string.invalid_participants_interval)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+        onView(withText(R.string.invalid_participants_interval)).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
 
         // Set valid participants filters
         onView(withId(R.id.etOfferFilterParticipantsMin)).perform(clearText());

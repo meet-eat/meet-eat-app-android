@@ -1,15 +1,9 @@
 package meet_eat.app;
 
-import androidx.test.espresso.action.GeneralLocation;
-import androidx.test.espresso.action.GeneralSwipeAction;
-import androidx.test.espresso.action.Press;
-import androidx.test.espresso.action.Swipe;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
-
-import com.google.common.collect.Lists;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -19,8 +13,6 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;

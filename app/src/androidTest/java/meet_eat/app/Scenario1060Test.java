@@ -13,8 +13,6 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.common.collect.Lists;
-
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -25,9 +23,7 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.LoginViewModel;

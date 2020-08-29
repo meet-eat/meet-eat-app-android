@@ -13,11 +13,8 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.common.collect.Lists;
-
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +23,6 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import meet_eat.app.repository.RequestHandlerException;
@@ -57,9 +53,7 @@ public class ProfileSubscribedFragmentTest {
     private static final String password = "123##Test";
     private static final long timestamp = System.currentTimeMillis();
 
-    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
     private static final Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
-    private static boolean isLoggedIn = false;
 
     @Rule
     public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
@@ -70,6 +64,7 @@ public class ProfileSubscribedFragmentTest {
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
         registerVM.register(newUser);
         addToBeSubscribedWithOffer();
+        loginVM.login(timestamp + "@example.com", password);
         Intents.init();
     }
 
@@ -92,21 +87,13 @@ public class ProfileSubscribedFragmentTest {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
         settingsVM.deleteUser();
-        loginVM.login(timestamp + 1 + "@example.com", password);
 
+        loginVM.login(timestamp + 1 + "@example.com", password);
         settingsVM.deleteUser();
     }
 
-    @Before
-    public void login() {
-        if(!isLoggedIn) {
-            scenarioTestHelper.login();
-            isLoggedIn = true;
-        }
-    }
-
     @Test
-    public void subsribeAndUnsubscribeTest() {
+    public void subscribeAndUnsubscribeTest() {
         // Select first offer, mustn't be own (user has never created an offer, so shouldn't be problem)
         // Open offer detailed view
         onView(withId(R.id.rvOfferList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -162,7 +149,7 @@ public class ProfileSubscribedFragmentTest {
         SystemClock.sleep(500);
 
         onView(withId(R.id.btOfferListSubscribed)).perform(click());
-        // Navigatge back
+        // Navigate back
         onView(withId(R.id.ibtBack)).perform(click());
     }
 

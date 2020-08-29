@@ -13,26 +13,21 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.common.collect.Lists;
-
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
-import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
-import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -55,14 +50,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class OfferEditFragmentTest {
     private static final RegisterViewModel registerVM = new RegisterViewModel();
-    private static final OfferViewModel offerVM = new OfferViewModel();
     private static final SettingsViewModel settingsVM = new SettingsViewModel();
+    private static final LoginViewModel loginVM = new LoginViewModel();
     private static final String password = "123##Test";
     private static final long timestamp = System.currentTimeMillis();
 
-    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
     private static final Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
-    private static boolean isLoggedIn = false;
 
     @Rule
     public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
@@ -72,23 +65,16 @@ public class OfferEditFragmentTest {
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
         registerVM.register(newUser);
+        loginVM.login(timestamp + "@example.com", password);
         Intents.init();
     }
 
     @AfterClass
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
-
         settingsVM.deleteUser();
     }
 
-    @Before
-    public void login() {
-        if (!isLoggedIn) {
-            scenarioTestHelper.login();
-            isLoggedIn = true;
-        }
-    }
 
     @Test
     public void navigateBackTest() {
@@ -99,12 +85,12 @@ public class OfferEditFragmentTest {
     @Test
     public void publishSaveAndDeleteOfferTest() {
         onView(withId(R.id.ibtOfferListCreate)).perform(click());
-        // Check for emtpy location
+        // Check for empty location
         onView(withId(R.id.btOfferEditPublish)).perform(click());
         onView(withText(R.string.missing_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
         // Check for invalid location
         SystemClock.sleep(1000);
-        onView(withId(R.id.etOfferEditCity)).perform(typeText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        onView(withId(R.id.etOfferEditCity)).perform(typeText("................................................."));
         closeSoftKeyboard();
         onView(withId(R.id.btOfferEditPublish)).perform(click());
         onView(withText(R.string.invalid_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));

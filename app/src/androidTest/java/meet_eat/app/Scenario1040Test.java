@@ -88,7 +88,7 @@ public class Scenario1040Test {
         onView(withId(R.id.etProfileEditHome)).perform(clearText());
         onView(withId(R.id.etProfileEditHome)).perform(typeText("Chicago"));
         closeSoftKeyboard();
-        // for more coverage also change phonenumber and description
+        // for more coverage also change phone number and description
         onView(withId(R.id.etProfileEditPhone)).perform(clearText());
         onView(withId(R.id.etProfileEditPhone)).perform(typeText("9876543210"));
         closeSoftKeyboard();

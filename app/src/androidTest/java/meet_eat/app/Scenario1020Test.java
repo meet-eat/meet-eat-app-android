@@ -8,8 +8,6 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.common.collect.Lists;
-
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -18,7 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -26,7 +23,6 @@ import meet_eat.app.repository.RequestHandlerException;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.OfferViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
-import meet_eat.data.entity.Offer;
 import meet_eat.data.entity.user.Email;
 import meet_eat.data.entity.user.Password;
 import meet_eat.data.entity.user.User;
@@ -47,7 +43,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class Scenario1020Test {
 
-    private static final OfferViewModel offerVM = new OfferViewModel();
     private static final SettingsViewModel settingsVM = new SettingsViewModel();
     private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final long timestamp = System.currentTimeMillis();

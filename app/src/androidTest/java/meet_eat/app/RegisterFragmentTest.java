@@ -156,7 +156,7 @@ public class RegisterFragmentTest {
     @Test
     public void registerWithInvalidHomeTest() {
         onView(withId(R.id.etRegisterHome)).perform(clearText());
-        onView(withId(R.id.etRegisterHome)).perform(typeText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        onView(withId(R.id.etRegisterHome)).perform(typeText("................................................."));
         closeSoftKeyboard();
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.invalid_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));

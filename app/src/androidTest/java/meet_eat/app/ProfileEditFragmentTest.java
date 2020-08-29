@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +18,7 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 
 import meet_eat.app.repository.RequestHandlerException;
+import meet_eat.app.viewmodel.login.LoginViewModel;
 import meet_eat.app.viewmodel.login.RegisterViewModel;
 import meet_eat.app.viewmodel.main.SettingsViewModel;
 import meet_eat.data.entity.user.Email;
@@ -41,14 +41,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileEditFragmentTest {
+
+    private static final LoginViewModel loginVM = new LoginViewModel();
     private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final SettingsViewModel settingsVM = new SettingsViewModel();
     private static final String password = "123##Test";
     private static final long timestamp = System.currentTimeMillis();
 
-    private final ScenarioTestHelper scenarioTestHelper = new ScenarioTestHelper(timestamp, password);
     private static final Localizable home = new SphericalLocation(new SphericalPosition(49.0082285, 8.3978892));
-    private static boolean isLoggedIn = false;
 
     @Rule
     public ActivityTestRule<SplashActivity> activityTestRule = new ActivityTestRule<>(SplashActivity.class);
@@ -58,6 +58,7 @@ public class ProfileEditFragmentTest {
         User newUser = new User(new Email(timestamp + "@example.com"), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), "Tester", "0123456789", "Test description", true, home);
         registerVM.register(newUser);
+        loginVM.login(timestamp + "@example.com", password);
         Intents.init();
     }
 
@@ -65,14 +66,6 @@ public class ProfileEditFragmentTest {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
         settingsVM.deleteUser();
-    }
-
-    @Before
-    public void login() {
-        if (!isLoggedIn) {
-            scenarioTestHelper.login();
-            isLoggedIn = true;
-        }
     }
 
     @Test
