@@ -60,6 +60,9 @@ public class UserViewModelTest {
                 new SphericalLocation(new SphericalPosition(0, 0)));
 
         registerVM.register(toBeReported);
+        loginVM.login(uniqueIdentifier + 1 + testEmail, password);
+        toBeReported = userVM.getCurrentUser();
+        settingsVM.logout();
         registerVM.register(toBeSubscribed);
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + testEmail, password);

@@ -50,6 +50,7 @@ public class OfferViewModelTest {
 
     private static LoginViewModel loginVM;
     private static SettingsViewModel settingsVM;
+    private static UserViewModel userVM;
     private static OfferViewModel offerVM;
     private static User secondUser;
     private static String uniqueIdentifier;
@@ -60,6 +61,7 @@ public class OfferViewModelTest {
         loginVM = new LoginViewModel();
         RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
+        userVM = new UserViewModel();
         offerVM = new OfferViewModel();
         uniqueIdentifier = String.valueOf(System.currentTimeMillis());
 
@@ -67,6 +69,9 @@ public class OfferViewModelTest {
         secondUser = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(secondUser);
+        loginVM.login(uniqueIdentifier + 1 + testEmail, password);
+        secondUser = userVM.getCurrentUser();
+        settingsVM.logout();
 
         // Register registeredUser:
         User registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
@@ -222,9 +227,7 @@ public class OfferViewModelTest {
         String reportMessage = "This is a report message";
         Report report = new Report(offerVM.getCurrentUser(), secondUser, reportMessage);
         offerVM.report(report);
-        // Logout and login to get current user's reports
-        settingsVM.logout();
-        loginVM.login(uniqueIdentifier + 1 + testEmail, password);
+
         // log standard user in again
         logoutThenLogin(uniqueIdentifier + testEmail);
     }
