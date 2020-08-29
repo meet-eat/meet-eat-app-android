@@ -32,11 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
 
-        // Checks if user was logged in previously
-        if (Session.getInstance().isLoggedIn()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
         setContentView(R.layout.activity_login);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_login);
     }
