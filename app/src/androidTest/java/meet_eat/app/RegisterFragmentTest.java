@@ -1,5 +1,6 @@
 package meet_eat.app;
 
+import android.os.SystemClock;
 import android.widget.DatePicker;
 
 import androidx.test.espresso.contrib.PickerActions;
@@ -66,21 +67,33 @@ public class RegisterFragmentTest {
     public static void cleanUp() throws RequestHandlerException {
         Intents.release();
         loginVM.login(timestamp + "@example.com", password);
-        
         settingsVM.deleteUser();
     }
 
     @Test
     public void registerWithInvalidEmailTest() {
-        onView(withId(R.id.etRegisterEmail)).perform(clearText());
+        onView(withId(R.id.btLoginRegister)).perform(click());
+
+        // Invalid email
         onView(withId(R.id.etRegisterEmail)).perform(typeText("a"));
         closeSoftKeyboard();
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.bad_email)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
+        onView(withId(R.id.etRegisterEmail)).perform(clearText());
+        onView(withId(R.id.etRegisterEmail)).perform(typeText(timestamp + "@example.com"));
+        closeSoftKeyboard();
+        SystemClock.sleep(1000);
 
-    @Test
-    public void registerWithInvalidPasswordTest() {
+        // No matching passwords
+        onView(withId(R.id.etRegisterPassword)).perform(typeText("123##Test1"));
+        closeSoftKeyboard();
+        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText("123##Test2"));
+        closeSoftKeyboard();
+        onView(withId(R.id.btRegister)).perform(click());
+        onView(withText(R.string.passwords_not_matching)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+        SystemClock.sleep(1000);
+
+        // Invalid password
         onView(withId(R.id.etRegisterPassword)).perform(clearText());
         onView(withId(R.id.etRegisterPassword)).perform(typeText("a"));
         closeSoftKeyboard();
@@ -89,117 +102,67 @@ public class RegisterFragmentTest {
         closeSoftKeyboard();
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.bad_password)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void registerWithNotMatchingPasswordsTest() {
         onView(withId(R.id.etRegisterPassword)).perform(clearText());
-        onView(withId(R.id.etRegisterPassword)).perform(typeText("123##Test1"));
+        onView(withId(R.id.etRegisterPassword)).perform(typeText(password));
         closeSoftKeyboard();
         onView(withId(R.id.etRegisterPasswordConfirm)).perform(clearText());
-        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText("123##Test2"));
+        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText(password));
         closeSoftKeyboard();
-        onView(withId(R.id.btRegister)).perform(click());
-        onView(withText(R.string.passwords_not_matching)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
+        SystemClock.sleep(1000);
 
-    @Test
-    public void registerWithEmptyUsernameTest() {
-        onView(withId(R.id.etRegisterUsername)).perform(clearText());
+        // Empty username
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.missing_username)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void registerWithEmptyBirthdayTest() {
-        onView(withId(R.id.ibtBack)).perform(click());
-        onView(withId(R.id.btLoginRegister)).perform(click());
-        onView(withId(R.id.etRegisterEmail)).perform(typeText("tester@example.com"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPassword)).perform(typeText("123##Test"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText("123##Test"));
-        closeSoftKeyboard();
         onView(withId(R.id.etRegisterUsername)).perform(typeText("Tester"));
         closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPhone)).perform(typeText("123456789"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterHome)).perform(typeText("New York City"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterDescription)).perform(typeText("Test description"));
-        closeSoftKeyboard();
+        SystemClock.sleep(1000);
+
+        // Empty birthday
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.missing_date)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
+        SystemClock.sleep(1000);
 
-    @Test
-    public void registerWithFutureBirthdayTest() {
+        // Future birthday
         onView(withId(R.id.tvRegisterBirthday)).perform(click());
         Calendar birthday = GregorianCalendar.getInstance();
         birthday.set(2030, 1, 1);
-        // Invoke date picker, set date, then click ok
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions
                 .setDate(birthday.get(Calendar.YEAR), birthday.get(Calendar.MONTH),
                         birthday.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.invalid_date_time_future)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
+        onView(withId(R.id.tvRegisterBirthday)).perform(click());
+        Calendar validBirthday = GregorianCalendar.getInstance();
+        validBirthday.set(2000, 1, 1);
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions
+                .setDate(validBirthday.get(Calendar.YEAR), validBirthday.get(Calendar.MONTH),
+                        validBirthday.get(Calendar.DAY_OF_MONTH)));
+        onView(withText("OK")).perform(click());
+        onView(withId(R.id.btRegister)).perform(click());
+        onView(withText(R.string.invalid_date_time_future)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+        SystemClock.sleep(1000);
 
-    @Test
-    public void registerWithEmptyHomeTest() {
-        onView(withId(R.id.etRegisterHome)).perform(clearText());
+        // Empty home
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.missing_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
+        SystemClock.sleep(1000);
 
-    @Test
-    public void registerWithInvalidHomeTest() {
-        onView(withId(R.id.etRegisterHome)).perform(clearText());
+        // Invalid home
         onView(withId(R.id.etRegisterHome)).perform(typeText("................................................."));
         closeSoftKeyboard();
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.invalid_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void navigateBackTest() {
-        onView(withId(R.id.ibtBack)).perform(click());
-    }
-
-    @Test
-    public void registerWithAlreadyRegisteredEmail() {
-        onView(withId(R.id.etRegisterEmail)).perform(clearText());
-        onView(withId(R.id.etRegisterEmail)).perform(typeText(timestamp + "@example.com"));
+        onView(withId(R.id.etRegisterHome)).perform(clearText());
+        onView(withId(R.id.etRegisterHome)).perform(typeText("Karlsruhe"));
         closeSoftKeyboard();
+        SystemClock.sleep(1000);
+
+        // Already registered email
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.toast_error_message)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
-    }
 
-    @Before
-    public void fillRegisterFormula() {
-        onView(withId(R.id.btLoginRegister)).perform(click());
-        onView(withId(R.id.etRegisterEmail)).perform(typeText("tester@example.com"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPassword)).perform(typeText("123##Test"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPasswordConfirm)).perform(typeText("123##Test"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterUsername)).perform(typeText("Tester"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterPhone)).perform(typeText("123456789"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterHome)).perform(typeText("New York City"));
-        closeSoftKeyboard();
-        onView(withId(R.id.etRegisterDescription)).perform(typeText("Test description"));
-        closeSoftKeyboard();
-        onView(withId(R.id.tvRegisterBirthday)).perform(click());
-        Calendar birthday = GregorianCalendar.getInstance();
-        birthday.set(2000, 1, 1);
-        // Invoke date picker, set date, then click ok
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions
-                .setDate(birthday.get(Calendar.YEAR), birthday.get(Calendar.MONTH),
-                        birthday.get(Calendar.DAY_OF_MONTH)));
-        onView(withText("OK")).perform(click());
+        // Navigate back
+        onView(withId(R.id.ibtBack)).perform(click());
     }
 }
