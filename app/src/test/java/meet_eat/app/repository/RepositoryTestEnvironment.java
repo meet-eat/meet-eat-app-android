@@ -19,7 +19,7 @@ public class RepositoryTestEnvironment {
 
     private static final String UNIQUE_IDENTIFIER = String.valueOf(System.currentTimeMillis() % 100000);
     private static final String UNREGISTERED_EMAIL = "test@example.com";
-    private static final String PASSWORD = "Str0ngPassw0rd!";
+    private static final String PASSWORD = "Str0ngPassword!";
     private static final LocalDate BIRTH_DAY = LocalDate.of(1998, Month.FEBRUARY, 6);
     private static final String USER_NAME = "JUnit Test User";
     private static final String PHONE_NUMBER = "0123456789";

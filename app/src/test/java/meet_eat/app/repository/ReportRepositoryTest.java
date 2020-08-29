@@ -41,7 +41,7 @@ public class ReportRepositoryTest extends EntityRepositoryTest<ReportRepository,
     @BeforeClass
     public static void initializePersistentUser() throws RequestHandlerException {
         Email email = new Email("wergviuhgvt349tz@example.com");
-        Password password = Password.createHashedPassword("Str0ngPassw0rd!");
+        Password password = Password.createHashedPassword("Str0ngPassword!");
         LocalDate birthDay = LocalDate.of(1998, Month.OCTOBER, 16);
         String name = "JUnit Test User";
         String phoneNumber = "0123456789";

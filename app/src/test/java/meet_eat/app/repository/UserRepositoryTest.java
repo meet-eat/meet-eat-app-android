@@ -41,7 +41,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
     @BeforeClass
     public static void initializePersistentEntities() throws RequestHandlerException {
         Email email = new Email("wergviuhgvt349tz@example.com");
-        Password password = Password.createHashedPassword("Str0ngPassw0rd!");
+        Password password = Password.createHashedPassword("Str0ngPassword!");
         LocalDate birthDay = LocalDate.of(1998, Month.OCTOBER, 16);
         String userName = "JUnit Test User";
         String phoneNumber = "0123456789";
@@ -76,7 +76,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
 
     private static User getNewUser() {
         Email email = new Email("423v8hg9fjg@example.com");
-        Password password = Password.createHashedPassword("Str0ngPassw0rd!");
+        Password password = Password.createHashedPassword("Str0ngPassword!");
         LocalDate birthDay = LocalDate.of(1998, Month.OCTOBER, 16);
         String name = "JUnit Test User";
         String phoneNumber = "0123456789";
