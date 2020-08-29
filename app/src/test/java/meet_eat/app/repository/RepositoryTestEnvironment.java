@@ -25,7 +25,7 @@ public class RepositoryTestEnvironment {
     private static final String PHONE_NUMBER = "0123456789";
     private static final String DESCRIPTION = "JUnit description";
     private static final boolean IS_VERIFIED = false;
-    private static final Localizable LOCATION = new CityLocation("Karlsruhe");
+    private static final Localizable LOCATION = new CityLocation("Stuttgart");
 
     private static User registeredUser;
     private static LoginCredential registeredLoginCredential;

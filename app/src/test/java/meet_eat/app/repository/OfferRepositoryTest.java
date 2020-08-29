@@ -49,7 +49,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
         double price = 5d;
         int maxParticipants = 5;
         LocalDateTime dateTime = LocalDateTime.of(2020, Month.SEPTEMBER, 30, 18, 0);
-        Localizable location = new CityLocation("Karlsruhe");
+        Localizable location = new CityLocation("Stuttgart");
         Session.getInstance().login(getRegisteredLoginCredential());
         Offer fetchedOffer = new OfferRepository().addEntity(
                 new Offer(creator, tags, name, description, price, maxParticipants, dateTime, location));
@@ -65,7 +65,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
         double price = 5d;
         int maxParticipants = 5;
         LocalDateTime dateTime = LocalDateTime.of(2020, Month.SEPTEMBER, 30, 18, 0);
-        Localizable location = new CityLocation("Karlsruhe");
+        Localizable location = new CityLocation("Stuttgart");
         return new Offer(creator, tags, name, description, price, maxParticipants, dateTime, location);
     }
 
@@ -73,7 +73,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
     public static void initialize() throws RequestHandlerException {
         page = new Page(0, 10);
         predicates = new ArrayList<>();
-        CityLocation cityLocation = new CityLocation("Karlsruhe");
+        CityLocation cityLocation = new CityLocation("Stuttgart");
         comparator = new OfferComparator(OfferComparableField.DISTANCE, cityLocation);
 
         // Persistent user
@@ -84,7 +84,7 @@ public class OfferRepositoryTest extends EntityRepositoryTest<OfferRepository, O
         String phoneNumber = "0123456789";
         String description = "This is a test description";
         boolean isVerified = false;
-        Localizable localizable = new CityLocation("Karlsruhe");
+        Localizable localizable = new CityLocation("Stuttgart");
         persistentLoginCredential = new LoginCredential(email, password);
         persistentUser = new UserRepository().addEntity(
                 new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable));

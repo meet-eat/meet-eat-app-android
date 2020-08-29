@@ -1,10 +1,8 @@
 package meet_eat.app.repository;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import meet_eat.data.entity.Tag;
-import meet_eat.data.entity.relation.Report;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -19,7 +17,7 @@ public class TagRepositoryTest extends EntityRepositoryTest<TagRepository, Tag, 
     }
 
     @Override
-    public void testAddEntityValid() throws RequestHandlerException {
+    public void testAddEntityValid() {
     }
 
     @Override

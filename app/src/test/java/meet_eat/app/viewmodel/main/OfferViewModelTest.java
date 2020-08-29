@@ -4,7 +4,6 @@ import com.google.common.collect.Iterables;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -68,15 +67,13 @@ public class OfferViewModelTest {
         secondUser = new User(new Email(uniqueIdentifier + 1 + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(secondUser);
-        System.out.println("Created " + secondUser.getEmail());
+
         // Register registeredUser:
         User registeredUser = new User(new Email(uniqueIdentifier + testEmail), Password.createHashedPassword(password),
                 LocalDate.of(2000, 1, 1), username, phoneNumber, profileDescription, true, location);
         registerVM.register(registeredUser);
-        System.out.println("Created " + registeredUser.getEmail());
 
         loginVM.login(uniqueIdentifier + testEmail, password);
-        System.out.println("Logged in " + registeredUser.getEmail());
     }
 
     @AfterClass
@@ -219,8 +216,7 @@ public class OfferViewModelTest {
         offerVM.sendContact(contactData);
     }
 
-    @Ignore("Asserting that the report was sent is not possible anymore.")
-    @Test(expected = RequestHandlerException.class)
+    @Test
     public void testReport() throws RequestHandlerException {
         // Not yet implemented
         String reportMessage = "This is a report message";

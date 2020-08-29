@@ -34,7 +34,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
     private static LoginCredential persistentLoginCredential;
     private static Offer persistentOffer;
 
-    public UserRepositoryTest() throws RequestHandlerException {
+    public UserRepositoryTest() {
         super(new UserRepository(), getRegisteredUser(), getNewUser());
     }
 
@@ -47,7 +47,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         String phoneNumber = "0123456789";
         String userDescription = "This is a test description";
         boolean isVerified = false;
-        Localizable localizable = new CityLocation("Karlsruhe");
+        Localizable localizable = new CityLocation("Stuttgart");
         persistentLoginCredential = new LoginCredential(email, password);
         persistentUser = new UserRepository().addEntity(
                 new User(email, password, birthDay, userName, phoneNumber, userDescription, isVerified, localizable));
@@ -59,7 +59,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         double price = 5d;
         int maxParticipants = 5;
         LocalDateTime dateTime = LocalDateTime.of(2020, Month.SEPTEMBER, 30, 18, 0);
-        Localizable location = new CityLocation("Karlsruhe");
+        Localizable location = new CityLocation("Stuttgart");
         Session.getInstance().login(persistentLoginCredential);
         Offer fetchedOffer = new OfferRepository().addEntity(
                 new Offer(creator, tags, offerName, offerDescription, price, maxParticipants, dateTime, location));
@@ -82,7 +82,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
         String phoneNumber = "0123456789";
         String description = "This is a test description";
         boolean isVerified = false;
-        Localizable localizable = new CityLocation("Karlsruhe");
+        Localizable localizable = new CityLocation("Stuttgart");
         return new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable);
     }
 
@@ -109,7 +109,7 @@ public class UserRepositoryTest extends EntityRepositoryTest<UserRepository, Use
 
     @Test
     @Override
-    public void testAddEntityValid() throws RequestHandlerException {
+    public void testAddEntityValid() {
         // Same as testAddEntityNotLoggedIn
     }
 

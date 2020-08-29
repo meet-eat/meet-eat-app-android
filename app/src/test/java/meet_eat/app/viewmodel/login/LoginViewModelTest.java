@@ -30,7 +30,7 @@ public class LoginViewModelTest {
     private static final LoginViewModel loginVM = new LoginViewModel();
     private static final RegisterViewModel registerVM = new RegisterViewModel();
     private static final SettingsViewModel settingsVM = new SettingsViewModel();
-    private static String uniqueIdentifier = String.valueOf(System.currentTimeMillis() % 100000);
+    private static String uniqueIdentifier = String.valueOf(System.currentTimeMillis());
 
     @BeforeClass
     public static void initialize() throws RequestHandlerException {
@@ -40,7 +40,6 @@ public class LoginViewModelTest {
                         new SphericalLocation(new SphericalPosition(0, 0)));
         registerVM.register(registeredUser);
         loginVM.login(uniqueIdentifier + validRegisteredEmail, password);
-        System.out.println("Created user " + settingsVM.getCurrentUser().getEmail());
         settingsVM.logout();
     }
 

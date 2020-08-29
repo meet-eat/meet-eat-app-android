@@ -145,7 +145,7 @@ public class SessionTest extends RepositoryTestEnvironment{
     }
 
     @Test
-    public void testIsLoggedInFalse() throws RequestHandlerException {
+    public void testIsLoggedInFalse() {
         // Execution
         Session session = Session.getInstance();
 

@@ -2,7 +2,6 @@ package meet_eat.app.repository;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -35,7 +34,7 @@ public class ReportRepositoryTest extends EntityRepositoryTest<ReportRepository,
         return fetchedReport;
     }
 
-    private static Report getNewReport() throws RequestHandlerException {
+    private static Report getNewReport() {
         return new Report(getRegisteredUser(), persistentUser, "Not politically correct.");
     }
 
@@ -48,7 +47,7 @@ public class ReportRepositoryTest extends EntityRepositoryTest<ReportRepository,
         String phoneNumber = "0123456789";
         String description = "This is a test description";
         boolean isVerified = false;
-        Localizable localizable = new CityLocation("Karlsruhe");
+        Localizable localizable = new CityLocation("Stuttgart");
         persistentLoginCredential = new LoginCredential(email, password);
         persistentUser = new UserRepository().addEntity(
                 new User(email, password, birthDay, name, phoneNumber, description, isVerified, localizable));
