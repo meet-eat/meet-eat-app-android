@@ -1,6 +1,5 @@
 package meet_eat.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Toast;
@@ -8,8 +7,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import meet_eat.app.repository.Session;
 
 /**
  * Holds the fragments {@link meet_eat.app.fragment.login.RegisterFragment RegisterFragment} and
