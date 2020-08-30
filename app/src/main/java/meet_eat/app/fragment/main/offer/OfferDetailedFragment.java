@@ -2,7 +2,6 @@ package meet_eat.app.fragment.main.offer;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,6 @@ public class OfferDetailedFragment extends Fragment {
             offer = offerVM.fetchOfferById(offer.getIdentifier());
         } catch (RequestHandlerException e) {
             Toast.makeText(getActivity(), R.string.toast_error_message, Toast.LENGTH_LONG).show();
-            Log.e("HILFE", e.getMessage());
         }
         initUI();
         binding.srlOfferDetailedSwipe.setRefreshing(false);
