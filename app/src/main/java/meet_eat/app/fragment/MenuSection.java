@@ -1,7 +1,7 @@
 package meet_eat.app.fragment;
 
 /**
- * Represents the section of the navigationdrawer.
+ * Represents the section of the navigation drawer.
  */
 public enum MenuSection {
 

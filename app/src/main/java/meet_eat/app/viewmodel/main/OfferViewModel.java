@@ -300,7 +300,7 @@ public class OfferViewModel extends ViewModel {
      * Returns the participants for the given offer.
      *
      * @param offer the offer whose participants are to be returned
-     * @return The participants of the given offerr
+     * @return The participants of the given offer
      * @throws RequestHandlerException if an error occurs when requesting the repository
      */
     public Set<User> getParticipants(Offer offer) throws RequestHandlerException {
