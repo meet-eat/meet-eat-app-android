@@ -50,7 +50,6 @@ public class OfferViewModelTest {
 
     private static LoginViewModel loginVM;
     private static SettingsViewModel settingsVM;
-    private static UserViewModel userVM;
     private static OfferViewModel offerVM;
     private static User secondUser;
     private static String uniqueIdentifier;
@@ -61,7 +60,7 @@ public class OfferViewModelTest {
         loginVM = new LoginViewModel();
         RegisterViewModel registerVM = new RegisterViewModel();
         settingsVM = new SettingsViewModel();
-        userVM = new UserViewModel();
+        UserViewModel userVM = new UserViewModel();
         offerVM = new OfferViewModel();
         uniqueIdentifier = String.valueOf(System.currentTimeMillis());
 
