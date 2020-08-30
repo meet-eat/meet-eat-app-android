@@ -10,7 +10,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -154,7 +153,7 @@ public class RegisterFragmentTest {
         onView(withId(R.id.btRegister)).perform(click());
         onView(withText(R.string.invalid_location)).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
         onView(withId(R.id.etRegisterHome)).perform(clearText());
-        onView(withId(R.id.etRegisterHome)).perform(typeText("Karlsruhe"));
+        onView(withId(R.id.etRegisterHome)).perform(typeText("Stuttgart"));
         closeSoftKeyboard();
         SystemClock.sleep(1000);
 
