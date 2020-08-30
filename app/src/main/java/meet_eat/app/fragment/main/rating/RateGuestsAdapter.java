@@ -51,14 +51,6 @@ public class RateGuestsAdapter extends RecyclerView.Adapter<RateGuestsAdapter.Vi
         notifyDataSetChanged();
     }
 
-    /**
-     * Tries to send the guest ratings.
-     */
-    public void sendRatings() {
-        // create ratings, then: ratingVM.send(ratings);
-    }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

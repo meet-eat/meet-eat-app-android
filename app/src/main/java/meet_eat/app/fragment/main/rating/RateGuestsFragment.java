@@ -82,7 +82,7 @@ public class RateGuestsFragment extends Fragment {
      * Send the guest ratings.
      */
     private void confirmRatings() {
-        rateGuestsAdapter.sendRatings();
+        // rateGuestsAdapter.sendRatings();
         navController.navigate(R.id.offerListFragment);
     }
 }
